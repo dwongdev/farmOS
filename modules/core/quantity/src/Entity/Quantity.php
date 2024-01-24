@@ -15,6 +15,7 @@ use Drupal\Core\Entity\Sql\SqlContentEntityStorage;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\entity\Menu\DefaultEntityLocalTaskProvider;
+use Drupal\entity\QueryAccess\UncacheableQueryAccessHandler;
 use Drupal\entity\Revision\RevisionableContentEntityBase;
 use Drupal\entity\Routing\AdminHtmlRouteProvider;
 use Drupal\entity\Routing\RevisionRouteProvider;
@@ -52,6 +53,7 @@ use Drupal\user\EntityOwnerTrait;
     'inline_form' => QuantityInlineForm::class,
     'list_builder' => QuantityListBuilder::class,
     'permission_provider' => UncacheableEntityPermissionProvider::class,
+    'query_access' => UncacheableQueryAccessHandler::class,
     'view_builder' => QuantityViewBuilder::class,
     'views_data' => QuantityViewsData::class,
     'form' => [
