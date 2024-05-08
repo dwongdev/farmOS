@@ -50,6 +50,7 @@ requirements (inherited from Drupal 11):
 - [Add map layer for "Other Location" assets #966](https://github.com/farmOS/farmOS/pull/966)
 - [Add ability to assign plan ownership #1015](https://github.com/farmOS/farmOS/pull/1015)
 - [Show violation messages when validation fails in bulk action forms #1018](https://github.com/farmOS/farmOS/pull/1018)
+- [Document how to use symfony/mailer for email SMTP relay #844](https://github.com/farmOS/farmOS/pull/844)
 
 ### Changed
 
