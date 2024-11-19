@@ -254,6 +254,10 @@ Equipment Assets have the following additional attributes:
 - Model (string)
 - Serial number (string)
 
+And the following additional relationships:
+
+- Equipment type (References a Term in the "Equipment type" vocabulary)
+
 #### Land Assets
 
 Land Assets have the following additional attributes:

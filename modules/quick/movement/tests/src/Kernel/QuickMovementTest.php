@@ -27,9 +27,11 @@ class QuickMovementTest extends QuickFormTestBase {
    */
   protected static $modules = [
     'farm_equipment',
+    'farm_equipment_type',
     'farm_activity',
     'farm_land',
     'farm_quick_movement',
+    'taxonomy',
   ];
 
   /**
@@ -39,6 +41,7 @@ class QuickMovementTest extends QuickFormTestBase {
     parent::setUp();
     $this->installConfig([
       'farm_activity',
+      'farm_equipment_type',
       'farm_equipment',
       'farm_land',
     ]);

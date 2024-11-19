@@ -17,6 +17,7 @@ in. Vocabularies are defined by modules, and are only available if their module
 is enabled. The modules included with farmOS define the following vocabularies:
 
 - Animal type
+- Equipment type
 - Log category
 - Material type
 - Plant type

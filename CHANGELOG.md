@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- [Add Equipment type field to Equipment assets #894](https://github.com/farmOS/farmOS/pull/894)
+
 ### Changed
 
 - [Pin PHP version to 8.3 in Dockerfile #923](https://github.com/farmOS/farmOS/pull/923)

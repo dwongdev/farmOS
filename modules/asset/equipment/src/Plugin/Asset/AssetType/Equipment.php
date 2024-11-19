@@ -22,6 +22,19 @@ class Equipment extends FarmAssetType {
   public function buildFieldDefinitions() {
     $fields = parent::buildFieldDefinitions();
     $field_info = [
+      'equipment_type' => [
+        'type' => 'entity_reference',
+        'label' => $this->t('Equipment type'),
+        'description' => $this->t("Enter the type of equipment."),
+        'target_type' => 'taxonomy_term',
+        'target_bundle' => 'equipment_type',
+        'auto_create' => TRUE,
+        'multiple' => TRUE,
+        'weight' => [
+          'form' => -90,
+          'view' => -50,
+        ],
+      ],
       'manufacturer' => [
         'type' => 'string',
         'label' => $this->t('Manufacturer'),
