@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- farmOS 4.x requires PHP 8.3+.
+
 ### Removed
 
 - Remove [deprecated Drupal 7 asset migration source plugin](https://www.drupal.org/node/3410747).
