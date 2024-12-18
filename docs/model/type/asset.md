@@ -246,7 +246,7 @@ above, some types add additional type-specific fields. These include:
 Animal Assets have the following additional attributes:
 
 - Birthdate (timestamp)
-- Is castrated (boolean)
+- Is sterile (boolean)
 - Nicknames (multiple strings)
 - Sex ("F" or "M" string)
 

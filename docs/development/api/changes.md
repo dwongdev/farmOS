@@ -16,6 +16,7 @@
   to a status of `active`.
 - Plans now have additional options for their `status` attribute: `planning`,
   `done` and `abandoned`, in addition to the existing `active` option.
+- The Animal asset `is_castrated` attribute has been renamed to `is_sterile`.
 
 ## 3.x vs 2.x
 

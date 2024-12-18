@@ -55,6 +55,7 @@ requirements (inherited from Drupal 11):
 - [Update Drupal to v11.2, PHPUnit to v11, PHPStan to v2 #980](https://github.com/farmOS/farmOS/pull/980)
 - [Update Docker base image to Debian Trixie #992](https://github.com/farmOS/farmOS/pull/992)
 - [Change how assets and plans are archived #986](https://github.com/farmOS/farmOS/pull/986)
+- [Change Animal asset is_castrated attribute to is_sterile #960](https://github.com/farmOS/farmOS/pull/960)
 - [Convert equipment to a base field #956](https://github.com/farmOS/farmOS/pull/956)
 - [Convert quick to a base field #957](https://github.com/farmOS/farmOS/pull/957)
 - [Make farmOS API OAuth2 Server optional #973](https://github.com/farmOS/farmOS/pull/973)
