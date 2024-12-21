@@ -6,6 +6,7 @@ namespace Drupal\farm_import_csv\Plugin\migrate\source;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\migrate\Attribute\MigrateSource;
 use Drupal\migrate\MigrateException;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate_source_csv\Plugin\migrate\source\CSV;
@@ -17,12 +18,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * This extends the CSV source plugin provided by migrate_source_csv, and
  * automatically handles assigning a file entity ID and row number to the
  * unique IDs of each row.
- *
- * @MigrateSource(
- *   id = "csv_file",
- *   source_module = "farm_import_csv"
- * )
  */
+#[MigrateSource(
+  id: 'csv_file',
+  source_module: 'farm_import_csv',
+)]
 class CSVFile extends CSV implements ContainerFactoryPluginInterface {
 
   /**
