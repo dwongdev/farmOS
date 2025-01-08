@@ -14,6 +14,11 @@ use Drupal\migrate_drupal\Plugin\migrate\source\d7\FieldableEntity;
  *   id = "d7_plan",
  *   source_module = "farm_plan"
  * )
+ *
+ * @deprecated in farm:3.4.0 and is removed from farm:4.0.0. Support for farmOS
+ *   v1 migrations was dropped in farmOS 3.x.
+ * @see https://www.drupal.org/project/farm/issues/3498064
+ * @see https://www.drupal.org/project/farm/issues/3382616
  */
 class Plan extends FieldableEntity {
 

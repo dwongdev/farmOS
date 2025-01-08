@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Deprecated
+
+- [Issue #3498064: Deprecate d7_plan plugin](https://www.drupal.org/project/farm/issues/3498064)
+
 ### Fixed
 
 - [CSV import validation messages not showing #924](https://github.com/farmOS/farmOS/issues/924)
