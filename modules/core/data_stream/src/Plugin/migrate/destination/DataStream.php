@@ -15,6 +15,11 @@ use Drupal\migrate\Row;
  * to assets that provide data streams. This is necessary because there was
  * no concept of data streams in farmOS 1.x. When creating a data stream from a
  * sensor asset, we need to reference the asset at this time.
+ *
+ * @deprecated in farm:3.4.0 and is removed from farm:4.0.0. Support for farmOS
+ *   v1 migrations was dropped in farmOS 3.x.
+ * @see https://www.drupal.org/project/farm/issues/3498067
+ * @see https://www.drupal.org/project/farm/issues/3382616
  */
 #[MigrateDestination(
   id: 'data_stream',

@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 
 - [Issue #3498064: Deprecate d7_plan plugin](https://www.drupal.org/project/farm/issues/3498064)
+- [Issue #3498067: Deprecate data stream migration plugins](https://www.drupal.org/project/farm/issues/3498067)
 
 ### Fixed
 

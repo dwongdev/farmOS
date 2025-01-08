@@ -17,6 +17,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * This is helpful in migrating data that was previously associated with
  * a sensor asset ID.
+ *
+ * @deprecated in farm:3.4.0 and is removed from farm:4.0.0. Support for farmOS
+ *   v1 migrations was dropped in farmOS 3.x.
+ * @see https://www.drupal.org/project/farm/issues/3498067
+ * @see https://www.drupal.org/project/farm/issues/3382616
  */
 #[MigrateProcess(
   id: 'data_stream_from_asset',
