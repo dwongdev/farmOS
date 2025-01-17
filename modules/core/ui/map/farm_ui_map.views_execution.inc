@@ -36,7 +36,11 @@ function farm_ui_map_views_pre_view(ViewExecutable $view, $display_id, array &$a
 
     // If a type argument is present, add bundle-specific exposed filters.
     if (!empty($args[0]) && $args[0] != 'all') {
-      farm_ui_views_add_bundle_handlers($view, $display_id, $args[0], 'filter');
+      /** @var \Drupal\entity\BundleFieldDefinition[] $bundle_fields */
+      $bundle_fields = \Drupal::entityTypeManager()->getHandler($view->getBaseEntityType()->id(), 'bundle_plugin')->getFieldDefinitions($args[0]);
+      foreach (array_reverse($bundle_fields) as $field_definition) {
+        farm_ui_views_add_handlers($view, $display_id, 'filter', $field_definition);
+      }
     }
   }
 }

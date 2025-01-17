@@ -8,6 +8,7 @@
 declare(strict_types=1);
 
 use Drupal\Core\Entity\Sql\SqlContentEntityStorageException;
+use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\views\ViewExecutable;
 use Drupal\views\Views;
 
@@ -32,8 +33,12 @@ function farm_ui_views_views_pre_view(ViewExecutable $view, $display_id, array &
     // If the entity type has a bundle_plugin manager, add all of its
     // bundle fields and filters to the page_type view.
     if (\Drupal::entityTypeManager()->hasHandler($view->getBaseEntityType()->id(), 'bundle_plugin')) {
-      farm_ui_views_add_bundle_handlers($view, $display_id, $bundle, 'field');
-      farm_ui_views_add_bundle_handlers($view, $display_id, $bundle, 'filter');
+      /** @var \Drupal\entity\BundleFieldDefinition[] $bundle_fields */
+      $bundle_fields = \Drupal::entityTypeManager()->getHandler($view->getBaseEntityType()->id(), 'bundle_plugin')->getFieldDefinitions($bundle);
+      foreach (array_reverse($bundle_fields) as $field_definition) {
+        farm_ui_views_add_handlers($view, $display_id, 'field', $field_definition);
+        farm_ui_views_add_handlers($view, $display_id, 'filter', $field_definition);
+      }
     }
   }
 
@@ -157,18 +162,18 @@ function farm_ui_views_views_pre_render(ViewExecutable $view) {
 }
 
 /**
- * Helper function for adding bundle-specific field and filter handlers.
+ * Helper function for adding field and filter handlers to a View.
  *
  * @param \Drupal\views\ViewExecutable $view
  *   The View to add handlers to.
  * @param string $display_id
  *   The ID of the View display to add handlers to.
- * @param string $bundle
- *   The bundle name.
  * @param string $type
  *   The handler type ('field' or 'filter').
+ * @param \Drupal\Core\Field\FieldDefinitionInterface $field_definition
+ *   The field definition to add Views field/filter handlers for.
  */
-function farm_ui_views_add_bundle_handlers(ViewExecutable $view, string $display_id, string $bundle, string $type) {
+function farm_ui_views_add_handlers(ViewExecutable $view, string $display_id, string $type, FieldDefinitionInterface $field_definition) {
 
   // Get the entity and bundle.
   $base_entity = $view->getBaseEntityType();
@@ -178,196 +183,190 @@ function farm_ui_views_add_bundle_handlers(ViewExecutable $view, string $display
   $entity_storage = \Drupal::entityTypeManager()->getStorage($base_entity->id());
   $table_mapping = $entity_storage->getTableMapping();
 
-  // Load bundle fields.
-  /** @var \Drupal\entity\BundleFieldDefinition[] $bundle_fields */
-  $bundle_fields = \Drupal::entityTypeManager()->getHandler($base_entity->id(), 'bundle_plugin')->getFieldDefinitions($bundle);
-  foreach (array_reverse($bundle_fields) as $field_name => $field_definition) {
+  // Skip if the field's view display is "hidden".
+  $view_options = $field_definition->getDisplayOptions('view');
+  if (empty($view_options) || (!empty($view_options['region']) && $view_options['region'] == 'hidden')) {
+    return;
+  }
 
-    // Skip the bundle field if the view display was set as "hidden".
-    $view_options = $field_definition->getDisplayOptions('view');
-    if (empty($view_options) || (!empty($view_options['region']) && $view_options['region'] == 'hidden')) {
-      continue;
-    }
+  // Save the field type.
+  $field_type = $field_definition->getType();
 
-    // Save the field type.
-    $field_type = $field_definition->getType();
+  // Build a views option name, so we can load its views data definition.
+  // First try to get the table from the field's table mapping.
+  try {
+    $table = $table_mapping->getFieldTableName($field_definition->getName());
+  }
+  // Else default to the entity type's base table.
+  // This is the convention that computed fields should follow when defining
+  // views data since they do not have a table created in the database.
+  catch (SqlContentEntityStorageException $e) {
+    $table = $entity_storage->getBaseTable();
+  }
 
-    // Build a views option name so we can load its views data definition.
-    // First try to get the table from the field's table mapping.
-    try {
-      $table = $table_mapping->getFieldTableName($field_name);
-    }
-    // Else default to the entity types's base table.
-    // This is the convention that computed fields should follow when defining
-    // views data since they do not have a table created in the database.
-    catch (SqlContentEntityStorageException $e) {
-      $table = $entity_storage->getBaseTable();
-    }
+  // Build the column name from the field name + main property.
+  $property_name = $field_definition->getFieldStorageDefinition()->getMainPropertyName();
+  $column_name = $field_definition->getName() . '_' . $property_name;
 
-    // Build the column name from the field name + main property.
-    $property_name = $field_definition->getFieldStorageDefinition()->getMainPropertyName();
-    $column_name = $field_name . '_' . $property_name;
+  // Fraction fields do not have a main property name, so build it manually.
+  if ($field_type == 'fraction') {
+    $column_name = $field_definition->getName() . '_value';
+  }
 
-    // Fraction fields do not have a main property name, so build it manually.
-    if ($field_type == 'fraction') {
-      $column_name = $field_name . '_value';
-    }
+  // Combine the table and column names.
+  $views_option_name = $table . '.' . $column_name;
 
-    // Combine the table and column names.
-    $views_option_name = $table . '.' . $column_name;
+  // Add a field handler if a views data field definition exists.
+  if ($type == 'field') {
+    $field_options = Views::viewsDataHelper()->fetchFields($table, 'field');
+    if (isset($field_options[$views_option_name])) {
 
-    // Add a field handler if a views data field definition exists.
-    if ($type == 'field') {
-      $field_options = Views::viewsDataHelper()->fetchFields($table, 'field');
-      if (isset($field_options[$views_option_name])) {
+      // Build field options for the field type.
+      $field_options = [];
+      $sort_order = 'asc';
 
-        // Build field options for the field type.
-        $field_options = [];
-        $sort_order = 'asc';
+      // Get the field label.
+      $field_options['label'] = $field_definition->getLabel();
 
-        // Get the field label.
-        $field_options['label'] = $field_definition->getLabel();
+      // Add settings that are specific to field types.
+      switch ($field_type) {
 
-        // Add settings that are specific to field types.
-        switch ($field_type) {
+        case 'timestamp':
+          // Render timestamp fields in the html_date format.
+          $field_options['type'] = 'timestamp';
+          $field_options['settings']['date_format'] = 'html_date';
 
-          case 'timestamp':
-            // Render timestamp fields in the html_date format.
-            $field_options['type'] = 'timestamp';
-            $field_options['settings']['date_format'] = 'html_date';
+          // Sort timestamps descending so new dates are on top by default.
+          $sort_order = 'desc';
+          break;
 
-            // Sort timestamps descending so new dates are on top by default.
-            $sort_order = 'desc';
-            break;
+        case 'boolean':
+        case 'entity_reference':
+        case 'fraction':
+        case 'list_string':
+        case 'string':
+          // Field types that do not need any modifications.
+          break;
 
-          case 'boolean':
-          case 'entity_reference':
-          case 'fraction':
-          case 'list_string':
-          case 'string':
-            // Field types that do not need any modifications.
-            break;
-
-          default:
-            // Do not add field handlers for unsupported field types.
-            continue 2;
-        }
-
-        // Add the field handler.
-        $new_field_id = $view->addHandler($display_id, 'field', $table, $column_name, $field_options);
-
-        // Determine what position to insert the field handler.
-        switch ($base_entity->id()) {
-          case 'asset':
-          case 'plan':
-            $sort_field = 'name';
-            break;
-
-          case 'log':
-            $sort_field = 'quantity_target_id';
-            break;
-
-          case 'quantity':
-          default:
-            $sort_field = FALSE;
-            break;
-        }
-
-        // Sort the field handlers if necessary.
-        if (!empty($sort_field)) {
-          farm_ui_views_sort_field($view, $display_id, $new_field_id, $sort_field);
-        }
-
-        // Add the field to the table style options.
-        $view->getStyle()->options['columns'][$new_field_id] = $new_field_id;
-        $view->getStyle()->options['info'][$new_field_id] = [
-          'sortable' => TRUE,
-          'default_sort_order' => $sort_order,
-          'align' => '',
-          'separator' => '',
-          'empty_column' => TRUE,
-          'responsive' => '',
-        ];
+        default:
+          // Do not add field handlers for unsupported field types.
+          return;
       }
-    }
 
-    // Add a filter handler if a views data filter definition exists.
-    elseif ($type == 'filter') {
-      $filter_options = Views::viewsDataHelper()->fetchFields($table, 'filter');
-      if (isset($filter_options[$views_option_name])) {
-        $filter_options = [
-          'id' => $field_name,
-          'table' => $table,
-          'field' => $column_name,
-          'exposed' => TRUE,
-          'expose' => [
-            'operator_id' => $column_name . '_op',
-            'label' => $filter_options[$views_option_name]['title'],
-            'identifier' => $column_name,
-            'multiple' => TRUE,
-          ],
-          'entity_type' => $base_entity->id(),
-          'entity_field' => $field_name,
-        ];
+      // Add the field handler.
+      $new_field_id = $view->addHandler($display_id, 'field', $table, $column_name, $field_options);
 
-        // Build filter options for the field type.
-        switch ($field_type) {
+      // Determine what position to insert the field handler.
+      switch ($base_entity->id()) {
+        case 'asset':
+        case 'plan':
+          $sort_field = 'name';
+          break;
 
-          case 'boolean':
-            $filter_options['value'] = 'All';
-            break;
+        case 'log':
+          $sort_field = 'quantity_target_id';
+          break;
 
-          case 'entity_reference':
-            $target_type = $field_definition->getSetting('target_type');
-
-            // Use a select widget for taxonomy term references.
-            if ($target_type === 'taxonomy_term') {
-              $filter_options['type'] = 'select';
-
-              // Limit to specific vocabularies if configured.
-              $handler_settings = $field_definition->getSetting('handler_settings');
-              $filter_options['limit'] = FALSE;
-              if (!empty($handler_settings['target_bundles'])) {
-                $filter_options['limit'] = TRUE;
-                $filter_options['vid'] = reset($handler_settings['target_bundles']);
-              }
-            }
-
-            // We use autocomplete for other entity types.
-            else {
-              $filter_options['type'] = 'autocomplete';
-
-              // If Views is used for the handler, or if target bundles are
-              // specified, then pass the handler and handler settings through
-              // to the filter so they can be used to limit options.
-              $handler = $field_definition->getSetting('handler');
-              $handler_settings = $field_definition->getSetting('handler_settings');
-              if ($handler === 'views' || !empty($handler_settings['target_bundles'])) {
-                $filter_options['sub_handler'] = $handler;
-                $filter_options['sub_handler_settings'] = $handler_settings;
-              }
-            }
-
-            break;
-
-          case 'string':
-            // String fields use the contains operator.
-            $filter_options['operator'] = 'contains';
-            break;
-
-          case 'list_string':
-          case 'timestamp':
-            // Field types that do not need any modifications.
-            break;
-
-          default:
-            // Do not add filter handlers for unsupported field types.
-            continue 2;
-        }
-
-        // Add the filter handler.
-        $view->addHandler($display_id, 'filter', $table, $column_name, $filter_options);
+        case 'quantity':
+        default:
+          $sort_field = FALSE;
+          break;
       }
+
+      // Sort the field handlers if necessary.
+      if (!empty($sort_field)) {
+        farm_ui_views_sort_field($view, $display_id, $new_field_id, $sort_field);
+      }
+
+      // Add the field to the table style options.
+      $view->getStyle()->options['columns'][$new_field_id] = $new_field_id;
+      $view->getStyle()->options['info'][$new_field_id] = [
+        'sortable' => TRUE,
+        'default_sort_order' => $sort_order,
+        'align' => '',
+        'separator' => '',
+        'empty_column' => TRUE,
+        'responsive' => '',
+      ];
+    }
+  }
+
+  // Add a filter handler if a views data filter definition exists.
+  elseif ($type == 'filter') {
+    $filter_options = Views::viewsDataHelper()->fetchFields($table, 'filter');
+    if (isset($filter_options[$views_option_name])) {
+      $filter_options = [
+        'id' => $field_definition->getName(),
+        'table' => $table,
+        'field' => $column_name,
+        'exposed' => TRUE,
+        'expose' => [
+          'operator_id' => $column_name . '_op',
+          'label' => $filter_options[$views_option_name]['title'],
+          'identifier' => $column_name,
+          'multiple' => TRUE,
+        ],
+        'entity_type' => $base_entity->id(),
+        'entity_field' => $field_definition->getName(),
+      ];
+
+      // Build filter options for the field type.
+      switch ($field_type) {
+
+        case 'boolean':
+          $filter_options['value'] = 'All';
+          break;
+
+        case 'entity_reference':
+          $target_type = $field_definition->getSetting('target_type');
+
+          // Use a select widget for taxonomy term references.
+          if ($target_type === 'taxonomy_term') {
+            $filter_options['type'] = 'select';
+
+            // Limit to specific vocabularies if configured.
+            $handler_settings = $field_definition->getSetting('handler_settings');
+            $filter_options['limit'] = FALSE;
+            if (!empty($handler_settings['target_bundles'])) {
+              $filter_options['limit'] = TRUE;
+              $filter_options['vid'] = reset($handler_settings['target_bundles']);
+            }
+          }
+
+          // We use autocomplete for other entity types.
+          else {
+            $filter_options['type'] = 'autocomplete';
+
+            // If Views is used for the handler, or if target bundles are
+            // specified, then pass the handler and handler settings through
+            // to the filter so they can be used to limit options.
+            $handler = $field_definition->getSetting('handler');
+            $handler_settings = $field_definition->getSetting('handler_settings');
+            if ($handler === 'views' || !empty($handler_settings['target_bundles'])) {
+              $filter_options['sub_handler'] = $handler;
+              $filter_options['sub_handler_settings'] = $handler_settings;
+            }
+          }
+
+          break;
+
+        case 'string':
+          // String fields use the contains operator.
+          $filter_options['operator'] = 'contains';
+          break;
+
+        case 'list_string':
+        case 'timestamp':
+          // Field types that do not need any modifications.
+          break;
+
+        default:
+          // Do not add filter handlers for unsupported field types.
+          return;
+      }
+
+      // Add the filter handler.
+      $view->addHandler($display_id, 'filter', $table, $column_name, $filter_options);
     }
   }
 }
