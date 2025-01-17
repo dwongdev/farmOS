@@ -22,6 +22,20 @@ function farm_ui_views_views_pre_view(ViewExecutable $view, $display_id, array &
     return;
   }
 
+  // Get the entity field manager service.
+  /** @var \Drupal\Core\Entity\EntityFieldManagerInterface $entity_field_manager */
+  $entity_field_manager = \Drupal::service('entity_field.manager');
+
+  // Add field and filter handlers for base fields provided by other modules.
+  $base_fields = \Drupal::moduleHandler()->invokeAll('farm_ui_views_base_fields', [$view->getBaseEntityType()->id()]);
+  foreach ($entity_field_manager->getBaseFieldDefinitions($view->getBaseEntityType()->id()) as $field_definition) {
+    if (!in_array($field_definition->getName(), $base_fields)) {
+      continue;
+    }
+    farm_ui_views_add_handlers($view, $display_id, 'field', $field_definition);
+    farm_ui_views_add_handlers($view, $display_id, 'filter', $field_definition);
+  }
+
   // If this is a "By type" display, alter the fields and filters.
   $bundle = farm_ui_views_get_bundle_argument($view, $display_id, $args);
   if (!empty($bundle)) {
