@@ -403,3 +403,44 @@ function farm_ui_views_add_handlers(ViewExecutable $view, string $display_id, st
     }
   }
 }
+
+/**
+ * Helper function for sorting a field handler.
+ *
+ * Based off the \Drupal\views_ui\Form\Ajax\Rearrange.php method of ordering
+ * handlers in views.
+ *
+ * @param \Drupal\views\ViewExecutable $view
+ *   The View to add handlers to.
+ * @param string $display_id
+ *   The ID of the View display to add handlers to.
+ * @param string $field_id
+ *   The ID of the field to sort.
+ * @param string $base_field_id
+ *   The ID of an existing field in the View. The field defined by $field_id
+ *   will be added before/after this field in the View.
+ * @param bool $before
+ *   If TRUE, the field will be added before the field defined by $base_field_id
+ *   instead of after.
+ */
+function farm_ui_views_sort_field(ViewExecutable $view, string $display_id, string $field_id, string $base_field_id, bool $before = FALSE) {
+
+  // Get the existing field handlers.
+  $type = 'field';
+  $types = ViewExecutable::getHandlerTypes();
+  $display = $view->displayHandlers->get($display_id);
+  $field_handlers = $display->getOption($types[$type]['plural']);
+
+  // Define the new field handler and insert at desired position.
+  $new_field_handler = [$field_id => $field_handlers[$field_id]];
+  $keys = array_keys($field_handlers);
+  $index = array_search($base_field_id, $keys, TRUE);
+  $pos = empty($index) ? count($field_handlers) : $index;
+  if (!$before) {
+    $pos++;
+  }
+  $new_field_handlers = array_merge(array_slice($field_handlers, 0, $pos, TRUE), $new_field_handler, array_slice($field_handlers, $pos, NULL, TRUE));
+
+  // Set the display to use the sorted field handlers.
+  $display->setOption($types[$type]['plural'], $new_field_handlers);
+}
