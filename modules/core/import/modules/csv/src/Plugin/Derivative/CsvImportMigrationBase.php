@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Drupal\farm_import_csv\Plugin\Derivative;
 
 use Drupal\Component\Plugin\Derivative\DeriverBase;
+use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Plugin\Discovery\ContainerDeriverInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -35,13 +37,33 @@ abstract class CsvImportMigrationBase extends DeriverBase implements ContainerDe
   protected $entityTypeManager;
 
   /**
+   * The entity field manager service.
+   *
+   * @var \Drupal\Core\Entity\EntityFieldManagerInterface
+   */
+  protected $entityFieldManager;
+
+  /**
+   * The module handler.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface
+   */
+  protected $moduleHandler;
+
+  /**
    * CsvImportMigration constructor.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
+   * @param \Drupal\Core\Entity\EntityFieldManagerInterface $entity_field_manager
+   *   The entity field manager service.
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
+   *   The module handler.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, EntityFieldManagerInterface $entity_field_manager, ModuleHandlerInterface $module_handler) {
     $this->entityTypeManager = $entity_type_manager;
+    $this->entityFieldManager = $entity_field_manager;
+    $this->moduleHandler = $module_handler;
   }
 
   /**
@@ -50,6 +72,8 @@ abstract class CsvImportMigrationBase extends DeriverBase implements ContainerDe
   public static function create(ContainerInterface $container, $base_plugin_id) {
     return new static(
       $container->get('entity_type.manager'),
+      $container->get('entity_field.manager'),
+      $container->get('module_handler'),
     );
   }
 
@@ -123,6 +147,17 @@ abstract class CsvImportMigrationBase extends DeriverBase implements ContainerDe
 
       // Alter column descriptions for this bundle.
       $this->alterColumnDescriptions($definition['third_party_settings']['farm_import_csv']['columns'], $bundle->id());
+
+      // Add column mapping and descriptions for base fields provided by other
+      // modules.
+      $base_fields = $this->moduleHandler->invokeAll('farm_import_csv_base_fields', [$this->entityType]);
+      foreach ($this->entityFieldManager->getBaseFieldDefinitions($this->entityType) as $field_definition) {
+        /** @var \Drupal\Core\Field\BaseFieldDefinition $field_definition */
+        if (!in_array($field_definition->getName(), $base_fields)) {
+          continue;
+        }
+        $this->addFieldMapping($field_definition, $definition['process'], $definition['third_party_settings']['farm_import_csv']['columns']);
+      }
 
       // If the entity type has a bundle_plugin manager, add column mappings
       // and descriptions for bundle fields.

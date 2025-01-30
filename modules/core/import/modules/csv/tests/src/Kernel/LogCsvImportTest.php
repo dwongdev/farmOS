@@ -114,6 +114,7 @@ class LogCsvImportTest extends CsvImportTestBase {
           'Category 1',
         ],
         'status' => 'done',
+        'test_string' => 'foo',
       ],
       2 => [
         'name' => 'Harvest potatoes',
@@ -138,6 +139,7 @@ class LogCsvImportTest extends CsvImportTestBase {
           'Category 2',
         ],
         'status' => 'done',
+        'test_string' => 'bar',
       ],
       3 => [
         'name' => 'Harvest onions',
@@ -153,6 +155,7 @@ class LogCsvImportTest extends CsvImportTestBase {
         'notes' => 'Small bulbs from weed pressure',
         'categories' => [],
         'status' => 'pending',
+        'test_string' => 'baz',
       ],
     ];
     foreach ($logs as $id => $log) {
@@ -182,6 +185,7 @@ class LogCsvImportTest extends CsvImportTestBase {
         }
       }
       $this->assertEquals($expected_values[$id]['status'], $log->get('status')->value);
+      $this->assertEquals($expected_values[$id]['test_string'], $log->get('test_string')->value);
       $this->assertEquals('Imported via CSV.', $log->getRevisionLogMessage());
     }
 
