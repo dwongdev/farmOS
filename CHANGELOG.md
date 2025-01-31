@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Add Equipment type field to Equipment assets #894](https://github.com/farmOS/farmOS/pull/894)
 - [Add support for geometry fields in CSV exports #884](https://github.com/farmOS/farmOS/pull/884)
 - [Allow modules to add base fields to farmOS Views #915](https://github.com/farmOS/farmOS/pull/915)
+- [Allow modules to add base fields to default CSV importers #916](https://github.com/farmOS/farmOS/pull/916)
 
 ### Changed
 
