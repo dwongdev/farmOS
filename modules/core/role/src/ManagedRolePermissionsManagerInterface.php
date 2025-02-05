@@ -47,4 +47,15 @@ interface ManagedRolePermissionsManagerInterface {
    */
   public function isPermissionInRole($permission, RoleInterface $role);
 
+  /**
+   * Helper function to build managed permissions for managed roles.
+   *
+   * @param \Drupal\user\RoleInterface $role
+   *   The role to load permissions for.
+   *
+   * @return string[]
+   *   Array of permissions for the managed role.
+   */
+  public function getManagedRolePermissions(RoleInterface $role): array;
+
 }
