@@ -99,17 +99,7 @@ class ManagedRolePermissionsManager extends DefaultPluginManager implements Mana
    * {@inheritdoc}
    */
   public function isPermissionInRole($permission, RoleInterface $role) {
-
-    // Check if permissions have been built for the specified role.
-    if (isset($this->rolePermissions[$role->id()])) {
-      $permissions = $this->rolePermissions[$role->id()];
-    }
-    else {
-      // Build permissions for the role.
-      $permissions = $this->getManagedRolePermissions($role);
-    }
-
-    return in_array($permission, $permissions);
+    return in_array($permission, $this->getManagedRolePermissions($role));
   }
 
   /**
@@ -122,6 +112,11 @@ class ManagedRolePermissionsManager extends DefaultPluginManager implements Mana
    *   Array of permissions for the managed role.
    */
   public function getManagedRolePermissions(RoleInterface $role): array {
+
+    // Check if permissions have been built for the specified role.
+    if (isset($this->rolePermissions[$role->id()])) {
+      return $this->rolePermissions[$role->id()];
+    }
 
     // Start list of permissions.
     $perms = [];
