@@ -8,5 +8,6 @@ test:password:
     password:
       status: true
       description: 'Password grant'
-  granularity: 'permission'
-  permission: 'access content'
+  granularity_id: 'permission'
+  granularity_configuration:
+    permission: 'access content'
