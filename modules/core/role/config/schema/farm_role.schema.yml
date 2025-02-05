@@ -1,3 +1,11 @@
+simple_oauth_scope_granularity.managed_role_permissions:
+  type: mapping
+  label: 'Managed Role Permissions granularity configuration'
+  mapping:
+    role:
+      type: string
+      label: 'Role'
+
 user.role.*.third_party.farm_role:
   type: mapping
   label: 'Farm Role'
