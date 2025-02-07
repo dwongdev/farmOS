@@ -220,4 +220,31 @@ class ManagedRolePermissionsTest extends KernelTestBase {
     }
   }
 
+  /**
+   * Test caching of managed role permissions access policy.
+   */
+  public function testManagedRolePermissionsCaching() {
+
+    // Create a user.
+    $user = $this->setUpCurrentUser();
+
+    // Ensure the user does not have permission to create any log.
+    $this->assertFalse($user->hasPermission('create observation log'));
+    $this->assertFalse($user->hasPermission('create harvest log'));
+
+    // Grant farm_test role and ensure the user can create observation log.
+    $user->addRole('farm_test');
+    $this->assertTrue($user->hasPermission('create observation log'));
+    $this->assertFalse($user->hasPermission('create harvest log'));
+
+    // Update the role to allow creating any log.
+    $farm_test = Role::load('farm_test');
+    $access_settings = $farm_test->getThirdPartySetting('farm_role', 'access');
+    $access_settings['entity']['create all'] = TRUE;
+    $farm_test->setThirdPartySetting('farm_role', 'access', $access_settings);
+    $farm_test->save();
+    $this->assertTrue($user->hasPermission('create observation log'));
+    $this->assertTrue($user->hasPermission('create harvest log'));
+  }
+
 }

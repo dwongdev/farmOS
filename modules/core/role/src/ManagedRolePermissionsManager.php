@@ -113,11 +113,6 @@ class ManagedRolePermissionsManager extends DefaultPluginManager implements Mana
    */
   public function getManagedRolePermissions(RoleInterface $role): array {
 
-    // Check if permissions have been built for the specified role.
-    if (isset($this->rolePermissions[$role->id()])) {
-      return $this->rolePermissions[$role->id()];
-    }
-
     // Start list of permissions.
     $perms = [];
 
@@ -332,7 +327,6 @@ class ManagedRolePermissionsManager extends DefaultPluginManager implements Mana
       }
     }
 
-    $this->rolePermissions[$role->id()] = $perms;
     return $perms;
   }
 
