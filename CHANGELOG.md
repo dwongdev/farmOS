@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- [Pin PHP version to 8.3 in Dockerfile #923](https://github.com/farmOS/farmOS/pull/923)
+
 ### Deprecated
 
 - [Issue #3498064: Deprecate d7_plan plugin](https://www.drupal.org/project/farm/issues/3498064)
