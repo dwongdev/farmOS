@@ -212,39 +212,38 @@ class EntityFlagActionForm extends ConfirmFormBase {
     // Update flags on accessible entities.
     $total_count = 0;
     foreach ($accessible_entities as $entity) {
-      if ($flag_field = $entity->get($this->flagFieldName)) {
+      $flag_field = $entity->get($this->flagFieldName);
 
-        // Save existing flags if appending.
-        $existing_flags = [];
-        if ($form_state->getValue('operation') === 'append') {
-          $existing_flags = array_column($flag_field->getValue(), 'value');
-        }
-
-        // Empty the flag field.
-        $flag_field->setValue([]);
-
-        $new_flags = array_unique(array_merge($existing_flags, $form_state->getValue('flags')));
-        foreach ($new_flags as $flag) {
-          $flag_field->appendItem($flag);
-        }
-
-        // Validate the entity before saving.
-        $violations = $entity->validate();
-        if ($violations->count() > 0) {
-          $this->messenger()->addWarning(
-            $this->t('Could not flag <a href=":entity_link">%entity_label</a>: validation failed.',
-              [
-                ':entity_link' => $entity->toUrl()->setAbsolute()->toString(),
-                '%entity_label' => $entity->label(),
-              ],
-            ),
-          );
-          continue;
-        }
-
-        $entity->save();
-        $total_count++;
+      // Save existing flags if appending.
+      $existing_flags = [];
+      if ($form_state->getValue('operation') === 'append') {
+        $existing_flags = array_column($flag_field->getValue(), 'value');
       }
+
+      // Empty the flag field.
+      $flag_field->setValue([]);
+
+      $new_flags = array_unique(array_merge($existing_flags, $form_state->getValue('flags')));
+      foreach ($new_flags as $flag) {
+        $flag_field->appendItem($flag);
+      }
+
+      // Validate the entity before saving.
+      $violations = $entity->validate();
+      if ($violations->count() > 0) {
+        $this->messenger()->addWarning(
+          $this->t('Could not flag <a href=":entity_link">%entity_label</a>: validation failed.',
+            [
+              ':entity_link' => $entity->toUrl()->setAbsolute()->toString(),
+              '%entity_label' => $entity->label(),
+            ],
+          ),
+        );
+        continue;
+      }
+
+      $entity->save();
+      $total_count++;
     }
 
     // Add warning message for inaccessible entities.

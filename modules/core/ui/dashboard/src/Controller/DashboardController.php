@@ -121,15 +121,13 @@ class DashboardController extends ControllerBase {
 
         // Render plugin block if is set.
         $block = $this->blockManager->createInstance($pane['block'], $args);
-        if ($block) {
 
-          // Check block access.
-          $access_result = $block->access($this->currentUser);
-          if ($access_result == TRUE) {
+        // Check block access.
+        $access_result = $block->access($this->currentUser);
 
-            // Builds renderable array of the block.
-            $output = $block->build();
-          }
+        // Build renderable array of the block.
+        if ($access_result == TRUE) {
+          $output = $block->build();
         }
       }
 

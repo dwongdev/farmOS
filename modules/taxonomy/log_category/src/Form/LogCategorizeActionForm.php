@@ -202,25 +202,24 @@ class LogCategorizeActionForm extends ConfirmFormBase {
     $total_count = 0;
     foreach ($accessible_entities as $entity) {
       /** @var \Drupal\Core\Field\EntityReferenceFieldItemList $category_field */
-      if ($category_field = $entity->get('category')) {
+      $category_field = $entity->get('category');
 
-        // Save existing values if appending.
-        $existing_values = [];
-        if ($form_state->getValue('operation') === 'append') {
-          $existing_values = array_column($category_field->getValue(), 'target_id');
-        }
-
-        // Empty the field.
-        $category_field->setValue([]);
-
-        $new_values = array_unique(array_merge($existing_values, $submitted_category_ids));
-        foreach ($new_values as $parent_id) {
-          $category_field->appendItem($parent_id);
-        }
-
-        $entity->save();
-        $total_count++;
+      // Save existing values if appending.
+      $existing_values = [];
+      if ($form_state->getValue('operation') === 'append') {
+        $existing_values = array_column($category_field->getValue(), 'target_id');
       }
+
+      // Empty the field.
+      $category_field->setValue([]);
+
+      $new_values = array_unique(array_merge($existing_values, $submitted_category_ids));
+      foreach ($new_values as $parent_id) {
+        $category_field->appendItem($parent_id);
+      }
+
+      $entity->save();
+      $total_count++;
     }
 
     // Add warning message for inaccessible entities.

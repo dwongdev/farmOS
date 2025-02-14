@@ -215,40 +215,39 @@ class AssignActionForm extends ConfirmFormBase {
     $total_count = 0;
     foreach ($accessible_entities as $entity) {
       /** @var \Drupal\Core\Field\FieldItemListInterface $owner_field */
-      if ($owner_field = $entity->get('owner')) {
+      $owner_field = $entity->get('owner');
 
-        // Save existing users if appending.
-        $existing_owners = [];
-        if ($form_state->getValue('operation') === 'append') {
-          $existing_owners = array_column($owner_field->getValue(), 'target_id');
-        }
-
-        // Empty the owner field.
-        $owner_field->setValue([]);
-
-        // Build list of owners.
-        $new_owners = array_unique(array_merge($existing_owners, $form_state->getValue('users')));
-        foreach ($new_owners as $owner) {
-          $owner_field->appendItem($owner);
-        }
-
-        // Validate the entity before saving.
-        $violations = $entity->validate();
-        if ($violations->count() > 0) {
-          $this->messenger()->addWarning(
-            $this->t('Could not assign <a href=":entity_link">%entity_label</a>: validation failed.',
-              [
-                ':entity_link' => $entity->toUrl()->setAbsolute()->toString(),
-                '%entity_label' => $entity->label(),
-              ],
-            ),
-          );
-          continue;
-        }
-
-        $entity->save();
-        $total_count++;
+      // Save existing users if appending.
+      $existing_owners = [];
+      if ($form_state->getValue('operation') === 'append') {
+        $existing_owners = array_column($owner_field->getValue(), 'target_id');
       }
+
+      // Empty the owner field.
+      $owner_field->setValue([]);
+
+      // Build list of owners.
+      $new_owners = array_unique(array_merge($existing_owners, $form_state->getValue('users')));
+      foreach ($new_owners as $owner) {
+        $owner_field->appendItem($owner);
+      }
+
+      // Validate the entity before saving.
+      $violations = $entity->validate();
+      if ($violations->count() > 0) {
+        $this->messenger()->addWarning(
+          $this->t('Could not assign <a href=":entity_link">%entity_label</a>: validation failed.',
+            [
+              ':entity_link' => $entity->toUrl()->setAbsolute()->toString(),
+              '%entity_label' => $entity->label(),
+            ],
+          ),
+        );
+        continue;
+      }
+
+      $entity->save();
+      $total_count++;
     }
 
     // Add warning message for inaccessible entities.

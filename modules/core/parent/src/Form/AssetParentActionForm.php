@@ -226,39 +226,38 @@ class AssetParentActionForm extends ConfirmFormBase {
     $total_count = 0;
     foreach ($accessible_entities as $entity) {
       /** @var \Drupal\Core\Field\EntityReferenceFieldItemListInterface $parent_field */
-      if ($parent_field = $entity->get('parent')) {
+      $parent_field = $entity->get('parent');
 
-        // Save existing values if appending.
-        $existing_values = [];
-        if ($form_state->getValue('operation') === 'append') {
-          $existing_values = array_column($parent_field->getValue(), 'target_id');
-        }
-
-        // Empty the field.
-        $parent_field->setValue([]);
-
-        $new_values = array_unique(array_merge($existing_values, $submitted_parent_ids));
-        foreach ($new_values as $parent_id) {
-          $parent_field->appendItem($parent_id);
-        }
-
-        // Validate the entity before saving.
-        $violations = $entity->validate();
-        if ($violations->count() > 0) {
-          $this->messenger()->addWarning(
-            $this->t('Could not assign parent for <a href=":entity_link">%entity_label</a>: validation failed.',
-              [
-                ':entity_link' => $entity->toUrl()->setAbsolute()->toString(),
-                '%entity_label' => $entity->label(),
-              ],
-            ),
-          );
-          continue;
-        }
-
-        $entity->save();
-        $total_count++;
+      // Save existing values if appending.
+      $existing_values = [];
+      if ($form_state->getValue('operation') === 'append') {
+        $existing_values = array_column($parent_field->getValue(), 'target_id');
       }
+
+      // Empty the field.
+      $parent_field->setValue([]);
+
+      $new_values = array_unique(array_merge($existing_values, $submitted_parent_ids));
+      foreach ($new_values as $parent_id) {
+        $parent_field->appendItem($parent_id);
+      }
+
+      // Validate the entity before saving.
+      $violations = $entity->validate();
+      if ($violations->count() > 0) {
+        $this->messenger()->addWarning(
+          $this->t('Could not assign parent for <a href=":entity_link">%entity_label</a>: validation failed.',
+            [
+              ':entity_link' => $entity->toUrl()->setAbsolute()->toString(),
+              '%entity_label' => $entity->label(),
+            ],
+          ),
+        );
+        continue;
+      }
+
+      $entity->save();
+      $total_count++;
     }
 
     // Add warning message for inaccessible entities.
