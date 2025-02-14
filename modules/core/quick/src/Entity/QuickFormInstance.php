@@ -122,6 +122,9 @@ class QuickFormInstance extends ConfigEntityBase implements QuickFormInstanceInt
    *   The block's plugin collection.
    */
   protected function getPluginCollection() {
+    // Ignore PHPStan error for conditional logic.
+    // We follow Drupal core convention.
+    // @phpstan-ignore booleanNot.alwaysFalse
     if (!$this->pluginCollection) {
       $this->pluginCollection = new QuickFormPluginCollection(\Drupal::service('plugin.manager.quick_form'), $this->plugin, $this->get('settings'), $this->id());
     }

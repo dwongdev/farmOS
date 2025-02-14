@@ -98,6 +98,9 @@ class ManagedRolePermissionsManager extends DefaultPluginManager implements Mana
    * {@inheritdoc}
    */
   protected function getDiscovery() {
+    // Ignore PHPStan error for conditional logic.
+    // We follow Drupal core convention.
+    // @phpstan-ignore booleanNot.alwaysFalse
     if (!$this->discovery) {
       $discovery = new YamlDiscovery('managed_role_permissions', $this->moduleHandler->getModuleDirectories());
       $this->discovery = new ContainerDerivativeDiscoveryDecorator($discovery);
