@@ -8,6 +8,7 @@ use Drupal\Component\Serialization\Json;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\asset\Entity\AssetInterface;
 use Drupal\data_stream\DataStreamTypeManager;
+use Drupal\data_stream\Entity\DataStreamInterface;
 use Drupal\jsonapi\Exception\UnprocessableHttpEntityException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -217,10 +218,10 @@ class SensorDataController extends ControllerBase {
    * @param string $name
    *   The data stream name.
    *
-   * @return \Drupal\Core\Entity\EntityInterface
+   * @return \Drupal\data_stream\Entity\DataStreamInterface
    *   The new data stream.
    */
-  protected function createDataStream(AssetInterface $asset, string $name) {
+  protected function createDataStream(AssetInterface $asset, string $name): DataStreamInterface {
 
     // Create new data stream.
     $new_data_stream = $this->entityTypeManager()->getStorage('data_stream')->create([
