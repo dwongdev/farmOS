@@ -31,12 +31,9 @@ function farm_structure_views_pre_render(ViewExecutable $view) {
     $exposed_filters = $view->getExposedInput();
 
     // If the structure type exposed filter is already in use remove structure
-    // types that are not included.
-    if (!empty($exposed_filters['structure_type_value'])) {
-      $structure_types = array_filter($structure_types, function ($key) use ($exposed_filters) {
-        return in_array($key, $exposed_filters['structure_type_value']);
-      }, ARRAY_FILTER_USE_KEY);
-    }
+    // types that are not specified in the filter value.
+    $structure_type_filters = (array) $exposed_filters['structure_type_value'];
+    $structure_types = array_intersect_key($structure_types, $structure_type_filters);
 
     // Create a layer for each structure type.
     $asset_layers = [];

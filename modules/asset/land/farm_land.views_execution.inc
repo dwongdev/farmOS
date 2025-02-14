@@ -31,12 +31,9 @@ function farm_land_views_pre_render(ViewExecutable $view) {
     $exposed_filters = $view->getExposedInput();
 
     // If the land type exposed filter is already in use remove land types
-    // that are not included.
-    if (!empty($exposed_filters['land_type_value'])) {
-      $land_types = array_filter($land_types, function ($key) use ($exposed_filters) {
-        return in_array($key, $exposed_filters['land_type_value']);
-      }, ARRAY_FILTER_USE_KEY);
-    }
+    // that are not specified by the filter value.
+    $land_type_filters = (array) $exposed_filters['land_type_value'];
+    $land_types = array_intersect_key($land_types, $land_type_filters);
 
     // Create a layer for each land type.
     $asset_layers = [];
