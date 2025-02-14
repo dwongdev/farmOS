@@ -133,17 +133,8 @@ class GroupMembership implements GroupMembershipInterface {
       return NULL;
     }
 
-    // Load the first log.
-    /** @var \Drupal\log\Entity\LogInterface $log */
-    $log = $this->entityTypeManager->getStorage('log')->load(reset($log_ids));
-
-    // Return the log, if available.
-    if (!is_null($log)) {
-      return $log;
-    }
-
-    // Otherwise, return NULL.
-    return NULL;
+    // Load the first log or return NULL.
+    return $this->entityTypeManager->getStorage('log')->load(reset($log_ids));
   }
 
   /**
