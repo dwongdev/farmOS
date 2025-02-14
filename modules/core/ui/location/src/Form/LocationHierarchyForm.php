@@ -306,7 +306,7 @@ class LocationHierarchyForm extends FormBase {
       }
 
       // Remove the original parent.
-      if (!empty($asset->get('parent'))) {
+      if (!$asset->get('parent')->isEmpty()) {
         /** @var \Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem $parent */
         foreach ($asset->get('parent') as $delta => $parent) {
           $parent_id = $parent->getValue()['target_id'];
