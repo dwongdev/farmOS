@@ -143,7 +143,7 @@ class AssignActionForm extends ConfirmFormBase {
     $this->entityType = $this->entityTypeManager->getDefinition($entity_type);
 
     // Load saved entities.
-    $this->entities = $this->tempStore->get($this->user->id());
+    $this->entities = $this->tempStore->get((string) $this->user->id());
 
     // If there are no entities, or if the entity type definition didn't load,
     // redirect the user to the cancel URL.
@@ -267,7 +267,7 @@ class AssignActionForm extends ConfirmFormBase {
       ]));
     }
 
-    $this->tempStore->delete($this->currentUser()->id());
+    $this->tempStore->delete((string) $this->currentUser()->id());
     $form_state->setRedirectUrl($this->getCancelUrl());
   }
 

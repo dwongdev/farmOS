@@ -79,7 +79,7 @@ class LogCategorize extends EntityActionBase {
    */
   public function executeMultiple(array $entities) {
     /** @var \Drupal\Core\Entity\EntityInterface[] $entities */
-    $this->tempStore->set($this->currentUser->id(), $entities);
+    $this->tempStore->set((string) $this->currentUser->id(), $entities);
   }
 
   /**

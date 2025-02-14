@@ -149,7 +149,7 @@ class AssetParentActionForm extends ConfirmFormBase {
     }
     // Else load entities from the tempStore state.
     else {
-      $this->entities = $this->tempStore->get($this->user->id());
+      $this->entities = $this->tempStore->get((string) $this->user->id());
     }
 
     $this->entityType = $this->entityTypeManager->getDefinition('asset');
@@ -277,7 +277,7 @@ class AssetParentActionForm extends ConfirmFormBase {
       ]));
     }
 
-    $this->tempStore->delete($this->currentUser()->id());
+    $this->tempStore->delete((string) $this->currentUser()->id());
     $form_state->setRedirectUrl($this->getCancelUrl());
   }
 

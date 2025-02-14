@@ -121,7 +121,7 @@ class AssetAddLogActionForm extends ConfirmFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $this->entityType = $this->entityTypeManager->getDefinition('asset');
-    $this->entities = $this->tempStore->get($this->user->id());
+    $this->entities = $this->tempStore->get((string) $this->user->id());
     if (!$this->entityType || empty($this->entities)) {
       // Ignore PHPstan error for incorrect return type.
       // Forms can return a RedirectResponse.
@@ -203,7 +203,7 @@ class AssetAddLogActionForm extends ConfirmFormBase {
       }
     }
 
-    $this->tempStore->delete($this->currentUser()->id());
+    $this->tempStore->delete((string) $this->currentUser()->id());
     $form_state->setRedirectUrl($redirect_url);
   }
 
