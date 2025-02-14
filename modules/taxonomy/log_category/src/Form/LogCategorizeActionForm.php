@@ -139,7 +139,7 @@ class LogCategorizeActionForm extends ConfirmFormBase {
 
     // Filter to active terms.
     $active_terms = array_filter($terms, function ($term) {
-      return (int) $term->get('status')->value;
+      return (bool) $term->get('status')->value;
     });
 
     // Build options with -- to represent hierarchies.
