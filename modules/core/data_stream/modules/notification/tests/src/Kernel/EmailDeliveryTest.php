@@ -106,7 +106,7 @@ class EmailDeliveryTest extends DataStreamTestBase {
 
     // Get the first configured email delivery plugin.
     $collections = $this->dataStreamNotification->getPluginCollections();
-    $email_delivery = $collections['delivery']->get(0);
+    $email_delivery = $collections['delivery']->get((string) 0);
 
     // Build a list of condition summaries to test against.
     $condition_summaries = array_map(function ($condition) {
