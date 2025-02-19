@@ -18,6 +18,7 @@
       var opts = {
         title: title,
         url: 'https://api.mapbox.com/styles/v1/' + tileset + '/tiles/512/{z}/{x}/{y}?access_token=' + key,
+        crossOrigin: 'anonymous',
         tileSize: 512,
         attribution: attribution,
         group: 'Base layers',
