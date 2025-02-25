@@ -22,7 +22,7 @@ class EntityReferenceFieldItemNormalizer extends CoreEntityReferenceFieldItemNor
   /**
    * {@inheritdoc}
    */
-  public function normalize($field_item, $format = NULL, array $context = []): array|string|int|float|bool|\ArrayObject|NULL {
+  public function normalize($field_item, $format = NULL, array $context = []): array|string|int|float|bool|\ArrayObject|null {
 
     // Attempt to load the referenced entity.
     if ($entity = $field_item->get('entity')->getValue()) {

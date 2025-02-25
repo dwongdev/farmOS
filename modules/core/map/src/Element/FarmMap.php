@@ -96,7 +96,7 @@ class FarmMap extends RenderElementBase {
     // If #behaviors are included, attach each one.
     $behavior_storage = $entity_type_manager->getStorage('map_behavior');
     foreach ($element['#behaviors'] as $behavior_name) {
-      /** @var \Drupal\farm_map\Entity\MapBehaviorInterface|NULL $behavior */
+      /** @var \Drupal\farm_map\Entity\MapBehaviorInterface|null $behavior */
       if ($behavior = $behavior_storage->load($behavior_name)) {
         $element['#attached']['library'][] = $behavior->getLibrary();
       }

@@ -20,7 +20,7 @@ class FractionFieldItemNormalizer extends FieldItemNormalizer {
   /**
    * {@inheritdoc}
    */
-  public function normalize($field_item, $format = NULL, array $context = []): array|string|int|float|bool|\ArrayObject|NULL {
+  public function normalize($field_item, $format = NULL, array $context = []): array|string|int|float|bool|\ArrayObject|null {
     /** @var \Drupal\fraction\Plugin\Field\FieldType\FractionItem $field_item */
     return $field_item->get('decimal')->getValue();
   }
