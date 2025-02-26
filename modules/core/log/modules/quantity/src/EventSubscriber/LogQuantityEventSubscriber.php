@@ -130,7 +130,7 @@ class LogQuantityEventSubscriber implements EventSubscriberInterface {
         return TRUE;
       }));
       $log->setNewRevision(TRUE);
-      $log->setRevisionLogMessage($this->t('Removed reference to deleted quantity %uuid.', ['%uuid' => $quantity->uuid()]));
+      $log->setRevisionLogMessage($this->t('Removed reference to deleted quantity %uuid.', ['%uuid' => $quantity->uuid()])->render());
       $log->save();
     }
   }

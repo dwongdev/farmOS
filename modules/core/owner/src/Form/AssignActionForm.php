@@ -21,9 +21,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class AssignActionForm extends ConfirmFormBase {
 
   /**
-   * The tempstore factory.
+   * The private temp store.
    *
-   * @var \Drupal\Core\TempStore\SharedTempStore
+   * @var \Drupal\Core\TempStore\PrivateTempStore
    */
   protected $tempStore;
 
@@ -125,13 +125,6 @@ class AssignActionForm extends ConfirmFormBase {
   /**
    * {@inheritdoc}
    */
-  public function getDescription() {
-    return '';
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function getConfirmText() {
     return $this->t('Assign');
   }
@@ -139,7 +132,7 @@ class AssignActionForm extends ConfirmFormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, ?string $entity_type = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, ?string $entity_type = NULL): array|RedirectResponse {
 
     // Only allow asset and log entities.
     if (!in_array($entity_type, ['asset', 'log'])) {
@@ -150,11 +143,11 @@ class AssignActionForm extends ConfirmFormBase {
     $this->entityType = $this->entityTypeManager->getDefinition($entity_type);
 
     // Load saved entities.
-    $this->entities = $this->tempStore->get($this->user->id());
+    $this->entities = $this->tempStore->get((string) $this->user->id());
 
     // If there are no entities, or if the entity type definition didn't load,
     // redirect the user to the cancel URL.
-    if (empty($this->entityType) || empty($this->entities)) {
+    if (!$this->entityType || empty($this->entities)) {
       return new RedirectResponse($this->getCancelUrl()
         ->setAbsolute()
         ->toString());
@@ -190,7 +183,13 @@ class AssignActionForm extends ConfirmFormBase {
       '#required' => TRUE,
     ];
 
-    return parent::buildForm($form, $form_state);
+    // Delegate to the parent method.
+    $form = parent::buildForm($form, $form_state);
+
+    // Remove form description text.
+    unset($form['description']);
+
+    return $form;
   }
 
   /**
@@ -213,40 +212,39 @@ class AssignActionForm extends ConfirmFormBase {
     $total_count = 0;
     foreach ($accessible_entities as $entity) {
       /** @var \Drupal\Core\Field\FieldItemListInterface $owner_field */
-      if ($owner_field = $entity->get('owner')) {
+      $owner_field = $entity->get('owner');
 
-        // Save existing users if appending.
-        $existing_owners = [];
-        if ($form_state->getValue('operation') === 'append') {
-          $existing_owners = array_column($owner_field->getValue(), 'target_id');
-        }
-
-        // Empty the owner field.
-        $owner_field->setValue([]);
-
-        // Build list of owners.
-        $new_owners = array_unique(array_merge($existing_owners, $form_state->getValue('users')));
-        foreach ($new_owners as $owner) {
-          $owner_field->appendItem($owner);
-        }
-
-        // Validate the entity before saving.
-        $violations = $entity->validate();
-        if ($violations->count() > 0) {
-          $this->messenger()->addWarning(
-            $this->t('Could not assign <a href=":entity_link">%entity_label</a>: validation failed.',
-              [
-                ':entity_link' => $entity->toUrl()->setAbsolute()->toString(),
-                '%entity_label' => $entity->label(),
-              ],
-            ),
-          );
-          continue;
-        }
-
-        $entity->save();
-        $total_count++;
+      // Save existing users if appending.
+      $existing_owners = [];
+      if ($form_state->getValue('operation') === 'append') {
+        $existing_owners = array_column($owner_field->getValue(), 'target_id');
       }
+
+      // Empty the owner field.
+      $owner_field->setValue([]);
+
+      // Build list of owners.
+      $new_owners = array_unique(array_merge($existing_owners, $form_state->getValue('users')));
+      foreach ($new_owners as $owner) {
+        $owner_field->appendItem($owner);
+      }
+
+      // Validate the entity before saving.
+      $violations = $entity->validate();
+      if ($violations->count() > 0) {
+        $this->messenger()->addWarning(
+          $this->t('Could not assign <a href=":entity_link">%entity_label</a>: validation failed.',
+            [
+              ':entity_link' => $entity->toUrl()->setAbsolute()->toString(),
+              '%entity_label' => $entity->label(),
+            ],
+          ),
+        );
+        continue;
+      }
+
+      $entity->save();
+      $total_count++;
     }
 
     // Add warning message for inaccessible entities.
@@ -266,7 +264,7 @@ class AssignActionForm extends ConfirmFormBase {
       ]));
     }
 
-    $this->tempStore->delete($this->currentUser()->id());
+    $this->tempStore->delete((string) $this->currentUser()->id());
     $form_state->setRedirectUrl($this->getCancelUrl());
   }
 

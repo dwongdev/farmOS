@@ -127,7 +127,7 @@ class GinContentFormBase extends ContentEntityForm implements RenderCallbackInte
 
     // Only alter the form display if farm_ui_theme.use_field_group is TRUE
     // or if the form display is new and not saved.
-    /** @var \Drupal\Core\Entity\Display\EntityFormDisplayInterface $form_display */
+    /** @var \Drupal\Core\Entity\Display\EntityFormDisplayInterface|null $form_display */
     $form_display = $form_state->get('form_display');
     if (!$form_display || !$form_display->getThirdPartySetting('farm_ui_theme', 'use_field_group', $form_display->isNew())) {
       return $form;
@@ -250,7 +250,7 @@ class GinContentFormBase extends ContentEntityForm implements RenderCallbackInte
     }
 
     // Remove the sidebar if the display is not using field groups.
-    /** @var \Drupal\Core\Entity\Display\EntityFormDisplayInterface $form_display */
+    /** @var \Drupal\Core\Entity\Display\EntityFormDisplayInterface|null $form_display */
     $form_display = $form_state->get('form_display');
     if (!$form_display || !$form_display->getThirdPartySetting('farm_ui_theme', 'use_field_group', $form_display->isNew())) {
 

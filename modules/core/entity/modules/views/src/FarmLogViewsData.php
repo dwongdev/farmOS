@@ -27,6 +27,7 @@ class FarmLogViewsData extends LogViewsData {
     // Entity Reference Revisions field.
     // @todo Patch Entity to support Entity Reference Revisions instead?
     $entity_type_id = $this->entityType->id();
+    /** @var \Drupal\Core\Field\BaseFieldDefinition[] $base_fields */
     $base_fields = $this->getEntityFieldManager()->getBaseFieldDefinitions($entity_type_id);
     $entity_reference_fields = array_filter($base_fields, function (BaseFieldDefinition $field) {
       return !$field->isComputed() && $field->getType() == 'entity_reference_revisions';

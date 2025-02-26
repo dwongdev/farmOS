@@ -48,7 +48,7 @@ class DataStreamTest extends DataStreamTestBase {
     ]);
 
     // Create 100 data points over the next 100 days.
-    $this->mockBasicData($this->dataStream, 100, $this->startTime);
+    $this->mockBasicData($this->dataStream, 100, (string) $this->startTime);
   }
 
   /**

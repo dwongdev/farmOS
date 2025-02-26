@@ -140,7 +140,7 @@ function farm_lab_test_post_update_migrate_lab_terms(&$sandbox) {
 
     // Save a new revision of the log.
     $log->setNewRevision(TRUE);
-    $log->setRevisionLogMessage(t('Automatically migrated laboratory name to taxonomy term in the new Lab vocabulary.'));
+    $log->setRevisionLogMessage(t('Automatically migrated laboratory name to taxonomy term in the new Lab vocabulary.')->render());
     $log->save();
 
     // Declare that the log has been fixed.

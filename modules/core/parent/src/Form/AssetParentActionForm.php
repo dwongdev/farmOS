@@ -21,9 +21,9 @@ use Symfony\Component\HttpFoundation\Request;
 class AssetParentActionForm extends ConfirmFormBase {
 
   /**
-   * The tempstore factory.
+   * The private temp store.
    *
-   * @var \Drupal\Core\TempStore\SharedTempStore
+   * @var \Drupal\Core\TempStore\PrivateTempStore
    */
   protected $tempStore;
 
@@ -125,13 +125,6 @@ class AssetParentActionForm extends ConfirmFormBase {
   /**
    * {@inheritdoc}
    */
-  public function getDescription() {
-    return '';
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function getConfirmText() {
     return $this->t('Save');
   }
@@ -139,7 +132,7 @@ class AssetParentActionForm extends ConfirmFormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state): array|RedirectResponse {
 
     // Check if asset IDs were provided in the asset query param.
     if ($asset_ids = $this->request->get('asset')) {
@@ -156,11 +149,11 @@ class AssetParentActionForm extends ConfirmFormBase {
     }
     // Else load entities from the tempStore state.
     else {
-      $this->entities = $this->tempStore->get($this->user->id());
+      $this->entities = $this->tempStore->get((string) $this->user->id());
     }
 
     $this->entityType = $this->entityTypeManager->getDefinition('asset');
-    if (empty($this->entityType) || empty($this->entities)) {
+    if (!$this->entityType || empty($this->entities)) {
       return new RedirectResponse($this->getCancelUrl()
         ->setAbsolute()
         ->toString());
@@ -198,7 +191,13 @@ class AssetParentActionForm extends ConfirmFormBase {
       '#required' => TRUE,
     ];
 
-    return parent::buildForm($form, $form_state);
+    // Delegate to the parent method.
+    $form = parent::buildForm($form, $form_state);
+
+    // Remove form description text.
+    unset($form['description']);
+
+    return $form;
   }
 
   /**
@@ -224,39 +223,38 @@ class AssetParentActionForm extends ConfirmFormBase {
     $total_count = 0;
     foreach ($accessible_entities as $entity) {
       /** @var \Drupal\Core\Field\EntityReferenceFieldItemListInterface $parent_field */
-      if ($parent_field = $entity->get('parent')) {
+      $parent_field = $entity->get('parent');
 
-        // Save existing values if appending.
-        $existing_values = [];
-        if ($form_state->getValue('operation') === 'append') {
-          $existing_values = array_column($parent_field->getValue(), 'target_id');
-        }
-
-        // Empty the field.
-        $parent_field->setValue([]);
-
-        $new_values = array_unique(array_merge($existing_values, $submitted_parent_ids));
-        foreach ($new_values as $parent_id) {
-          $parent_field->appendItem($parent_id);
-        }
-
-        // Validate the entity before saving.
-        $violations = $entity->validate();
-        if ($violations->count() > 0) {
-          $this->messenger()->addWarning(
-            $this->t('Could not assign parent for <a href=":entity_link">%entity_label</a>: validation failed.',
-              [
-                ':entity_link' => $entity->toUrl()->setAbsolute()->toString(),
-                '%entity_label' => $entity->label(),
-              ],
-            ),
-          );
-          continue;
-        }
-
-        $entity->save();
-        $total_count++;
+      // Save existing values if appending.
+      $existing_values = [];
+      if ($form_state->getValue('operation') === 'append') {
+        $existing_values = array_column($parent_field->getValue(), 'target_id');
       }
+
+      // Empty the field.
+      $parent_field->setValue([]);
+
+      $new_values = array_unique(array_merge($existing_values, $submitted_parent_ids));
+      foreach ($new_values as $parent_id) {
+        $parent_field->appendItem($parent_id);
+      }
+
+      // Validate the entity before saving.
+      $violations = $entity->validate();
+      if ($violations->count() > 0) {
+        $this->messenger()->addWarning(
+          $this->t('Could not assign parent for <a href=":entity_link">%entity_label</a>: validation failed.',
+            [
+              ':entity_link' => $entity->toUrl()->setAbsolute()->toString(),
+              '%entity_label' => $entity->label(),
+            ],
+          ),
+        );
+        continue;
+      }
+
+      $entity->save();
+      $total_count++;
     }
 
     // Add warning message for inaccessible entities.
@@ -276,7 +274,7 @@ class AssetParentActionForm extends ConfirmFormBase {
       ]));
     }
 
-    $this->tempStore->delete($this->currentUser()->id());
+    $this->tempStore->delete((string) $this->currentUser()->id());
     $form_state->setRedirectUrl($this->getCancelUrl());
   }
 

@@ -20,7 +20,7 @@ class GeofieldItemNormalizer extends FieldItemNormalizer {
   /**
    * {@inheritdoc}
    */
-  public function normalize($object, $format = NULL, array $context = []): array|string|int|float|bool|\ArrayObject|NULL {
+  public function normalize($object, $format = NULL, array $context = []): array|string|int|float|bool|\ArrayObject|null {
     $data = parent::normalize($object, $format, $context);
 
     // Return the WKT value, if desired.

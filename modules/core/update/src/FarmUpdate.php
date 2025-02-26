@@ -115,6 +115,7 @@ class FarmUpdate implements FarmUpdateInterface {
 
       // Get the config type and bail if simple configuration.
       // The lister gives NULL if simple configuration.
+      /** @var string|null $type */
       $type = $this->configList->getTypeNameByConfigName($name);
       if ($type === NULL) {
         continue;

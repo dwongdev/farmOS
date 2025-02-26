@@ -20,7 +20,7 @@ class TextLongFieldItemNormalizer extends FieldItemNormalizer {
   /**
    * {@inheritdoc}
    */
-  public function normalize($field_item, $format = NULL, array $context = []): array|string|int|float|bool|\ArrayObject|NULL {
+  public function normalize($field_item, $format = NULL, array $context = []): array|string|int|float|bool|\ArrayObject|null {
     /** @var \Drupal\text\Plugin\Field\FieldType\TextLongItem $field_item */
 
     // If processed_text is explicitly set, return processed or raw user input

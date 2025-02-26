@@ -29,9 +29,9 @@ use Symfony\Component\Serializer\SerializerInterface;
 class EntityCsvActionForm extends ConfirmFormBase implements BaseFormIdInterface {
 
   /**
-   * The tempstore factory.
+   * The private temp store.
    *
-   * @var \Drupal\Core\TempStore\SharedTempStore
+   * @var \Drupal\Core\TempStore\PrivateTempStore
    */
   protected $tempStore;
 
@@ -198,13 +198,6 @@ class EntityCsvActionForm extends ConfirmFormBase implements BaseFormIdInterface
   /**
    * {@inheritdoc}
    */
-  public function getDescription() {
-    return '';
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function getConfirmText() {
     return $this->t('Export');
   }
@@ -212,7 +205,7 @@ class EntityCsvActionForm extends ConfirmFormBase implements BaseFormIdInterface
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, $entity_type_id = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, $entity_type_id = NULL): array|RedirectResponse {
 
     // If we don't have an entity type or list of entities, redirect.
     $this->entityType = $this->entityTypeManager->getDefinition($entity_type_id);
@@ -291,7 +284,12 @@ class EntityCsvActionForm extends ConfirmFormBase implements BaseFormIdInterface
     ];
 
     // Delegate to the parent method.
-    return parent::buildForm($form, $form_state);
+    $form = parent::buildForm($form, $form_state);
+
+    // Remove form description text.
+    unset($form['description']);
+
+    return $form;
   }
 
   /**

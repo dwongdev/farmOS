@@ -36,9 +36,9 @@ class CsvMigrationSubscriber implements EventSubscriberInterface {
   protected $currentUser;
 
   /**
-   * The tempstore service.
+   * The private temp store.
    *
-   * @var \Drupal\Core\TempStore\PrivateTempStoreFactory
+   * @var \Drupal\Core\TempStore\PrivateTempStore
    */
   protected $tempStore;
 
@@ -146,7 +146,7 @@ class CsvMigrationSubscriber implements EventSubscriberInterface {
         foreach ($record_numbers as $record_number) {
           $messages = $event->getMigration()->getIdMap()->getMessages(['file_id' => $file_id, 'record_number' => $record_number]);
           foreach ($messages as $message) {
-            $this->messenger->addWarning($this->t('Row @rownum: @message', ['@rownum' => $record_number, '@message' => $message->message]));
+            $this->messenger->addWarning($this->t('Row @rownum: @message', ['@rownum' => $record_number, '@message' => $message->message])->render());
           }
         }
       }

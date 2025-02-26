@@ -55,7 +55,7 @@ class ReportController extends ControllerBase {
     // Load all menu links below it.
     $parameters = new MenuTreeParameters();
     $parameters->setRoot('farm.report')->excludeRoot()->setTopLevelOnly()->onlyEnabledLinks();
-    $tree = $this->menuLinkTree->load(NULL, $parameters);
+    $tree = $this->menuLinkTree->load('', $parameters);
     $manipulators = [
       ['callable' => 'menu.default_tree_manipulators:checkAccess'],
       ['callable' => 'menu.default_tree_manipulators:generateIndexAndSort'],

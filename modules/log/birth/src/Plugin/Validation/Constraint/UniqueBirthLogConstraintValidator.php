@@ -49,7 +49,7 @@ class UniqueBirthLogConstraintValidator extends ConstraintValidator implements C
     /** @var \Drupal\farm_birth\Plugin\Validation\Constraint\UniqueBirthLogConstraint $constraint */
 
     // Only continue if this is a birth log.
-    /** @var \Drupal\log\Entity\LogInterface $log */
+    /** @var \Drupal\log\Entity\LogInterface|null $log */
     $log = $value->getParent()->getValue();
     if (!is_null($log) && $log->bundle() != 'birth') {
       return;

@@ -65,7 +65,7 @@ interface PlanInterface extends ContentEntityInterface, EntityChangedInterface, 
   /**
    * Sets the plan archived timestamp.
    *
-   * @param int $timestamp
+   * @param int|string|null $timestamp
    *   Archived timestamp of the plan.
    *
    * @return \Drupal\plan\Entity\PlanInterface

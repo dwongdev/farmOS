@@ -76,7 +76,7 @@ class SensorDataApiTest extends FarmBrowserTestBase {
 
     // Assert valid response.
     $this->assertEquals(200, $response->getStatusCode());
-    $data = Json::decode($response->getBody());
+    $data = Json::decode((string) $response->getBody());
     $this->assertEquals(0, count($data));
 
     // Make the sensor public.
@@ -85,7 +85,7 @@ class SensorDataApiTest extends FarmBrowserTestBase {
     // Test that data can be accessed without the private key.
     $response = $this->processRequest('GET', $url);
     $this->assertEquals(200, $response->getStatusCode());
-    $data = Json::decode($response->getBody());
+    $data = Json::decode((string) $response->getBody());
     $this->assertEquals(0, count($data));
   }
 
@@ -125,7 +125,7 @@ class SensorDataApiTest extends FarmBrowserTestBase {
 
     // Assert that new data was saved in DB.
     $response = $this->processRequest('GET', $url);
-    $data = Json::decode($response->getBody());
+    $data = Json::decode((string) $response->getBody());
     $this->assertEquals(2, count($data));
 
     // More test data.
@@ -143,7 +143,7 @@ class SensorDataApiTest extends FarmBrowserTestBase {
 
     // Assert that new data was saved in DB.
     $response = $this->processRequest('GET', $url);
-    $data = Json::decode($response->getBody());
+    $data = Json::decode((string) $response->getBody());
     $this->assertEquals(4, count($data));
   }
 

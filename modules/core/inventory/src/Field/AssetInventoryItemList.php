@@ -6,6 +6,7 @@ namespace Drupal\farm_inventory\Field;
 
 use Drupal\Core\Field\FieldItemList;
 use Drupal\Core\TypedData\ComputedItemListTrait;
+use Drupal\asset\Entity\AssetInterface;
 
 /**
  * Computes the current inventory value for assets.
@@ -23,6 +24,7 @@ class AssetInventoryItemList extends FieldItemList {
     $entity = $this->getEntity();
 
     // Get the asset's current inventories.
+    assert($entity instanceof AssetInterface);
     $inventories = \Drupal::service('asset.inventory')->getInventory($entity);
 
     // Update the assets current inventory values to match.

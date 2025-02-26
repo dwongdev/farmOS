@@ -16,9 +16,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 abstract class AssignBase extends EntityActionBase {
 
   /**
-   * The tempstore object.
+   * The private temp store.
    *
-   * @var \Drupal\Core\TempStore\SharedTempStore
+   * @var \Drupal\Core\TempStore\PrivateTempStore
    */
   protected $tempStore;
 
@@ -71,7 +71,7 @@ abstract class AssignBase extends EntityActionBase {
    */
   public function executeMultiple(array $entities) {
     /** @var \Drupal\Core\Entity\EntityInterface[] $entities */
-    $this->tempStore->set($this->currentUser->id(), $entities);
+    $this->tempStore->set((string) $this->currentUser->id(), $entities);
   }
 
   /**

@@ -6,6 +6,7 @@ namespace Drupal\farm_group\Field;
 
 use Drupal\Core\Field\EntityReferenceFieldItemList;
 use Drupal\Core\TypedData\ComputedItemListTrait;
+use Drupal\asset\Entity\AssetInterface;
 
 /**
  * Computes the current group value for assets.
@@ -23,6 +24,7 @@ class AssetGroupItemList extends EntityReferenceFieldItemList {
     $entity = $this->getEntity();
 
     // Get the asset's current groups.
+    assert($entity instanceof AssetInterface);
     $groups = \Drupal::service('group.membership')->getGroup($entity);
 
     // Update the assets current group values to match.

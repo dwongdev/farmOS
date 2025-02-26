@@ -20,9 +20,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class LogCategorizeActionForm extends ConfirmFormBase {
 
   /**
-   * The tempstore factory.
+   * The private temp store.
    *
-   * @var \Drupal\Core\TempStore\SharedTempStore
+   * @var \Drupal\Core\TempStore\PrivateTempStore
    */
   protected $tempStore;
 
@@ -113,13 +113,6 @@ class LogCategorizeActionForm extends ConfirmFormBase {
   /**
    * {@inheritdoc}
    */
-  public function getDescription() {
-    return '';
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function getConfirmText() {
     return $this->t('Categorize');
   }
@@ -127,10 +120,10 @@ class LogCategorizeActionForm extends ConfirmFormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state): array|RedirectResponse {
     $this->entityType = $this->entityTypeManager->getDefinition('log');
-    $this->entities = $this->tempStore->get($this->user->id());
-    if (empty($this->entityType) || empty($this->entities)) {
+    $this->entities = $this->tempStore->get((string) $this->user->id());
+    if (!$this->entityType || empty($this->entities)) {
       return new RedirectResponse($this->getCancelUrl()
         ->setAbsolute()
         ->toString());
@@ -143,7 +136,7 @@ class LogCategorizeActionForm extends ConfirmFormBase {
 
     // Filter to active terms.
     $active_terms = array_filter($terms, function ($term) {
-      return (int) $term->get('status')->value;
+      return (bool) $term->get('status')->value;
     });
 
     // Build options with -- to represent hierarchies.
@@ -174,7 +167,13 @@ class LogCategorizeActionForm extends ConfirmFormBase {
       '#required' => TRUE,
     ];
 
-    return parent::buildForm($form, $form_state);
+    // Delegate to the parent method.
+    $form = parent::buildForm($form, $form_state);
+
+    // Remove form description text.
+    unset($form['description']);
+
+    return $form;
   }
 
   /**
@@ -200,25 +199,24 @@ class LogCategorizeActionForm extends ConfirmFormBase {
     $total_count = 0;
     foreach ($accessible_entities as $entity) {
       /** @var \Drupal\Core\Field\EntityReferenceFieldItemList $category_field */
-      if ($category_field = $entity->get('category')) {
+      $category_field = $entity->get('category');
 
-        // Save existing values if appending.
-        $existing_values = [];
-        if ($form_state->getValue('operation') === 'append') {
-          $existing_values = array_column($category_field->getValue(), 'target_id');
-        }
-
-        // Empty the field.
-        $category_field->setValue([]);
-
-        $new_values = array_unique(array_merge($existing_values, $submitted_category_ids));
-        foreach ($new_values as $parent_id) {
-          $category_field->appendItem($parent_id);
-        }
-
-        $entity->save();
-        $total_count++;
+      // Save existing values if appending.
+      $existing_values = [];
+      if ($form_state->getValue('operation') === 'append') {
+        $existing_values = array_column($category_field->getValue(), 'target_id');
       }
+
+      // Empty the field.
+      $category_field->setValue([]);
+
+      $new_values = array_unique(array_merge($existing_values, $submitted_category_ids));
+      foreach ($new_values as $parent_id) {
+        $category_field->appendItem($parent_id);
+      }
+
+      $entity->save();
+      $total_count++;
     }
 
     // Add warning message for inaccessible entities.

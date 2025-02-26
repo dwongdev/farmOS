@@ -131,6 +131,11 @@ class Birth extends QuickFormBase {
       $container->get('config.factory'),
       $container->get('asset.location'),
       $container->get('current_user'),
+      // PHPStan level 3+ throws the following error on the next line:
+      // Ternary operator condition is always true.
+      // We ignore this because we know that the group.membership service will
+      // not exist if the group module is not installed.
+      // @phpstan-ignore ternary.alwaysTrue
       $container->has('group.membership') ? $container->get('group.membership') : NULL,
     );
   }

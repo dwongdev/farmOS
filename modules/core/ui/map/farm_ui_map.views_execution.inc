@@ -70,6 +70,7 @@ function farm_ui_map_views_pre_render(ViewExecutable $view) {
     $layer_group = $view->getBaseEntityType()->getCollectionLabel();
 
     // Get exposed filters.
+    /** @var array<string,string[]> $exposed_filters */
     $exposed_filters = $view->getExposedInput();
 
     // Add multiple asset layers to the page of all assets.
@@ -119,9 +120,8 @@ function farm_ui_map_views_pre_render(ViewExecutable $view) {
       $type = AssetType::load($bundle);
 
       // Load the map layer style.
-      /** @var \Drupal\farm_map\Entity\LayerStyleInterface $layer_style */
-      $layer_style = \Drupal::service('farm_map.layer_style_loader')->load(['asset_type' => $bundle]);
-      if (!is_null($layer_style)) {
+      /** @var \Drupal\farm_map\Entity\LayerStyleInterface|null $layer_style */
+      if ($layer_style = \Drupal::service('farm_map.layer_style_loader')->load(['asset_type' => $bundle])) {
         $color = $layer_style->get('color');
       }
 

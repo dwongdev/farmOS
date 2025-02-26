@@ -19,9 +19,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class AssetAddLogActionForm extends ConfirmFormBase {
 
   /**
-   * The tempstore factory.
+   * The private temp store.
    *
-   * @var \Drupal\Core\TempStore\SharedTempStore
+   * @var \Drupal\Core\TempStore\PrivateTempStore
    */
   protected $tempStore;
 
@@ -112,13 +112,6 @@ class AssetAddLogActionForm extends ConfirmFormBase {
   /**
    * {@inheritdoc}
    */
-  public function getDescription() {
-    return '';
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function getConfirmText() {
     return $this->t('Continue');
   }
@@ -126,10 +119,10 @@ class AssetAddLogActionForm extends ConfirmFormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state): array|RedirectResponse {
     $this->entityType = $this->entityTypeManager->getDefinition('asset');
-    $this->entities = $this->tempStore->get($this->user->id());
-    if (empty($this->entityType) || empty($this->entities)) {
+    $this->entities = $this->tempStore->get((string) $this->user->id());
+    if (!$this->entityType || empty($this->entities)) {
       return new RedirectResponse($this->getCancelUrl()
         ->setAbsolute()
         ->toString());
@@ -153,7 +146,13 @@ class AssetAddLogActionForm extends ConfirmFormBase {
       '#required' => TRUE,
     ];
 
-    return parent::buildForm($form, $form_state);
+    // Delegate to the parent method.
+    $form = parent::buildForm($form, $form_state);
+
+    // Remove form description text.
+    unset($form['description']);
+
+    return $form;
   }
 
   /**
@@ -201,7 +200,7 @@ class AssetAddLogActionForm extends ConfirmFormBase {
       }
     }
 
-    $this->tempStore->delete($this->currentUser()->id());
+    $this->tempStore->delete((string) $this->currentUser()->id());
     $form_state->setRedirectUrl($redirect_url);
   }
 
