@@ -27,7 +27,9 @@ class TextLongFieldItemNormalizer extends FieldItemNormalizer {
     // accordingly.
     if (isset($context['processed_text'])) {
       if ($context['processed_text']) {
-        return $field_item->get('processed')->getValue();
+        /** @var \Drupal\filter\Render\FilteredMarkup $processed_text */
+        $processed_text = $field_item->get('processed')->getValue();
+        return (string) $processed_text;
       }
       else {
         return $field_item->get('value')->getValue();

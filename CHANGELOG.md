@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - [Issue #3511488: Refreshed access_token is missing scope with league/oauth2-server ^9](https://www.drupal.org/project/simple_oauth_password_grant/issues/3511488)
+- [Cast processed text exported to CSV as a string #931](https://github.com/farmOS/farmOS/pull/931)
 
 ## [3.4.1] 2025-02-19
 
