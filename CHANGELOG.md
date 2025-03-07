@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Issue #3511488: Refreshed access_token is missing scope with league/oauth2-server ^9](https://www.drupal.org/project/simple_oauth_password_grant/issues/3511488)
 - [Cast processed text exported to CSV as a string #931](https://github.com/farmOS/farmOS/pull/931)
 - [Fix TypeError on invalid /asset/%asset_id/assets path #932](https://github.com/farmOS/farmOS/pull/932)
+- [Restore missing transplant_days field on plant_type terms #935](https://github.com/farmOS/farmOS/pull/935)
 
 ## [3.4.1] 2025-02-19
 

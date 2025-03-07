@@ -125,19 +125,24 @@ function farm_plant_type_post_update_move_transplant_days() {
 
   // The transplant_days field was previously part of this module. It has moved
   // to the farm_transplanting module, so that it is only made available in
-  // instances that deal with transplants. If there is transplant_days data in
-  // the database, but the farm_transplant module is not installed, we should
-  // install it so that module can be responsible for the data moving forward.
-  $data_count = \Drupal::database()->query('SELECT COUNT(*) FROM {taxonomy_term__transplant_days}')->fetchField();
-  if (!empty($data_count)) {
-    if (!\Drupal::service('module_handler')->moduleExists('farm_transplanting')) {
-      \Drupal::configFactory()->getEditable('field.field.taxonomy_term.plant_type.transplant_days')->delete();
-      \Drupal::configFactory()->getEditable('field.storage.taxonomy_term.transplant_days')->delete();
-      \Drupal::service('module_installer')->install(['farm_transplanting']);
-    }
+  // instances that deal with transplants. This update hook helps hand off the
+  // responsibility of the field to farm_transplanting. If the module is already
+  // installed, we don't do need to do anything.
+  if (\Drupal::service('module_handler')->moduleExists('farm_transplanting')) {
+    return;
   }
 
-  // Otherwise, we can delete the transplant_days field.
+  // If there is transplant_days data in the database, install the
+  // farm_transplanting module so that it can be responsible for the data moving
+  // forward.
+  $data_count = \Drupal::database()->query('SELECT COUNT(*) FROM {taxonomy_term__transplant_days}')->fetchField();
+  if (!empty($data_count)) {
+    \Drupal::configFactory()->getEditable('field.field.taxonomy_term.plant_type.transplant_days')->delete();
+    \Drupal::configFactory()->getEditable('field.storage.taxonomy_term.transplant_days')->delete();
+    \Drupal::service('module_installer')->install(['farm_transplanting']);
+  }
+
+  // Otherwise, if there is no data, we can delete the transplant_days field.
   // Using FieldConfig::load() and FieldStorageConfig::load() and their
   // associated delete() methods will delete the config and database tables.
   else {
