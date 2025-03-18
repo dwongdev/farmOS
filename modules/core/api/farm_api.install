@@ -56,7 +56,7 @@ function farm_api_install() {
   $pri_filename = sprintf('%s/private.key', $keys_path);
 
   // Attempt to create keys if they don't exist.
-  if (!$file_system_checker->fileExist($pub_filename) || !$file_system_checker->fileExist($pri_filename)) {
+  if (!empty($keys_path) && (!$file_system_checker->fileExist($pub_filename) || !$file_system_checker->fileExist($pri_filename))) {
     try {
       $key_gen->generateKeys($keys_path);
     }

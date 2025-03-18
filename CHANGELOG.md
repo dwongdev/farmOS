@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Cast processed text exported to CSV as a string #931](https://github.com/farmOS/farmOS/pull/931)
 - [Fix TypeError on invalid /asset/%asset_id/assets path #932](https://github.com/farmOS/farmOS/pull/932)
 - [Restore missing transplant_days field on plant_type terms #935](https://github.com/farmOS/farmOS/pull/935)
+- [Fix TypeError during installation of farmOS API module #936](https://github.com/farmOS/farmOS/pull/936)
 
 ## [3.4.1] 2025-02-19
 
