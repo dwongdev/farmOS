@@ -1,7 +1,7 @@
 ##
 # Alias the Drupal base image for use in other build stages.
 # We do this so that the Drupal image version only needs to be updated here.
-FROM drupal:10.4-php8.3 as baseimage
+FROM drupal:10.4-php8.3 AS baseimage
 
 # Define common paths.
 # BUILD_PATH is where the farmOS codebase will be built.
@@ -15,7 +15,7 @@ ENV DRUPAL_PATH=/opt/drupal
 
 ##
 # Build/install PHP extensions.
-FROM baseimage as php-dependencies
+FROM baseimage AS php-dependencies
 
 # Build and install the GEOS PHP extension.
 # See https://git.osgeo.org/gitea/geos/php-geos
@@ -35,7 +35,7 @@ RUN docker-php-ext-install bcmath
 
 ##
 # Build common requirements for production and development images.
-FROM baseimage as common
+FROM baseimage AS common
 
 # Set the farmOS and composer project repository URLs and versions.
 ARG FARMOS_REPO=https://github.com/farmOS/farmOS.git
@@ -81,7 +81,7 @@ CMD ["apache2-foreground"]
 
 ##
 # Build the production image.
-FROM common as production
+FROM common AS production
 
 # Build the farmOS codebase in ${BUILD_PATH} with the --no-dev flag.
 # Change the ownership of the sites directory and copy the farmOS codebase into ${DRUPAL_PATH}.
@@ -91,7 +91,7 @@ RUN mkdir ${BUILD_PATH} \
   && rm -r ${DRUPAL_PATH} && cp -rp ${BUILD_PATH} ${DRUPAL_PATH}
 
 ## Build the development image.
-FROM common as dev
+FROM common AS dev
 
 # Install and enable XDebug extension.
 RUN yes | pecl install xdebug \
