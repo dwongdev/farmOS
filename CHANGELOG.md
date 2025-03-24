@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Remove [deprecated Drupal 7 asset migration source plugin](https://www.drupal.org/node/3410747).
 - Remove [deprecated Drupal 7 plan migration source plugin](https://www.drupal.org/node/3498065).
 - Remove [deprecated data stream migration plugins](https://www.drupal.org/node/3498069).
+- Remove [EXIF Orientation](https://www.drupal.org/project/exif_orientation) module (see [Automatically rotate derivative images based on EXIF Orientation #941](https://github.com/farmOS/farmOS/pull/941)).
 
 ## farmOS 3.x
 
