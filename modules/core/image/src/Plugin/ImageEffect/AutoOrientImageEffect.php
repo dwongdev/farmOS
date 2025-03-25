@@ -51,11 +51,6 @@ class AutoOrientImageEffect extends ImageEffectBase implements ContainerFactoryP
    */
   public function applyEffect(ImageInterface $image) {
 
-    // Only proceed if the exif PHP extension is loaded.
-    if (!extension_loaded('exif')) {
-      return TRUE;
-    }
-
     // Only work with supported image types.
     $mime_types = [
       'image/jpeg',
@@ -144,11 +139,6 @@ class AutoOrientImageEffect extends ImageEffectBase implements ContainerFactoryP
    * {@inheritdoc}
    */
   public function transformDimensions(array &$dimensions, $uri) {
-
-    // Only proceed if the exif PHP extension is loaded.
-    if (!extension_loaded('exif')) {
-      return;
-    }
 
     // This logic is adapted from the Drupal Image Effects module.
     // @see https://git.drupalcode.org/project/image_effects/-/blob/730a1e6f5f947ef4d6eec5d359c6968ce93594f9/src/Plugin/ImageEffect/AutoOrientImageEffect.php
