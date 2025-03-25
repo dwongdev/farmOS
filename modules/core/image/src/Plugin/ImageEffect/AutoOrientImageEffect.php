@@ -91,6 +91,8 @@ class AutoOrientImageEffect extends ImageEffectBase implements ContainerFactoryP
     }
 
     // Apply transformations based on the EXIF Orientation value.
+    // This logic is adapted from the Drupal Image Effects module.
+    // @see https://git.drupalcode.org/project/image_effects/-/blob/730a1e6f5f947ef4d6eec5d359c6968ce93594f9/src/Plugin/ImageToolkit/Operation/gd/AutoOrient.php#L45-86
     // http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/EXIF.html:
     // 1 = Horizontal (normal)                 [top-left].
     // 2 = Mirror horizontal                   [top-right].
@@ -163,6 +165,8 @@ class AutoOrientImageEffect extends ImageEffectBase implements ContainerFactoryP
       return;
     }
 
+    // This logic is adapted from the Drupal Image Effects module.
+    // @see https://git.drupalcode.org/project/image_effects/-/blob/730a1e6f5f947ef4d6eec5d359c6968ce93594f9/src/Plugin/ImageEffect/AutoOrientImageEffect.php
     $dimensions['width'] = $dimensions['width'] ? (int) $dimensions['width'] : NULL;
     $dimensions['height'] = $dimensions['height'] ? (int) $dimensions['height'] : NULL;
     if ($dimensions['width'] && $dimensions['height']) {
