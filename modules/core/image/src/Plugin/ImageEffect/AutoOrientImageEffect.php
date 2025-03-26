@@ -77,6 +77,7 @@ class AutoOrientImageEffect extends ImageEffectBase implements ContainerFactoryP
       'image/jpeg',
       'image/png',
       'image/tiff',
+      'image/webp',
     ];
     if (!in_array($image->getMimeType(), $mime_types)) {
       return TRUE;
