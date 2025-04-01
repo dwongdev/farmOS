@@ -108,6 +108,7 @@ class FarmModulesForm extends FormBase {
       'farm_farm' => $this->t('Farm organizations'),
 
       // Map layers.
+      'farm_map_google' => $this->t('Google Maps map layers: Satellite, Terrain, Roadmap'),
       'farm_map_mapbox' => $this->t('Mapbox map layers: Satellite, Outdoors'),
 
       // API.

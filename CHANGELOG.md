@@ -42,6 +42,7 @@ requirements (inherited from Drupal 11):
 
 - [Add a farmOS setup wizard #1035](https://github.com/farmOS/farmOS/pull/1035)
 - [Add an Organization entity type with a Farm bundle #849](https://github.com/farmOS/farmOS/pull/849)
+- [Add Google Maps base layers #946](https://github.com/farmOS/farmOS/pull/946)
 - [Allow API access to organizations #1010](https://github.com/farmOS/farmOS/pull/1010)
 - [Issue #3304608: Add an "abandoned" log status](https://www.drupal.org/project/farm/issues/3304608)
 - [Add default plan status options: "planning", "done", "abandoned" #986](https://github.com/farmOS/farmOS/pull/986)
