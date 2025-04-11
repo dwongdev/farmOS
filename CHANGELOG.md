@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Remove [deprecated Drupal 7 asset migration source plugin](https://www.drupal.org/node/3410747).
 - Remove [deprecated Drupal 7 plan migration source plugin](https://www.drupal.org/node/3498065).
+- Remove [deprecated data stream migration plugins](https://www.drupal.org/node/3498069).
 
 ## farmOS 3.x
 
