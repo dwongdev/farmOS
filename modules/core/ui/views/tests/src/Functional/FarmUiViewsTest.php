@@ -21,6 +21,7 @@ class FarmUiViewsTest extends FarmBrowserTestBase {
   protected static $modules = [
     'farm_activity',
     'farm_equipment',
+    'farm_observation',
     'farm_water',
     'farm_ui_views',
     'farm_ui_views_test',
@@ -51,6 +52,7 @@ class FarmUiViewsTest extends FarmBrowserTestBase {
     $this->doTestLogViews();
     $this->doTestAssetsByLocationView();
     $this->doTestAssetChildrenView();
+    $this->doTestAssetLogsView();
   }
 
   /**
@@ -227,6 +229,76 @@ class FarmUiViewsTest extends FarmBrowserTestBase {
     // Check that /asset/%/children returns a 403.
     $this->drupalGet('/asset/' . $parent->id() . '/children');
     $this->assertSession()->statusCodeEquals(403);
+
+    // Delete all entities.
+    $this->deleteAllEntities();
+  }
+
+  /**
+   * Test farm_log View's page_asset display.
+   */
+  public function doTestAssetLogsView() {
+
+    // Create an equipment asset.
+    $equipment = Asset::create([
+      'name' => 'Equipment asset',
+      'type' => 'equipment',
+      'status' => 'active',
+    ]);
+    $equipment->save();
+
+    // Check that /asset/%/logs shows "No logs found.".
+    $this->drupalGet('/asset/' . $equipment->id() . '/logs');
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextContains('No logs found.');
+
+    // Create two logs of different types that reference the asset.
+    $activity = Log::create([
+      'name' => 'Equipment activity',
+      'type' => 'activity',
+      'asset' => [$equipment],
+      'status' => 'done',
+    ]);
+    $activity->save();
+    $observation = Log::create([
+      'name' => 'Equipment observation',
+      'type' => 'observation',
+      'asset' => [$equipment],
+      'status' => 'done',
+    ]);
+    $observation->save();
+
+    // Create a third log that does not reference the asset.
+    $unrelated = Log::create([
+      'name' => 'Generic activity',
+      'type' => 'activity',
+      'status' => 'done',
+    ]);
+    $unrelated->save();
+
+    // Check that only 2 logs appear in /asset/%/logs and /asset/%/logs/all.
+    $this->drupalGet('/asset/' . $equipment->id() . '/logs');
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextContains($activity->label());
+    $this->assertSession()->pageTextContains($observation->label());
+    $this->assertSession()->pageTextNotContains($unrelated->label());
+    $this->drupalGet('/asset/' . $equipment->id() . '/logs/all');
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextContains($activity->label());
+    $this->assertSession()->pageTextContains($observation->label());
+    $this->assertSession()->pageTextNotContains($unrelated->label());
+
+    // Check that the appropriate logs appear in /asset/%/logs/%log_type.
+    $this->drupalGet('/asset/' . $equipment->id() . '/logs/activity');
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextContains($activity->label());
+    $this->assertSession()->pageTextNotContains($observation->label());
+    $this->assertSession()->pageTextNotContains($unrelated->label());
+    $this->drupalGet('/asset/' . $equipment->id() . '/logs/observation');
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextNotContains($activity->label());
+    $this->assertSession()->pageTextContains($observation->label());
+    $this->assertSession()->pageTextNotContains($unrelated->label());
 
     // Delete all entities.
     $this->deleteAllEntities();
