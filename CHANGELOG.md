@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - [Fix hidden entity fields #950](https://github.com/farmOS/farmOS/pull/950)
+- [Fix missing Assets tab on locations #951](https://github.com/farmOS/farmOS/pull/951)
 
 ## [3.4.4] 2025-04-03
 
