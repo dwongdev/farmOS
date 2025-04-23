@@ -101,6 +101,21 @@ class FarmUiViewsTest extends FarmBrowserTestBase {
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->pageTextContains('Foo activity');
     $this->assertSession()->pageTextNotContains('Baz activity');
+
+    // Move the equipment asset into the water asset via an activity log.
+    $movement = Log::create([
+      'type' => 'activity',
+      'asset' => [$equipment],
+      'location' => [$water],
+      'status' => 'done',
+      'is_movement' => TRUE,
+    ]);
+    $movement->save();
+
+    // Check that the equipment appears in /asset/%/assets.
+    $this->drupalGet('/asset/' . $water->id() . '/assets');
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextContains($equipment->label());
   }
 
 }
