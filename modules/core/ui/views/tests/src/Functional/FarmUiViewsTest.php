@@ -7,6 +7,7 @@ namespace Drupal\Tests\farm_ui_views\Functional;
 use Drupal\Tests\farm_test\Functional\FarmBrowserTestBase;
 use Drupal\asset\Entity\Asset;
 use Drupal\log\Entity\Log;
+use Drupal\quantity\Entity\Quantity;
 
 /**
  * Tests the farm_ui_views Views.
@@ -21,7 +22,9 @@ class FarmUiViewsTest extends FarmBrowserTestBase {
   protected static $modules = [
     'farm_activity',
     'farm_equipment',
+    'farm_inventory',
     'farm_observation',
+    'farm_quantity_standard',
     'farm_water',
     'farm_ui_views',
     'farm_ui_views_test',
@@ -33,8 +36,9 @@ class FarmUiViewsTest extends FarmBrowserTestBase {
   protected function setUp(): void {
     parent::setUp();
 
-    // Create and login a user with permission to view assets and logs.
-    $user = $this->createUser(['view any asset', 'view any log']);
+    // Create and login a user with permission to view assets, logs, and
+    // quantities.
+    $user = $this->createUser(['view any asset', 'view any log', 'view any quantity']);
     $this->drupalLogin($user);
 
     // Disable entity_reference_integrity_enforce module's protections, so we
@@ -52,6 +56,7 @@ class FarmUiViewsTest extends FarmBrowserTestBase {
     $this->doTestLogViews();
     $this->doTestAssetsByLocationView();
     $this->doTestAssetChildrenView();
+    $this->doTestAssetInventoryView();
     $this->doTestAssetLogsView();
   }
 
@@ -229,6 +234,50 @@ class FarmUiViewsTest extends FarmBrowserTestBase {
     // Check that /asset/%/children returns a 403.
     $this->drupalGet('/asset/' . $parent->id() . '/children');
     $this->assertSession()->statusCodeEquals(403);
+
+    // Delete all entities.
+    $this->deleteAllEntities();
+  }
+
+  /**
+   * Test farm_inventory View's page_asset display.
+   */
+  public function doTestAssetInventoryView() {
+
+    // Create an equipment asset.
+    $water = Asset::create([
+      'name' => 'Cistern',
+      'type' => 'equipment',
+      'status' => 'active',
+    ]);
+    $water->save();
+
+    // Check that /asset/%/inventory returns a 403.
+    $this->drupalGet('/asset/' . $water->id() . '/inventory');
+    $this->assertSession()->statusCodeEquals(403);
+
+    // Create an observation log with a quantity that sets asset inventory.
+    $quantity = Quantity::create([
+      'type' => 'standard',
+      'value' => 1101,
+      'inventory_adjustment' => 'reset',
+      'inventory_asset' => $water,
+    ]);
+    $quantity->save();
+    $observation = Log::create([
+      'name' => 'Cistern observation',
+      'type' => 'observation',
+      'quantity' => [$quantity],
+      'status' => 'done',
+    ]);
+    $observation->save();
+
+    // Check that the log appears in /asset/%/inventory.
+    $this->drupalGet('/asset/' . $water->id() . '/inventory');
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextContains($observation->label());
+    $this->assertSession()->pageTextContains('Reset');
+    $this->assertSession()->pageTextContains('1101');
 
     // Delete all entities.
     $this->deleteAllEntities();
