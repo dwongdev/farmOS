@@ -156,6 +156,11 @@ class FarmUiViewsTest extends FarmBrowserTestBase {
     ]);
     $water->save();
 
+    // Check that the equipment does not appear in /asset/%/assets.
+    $this->drupalGet('/asset/' . $water->id() . '/assets');
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextNotContains($equipment->label());
+
     // Move the equipment asset into the water asset via an activity log.
     $movement = Log::create([
       'type' => 'activity',
@@ -170,6 +175,14 @@ class FarmUiViewsTest extends FarmBrowserTestBase {
     $this->drupalGet('/asset/' . $water->id() . '/assets');
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->pageTextContains($equipment->label());
+
+    // Change is_location to FALSE on the water asset.
+    $water->set('is_location', FALSE);
+    $water->save();
+
+    // Check that /asset/%/assets returns a 403.
+    $this->drupalGet('/asset/' . $water->id() . '/assets');
+    $this->assertSession()->statusCodeEquals(403);
 
     // Delete all entities.
     $this->deleteAllEntities();
