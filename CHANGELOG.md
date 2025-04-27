@@ -43,6 +43,7 @@ requirements (inherited from Drupal 11):
 - [Allow API access to organizations #1010](https://github.com/farmOS/farmOS/pull/1010)
 - [Issue #3304608: Add an "abandoned" log status](https://www.drupal.org/project/farm/issues/3304608)
 - [Add default plan status options: "planning", "done", "abandoned" #986](https://github.com/farmOS/farmOS/pull/986)
+- [Add Term Merge module #961](https://github.com/farmOS/farmOS/pull/961)
 - [Add support for attributes in farmOS plugin types #963](https://github.com/farmOS/farmOS/pull/963)
 - [Add a hook for excluding fields from CSV importers #958](https://github.com/farmOS/farmOS/pull/958)
 - [Include config fields in CSV importers #959](https://github.com/farmOS/farmOS/pull/959)

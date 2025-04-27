@@ -1,0 +1,3 @@
+farm_ui_term:
+  config_permissions:
+    - merge taxonomy terms
