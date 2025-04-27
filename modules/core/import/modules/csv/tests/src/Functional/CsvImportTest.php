@@ -96,6 +96,9 @@ class CsvImportTest extends FarmBrowserTestBase {
       'is fixed: Whether this asset has a fixed location. Accepts most boolean values. Leave this blank to use the default for this asset type.',
       'intrinsic geometry: The intrinsic geometry of the asset in WKT format. This is only used if the asset has a fixed location.',
       'status: Status of the asset.',
+      'id tag: ID tag.',
+      'id tag type: The type of ID tag. Allowed values: eid, other.',
+      'id tag location: Location of the ID tag.',
     ];
     foreach ($log_columns as $description) {
       $this->assertSession()->pageTextContains($description);
