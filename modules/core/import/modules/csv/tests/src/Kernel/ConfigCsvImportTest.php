@@ -27,7 +27,6 @@ class ConfigCsvImportTest extends CsvImportTestBase {
   public function setUp(): void {
     parent::setUp();
     $this->installConfig(['farm_harvest']);
-    $this->installConfig(['farm_import_csv_test']);
   }
 
   /**

@@ -32,6 +32,7 @@ class CsvImportTestBase extends MigrateTestBase {
     'asset',
     'entity_reference_revisions',
     'entity_reference_validators',
+    'farm_animal_type',
     'farm_entity_fields',
     'farm_field',
     'farm_format',
@@ -43,6 +44,7 @@ class CsvImportTestBase extends MigrateTestBase {
     'farm_log_quantity',
     'farm_migrate',
     'farm_quantity_standard',
+    'field',
     'file',
     'filter',
     'fraction',
@@ -75,7 +77,7 @@ class CsvImportTestBase extends MigrateTestBase {
     $this->installEntitySchema('quantity');
     $this->installEntitySchema('taxonomy_term');
     $this->installEntitySchema('user');
-    $this->installConfig(['farm_format', 'farm_log_asset', 'farm_quantity_standard', 'farm_import_csv']);
+    $this->installConfig(['farm_format', 'farm_log_asset', 'farm_quantity_standard', 'farm_animal_type', 'farm_import_csv', 'farm_import_csv_test']);
     $this->installSchema('migrate_tools', ['migrate_tools_sync_source_ids']);
     $this->installSchema('farm_import_csv', ['farm_import_csv_entity']);
 

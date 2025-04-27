@@ -17,16 +17,8 @@ class TermCsvImportTest extends CsvImportTestBase {
   /**
    * {@inheritdoc}
    */
-  protected static $modules = [
-    'farm_animal_type',
-  ];
-
-  /**
-   * {@inheritdoc}
-   */
   public function setUp(): void {
     parent::setUp();
-    $this->installConfig(['farm_animal_type']);
 
     // Create parent term to test asset_lookup.
     $term = Term::create(['name' => 'Sheep', 'vid' => 'animal_type']);
@@ -49,15 +41,18 @@ class TermCsvImportTest extends CsvImportTestBase {
       2 => [
         'name' => 'Cow',
         'description' => 'Cow description',
+        'test_config_field' => 'foo',
       ],
       3 => [
         'name' => 'Pig',
         'description' => 'Pig description',
+        'test_config_field' => 'bar',
       ],
       4 => [
         'name' => 'Galway',
         'description' => 'Large polled white-faced sheep',
         'parent' => 'Sheep',
+        'test_config_field' => '',
       ],
     ];
     foreach ($terms as $id => $term) {
@@ -76,6 +71,7 @@ class TermCsvImportTest extends CsvImportTestBase {
       else {
         $this->assertEmpty($term->get('parent')->referencedEntities());
       }
+      $this->assertEquals($expected_values[$id]['test_config_field'], $term->get('test_config_field')->value);
     }
   }
 

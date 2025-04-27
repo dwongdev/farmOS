@@ -139,6 +139,7 @@ class CsvImportTest extends FarmBrowserTestBase {
       'name: Name of the term. Required.',
       'description: Description of the term.',
       'parent: Parent term in the taxonomy hierarchy.',
+      'test config field',
     ];
     foreach ($log_columns as $description) {
       $this->assertSession()->pageTextContains($description);

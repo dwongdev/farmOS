@@ -8,10 +8,10 @@ use Drupal\Component\Plugin\Derivative\DeriverBase;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
-use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Plugin\Discovery\ContainerDeriverInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\entity\BundleFieldDefinition;
+use Drupal\field\FieldConfigInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -177,6 +177,18 @@ abstract class CsvImportMigrationBase extends DeriverBase implements ContainerDe
         }
       }
 
+      // If the bundle has fields defined by configuration, add column mappings
+      // and descriptions for them.
+      $config_field_definitions = array_filter($this->entityFieldManager->getFieldDefinitions($this->entityType, $bundle->id()), function ($definition) {
+        return $definition instanceof FieldConfigInterface;
+      });
+      foreach ($config_field_definitions as $field_definition) {
+        if (in_array($field_definition->getName(), $exclude_fields)) {
+          continue;
+        }
+        $this->addFieldMapping($field_definition, $definition['process'], $definition['third_party_settings']['farm_import_csv']['columns']);
+      }
+
       // Add access control permissions to third party settings.
       $definition['third_party_settings']['farm_import_csv']['access']['permissions'][] = $this->getCreatePermission($bundle->id());
 
@@ -190,14 +202,14 @@ abstract class CsvImportMigrationBase extends DeriverBase implements ContainerDe
   /**
    * Adds field mapping configuration for supported field types.
    *
-   * @param \Drupal\Core\Field\BaseFieldDefinition|\Drupal\entity\BundleFieldDefinition $field_definition
+   * @param \Drupal\Core\Field\FieldDefinitionInterface $field_definition
    *   The field definition.
    * @param array &$mapping
    *   The migration process mapping.
    * @param array &$columns
    *   The column descriptions from third-party settings.
    */
-  protected function addFieldMapping(BaseFieldDefinition|BundleFieldDefinition $field_definition, array &$mapping, array &$columns): void {
+  protected function addFieldMapping(FieldDefinitionInterface $field_definition, array &$mapping, array &$columns): void {
 
     // This only supports certain field types.
     $supported_field_types = [
@@ -309,7 +321,7 @@ abstract class CsvImportMigrationBase extends DeriverBase implements ContainerDe
 
     // If the field supports multiple values, explode on comma delimiter
     // as a first step and describe how to format values.
-    if ($field_definition->getCardinality() === -1 || $field_definition->getCardinality() > 1) {
+    if ($field_definition->getFieldStorageDefinition()->getCardinality() === -1 || $field_definition->getFieldStorageDefinition()->getCardinality() > 1) {
       array_unshift($process, ['plugin' => 'explode', 'delimiter' => ',']);
       array_unshift($process, ['plugin' => 'skip_on_empty', 'method' => 'process']);
       $description[] = $this->t('Multiple values can be separated by commas with the whole cell wrapped in quotes.');
