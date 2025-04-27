@@ -87,6 +87,10 @@ class AssetCsvImportTest extends CsvImportTestBase {
         ],
         'parents' => [],
         'notes' => 'Inherited from Grandpa',
+        'flags' => [
+          'priority',
+          'review',
+        ],
         'archived' => TRUE,
       ],
       3 => [
@@ -104,6 +108,9 @@ class AssetCsvImportTest extends CsvImportTestBase {
         ],
         'parents' => [],
         'notes' => 'Purchased recently',
+        'flags' => [
+          'monitor',
+        ],
         'archived' => FALSE,
       ],
       4 => [
@@ -121,6 +128,7 @@ class AssetCsvImportTest extends CsvImportTestBase {
           'Test parent',
         ],
         'notes' => 'Makes big bales',
+        'flags' => [],
         'archived' => FALSE,
       ],
     ];
@@ -172,6 +180,13 @@ class AssetCsvImportTest extends CsvImportTestBase {
       $this->assertInstanceOf(TextLongItem::class, $asset->get('notes')->first());
       $this->assertEquals('default', $asset->get('notes')->first()->format);
       $this->assertEquals($expected_values[$id]['archived'], $asset->get('archived')->value);
+
+      // Confirm that flags are set.
+      if (!empty($expected_values[$id]['flags'])) {
+        foreach ($asset->get('flag') as $flag) {
+          $this->assertTRUE(in_array($flag->getValue()['value'], $expected_values[$id]['flags']));
+        }
+      }
 
       // Confirm revision message is set.
       $this->assertEquals('Imported via CSV.', $asset->getRevisionLogMessage());

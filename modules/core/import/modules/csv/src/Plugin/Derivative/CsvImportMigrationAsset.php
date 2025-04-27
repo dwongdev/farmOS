@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\farm_import_csv\Plugin\Derivative;
 
+use Drupal\farm_flag\FarmFlagHelper;
 use Drupal\farm_id_tag\FarmIdTagHelper;
 
 /**
@@ -73,6 +74,15 @@ class CsvImportMigrationAsset extends CsvImportMigrationBase {
       'name' => 'id tag location',
       'description' => $this->t('Location of the ID tag.'),
     ];
+
+    // Add flags allowed values.
+    foreach ($columns as &$column) {
+      if ($column['name'] == 'flags') {
+        $allowed_flags = FarmFlagHelper::flagOptions('asset', [$bundle]);
+        $allowed_values_string = $this->t('Allowed values: @values.', ['@values' => implode(', ', array_keys($allowed_flags))]);
+        $column['description'] .= ' ' . $allowed_values_string;
+      }
+    }
   }
 
 }

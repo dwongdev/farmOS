@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+<<<<<<< HEAD
 Update to the latest farmOS 3.x release before attempting to update to farmOS
 4.x. All the automated database and configuration updates for the farmOS 2.x and
 3.x branches have been removed. Updating to the latest release on the 3.x branch
@@ -45,6 +46,7 @@ requirements (inherited from Drupal 11):
 - [Add default plan status options: "planning", "done", "abandoned" #986](https://github.com/farmOS/farmOS/pull/986)
 - [Add Term Merge module #961](https://github.com/farmOS/farmOS/pull/961)
 - [Add support for attributes in farmOS plugin types #963](https://github.com/farmOS/farmOS/pull/963)
+- [Set asset/log flags via CSV importers #955](https://github.com/farmOS/farmOS/pull/955)
 - [Add a hook for excluding fields from CSV importers #958](https://github.com/farmOS/farmOS/pull/958)
 - [Include config fields in CSV importers #959](https://github.com/farmOS/farmOS/pull/959)
 - Add support for decimal and integer fields in CSV importers.

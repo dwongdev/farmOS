@@ -113,6 +113,10 @@ class LogCsvImportTest extends CsvImportTestBase {
         'categories' => [
           'Category 1',
         ],
+        'flags' => [
+          'priority',
+          'review',
+        ],
         'status' => 'done',
         'test_string' => 'foo',
       ],
@@ -138,6 +142,9 @@ class LogCsvImportTest extends CsvImportTestBase {
           'Category 1',
           'Category 2',
         ],
+        'flags' => [
+          'monitor',
+        ],
         'status' => 'done',
         'test_string' => 'bar',
       ],
@@ -154,6 +161,7 @@ class LogCsvImportTest extends CsvImportTestBase {
         ],
         'notes' => 'Small bulbs from weed pressure',
         'categories' => [],
+        'flags' => [],
         'status' => 'pending',
         'test_string' => 'baz',
       ],
@@ -182,6 +190,11 @@ class LogCsvImportTest extends CsvImportTestBase {
       if (!empty($expected_values[$id]['categories'])) {
         foreach ($log->get('category')->referencedEntities() as $category) {
           $this->assertTrue(in_array($category->label(), $expected_values[$id]['categories']));
+        }
+      }
+      if (!empty($expected_values[$id]['flags'])) {
+        foreach ($log->get('flag') as $flag) {
+          $this->assertTRUE(in_array($flag->getValue()['value'], $expected_values[$id]['flags']));
         }
       }
       $this->assertEquals($expected_values[$id]['status'], $log->get('status')->value);
