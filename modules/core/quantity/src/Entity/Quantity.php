@@ -75,6 +75,7 @@ use Drupal\user\EntityOwnerTrait;
     'delete-multiple-form' => '/quantity/delete',
   ],
   admin_permission: 'administer quantity',
+  collection_permission: 'access quantity collection',
   permission_granularity: 'bundle',
   bundle_entity_type: 'quantity_type',
   base_table: 'quantity',

@@ -80,6 +80,7 @@ use Drupal\views\EntityViewsData;
     'version-history' => '/asset/{asset}/revisions',
   ],
   admin_permission: 'administer assets',
+  collection_permission: 'access asset collection',
   permission_granularity: 'bundle',
   bundle_entity_type: 'asset_type',
   bundle_label: new TranslatableMarkup('Asset type'),

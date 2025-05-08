@@ -78,6 +78,7 @@ use Drupal\views\EntityViewsData;
     'version-history' => '/plan/{plan}/revisions',
   ],
   admin_permission: 'administer plans',
+  collection_permission: 'access plan collection',
   permission_granularity: 'bundle',
   bundle_entity_type: 'plan_type',
   bundle_label: new TranslatableMarkup('Plan type'),
