@@ -11,6 +11,11 @@ use Drupal\Component\Annotation\Plugin;
  *
  * Plugin namespace: Plugin\Log\LogType.
  *
+ * @deprecated in farm:4.0.0 and is removed from farm:5.0.0.
+ *   Use Attributes moving forward.
+ * @see https://www.drupal.org/node/3523485
+ * @see https://www.drupal.org/project/farm/issues/3461548
+ *
  * @see plugin_api
  *
  * @Annotation
