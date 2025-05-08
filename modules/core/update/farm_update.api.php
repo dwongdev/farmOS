@@ -17,12 +17,12 @@ declare(strict_types=1);
  */
 
 /**
- * Specify config items that should be excluded from automatic updates.
+ * Specify config items that should be automatically updated.
  *
  * @return array
  *   An array of config item names.
  */
-function hook_farm_update_exclude_config() {
+function hook_farm_update_managed_config() {
   return [
     'views.view.farm_log',
     'asset.type.structure',

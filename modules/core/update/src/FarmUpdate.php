@@ -42,11 +42,11 @@ class FarmUpdate implements FarmUpdateInterface {
    */
   public function rebuild(): void {
 
-    // Get a list of excluded config.
-    $exclude_config = $this->getExcludedItems();
+    // Get a list of managed config.
+    $managed_config = $this->getManagedConfig();
 
-    // Build a list of config to revert, without excluded config.
-    $revert_config = array_diff($this->getDifferentItems('type', 'system.all'), $exclude_config);
+    // Build a list of config to revert.
+    $revert_config = array_intersect($this->getDifferentItems('type', 'system.all'), $managed_config);
 
     // Iterate through config items and revert them.
     foreach ($revert_config as $name) {
@@ -76,32 +76,25 @@ class FarmUpdate implements FarmUpdateInterface {
   }
 
   /**
-   * Lists excluded config items.
+   * Lists managed config items.
    *
-   * Lists config items that should be excluded from all automatic updates.
+   * Lists config items that should be automatically updated.
    *
    * @return array
    *   An array of config item names.
    */
-  protected function getExcludedItems() {
+  protected function getManagedConfig() {
 
-    // Ask modules for config exclusions.
-    $exclude_config = $this->moduleHandler->invokeAll('farm_update_exclude_config');
+    // Ask modules for managed configuration items.
+    $managed_config = $this->moduleHandler->invokeAll('farm_update_managed_config');
 
-    // Load farm_update.settings to get additional exclusions.
-    $settings_exclude_config = $this->configFactory->get('farm_update.settings')->get('exclude_config');
-    if (!empty($settings_exclude_config)) {
-      $exclude_config = array_merge($exclude_config, $settings_exclude_config);
+    // Load farm_update.settings to get additional items.
+    $settings_managed_config = $this->configFactory->get('farm_update.settings')->get('managed_config');
+    if (!empty($settings_managed_config)) {
+      $managed_config = array_merge($managed_config, $settings_managed_config);
     }
 
-    // Always exclude this module's configuration.
-    // This isn't strictly necessary because we don't provide default config
-    // in config/install. But in the unlikely event that a custom module does
-    // provide this config, and then it is somehow overridden by another means,
-    // it would be reverted. So we exclude it here just to be extra safe.
-    $exclude_config[] = 'farm_update.settings';
-
-    return $exclude_config;
+    return $managed_config;
   }
 
   /**
