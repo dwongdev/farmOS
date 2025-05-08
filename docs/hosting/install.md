@@ -45,6 +45,9 @@ Minimum version requirements:
 - MySQL/Percona 8.0+
 - SQLite 3.45+
 
+See [farmOS in Docker][#farmos-in-docker] below for an example configuration
+that runs a PostgreSQL database Docker container alongside a farmOS container.
+
 ### SSL
 
 Although not strictly a requirement, some features (like the "Geolocate" button
@@ -120,6 +123,11 @@ to install farmOS, update the `farmos/farmos:x.y.z` version reference, and run:
 
     docker compose up -d
 
+This configuration includes a PostgreSQL database container. Refer to
+`docker/README.md` for more information. If you already have a database
+provisioned elsewhere, this can be removed from the Docker Compose
+configuration.
+
 #### Persistence
 
 All site-specific settings and user-uploaded files are stored in
@@ -129,7 +137,8 @@ a directory from the host into the container is the recommended way to achieve
 this.
 
 The `docker run` command above does this, as well as the example
-`docker-compose.yml` provided in the farmOS repository's `docker` directory.
+`docker-compose.production.yml` provided in the farmOS repository's `docker`
+directory.
 
 If the `sites` directory is not persisted, all settings and files will be lost
 when the container is destroyed, and you will be prompted to install farmOS

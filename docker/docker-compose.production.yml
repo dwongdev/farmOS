@@ -1,5 +1,18 @@
 services:
+  db:
+    image: postgres:16
+    volumes:
+      - './db:/var/lib/postgresql/data'
+    environment:
+      # Set a strong password and optionally change the user/database name.
+      POSTGRES_USER: farm
+      POSTGRES_PASSWORD: farm
+      POSTGRES_DB: farm
+    restart: always
+
   www:
+    depends_on:
+      - db
     # Update this to the latest stable version before deploying.
     image: farmos/farmos:4.x.y
     volumes:

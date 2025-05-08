@@ -27,7 +27,9 @@ simply pulling a new image (and then manually running database updates via Drush
 or `/update.php`). Everything outside of the `sites` directory will not be
 preserved and will be replaced with the new official farmOS files.
 
-Note that this example does not include a database. It is assumed that in
-production environments the database will be managed outside of Docker.
+A PostgreSQL database container is included, with a hostname of `db` and default
+credentials. Set a strong password and optionally change the user/database name
+for added security. This database container is only provided as an example, and
+can be removed if an external database is used instead.
 
 For more information, see https://farmOS.org/hosting.
