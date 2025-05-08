@@ -24,21 +24,21 @@ services:
     parent: default_plugin_manager
   farm_entity.asset_collection_access:
     class: Drupal\farm_entity\Access\EntityCollectionAccessCheck
-    arguments: [ '@current_user', '@entity_type.manager', '@entity_type.bundle.info', 'asset' ]
+    arguments: [ '@current_user', '@entity_type.manager', 'asset' ]
     tags:
       - { name: access_check, applies_to: _asset_collection_access }
   farm_entity.log_collection_access:
     class: Drupal\farm_entity\Access\EntityCollectionAccessCheck
-    arguments: [ '@current_user', '@entity_type.manager', '@entity_type.bundle.info', 'log' ]
+    arguments: [ '@current_user', '@entity_type.manager', 'log' ]
     tags:
       - { name: access_check, applies_to: _log_collection_access }
   farm_entity.plan_collection_access:
     class: Drupal\farm_entity\Access\EntityCollectionAccessCheck
-    arguments: [ '@current_user', '@entity_type.manager', '@entity_type.bundle.info', 'plan' ]
+    arguments: [ '@current_user', '@entity_type.manager', 'plan' ]
     tags:
       - { name: access_check, applies_to: _plan_collection_access }
   farm_entity.quantity_collection_access:
     class: Drupal\farm_entity\Access\EntityCollectionAccessCheck
-    arguments: [ '@current_user', '@entity_type.manager', '@entity_type.bundle.info', 'quantity' ]
+    arguments: [ '@current_user', '@entity_type.manager', 'quantity' ]
     tags:
       - { name: access_check, applies_to: _quantity_collection_access }
