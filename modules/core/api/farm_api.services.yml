@@ -1,4 +1,10 @@
 services:
+  # Disable certain JSON:API resource types.
+  farm_api.jsonapi_build_subscriber:
+    class: Drupal\farm_api\EventSubscriber\JsonApiBuildSubscriber
+    arguments: ['@module_handler']
+    tags:
+      - { name: event_subscriber }
   # Add CORS headers for allowed origins configured on consumers.
   farm_api.cors_event_subscriber:
     class: Drupal\farm_api\EventSubscriber\CorsResponseEventSubscriber

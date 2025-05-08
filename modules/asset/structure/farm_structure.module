@@ -62,3 +62,10 @@ function farm_structure_farm_ui_theme_region_items(string $entity_type) {
       return [];
   }
 }
+
+/**
+ * Implements hook_farm_api_allow_resource_types().
+ */
+function farm_structure_farm_api_allow_resource_types() {
+  return ['structure_type'];
+}

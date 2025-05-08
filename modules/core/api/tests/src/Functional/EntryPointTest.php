@@ -24,7 +24,6 @@ class EntryPointTest extends FarmBrowserTestBase {
    */
   protected static $modules = [
     'basic_auth',
-    'node',
     'farm_api',
     'views',
   ];
@@ -67,7 +66,6 @@ class EntryPointTest extends FarmBrowserTestBase {
     $links = $document['links'];
     $this->assertMatchesRegularExpression('/.*\/api/', $links['self']['href']);
     $this->assertMatchesRegularExpression('/.*\/api\/user\/user/', $links['user--user']['href']);
-    $this->assertMatchesRegularExpression('/.*\/api\/node_type\/node_type/', $links['node_type--node_type']['href']);
 
     // farm_api alters the root document to include a 'meta' key.
     $this->assertArrayHasKey('meta', $document);

@@ -204,3 +204,10 @@ function farm_flag_entity_type_build(array &$entity_types) {
     }
   }
 }
+
+/**
+ * Implements hook_farm_api_allow_resource_types().
+ */
+function farm_flag_farm_api_allow_resource_types() {
+  return ['flag'];
+}

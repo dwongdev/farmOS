@@ -69,3 +69,10 @@ function farm_id_tag_theme() {
     ],
   ];
 }
+
+/**
+ * Implements hook_farm_api_allow_resource_types().
+ */
+function farm_id_tag_farm_api_allow_resource_types() {
+  return ['tag_type'];
+}

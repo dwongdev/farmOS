@@ -59,6 +59,7 @@ class FarmApiTest extends KernelTestBase {
     parent::setUp();
     $this->installEntitySchema('consumer');
     $this->installEntitySchema('asset');
+    $this->installEntitySchema('file');
     $this->installEntitySchema('log');
     $this->installConfig([
       'farm_api_test',
@@ -186,6 +187,28 @@ class FarmApiTest extends KernelTestBase {
   }
 
   /**
+   * Test allowing resources.
+   */
+  public function testAllowedApiResources() {
+
+    // Test that core entity type resources are available.
+    $this->apiRequest('/api/asset/test');
+    $this->apiRequest('/api/file/file');
+    $this->apiRequest('/api/log/test');
+    $this->apiRequest('/api/user/user');
+    $this->apiRequest('/api/user_role/user_role');
+
+    // Test that view entity type resource is not available.
+    $this->apiRequest('/api/view/view', 'GET', [], 404);
+
+    // Install the farm_api_test_allowed_resources, which allows view entities.
+    $this->enableModules(['farm_api_test_allowed_resources']);
+
+    // Test that view entity type resource is now available.
+    $this->apiRequest('/api/view/view');
+  }
+
+  /**
    * Helper function for performing an API request.
    *
    * @param string $endpoint
@@ -194,11 +217,14 @@ class FarmApiTest extends KernelTestBase {
    *   The request method (eg: GET, POST, PATCH, DELETE).
    * @param array $payload
    *   Array of data to send as a payload.
+   * @param int|null $expected_response
+   *   The expected response status code. If null, this will default to a
+   *   successful status code based on the request method.
    *
    * @return array
    *   An array of JSON-decoded data returned by the request.
    */
-  protected function apiRequest(string $endpoint, string $method = 'GET', array $payload = []) {
+  protected function apiRequest(string $endpoint, string $method = 'GET', array $payload = [], int|null $expected_response = NULL) {
     $http_kernel = $this->container->get('http_kernel');
     $content = '';
     if (!empty($payload)) {
@@ -210,13 +236,16 @@ class FarmApiTest extends KernelTestBase {
     $request->headers->set('Accept', 'application/vnd.api+json');
     $request->headers->set('Content-Type', 'application/vnd.api+json');
     $response = $http_kernel->handle($request);
-    $expected_response = [
-      'GET' => Response::HTTP_OK,
-      'POST' => Response::HTTP_CREATED,
-      'PATCH' => Response::HTTP_OK,
-      'DELETE' => Response::HTTP_NO_CONTENT,
-    ];
-    $this->assertEquals($expected_response[$method], $response->getStatusCode());
+    if (is_null($expected_response)) {
+      $expected_responses = [
+        'GET' => Response::HTTP_OK,
+        'POST' => Response::HTTP_CREATED,
+        'PATCH' => Response::HTTP_OK,
+        'DELETE' => Response::HTTP_NO_CONTENT,
+      ];
+      $expected_response = $expected_responses[$method];
+    }
+    $this->assertEquals($expected_response, $response->getStatusCode());
     return Json::decode($response->getContent());
   }
 

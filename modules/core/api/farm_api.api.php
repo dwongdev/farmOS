@@ -29,5 +29,17 @@ function hook_farm_api_meta_alter(array &$data) {
 }
 
 /**
+ * Allow entity types to be included in JSON:API resources.
+ *
+ * @return string[]
+ *   Returns an array of entity type IDs.
+ */
+function hook_farm_api_allow_resource_types() {
+
+  // Allow block and view entities.
+  return ['block', 'view'];
+}
+
+/**
  * @} End of "addtogroup hooks".
  */

@@ -105,3 +105,10 @@ function farm_quick_form_alter(&$form, FormStateInterface $form_state, $form_id)
     }
   }
 }
+
+/**
+ * Implements hook_farm_api_allow_resource_types().
+ */
+function farm_quick_farm_api_allow_resource_types() {
+  return ['quick_form'];
+}
