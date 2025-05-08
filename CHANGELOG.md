@@ -7,9 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- [Add support for attributes in farmOS plugin types #963](https://github.com/farmOS/farmOS/pull/963)
+
 ### Changed
 
 - farmOS 4.x requires PHP 8.3+.
+
+### Deprecated
+
+- [farmOS core plugin type annotations are deprecated](https://www.drupal.org/node/3523485)
 
 ### Removed
 
