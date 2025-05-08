@@ -57,6 +57,7 @@ requirements:
 - Remove [deprecated data stream migration plugins](https://www.drupal.org/node/3498069).
 - Remove [EXIF Orientation](https://www.drupal.org/project/exif_orientation) module (see [Automatically rotate derivative images based on EXIF Orientation #941](https://github.com/farmOS/farmOS/pull/941)).
 - Remove [JSON:API Extras](https://www.drupal.org/project/jsonapi_extras) module (see [Remove dependency on JSON:API Extras module #964](https://github.com/farmOS/farmOS/pull/964)).
+- [Do not generate keys during farm_api_install() #972](https://github.com/farmOS/farmOS/pull/972)
 
 ### Fixed
 

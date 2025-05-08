@@ -4,6 +4,7 @@ services:
     image: farmos/farmos:4.x.y
     volumes:
       - './sites:/opt/drupal/web/sites'
+      - './keys:/opt/drupal/keys'
     ports:
       - '80:80'
     restart: always
