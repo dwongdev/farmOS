@@ -43,6 +43,7 @@ requirements:
 - [Add a hook for excluding fields from CSV importers #958](https://github.com/farmOS/farmOS/pull/958)
 - [Include config fields in CSV importers #959](https://github.com/farmOS/farmOS/pull/959)
 - Add support for decimal and integer fields in CSV importers.
+- [Add map layer for "Other Location" assets #966](https://github.com/farmOS/farmOS/pull/966)
 
 ### Changed
 
