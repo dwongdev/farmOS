@@ -12,6 +12,25 @@ Update to the latest farmOS 3.x release before attempting to update to farmOS
 3.x branches have been removed. Updating to the latest release on the 3.x branch
 will ensure that all necessary changes have been applied before updating to 4.x.
 
+farmOS v4 updates Drupal to version 11. If you have built any add-on modules for
+farmOS, you will need to check that they are compatible with Drupal 11, and
+declare support in your `*.info.yml` file by changing `core_version_requirement`
+from `^10` to `^10 || ^11` (to indicate that it works on both versions), or just
+`^11` (to indicate that it only works on Drupal 11). The PHPStan tool that is
+included with the farmOS `4.x-dev` Docker image can be used to perform static
+analysis of your module code to see if there are deprecations that need to be
+fixed. See
+[farmOS coding standards](https://farmos.org/development/environment/code/) for
+more information.
+
+Drupal 11 requires PHP 8.3+, and has the following minimum database version
+requirements:
+
+- PostgreSQL 16+
+- MariaDB 10.6+
+- MySQL/Percona 8.0+
+- SQLite 3.45+
+
 ### Added
 
 - [Add support for attributes in farmOS plugin types #963](https://github.com/farmOS/farmOS/pull/963)
@@ -22,6 +41,7 @@ will ensure that all necessary changes have been applied before updating to 4.x.
 ### Changed
 
 - farmOS 4.x requires PHP 8.3+.
+- [Issue #3488916: Update Drupal core to 11.x](https://www.drupal.org/project/farm/issues/3488916)
 - [Convert equipment to a base field #956](https://github.com/farmOS/farmOS/pull/956)
 - [Convert quick to a base field #957](https://github.com/farmOS/farmOS/pull/957)
 
