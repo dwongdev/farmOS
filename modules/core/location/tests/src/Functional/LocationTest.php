@@ -19,9 +19,7 @@ class LocationTest extends WebDriverTestBase {
   use StringTranslationTrait;
   use WktTrait;
   use JsonApiRequestTestTrait;
-  use LocationFunctionalTestTrait {
-    setUp as locationSetup;
-  }
+  use LocationFunctionalTestTrait;
 
   /**
    * {@inheritdoc}
@@ -42,14 +40,6 @@ class LocationTest extends WebDriverTestBase {
     'farm_location_test',
     'farm_api',
   ];
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function setUp(): void {
-    $GLOBALS['farm_test'] = TRUE;
-    $this->locationSetup();
-  }
 
   /**
    * Test computed asset location.

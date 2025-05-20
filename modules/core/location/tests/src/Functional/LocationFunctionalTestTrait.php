@@ -41,6 +41,7 @@ trait LocationFunctionalTestTrait {
    * {@inheritdoc}
    */
   public function setUp(): void {
+    $GLOBALS['farm_test'] = TRUE;
     parent::setUp();
 
     // Load asset and log storage.
