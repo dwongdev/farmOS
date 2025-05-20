@@ -22,7 +22,7 @@ use Drupal\farm_quick\Traits\ConfigurableQuickFormTrait;
     'create test log',
   ],
 )]
-class ConfigurableTest extends Test implements ConfigurableQuickFormInterface {
+class TestConfigurable extends TestQuick implements ConfigurableQuickFormInterface {
 
   use ConfigurableQuickFormTrait;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\farm_entity_test\Plugin\Asset\AssetType;
+namespace Drupal\farm_api_test\Plugin\Asset\AssetType;
 
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\farm_entity\Attribute\AssetType;
@@ -15,6 +15,6 @@ use Drupal\farm_entity\Plugin\Asset\AssetType\FarmAssetType;
   id: 'test',
   label: new TranslatableMarkup('Test'),
 )]
-class Test extends FarmAssetType {
+class TestAsset extends FarmAssetType {
 
 }

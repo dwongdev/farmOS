@@ -15,6 +15,6 @@ use Drupal\farm_entity\Plugin\Quantity\QuantityType\FarmQuantityType;
   id: 'test2',
   label: new TranslatableMarkup('Test2'),
 )]
-class Test2 extends FarmQuantityType {
+class TestQuantity2 extends FarmQuantityType {
 
 }

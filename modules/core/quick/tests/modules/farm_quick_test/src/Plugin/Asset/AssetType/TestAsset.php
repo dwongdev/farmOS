@@ -16,7 +16,7 @@ use Drupal\farm_entity\Plugin\Asset\AssetType\FarmAssetType;
   id: 'test',
   label: new TranslatableMarkup('Test'),
 )]
-class Test extends FarmAssetType {
+class TestAsset extends FarmAssetType {
 
   /**
    * {@inheritdoc}

@@ -15,6 +15,6 @@ use Drupal\farm_entity\Plugin\Plan\PlanType\FarmPlanType;
   id: 'test',
   label: new TranslatableMarkup('Test'),
 )]
-class Test extends FarmPlanType {
+class TestPlan extends FarmPlanType {
 
 }

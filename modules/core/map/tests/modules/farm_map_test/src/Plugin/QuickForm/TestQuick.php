@@ -22,7 +22,7 @@ use Drupal\farm_quick\Traits\QuickLogTrait;
     'create test log',
   ],
 )]
-class Test extends QuickFormBase {
+class TestQuick extends QuickFormBase {
 
   use QuickLogTrait;
 

@@ -15,7 +15,7 @@ use Drupal\farm_entity\Plugin\Log\LogType\FarmLogType;
   id: 'test',
   label: new TranslatableMarkup('Test'),
 )]
-class Test extends FarmLogType {
+class TestLog extends FarmLogType {
 
   /**
    * {@inheritdoc}

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\farm_group_test\Plugin\Log\LogType;
+namespace Drupal\farm_quick_test\Plugin\Log\LogType;
 
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\farm_entity\Attribute\LogType;
@@ -15,6 +15,6 @@ use Drupal\farm_entity\Plugin\Log\LogType\FarmLogType;
   id: 'test',
   label: new TranslatableMarkup('Test'),
 )]
-class Test extends FarmLogType {
+class TestLog extends FarmLogType {
 
 }

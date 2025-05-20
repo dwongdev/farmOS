@@ -20,6 +20,6 @@ use Drupal\farm_quick\Attribute\QuickForm;
   ],
   requiresEntity: TRUE,
 )]
-class RequiresEntityTest extends Test {
+class TestRequiresEntity extends TestQuick {
 
 }

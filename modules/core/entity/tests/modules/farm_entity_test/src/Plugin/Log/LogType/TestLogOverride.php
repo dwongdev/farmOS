@@ -14,7 +14,7 @@ use Drupal\farm_entity\Attribute\LogType;
   id: 'test_override',
   label: new TranslatableMarkup('Test Override'),
 )]
-class TestOverride extends Test {
+class TestLogOverride extends TestLog {
 
   /**
    * {@inheritdoc}
