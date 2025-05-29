@@ -343,7 +343,7 @@ class InventoryTest extends KernelTestBase {
    * @param string|int|null $units
    *   The quantity units of the inventory (term ID).
    * @param int|null $timestamp
-   *   Optionally specify the timestamp when the adjustment occured.
+   *   Optionally specify the timestamp when the adjustment occurred.
    *   If this is NULL (default), the current time will be used.
    *
    * @return \Drupal\log\Entity\LogInterface
