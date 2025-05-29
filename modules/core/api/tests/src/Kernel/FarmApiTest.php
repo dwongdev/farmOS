@@ -93,7 +93,7 @@ class FarmApiTest extends KernelTestBase {
   public function testApi() {
 
     // Test that the API root path is /api and it contains meta.farm info.
-    $data = $this->apiRequest('/api');
+    $data = $this->assertApiRequest('/api');
     $this->assertNotEmpty($data['meta']['farm']);
     $this->assertEquals('API Test', $data['meta']['farm']['name']);
 
@@ -105,7 +105,7 @@ class FarmApiTest extends KernelTestBase {
         'name' => 'Test asset',
       ],
     ];
-    $data = $this->apiRequest('/api/asset/test', 'POST', $payload);
+    $data = $this->assertApiRequest('/api/asset/test', 'POST', $payload);
     $this->assertNotEmpty($data['data']['id']);
     $this->assertEquals($asset_type, $data['data']['type']);
     $this->assertEquals($payload['attributes']['name'], $data['data']['attributes']['name']);
@@ -128,7 +128,7 @@ class FarmApiTest extends KernelTestBase {
         ],
       ],
     ];
-    $data = $this->apiRequest('/api/log/test', 'POST', $payload);
+    $data = $this->assertApiRequest('/api/log/test', 'POST', $payload);
     $this->assertNotEmpty($data['data']['id']);
     $this->assertEquals($log_type, $data['data']['type']);
     $this->assertEquals($asset_id, $data['data']['relationships']['asset']['data'][0]['id']);
@@ -137,17 +137,17 @@ class FarmApiTest extends KernelTestBase {
     $log_id = $data['data']['id'];
 
     // Test that the asset and log appear in collection endpoints.
-    $data = $this->apiRequest('/api/asset/test');
+    $data = $this->assertApiRequest('/api/asset/test');
     $this->assertCount(1, $data['data']);
     $this->assertEquals($asset_id, $data['data'][0]['id']);
-    $data = $this->apiRequest('/api/log/test');
+    $data = $this->assertApiRequest('/api/log/test');
     $this->assertCount(1, $data['data']);
     $this->assertEquals($log_id, $data['data'][0]['id']);
 
     // Test retrieving both asset and log individually by UUID.
-    $data = $this->apiRequest('/api/asset/test/' . $asset_id);
+    $data = $this->assertApiRequest('/api/asset/test/' . $asset_id);
     $this->assertEquals($asset_id, $data['data']['id']);
-    $data = $this->apiRequest('/api/log/test/' . $log_id);
+    $data = $this->assertApiRequest('/api/log/test/' . $log_id);
     $this->assertEquals($log_id, $data['data']['id']);
 
     // Test updating assets and logs.
@@ -158,9 +158,9 @@ class FarmApiTest extends KernelTestBase {
         'name' => 'Updated asset name',
       ],
     ];
-    $data = $this->apiRequest('/api/asset/test/' . $asset_id, 'PATCH', $payload);
+    $data = $this->assertApiRequest('/api/asset/test/' . $asset_id, 'PATCH', $payload);
     $this->assertEquals($asset_id, $data['data']['id']);
-    $data = $this->apiRequest('/api/asset/test/' . $asset_id);
+    $data = $this->assertApiRequest('/api/asset/test/' . $asset_id);
     $this->assertEquals($payload['attributes']['name'], $data['data']['attributes']['name']);
     $payload = [
       'type' => $log_type,
@@ -169,17 +169,17 @@ class FarmApiTest extends KernelTestBase {
         'name' => 'Updated log name',
       ],
     ];
-    $data = $this->apiRequest('/api/log/test/' . $log_id, 'PATCH', $payload);
+    $data = $this->assertApiRequest('/api/log/test/' . $log_id, 'PATCH', $payload);
     $this->assertEquals($log_id, $data['data']['id']);
-    $data = $this->apiRequest('/api/log/test/' . $log_id);
+    $data = $this->assertApiRequest('/api/log/test/' . $log_id);
     $this->assertEquals($payload['attributes']['name'], $data['data']['attributes']['name']);
 
     // Test deleting logs and assets.
-    $this->apiRequest('/api/log/test/' . $log_id, 'DELETE');
-    $data = $this->apiRequest('/api/log/test');
+    $this->assertApiRequest('/api/log/test/' . $log_id, 'DELETE');
+    $data = $this->assertApiRequest('/api/log/test');
     $this->assertCount(0, $data['data']);
-    $data = $this->apiRequest('/api/asset/test/' . $asset_id, 'DELETE');
-    $data = $this->apiRequest('/api/asset/test');
+    $data = $this->assertApiRequest('/api/asset/test/' . $asset_id, 'DELETE');
+    $data = $this->assertApiRequest('/api/asset/test');
     $this->assertCount(0, $data['data']);
   }
 
@@ -189,23 +189,23 @@ class FarmApiTest extends KernelTestBase {
   public function testAllowedApiResources() {
 
     // Test that core entity type resources are available.
-    $this->apiRequest('/api/asset/test');
-    $this->apiRequest('/api/file/file');
-    $this->apiRequest('/api/log/test');
-    $this->apiRequest('/api/user/user');
-    $this->apiRequest('/api/user_role/user_role');
+    $this->assertApiRequest('/api/asset/test');
+    $this->assertApiRequest('/api/file/file');
+    $this->assertApiRequest('/api/log/test');
+    $this->assertApiRequest('/api/user/user');
+    $this->assertApiRequest('/api/user_role/user_role');
 
     // Test that view entity type resource is not available.
-    $this->apiRequest('/api/view/view', 'GET', [], Response::HTTP_NOT_FOUND);
+    $this->assertApiRequest('/api/view/view', 'GET', [], Response::HTTP_NOT_FOUND);
 
     // Install the farm_api_test_allowed_resources, which allows view entities.
     $this->enableModules(['farm_api_test_allowed_resources']);
 
     // Test that view entity type resource is now available.
-    $this->apiRequest('/api/view/view');
+    $this->assertApiRequest('/api/view/view');
 
     // Test that log entity type resources are now unavailable.
-    $this->apiRequest('/api/log/test', 'GET', [], Response::HTTP_NOT_FOUND);
+    $this->assertApiRequest('/api/log/test', 'GET', [], Response::HTTP_NOT_FOUND);
 
   }
 
@@ -222,7 +222,7 @@ class FarmApiTest extends KernelTestBase {
         'name' => 'Test asset',
       ],
     ];
-    $data = $this->apiRequest('/api/asset/test', 'POST', $payload);
+    $data = $this->assertApiRequest('/api/asset/test', 'POST', $payload);
     $this->assertNotEmpty($data['data']['id']);
     $this->assertNotEmpty($data['data']['attributes']['drupal_internal__id']);
     $this->assertEquals($asset_type, $data['data']['type']);
@@ -246,8 +246,8 @@ class FarmApiTest extends KernelTestBase {
         'name' => 'Test asset update',
       ],
     ];
-    $data = $this->apiRequest('/api/asset/test/' . $data['data']['id'], 'PATCH', $payload);
-    $data = $this->apiRequest('/api/asset/test/' . $data['data']['id']);
+    $data = $this->assertApiRequest('/api/asset/test/' . $data['data']['id'], 'PATCH', $payload);
+    $data = $this->assertApiRequest('/api/asset/test/' . $data['data']['id']);
     $this->assertEquals($payload['attributes']['name'], $data['data']['attributes']['name']);
 
     // Reload the asset.
@@ -274,7 +274,7 @@ class FarmApiTest extends KernelTestBase {
    * @return array
    *   An array of JSON-decoded data returned by the request.
    */
-  protected function apiRequest(string $endpoint, string $method = 'GET', array $payload = [], int|null $expected_response = NULL) {
+  protected function assertApiRequest(string $endpoint, string $method = 'GET', array $payload = [], int|null $expected_response = NULL) {
     $http_kernel = $this->container->get('http_kernel');
     $content = '';
     if (!empty($payload)) {

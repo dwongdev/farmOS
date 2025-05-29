@@ -116,11 +116,11 @@ abstract class FarmApiOauthTestBase extends FarmApiTest {
   /**
    * {@inheritdoc}
    */
-  protected function apiRequest(string $endpoint, string $method = 'GET', array $payload = [], int|null $expected_response = NULL) {
+  protected function assertApiRequest(string $endpoint, string $method = 'GET', array $payload = [], int|null $expected_response = NULL) {
 
-    // This overrides and copies logic from the parent apiRequest() function
-    // to add an Authorization header with an OAuth access token.
-    // @see \Drupal\Tests\farm_api\Kernel\FarmApiTest::apiRequest
+    // This overrides and copies logic from the parent assertApiRequest()
+    // function to add an Authorization header with an OAuth access token.
+    // @see \Drupal\Tests\farm_api\Kernel\FarmApiTest::assertApiRequest
     $http_kernel = $this->container->get('http_kernel');
     $content = '';
     if (!empty($payload)) {
@@ -130,7 +130,7 @@ abstract class FarmApiOauthTestBase extends FarmApiTest {
     }
     $request = Request::create($endpoint, $method, [], [], [], [], $content);
     $request->headers->set('Accept', 'application/vnd.api+json');
-    $request->headers->set('Authorization', 'Bearer ' . $this->getAccessToken());
+    $request->headers->set('Authorization', 'Bearer ' . $this->assertGetAccessToken());
     $request->headers->set('Content-Type', 'application/vnd.api+json');
     $response = $http_kernel->handle($request);
     if (is_null($expected_response)) {
@@ -152,7 +152,7 @@ abstract class FarmApiOauthTestBase extends FarmApiTest {
    * @return string
    *   Access token.
    */
-  protected function getAccessToken(): string {
+  protected function assertGetAccessToken(): string {
     $parameters = [
       'grant_type' => 'password',
       'client_id' => $this->client->getClientId(),

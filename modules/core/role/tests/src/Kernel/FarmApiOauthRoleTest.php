@@ -30,7 +30,7 @@ class FarmApiOauthRoleTest extends FarmApiOauthTestBase {
     $this->user->save();
 
     // Test that the API root path is /api and it contains meta.farm info.
-    $data = $this->apiRequest('/api');
+    $data = $this->assertApiRequest('/api');
     $this->assertNotEmpty($data['meta']['farm']);
     $this->assertEquals('API Test', $data['meta']['farm']['name']);
 
@@ -42,7 +42,7 @@ class FarmApiOauthRoleTest extends FarmApiOauthTestBase {
         'name' => 'Test asset',
       ],
     ];
-    $this->apiRequest('/api/asset/test', 'POST', $payload, Response::HTTP_FORBIDDEN);
+    $this->assertApiRequest('/api/asset/test', 'POST', $payload, Response::HTTP_FORBIDDEN);
 
     // Create the asset.
     $asset = Asset::create([
@@ -67,7 +67,7 @@ class FarmApiOauthRoleTest extends FarmApiOauthTestBase {
         ],
       ],
     ];
-    $this->apiRequest('/api/log/test', 'POST', $payload, Response::HTTP_FORBIDDEN);
+    $this->assertApiRequest('/api/log/test', 'POST', $payload, Response::HTTP_FORBIDDEN);
 
     // Create the log.
     $log = Log::create([
@@ -79,17 +79,17 @@ class FarmApiOauthRoleTest extends FarmApiOauthTestBase {
     $log_id = $log->uuid();
 
     // Test that the asset and log appear in collection endpoints.
-    $data = $this->apiRequest('/api/asset/test');
+    $data = $this->assertApiRequest('/api/asset/test');
     $this->assertCount(1, $data['data']);
     $this->assertEquals($asset_id, $data['data'][0]['id']);
-    $data = $this->apiRequest('/api/log/test');
+    $data = $this->assertApiRequest('/api/log/test');
     $this->assertCount(1, $data['data']);
     $this->assertEquals($log_id, $data['data'][0]['id']);
 
     // Test retrieving both asset and log individually by UUID.
-    $data = $this->apiRequest('/api/asset/test/' . $asset_id);
+    $data = $this->assertApiRequest('/api/asset/test/' . $asset_id);
     $this->assertEquals($asset_id, $data['data']['id']);
-    $data = $this->apiRequest('/api/log/test/' . $log_id);
+    $data = $this->assertApiRequest('/api/log/test/' . $log_id);
     $this->assertEquals($log_id, $data['data']['id']);
 
     // Test updating assets and logs.
@@ -100,7 +100,7 @@ class FarmApiOauthRoleTest extends FarmApiOauthTestBase {
         'name' => 'Updated asset name',
       ],
     ];
-    $this->apiRequest('/api/asset/test/' . $asset_id, 'PATCH', $payload, Response::HTTP_FORBIDDEN);
+    $this->assertApiRequest('/api/asset/test/' . $asset_id, 'PATCH', $payload, Response::HTTP_FORBIDDEN);
     $payload = [
       'type' => $log_type,
       'id' => $log_id,
@@ -108,11 +108,11 @@ class FarmApiOauthRoleTest extends FarmApiOauthTestBase {
         'name' => 'Updated log name',
       ],
     ];
-    $this->apiRequest('/api/log/test/' . $log_id, 'PATCH', $payload, Response::HTTP_FORBIDDEN);
+    $this->assertApiRequest('/api/log/test/' . $log_id, 'PATCH', $payload, Response::HTTP_FORBIDDEN);
 
     // Test deleting logs and assets.
-    $this->apiRequest('/api/log/test/' . $log_id, 'DELETE', [], Response::HTTP_FORBIDDEN);
-    $this->apiRequest('/api/asset/test/' . $asset_id, 'DELETE', [], Response::HTTP_FORBIDDEN);
+    $this->assertApiRequest('/api/log/test/' . $log_id, 'DELETE', [], Response::HTTP_FORBIDDEN);
+    $this->assertApiRequest('/api/asset/test/' . $asset_id, 'DELETE', [], Response::HTTP_FORBIDDEN);
   }
 
 }
