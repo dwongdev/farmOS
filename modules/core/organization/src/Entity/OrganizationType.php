@@ -5,56 +5,61 @@ declare(strict_types=1);
 namespace Drupal\organization\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
+use Drupal\Core\Entity\Attribute\ConfigEntityType;
+use Drupal\Core\Entity\EntityDeleteForm;
+use Drupal\Core\Entity\EntityViewBuilder;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\entity\Routing\DefaultHtmlRouteProvider;
+use Drupal\organization\Form\OrganizationTypeForm;
+use Drupal\organization\OrganizationTypeListBuilder;
 
 /**
  * Defines the organization type entity.
- *
- * @ConfigEntityType(
- *   id = "organization_type",
- *   label = @Translation("Organization type"),
- *   label_collection = @Translation("Organization types"),
- *   label_singular = @Translation("Organization type"),
- *   label_plural = @Translation("Organization types"),
- *   label_count = @PluralTranslation(
- *     singular = "@count organization type",
- *     plural = "@count organization types",
- *   ),
- *   handlers = {
- *     "list_builder" = "Drupal\organization\OrganizationTypeListBuilder",
- *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
- *     "form" = {
- *       "add" = "Drupal\organization\Form\OrganizationTypeForm",
- *       "edit" = "Drupal\organization\Form\OrganizationTypeForm",
- *       "delete" = "\Drupal\Core\Entity\EntityDeleteForm",
- *     },
- *     "route_provider" = {
- *       "default" = "Drupal\entity\Routing\DefaultHtmlRouteProvider",
- *     },
- *   },
- *   admin_permission = "administer organization types",
- *   config_prefix = "type",
- *   bundle_of = "organization",
- *   entity_keys = {
- *     "id" = "id",
- *     "label" = "label",
- *     "uuid" = "uuid"
- *   },
- *   links = {
- *     "canonical" = "/admin/structure/organization-type/{organization_type}",
- *     "add-form" = "/admin/structure/organization-type/add",
- *     "edit-form" = "/admin/structure/organization-type/{organization_type}/edit",
- *     "delete-form" = "/admin/structure/organization-type/{organization_type}/delete",
- *     "collection" = "/admin/structure/organization-type"
- *   },
- *   config_export = {
- *     "id",
- *     "label",
- *     "description",
- *     "workflow",
- *     "new_revision",
- *   }
- * )
  */
+#[ConfigEntityType(
+  id: 'organization_type',
+  label: new TranslatableMarkup('Organization type'),
+  label_collection: new TranslatableMarkup('Organization types'),
+  label_singular: new TranslatableMarkup('Organization type'),
+  label_plural: new TranslatableMarkup('Organization types'),
+  config_prefix: 'type',
+  entity_keys: [
+    'id' => 'id',
+    'label' => 'label',
+    'uuid' => 'uuid',
+  ],
+  handlers: [
+    'list_builder' => OrganizationTypeListBuilder::class,
+    'view_builder' => EntityViewBuilder::class,
+    'form' => [
+      'add' => OrganizationTypeForm::class,
+      'edit' => OrganizationTypeForm::class,
+      'delete' => EntityDeleteForm::class,
+    ],
+    'route_provider' => [
+      'default' => DefaultHtmlRouteProvider::class,
+    ],
+  ],
+  links: [
+    'canonical' => '/admin/structure/organization-type/{organization_type}',
+    'add-form' => '/admin/structure/organization-type/add',
+    'edit-form' => '/admin/structure/organization-type/{organization_type}/edit',
+    'delete-form' => '/admin/structure/organization-type/{organization_type}/delete',
+    'collection' => '/admin/structure/organization-type',
+  ],
+  admin_permission: 'administer organization types',
+  bundle_of: 'organization',
+  label_count: [
+    'singular' => '@count organization type',
+    'plural' => '@count organization types',
+  ],
+  config_export: [
+    'id', 'label',
+    'description',
+    'workflow',
+    'new_revision',
+  ],
+)]
 class OrganizationType extends ConfigEntityBundleBase implements OrganizationTypeInterface {
 
   /**
