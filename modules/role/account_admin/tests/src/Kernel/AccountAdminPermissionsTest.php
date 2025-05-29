@@ -55,7 +55,6 @@ class AccountAdminPermissionsTest extends KernelTestBase {
 
     // List Account Admin permissions.
     $account_admin_permissions = [
-      'administer farm settings',
       'administer users',
       'assign farm_manager role',
       'assign farm_worker role',

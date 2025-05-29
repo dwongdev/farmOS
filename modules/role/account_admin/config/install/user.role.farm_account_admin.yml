@@ -3,23 +3,22 @@ status: true
 dependencies:
   module:
     - farm_role
-    - farm_setup
   enforced:
     module:
       - farm_account_admin
-third_party_settings:
-  farm_role:
-    access:
-      config: true
-      entity:
-        'view all': false
-        'create all': false
-        'update all': false
-        'delete all': false
 id: farm_account_admin
 label: 'Account Admin'
 weight: 1
 is_admin: false
 permissions:
-  - 'administer farm settings'
   - 'administer users'
+third_party_settings:
+  farm_role:
+    access:
+      config: false
+      manager: false
+      entity:
+        view all: false
+        create all: false
+        update all: false
+        delete all: false
