@@ -198,7 +198,10 @@ jobs:
       - name: Run PHPUnit tests
         run: docker compose exec -T www ${{ matrix.test_cmd }} /opt/drupal/web/profiles/farm
       - name: Test Drush site install with all modules
-        run: docker compose exec -T www drush site-install --db-url=${{ matrix.DB_URL }} farm farm.modules='all'
+        run: |
+          docker compose exec -T www drush site-install --db-url=${{ matrix.DB_URL }}
+          docker compose exec -T www drush en farm_test
+          docker compose exec -T www drush farm_test:modules
 
   release:
     name: Create release
