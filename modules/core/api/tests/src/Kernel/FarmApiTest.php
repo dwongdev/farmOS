@@ -196,7 +196,7 @@ class FarmApiTest extends KernelTestBase {
     $this->apiRequest('/api/user_role/user_role');
 
     // Test that view entity type resource is not available.
-    $this->apiRequest('/api/view/view', 'GET', [], 404);
+    $this->apiRequest('/api/view/view', 'GET', [], Response::HTTP_NOT_FOUND);
 
     // Install the farm_api_test_allowed_resources, which allows view entities.
     $this->enableModules(['farm_api_test_allowed_resources']);
@@ -205,7 +205,7 @@ class FarmApiTest extends KernelTestBase {
     $this->apiRequest('/api/view/view');
 
     // Test that log entity type resources are now unavailable.
-    $this->apiRequest('/api/log/test', 'GET', [], 404);
+    $this->apiRequest('/api/log/test', 'GET', [], Response::HTTP_NOT_FOUND);
 
   }
 
