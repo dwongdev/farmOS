@@ -25,6 +25,6 @@ dependencies: []
 
 # Install modules and theme.
 install:
-  - dblog
+  - drupal:dblog
 themes:
   - claro
