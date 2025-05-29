@@ -22,11 +22,15 @@ Three default managed roles are provided with farmOS:
   changes. For example, if you need to share your farm records with an Organic
   Certifying Agent, you can give them a user account with the Viewer role.
 
-The "farmOS Account Admin Role" module provides another optional managed role
-called **Account Admin**, which has permission to add/edit/remove other users.
-This is useful in situations where an instance administrator wants to give
-someone the ability to set up other accounts, without giving them full admin
-access.
+In addition to the 3 roles described above, farmOS provides two higher-level
+administrative roles. These are useful in situations where the system
+administrator (with full Drupal admin access) wants to grant some additional
+permissions without giving full Drupal admin access (which has the potential to
+break things.)
+
+- **Config Admin** - Has access to change certain farmOS configuration options.
+- **Account Admin** - Has access to add/edit/remove other user accounts and
+  grant/revoke roles.
 
 Each of these roles is provided by a separate module that can be turned on/off
 individually.
