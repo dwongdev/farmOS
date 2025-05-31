@@ -1,3 +1,0 @@
-farm_role_account_admin:
-  permission_callbacks:
-    - Drupal\farm_role_account_admin\AccountAdminPermissions::permissions

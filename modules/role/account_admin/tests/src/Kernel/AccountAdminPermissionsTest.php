@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\Tests\farm_role_account_admin\Kernel;
+namespace Drupal\Tests\farm_account_admin\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\Tests\user\Traits\UserCreationTrait;
@@ -21,7 +21,7 @@ class AccountAdminPermissionsTest extends KernelTestBase {
    */
   protected static $modules = [
     'farm_role',
-    'farm_role_account_admin',
+    'farm_account_admin',
     'farm_role_roles',
     'farm_settings',
     'role_delegation',
@@ -35,7 +35,7 @@ class AccountAdminPermissionsTest extends KernelTestBase {
   protected function setUp():void {
     parent::setUp();
     $this->installEntitySchema('user');
-    $this->installConfig(['farm_role_account_admin', 'farm_role_roles']);
+    $this->installConfig(['farm_account_admin', 'farm_role_roles']);
   }
 
   /**
@@ -73,7 +73,7 @@ class AccountAdminPermissionsTest extends KernelTestBase {
     $this->assertFalse($user->hasPermission('assign farm_account_admin role'));
 
     // Enable the allow_peer_role_assignment setting.
-    $settings = \Drupal::configFactory()->getEditable('farm_role_account_admin.settings');
+    $settings = \Drupal::configFactory()->getEditable('farm_account_admin.settings');
     $settings->set('allow_peer_role_assignment', TRUE);
     $settings->save();
 

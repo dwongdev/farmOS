@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\farm_role_account_admin;
+namespace Drupal\farm_account_admin;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
@@ -68,7 +68,7 @@ class AccountAdminPermissions implements ContainerInjectionInterface {
     if ($role->id() == 'farm_account_admin') {
 
       // Load the module settings.
-      $settings = $this->configFactory->get('farm_role_account_admin.settings');
+      $settings = $this->configFactory->get('farm_account_admin.settings');
 
       // Grant the ability to assign managed farmOS roles.
       $roles = $this->managedRolePermissionsManager->getMangedRoles();

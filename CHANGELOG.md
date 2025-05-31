@@ -55,6 +55,7 @@ requirements (inherited from Drupal 11):
 - [Make farmOS API OAuth2 Server optional #973](https://github.com/farmOS/farmOS/pull/973)
 - [Make the farmOS API optional #974](https://github.com/farmOS/farmOS/pull/973)
 - [Move QuantityCsvNormalizer to farm_csv module #977](https://github.com/farmOS/farmOS/pull/977)
+- [The farm_account_admin role has moved to a new farm_account_admin module](https://www.drupal.org/node/3527786)
 
 ### Deprecated
 

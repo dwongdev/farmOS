@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\farm_role_account_admin\Form;
+namespace Drupal\farm_account_admin\Form;
 
 use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -20,7 +20,7 @@ class AccountAdminSettingsForm extends ConfigFormbase {
    *
    * @var string
    */
-  const SETTINGS = 'farm_role_account_admin.settings';
+  const SETTINGS = 'farm_account_admin.settings';
 
   /**
    * The cache tags invalidator.
@@ -56,7 +56,7 @@ class AccountAdminSettingsForm extends ConfigFormbase {
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'farm_role_account_admin_settings';
+    return 'farm_account_admin_settings';
   }
 
   /**

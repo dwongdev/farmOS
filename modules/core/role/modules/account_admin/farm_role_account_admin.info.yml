@@ -1,9 +1,9 @@
-name: farmOS Account Admin Role
-description: Provides an Account Admin role for managing users.
+name: farm_role_account_admin (deprecated)
+description: This module has moved to the farm_account_admin module.
 type: module
-package: farmOS
+package: farmOS (deprecated)
 core_version_requirement: ^11
+lifecycle: obsolete
+lifecycle_link: 'https://www.drupal.org/node/3527786'
 dependencies:
-  - farm:farm_role
-  - farm:farm_settings
-  - role_delegation:role_delegation
+  - farm:farm_account_admin

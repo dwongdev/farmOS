@@ -6,7 +6,7 @@ dependencies:
     - farm_settings
   enforced:
     module:
-      - farm_role_account_admin
+      - farm_account_admin
 third_party_settings:
   farm_role:
     access:

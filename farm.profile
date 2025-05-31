@@ -70,7 +70,6 @@ function farm_modules() {
       'farm_api_default_consumer' => t('Default API Consumer'),
       'farm_fieldkit' => t('Field Kit integration'),
       'farm_l10n' => t('Translation/localization features'),
-      'farm_role_account_admin' => t('Account Admin role'),
     ],
   ];
 }

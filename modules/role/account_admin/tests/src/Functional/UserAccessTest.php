@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\Tests\farm_role_account_admin\Functional;
+namespace Drupal\Tests\farm_account_admin\Functional;
 
 use Drupal\Tests\farm_test\Functional\FarmBrowserTestBase;
 
@@ -17,7 +17,7 @@ class UserAccessTest extends FarmBrowserTestBase {
    * {@inheritdoc}
    */
   protected static $modules = [
-    'farm_role_account_admin',
+    'farm_account_admin',
   ];
 
   /**
