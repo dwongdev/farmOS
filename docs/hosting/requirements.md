@@ -4,14 +4,17 @@
 For local development/testing, please refer to the
 [development environment](/development/environment) documentation.
 
+Docker is the recommended method of hosting farmOS because it encapsulates the
+web server requirements described below. For more information, refer to the
+[farmOS in Docker](/hosting/docker) documentation.
+
 ## Web server
 
 farmOS is based on [Drupal](https://drupal.org), and therefore shares many of
 the same [requirements](https://drupal.org/docs/system-requirements).
 
 In addition to Drupal's basic requirements, farmOS has the following server
-dependencies. The [farmOS Docker images](/hosting/install#farmos-in-docker)
-include these.
+dependencies. The [farmOS Docker images](/hosting/docker/) include these.
 
 - **PHP 8.3+**
 - **PHP configuration** - The following PHP settings are recommended:
@@ -43,8 +46,8 @@ Minimum version requirements:
 - MySQL/Percona 8.0+
 - SQLite 3.45+
 
-See [farmOS in Docker][#farmos-in-docker] below for an example configuration
-that runs a PostgreSQL database Docker container alongside a farmOS container.
+See [farmOS in Docker][/hosting/docker/] for an example configuration that runs
+a PostgreSQL database Docker container alongside a farmOS container.
 
 ## SSL
 

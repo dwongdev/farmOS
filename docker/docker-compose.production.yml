@@ -14,7 +14,7 @@ services:
     depends_on:
       - db
     # Update this to the latest stable version before deploying.
-    image: farmos/farmos:4.x.y
+    image: farmos/farmos:x.y.z
     volumes:
       - './sites:/opt/drupal/web/sites'
       - './keys:/opt/drupal/keys'

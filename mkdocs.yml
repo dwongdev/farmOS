@@ -62,6 +62,7 @@ nav:
     - Requirements: hosting/requirements.md
     - Installing: hosting/install.md
     - Updating: hosting/update.md
+    - Docker: hosting/docker.md
     - Composer: hosting/composer.md
     - Pre-built: hosting/prebuilt.md
     - Email: hosting/email.md

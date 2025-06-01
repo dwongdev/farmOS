@@ -3,9 +3,8 @@
 [Composer](https://getcomposer.org/) is the standard way to build and manage
 PHP-based projects and their dependencies. farmOS uses Composer in its
 automated build processes to generate packaged releases, including
-[Docker](/hosting/install/#farmos-in-docker) images and
-[pre-built](/hosting/prebuilt/) "packaged" releases. These "official" releases
-only include the core farmOS modules.
+[Docker](/hosting/docker/) images and [pre-built](/hosting/prebuilt/) "packaged"
+releases. These "official" releases only include the core farmOS modules.
 
 If you want to include additional modules that are created by yourself or
 others in the community, you may find that you need more control over the
@@ -250,5 +249,4 @@ needs.
     sudo docker build -t mycustomfarmos .
     sudo docker run --rm -it -p 80:80 -v $(pwd)/sites:/opt/drupal/web/sites mycustomfarmos
 
-See [Hosting farmOS in Docker](/hosting/install/#farmos-in-docker) for more
-information.
+See [Hosting farmOS in Docker](/hosting/docker/) for more information.

@@ -14,9 +14,8 @@ provides guidance for avoiding this.
 
 ## Docker
 
-The [farmOS Docker images](/hosting/install#farmos-in-docker) do not include an
-SMTP server, so you will see this error message when farmOS tries to send an
-email:
+The [farmOS Docker images](/hosting/docker/) do not include an SMTP server, so
+you will see this error message when farmOS tries to send an email:
 
 > Unable to send e-mail. Contact the site administrator if the problem persists.
 
