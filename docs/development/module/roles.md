@@ -55,7 +55,7 @@ configuration):
 third_party_settings:
   farm_role:
     access:
-      config: true
+      manager: true
       entity:
         view all: true
         create all: true

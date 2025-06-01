@@ -10,12 +10,12 @@ can be added/edited through the UI.
 
 Three default managed roles are provided with farmOS:
 
-- **Manager** - Has access to everything in farmOS. They can create, edit, and
-  delete records, and they can change configuration settings.
-- **Worker** - Has most of the same permissions as Managers, but cannot change
-  configuration, and can only delete records that they created. They cannot
-  delete records created by others, even if they are assigned to them. They also
-  cannot update or delete taxonomy terms.
+- **Manager** - Has access to all data in farmOS. They can create, edit, and
+  delete records, and they have access to some additional management features.
+- **Worker** - Has most of the same permissions as Managers, without access to
+  additional management features, and can only delete records that they created.
+  They cannot delete records created by others, even if they are assigned to
+  them. They also cannot update or delete taxonomy terms.
 - **Viewer** - Limited to viewing farmOS records - but they cannot edit, delete
   or change configuration. This role is useful if you want to share your farm's
   activities with someone, but you don't want to give them the ability to make
