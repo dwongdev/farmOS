@@ -25,7 +25,8 @@ images.
 
 - Pre-built "packaged" released only include a default "stock" farmOS codebase.
 - You are responsible for all [server requirements](/hosting/requirements).
-- Installing community add-on modules is more difficult.
+- Installing community add-on modules is more difficult (see
+  [Build your own](#build-your-own) for a suggested approach).
 - No support is provided by the farmOS maintainers.
 
 ## Overview
@@ -57,3 +58,12 @@ all files and directories.
 
 **Do not overwrite the `web/sites` directory, because it contains all your
 site-specific settings and uploaded files.**
+
+## Build your own
+
+If you want to install community add-on modules, but can't run Docker or
+Composer in your hosting environment, one approach is to build your own farmOS
+codebase locally with Composer and create your own tarball. This mimics the way
+the official pre-built "packaged" releases are created, but gives you more
+control over defining your own dependencies. For more information, see
+[Building farmOS with Composer](/hosting/composer).
