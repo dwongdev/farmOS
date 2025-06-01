@@ -1,5 +1,6 @@
 farm_setup:
   config_permissions:
     - access farm setup
+    - administer farm settings
   manager_permissions:
     - access farm setup
