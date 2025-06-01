@@ -82,7 +82,7 @@ class ManagedRolePermissionsTest extends KernelTestBase {
   public function testManagedRoleConfigAccess() {
 
     /** @var \Drupal\user\RoleInterface $role */
-    $role = Role::load('farm_test_manager');
+    $role = Role::load('farm_test_config');
 
     // Test that the role's config setting is TRUE.
     $this->assertNotEmpty($role->getThirdPartySetting('farm_role', 'access', FALSE));
@@ -99,9 +99,45 @@ class ManagedRolePermissionsTest extends KernelTestBase {
     $user->addRole('farm_test');
     $this->assertFalse($user->hasPermission('test config access permission'));
 
-    // Ensure the farm_test_manager role provides config access permissions.
-    $user->addRole('farm_test_manager');
+    // Ensure the farm_test_config role provides config access permissions.
+    $user->addRole('farm_test_config');
     $this->assertTrue($user->hasPermission('test config access permission'));
+
+    // Ensure the farm_test_config role does not provide manager access
+    // permissions.
+    $this->assertFalse($user->hasPermission('test manager access permission'));
+  }
+
+  /**
+   * Test that managed roles with manager access get manager permissions.
+   */
+  public function testManagedRoleManagerAccess() {
+
+    /** @var \Drupal\user\RoleInterface $role */
+    $role = Role::load('farm_test_manager');
+
+    // Test that the role's manager setting is TRUE.
+    $this->assertNotEmpty($role->getThirdPartySetting('farm_role', 'access', FALSE));
+    $access_settings = $role->getThirdPartySetting('farm_role', 'access');
+    $this->assertTrue(!empty($access_settings['manager']));
+
+    // Create a user.
+    $user = $this->setUpCurrentUser([], [], FALSE);
+
+    // Ensure the user does not have manager access permissions.
+    $this->assertFalse($user->hasPermission('test manager access permission'));
+
+    // Ensure the farm_test does not provide manager access permissions.
+    $user->addRole('farm_test');
+    $this->assertFalse($user->hasPermission('test manager access permission'));
+
+    // Ensure the farm_test_manager role provides manager access permissions.
+    $user->addRole('farm_test_manager');
+    $this->assertTrue($user->hasPermission('test manager access permission'));
+
+    // Ensure the farm_test_manager role does not provide config access
+    // permissions.
+    $this->assertFalse($user->hasPermission('test config access permission'));
   }
 
   /**

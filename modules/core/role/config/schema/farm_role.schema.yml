@@ -14,6 +14,9 @@ user.role.*.third_party.farm_role:
       type: mapping
       label: 'Access config'
       mapping:
+        manager:
+          type: boolean
+          label: 'Grant manager permissions'
         config:
           type: boolean
           label: 'Grant config permissions'
