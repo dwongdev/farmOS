@@ -13,13 +13,13 @@ use Drupal\simple_oauth\Plugin\ScopeGranularity\Role;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * The Managed Role Permissions scope granularity plugin.
+ * The Managed Role scope granularity plugin.
  */
 #[ScopeGranularity(
-  'managed_role_permissions',
-  new TranslatableMarkup('Managed Role Permissions'),
+  'managed_role',
+  new TranslatableMarkup('Managed Role'),
 )]
-class ManagedRolePermissions extends Role implements ContainerFactoryPluginInterface {
+class ManagedRole extends Role implements ContainerFactoryPluginInterface {
 
   public function __construct(
     array $configuration,

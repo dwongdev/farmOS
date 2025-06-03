@@ -67,7 +67,7 @@ class ScopeGranularityTest extends KernelTestBase {
     $scope = Oauth2Scope::create([
       'id' => $role_id,
       'name' => $role_id,
-      'granularity_id' => 'managed_role_permissions',
+      'granularity_id' => 'managed_role',
       'granularity_configuration' => [
         'role' => $role_id,
       ],

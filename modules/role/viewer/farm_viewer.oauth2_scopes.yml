@@ -8,6 +8,6 @@ farm_viewer:
       status: true
     refresh_token:
       status: true
-  granularity_id: 'managed_role_permissions'
+  granularity_id: 'managed_role'
   granularity_configuration:
     role: 'farm_viewer'
