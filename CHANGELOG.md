@@ -12,6 +12,12 @@ Update to the latest farmOS 3.x release before attempting to update to farmOS
 3.x branches have been removed. Updating to the latest release on the 3.x branch
 will ensure that all necessary changes have been applied before updating to 4.x.
 
+Please note that pre-built "packaged" releases of farmOS are no longer one of
+the recommended methods for hosting farmOS. They will still be generated with
+each release, but system administrators are encouraged to move to a deployment
+workflow that uses Docker and/or Composer. See the updated farmOS installation
+guide for more information.
+
 farmOS v4 updates Drupal to version 11. If you have built any add-on modules for
 farmOS, you will need to check that they are compatible with Drupal 11, and
 declare support in your `*.info.yml` file by changing `core_version_requirement`
