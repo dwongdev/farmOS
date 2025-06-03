@@ -106,7 +106,7 @@ class ManagedRolePermissionsManager extends DefaultPluginManager implements Mana
     }
     else {
       // Build permissions for the role.
-      $permissions = $this->getManagedPermissionsForRole($role);
+      $permissions = $this->getManagedRolePermissions($role);
     }
 
     return in_array($permission, $permissions);
@@ -121,7 +121,7 @@ class ManagedRolePermissionsManager extends DefaultPluginManager implements Mana
    * @return array
    *   Array of permissions for the managed role.
    */
-  protected function getManagedPermissionsForRole(RoleInterface $role) {
+  protected function getManagedRolePermissions(RoleInterface $role) {
 
     // Start list of permissions.
     $perms = [];
