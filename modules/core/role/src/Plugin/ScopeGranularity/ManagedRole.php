@@ -73,11 +73,9 @@ class ManagedRole extends Role implements ContainerFactoryPluginInterface {
    */
   protected function getRoleOptions(): array {
     $options = [];
-    $role_storage = $this->entityTypeManager->getStorage('user_role');
-    foreach ($role_storage->loadMultiple() as $role) {
+    foreach ($this->managedRolePermissionsManager->getMangedRoles() as $role) {
       $options[$role->id()] = $role->label();
     }
-
     return $options;
   }
 
