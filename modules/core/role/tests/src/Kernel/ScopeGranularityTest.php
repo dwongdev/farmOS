@@ -88,6 +88,7 @@ class ScopeGranularityTest extends KernelTestBase {
       'farm_test' => [
         'farm_test',
         [
+          'standard role permission',
           'default callback permission',
           'test default permission',
           'view any harvest log',

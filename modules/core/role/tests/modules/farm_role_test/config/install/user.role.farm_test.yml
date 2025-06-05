@@ -6,7 +6,8 @@ id: farm_test
 label: 'Test role for farm_role'
 weight: 1
 is_admin: false
-permissions: { }
+permissions:
+  - standard role permission
 third_party_settings:
   farm_role:
     access:

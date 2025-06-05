@@ -41,6 +41,24 @@ class ManagedRolePermissionsTest extends KernelTestBase {
   }
 
   /**
+   * Test that managed roles get standard role permissions.
+   */
+  public function testManagedRoleStandardPermissions() {
+
+    // Create a user.
+    $user = $this->setUpCurrentUser([], [], FALSE);
+
+    // Ensure the user does not have standard role permissions.
+    $this->assertFalse($user->hasPermission('standard role permission'));
+
+    // Add farm_test role.
+    $user->addRole('farm_test');
+
+    // Ensure the user has standard role permissions.
+    $this->assertTrue($user->hasPermission('standard role permission'));
+  }
+
+  /**
    * Test that managed roles get default permissions.
    */
   public function testManagedRoleDefaultAccess() {
