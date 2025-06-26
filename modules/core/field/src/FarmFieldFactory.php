@@ -48,12 +48,12 @@ class FarmFieldFactory implements FarmFieldFactoryInterface {
   /**
    * Builds a field definition with farmOS opinions.
    *
-   * @param \Drupal\Core\Field\BaseFieldDefinition &$field
+   * @param \Drupal\Core\Field\BaseFieldDefinition $field
    *   A base field definition object.
    * @param array $options
    *   An array of options.
    */
-  protected function buildFieldDefinition(BaseFieldDefinition &$field, array $options = []) {
+  protected function buildFieldDefinition(BaseFieldDefinition $field, array $options = []) {
 
     // Set label.
     if (!empty($options['label'])) {
