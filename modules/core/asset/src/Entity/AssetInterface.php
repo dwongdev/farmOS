@@ -74,7 +74,7 @@ interface AssetInterface extends ContentEntityInterface, EntityChangedInterface,
   public function setArchivedTime($timestamp);
 
   /**
-   * Gets the label of the the asset type.
+   * Gets the label of the asset type.
    *
    * @return string
    *   The label of the asset type.
