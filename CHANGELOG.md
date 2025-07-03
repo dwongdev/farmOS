@@ -29,8 +29,8 @@ fixed. See
 [farmOS coding standards](https://farmos.org/development/environment/code/) for
 more information.
 
-Drupal 11 requires PHP 8.3+, and has the following minimum database version
-requirements:
+farmOS v3 requires PHP 8.4, and has the following minimum database version
+requirements (inherited from Drupal 11):
 
 - PostgreSQL 16+
 - MariaDB 10.6+
@@ -48,7 +48,7 @@ requirements:
 
 ### Changed
 
-- farmOS 4.x requires PHP 8.3+.
+- [farmOS 4.x requires PHP 8.4 #979](https://github.com/farmOS/farmOS/pull/979)
 - [Issue #3488916: Update Drupal core to 11.x](https://www.drupal.org/project/farm/issues/3488916)
 - [Convert equipment to a base field #956](https://github.com/farmOS/farmOS/pull/956)
 - [Convert quick to a base field #957](https://github.com/farmOS/farmOS/pull/957)
