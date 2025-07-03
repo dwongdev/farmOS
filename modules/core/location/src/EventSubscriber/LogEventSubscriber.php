@@ -264,7 +264,7 @@ class LogEventSubscriber implements EventSubscriberInterface {
     }
 
     // If updating an existing 'done' movement log, invalidate the cache.
-    // This catches any movement logs changing from done to pending.
+    // This catches any movement logs changing from done to another status.
     if (!empty($log->original) && $this->isActiveMovementLog($log->original)) {
       $update_asset_cache = TRUE;
     }

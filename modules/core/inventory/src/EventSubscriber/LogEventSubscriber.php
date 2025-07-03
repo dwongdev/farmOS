@@ -95,7 +95,7 @@ class LogEventSubscriber implements EventSubscriberInterface {
     }
 
     // If updating an existing inventory log, invalidate the cache.
-    // This catches inventory logs changing from done to pending.
+    // This catches inventory logs changing from done to another status.
     if (!empty($log->original) && $this->isActiveQuantityLog($log->original)) {
       $update_asset_cache = TRUE;
     }

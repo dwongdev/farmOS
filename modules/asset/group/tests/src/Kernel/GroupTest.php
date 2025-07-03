@@ -174,7 +174,60 @@ class GroupTest extends KernelTestBase {
     // Assert that the animal's cache tags were not invalidated.
     $this->assertEntityTestCache($animal, TRUE);
 
+    // Create an "abandoned" log that assigns the animal to the second group
+    // and confirm that it still has the same group membership as before.
+    /** @var \Drupal\log\Entity\LogInterface $abandoned_log */
+    $abandoned_log = Log::create([
+      'type' => 'test',
+      'status' => 'abandoned',
+      'is_group_assignment' => TRUE,
+      'group' => ['target_id' => $second_group->id()],
+      'asset' => ['target_id' => $animal->id()],
+    ]);
+    $abandoned_log->save();
+    $this->assertEquals($first_group->id(), $this->groupMembership->getGroup($animal)[0]->id(), 'Abandoned group assignment logs do not affect membership.');
+    $this->assertCorrectAssets([], $this->groupMembership->getGroupMembers([$second_group]), TRUE, 'Groups with only abandoned membership have zero members.');
+
+    // Assert that the animal's cache tags were not invalidated.
+    $this->assertEntityTestCache($animal, TRUE);
+
+    // Change the pending log's status to "abandoned" and confirm that the group
+    // membership is still unchanged.
+    $second_log->set('status', 'abandoned');
+    $second_log->save();
+    $this->assertEquals($first_group->id(), $this->groupMembership->getGroup($animal)[0]->id(), 'Abandoned group assignment logs do not affect membership.');
+    $this->assertCorrectAssets([], $this->groupMembership->getGroupMembers([$second_group]), TRUE, 'Groups with only abandoned membership logs have zero members.');
+
+    // Assert that the animal's cache tags were not invalidated.
+    $this->assertEntityTestCache($animal, TRUE);
+
     // When the log is marked as "done", the asset's membership is updated.
+    $second_log->set('status', 'done');
+    $second_log->save();
+    $this->assertEquals($second_group->id(), $this->groupMembership->getGroup($animal)[0]->id(), 'A second group assignment log updates group membership.');
+    $this->assertCorrectAssets([$animal], $this->groupMembership->getGroupMembers([$second_group]), TRUE, 'Completed group assignment logs add group members.');
+
+    // Assert that the animal's cache tags were invalidated.
+    $this->assertEntityTestCache($animal, FALSE);
+
+    // Re-populate a cache value dependent on the animal's cache tags.
+    $this->populateEntityTestCache($animal);
+
+    // When a log is changed from "done" to "abandoned", the asset's membership
+    // is reverted to what it was previously.
+    $second_log->set('status', 'abandoned');
+    $second_log->save();
+    $this->assertEquals($first_group->id(), $this->groupMembership->getGroup($animal)[0]->id(), 'Abandoned group assignment logs do not affect membership.');
+    $this->assertCorrectAssets([], $this->groupMembership->getGroupMembers([$second_group]), TRUE, 'Groups with only abandoned membership logs have zero members.');
+
+    // Assert that the animal's cache tags were invalidated.
+    $this->assertEntityTestCache($animal, FALSE);
+
+    // Re-populate a cache value dependent on the animal's cache tags.
+    $this->populateEntityTestCache($animal);
+
+    // When a log is changed from "abandoned" to "done", the asset's membership
+    // is updated.
     $second_log->set('status', 'done');
     $second_log->save();
     $this->assertEquals($second_group->id(), $this->groupMembership->getGroup($animal)[0]->id(), 'A second group assignment log updates group membership.');

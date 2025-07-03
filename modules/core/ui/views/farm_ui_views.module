@@ -41,7 +41,7 @@ function farm_ui_views_help($route_name, RouteMatchInterface $route_match) {
 
   // Logs View.
   if ($route_name == $entity_routes['log']) {
-    $output .= '<p>' . t('Logs represent events that take place in relation to <a href=":assets">assets</a> and other records. They have a timestamp to represent when they take place, and can be marked as "Pending" or "Done" for planning purposes.', [':assets' => $entity_urls['asset']]) . '</p>';
+    $output .= '<p>' . t('Logs represent events that take place in relation to <a href=":assets">assets</a> and other records. They have a timestamp to represent when they take place, and a status to designate that they are "Done", "Pending", or "Abandoned".', [':assets' => $entity_urls['asset']]) . '</p>';
     $output .= '<p>' . t('Logs can be assigned to <a href=":people">people</a> for task management purposes.', [':people' => $entity_urls['people']]) . '</p>';
   }
 

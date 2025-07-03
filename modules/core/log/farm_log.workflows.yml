@@ -7,12 +7,18 @@ farm_log_workflow:
       label: Done
     pending:
       label: Pending
+    abandoned:
+      label: Abandoned
   transitions:
     done:
       label: 'Done'
-      from: [pending]
+      from: [pending, abandoned]
       to: done
     to_pending:
       label: 'Move to Pending'
-      from: [done]
+      from: [done, abandoned]
       to: pending
+    to_abandoned:
+      label: 'Abandon'
+      from: [done, pending]
+      to: abandoned

@@ -318,7 +318,59 @@ class LocationTest extends KernelTestBase {
     // Assert that the asset's cache tags were not invalidated.
     $this->assertEntityTestCache($asset, TRUE);
 
+    // Create an "abandoned" log that references the asset.
+    /** @var \Drupal\log\Entity\LogInterface $abandoned_log */
+    $abandoned_log = Log::create([
+      'type' => 'movement',
+      'status' => 'abandoned',
+      'asset' => ['target_id' => $asset->id()],
+      'location' => ['target_id' => $this->locations[2]->id()],
+      'is_movement' => TRUE,
+    ]);
+    $abandoned_log->save();
+    $this->assertEquals($this->logLocation->getLocation($first_log), $this->assetLocation->getLocation($asset), 'Asset with abandoned movement log has original location');
+    $this->assertEquals($this->logLocation->getGeometry($first_log), $this->assetLocation->getGeometry($asset), 'Asset with abandoned movement log has original geometry.');
+
+    // Assert that the asset's cache tags were not invalidated.
+    $this->assertEntityTestCache($asset, TRUE);
+
+    // Change the pending log's status to "abandoned" and confirm that the asset
+    // location is still unchanged.
+    $second_log->set('status', 'abandoned');
+    $second_log->save();
+    $this->assertEquals($this->logLocation->getLocation($first_log), $this->assetLocation->getLocation($asset), 'Asset with abandoned movement log has original location');
+    $this->assertEquals($this->logLocation->getGeometry($first_log), $this->assetLocation->getGeometry($asset), 'Asset with abandoned movement log has original geometry.');
+
+    // Assert that the asset's cache tags were not invalidated.
+    $this->assertEntityTestCache($asset, TRUE);
+
     // When the log is marked as "done", the asset location is updated.
+    $second_log->set('status', 'done');
+    $second_log->save();
+    $this->assertEquals($this->logLocation->getLocation($second_log), $this->assetLocation->getLocation($asset), 'Asset with second movement log has new location');
+    $this->assertEquals($this->logLocation->getGeometry($second_log), $this->assetLocation->getGeometry($asset), 'Asset with second movement log has new geometry.');
+
+    // Assert that the asset's cache tags were invalidated.
+    $this->assertEntityTestCache($asset, FALSE);
+
+    // Re-populate a cache value dependent on the asset's cache tags.
+    $this->populateEntityTestCache($asset);
+
+    // When a log is changed from "done" to "abandoned", the asset's location
+    // is reverted to what it was previously.
+    $second_log->set('status', 'abandoned');
+    $second_log->save();
+    $this->assertEquals($this->logLocation->getLocation($first_log), $this->assetLocation->getLocation($asset), 'Asset with abandoned movement log has original location');
+    $this->assertEquals($this->logLocation->getGeometry($first_log), $this->assetLocation->getGeometry($asset), 'Asset with abandoned movement log has original geometry.');
+
+    // Assert that the asset's cache tags were invalidated.
+    $this->assertEntityTestCache($asset, FALSE);
+
+    // Re-populate a cache value dependent on the asset's cache tags.
+    $this->populateEntityTestCache($asset);
+
+    // When a log is changed from "abandoned" to "done", the asset's location
+    // is updated.
     $second_log->set('status', 'done');
     $second_log->save();
     $this->assertEquals($this->logLocation->getLocation($second_log), $this->assetLocation->getLocation($asset), 'Asset with second movement log has new location');

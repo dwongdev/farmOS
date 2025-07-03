@@ -36,9 +36,8 @@ clicking on a location and then clicking on the available links within the
 Asset details popup.
 
 Below the map you will see "Upcoming tasks" and "Late tasks" on the left, which
-summarize Logs that are still in "pending" status. From here you can quickly
-select Logs and mark them as "done", reschedule them, clone them, or delete
-them.
+summarize Logs that have a "pending" status. From here you can quickly select
+Logs and mark them as "done", reschedule them, clone them, or delete them.
 
 To the right you will see a summary of various farm metrics, including total
 Asset and Log counts. Additional metrics can be added via modules.

@@ -1,5 +1,10 @@
 # API Changes
 
+## 4.x vs 3.x
+
+- Logs can now have a status of `abandoned`, in addition to the existing `done`
+  and `pending`.
+
 ## 3.x vs 2.x
 
 The [Simple OAuth](https://www.drupal.org/project/simple_oauth) module has been

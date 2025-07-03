@@ -128,6 +128,6 @@ third_party_settings:
       - name: is movement
         description: Whether this log represents an asset movement. Accepts most boolean values. Leave this blank to use the default for this log type.
       - name: status
-        description: 'Status of the log. Allowed values: pending, done. Defaults to done.'
+        description: 'Status of the log. Allowed values: pending, done, abandoned. Defaults to done.'
 
 deriver: \Drupal\farm_import_csv\Plugin\Derivative\CsvImportMigrationLog

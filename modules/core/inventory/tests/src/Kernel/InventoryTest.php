@@ -117,9 +117,22 @@ class InventoryTest extends KernelTestBase {
     $this->populateEntityTestCache($asset);
 
     // Decrement the inventory by 1.
-    $this->adjustInventory($asset, 'decrement', '1');
+    $log = $this->adjustInventory($asset, 'decrement', '1');
     $inventory = $this->assetInventory->getInventory($asset);
     $this->assertEquals('5', $inventory[0]['value'], 'Asset inventory is 5.');
+
+    // Assert that the asset's cache tags were invalidated.
+    $this->assertEntityTestCache($asset, FALSE);
+
+    // Re-populate a cache value dependent on the asset's cache tags.
+    $this->populateEntityTestCache($asset);
+
+    // Change the previous log's status to "abandoned", and confirm that it
+    // resets the inventory back to 6.
+    $log->set('status', 'abandoned');
+    $log->save();
+    $inventory = $this->assetInventory->getInventory($asset);
+    $this->assertEquals('6', $inventory[0]['value'], 'Asset inventory is 6.');
 
     // Assert that the asset's cache tags were invalidated.
     $this->assertEntityTestCache($asset, FALSE);
@@ -140,9 +153,28 @@ class InventoryTest extends KernelTestBase {
 
     // Add a pending adjustment, and confirm that it does not affect the current
     // inventory.
-    $this->adjustInventory($asset, 'increment', '1', '', NULL, NULL, 'pending');
+    $log = $this->adjustInventory($asset, 'increment', '1', '', NULL, NULL, 'pending');
     $inventory = $this->assetInventory->getInventory($asset);
     $this->assertEquals('0', $inventory[0]['value'], 'Pending adjustments do not affect inventory.');
+
+    // Assert that the asset's cache tags were not invalidated.
+    $this->assertEntityTestCache($asset, TRUE);
+
+    // Change the pending log's status to "abandoned", and confirm that it does
+    // not affect the current inventory.
+    $log->set('status', 'abandoned');
+    $log->save();
+    $inventory = $this->assetInventory->getInventory($asset);
+    $this->assertEquals('0', $inventory[0]['value'], 'Pending adjustments do not affect inventory.');
+
+    // Assert that the asset's cache tags were not invalidated.
+    $this->assertEntityTestCache($asset, TRUE);
+
+    // Add an abandoned adjustment, and confirm that it does not affect the
+    // current inventory.
+    $this->adjustInventory($asset, 'increment', '1', '', NULL, NULL, 'abandoned');
+    $inventory = $this->assetInventory->getInventory($asset);
+    $this->assertEquals('0', $inventory[0]['value'], 'Abandoned adjustments do not affect inventory.');
 
     // Assert that the asset's cache tags were not invalidated.
     $this->assertEntityTestCache($asset, TRUE);
