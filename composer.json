@@ -35,7 +35,7 @@
         "drupal/inspire_tree": "^1.0.6",
         "drupal/jsonapi_schema": "^1.0",
         "drupal/log": "^2.3.1",
-        "drupal/migrate_plus": "^6.0.5",
+        "drupal/migrate_plus": "6.0.5",
         "drupal/migrate_source_csv": "^3.6",
         "drupal/migrate_source_ui": "^1.1",
         "drupal/migrate_tools": "^6.0.5",
@@ -73,6 +73,9 @@
             },
             "drupal/gin": {
                 "Issue #3342164: Remove implicit dependency on node module for gin content form.": "https://www.drupal.org/files/issues/2024-01-15/3342164-6.patch"
+            },
+            "drupal/migrate_plus": {
+                "Issue #3508679: PHP 8.4 implicit nullable deprecation": "https://www.drupal.org/files/issues/2025-04-10/migrate_plus-3508679.patch"
             },
             "itamair/geophp": {
                 "Use BCMath (where available) for all float arithmetic #115": "https://patch-diff.githubusercontent.com/raw/phayes/geoPHP/pull/115.patch"
