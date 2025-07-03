@@ -20,7 +20,7 @@
         "drupal/admin_toolbar": "^3.5",
         "drupal/core": "11.1.7",
         "drupal/config_update": "^2.0@alpha",
-        "drupal/consumers": "^1.19",
+        "drupal/consumers": "1.19",
         "drupal/csv_serialization": "^4.0.1",
         "drupal/date_popup": "^2.0",
         "drupal/entity": "1.6",
@@ -56,6 +56,9 @@
             "drupal/core": "-p2"
         },
         "patches": {
+            "drupal/consumers": {
+                "Issue #3496751: PHP 8.4: Implicitly nullable parameter declarations deprecated": "https://www.drupal.org/files/issues/2025-05-08/consumers-php8.4-3496751.patch"
+            },
             "drupal/core": {
                 "Issue #2339235: Remove taxonomy hard dependency on node module": "https://www.drupal.org/files/issues/2025-03-31/2339235-11.1.x-93.patch",
                 "Issue #1874838: Allow exposed blocks to use 'Link display' settings": "https://www.drupal.org/files/issues/2021-11-11/1874838-26.patch",
