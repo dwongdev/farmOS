@@ -2,7 +2,7 @@ name: Organization
 description: Provides an organization entity type for real world record keeping.
 type: module
 package: Organization
-core_version_requirement: ^10
+core_version_requirement: ^11
 dependencies:
   - drupal:system
   - drupal:user
