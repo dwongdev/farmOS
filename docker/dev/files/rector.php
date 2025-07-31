@@ -64,11 +64,11 @@ return static function (RectorConfig $rectorConfig): void {
     // farmOS attributes.
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'AssetType', 'Drupal\farm_entity\Attribute\AssetType'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'DataStreamType', 'Drupal\data_stream\Attribute\DataStreamType'),
-    new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'LogType', 'Drupal\log\Attribute\LogType'),
+    new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'LogType', 'Drupal\farm_entity\Attribute\LogType'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'NotificationCondition', 'Drupal\data_stream_notification\Attribute\NotificationCondition'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'NotificationDelivery', 'Drupal\data_stream_notification\Attribute\NotificationDelivery'),
-    new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'PlanType', 'Drupal\plan\Attribute\PlanType'),
-    new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'QuantityType', 'Drupal\plan\Attribute\QuantityType'),
+    new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'PlanType', 'Drupal\farm_entity\Attribute\PlanType'),
+    new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'QuantityType', 'Drupal\farm_entity\Attribute\QuantityType'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'QuickForm', 'Drupal\farm_quick\Attribute\QuickForm'),
   ]);
 };
