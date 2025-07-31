@@ -3,8 +3,14 @@ plan_default:
   group: plan
   label: 'Default'
   states:
+    planning:
+      label: Planning
     active:
       label: Active
+    done:
+      label: Done
+    abandoned:
+      label: Abandoned
     archived:
       label: Archived
   transitions:
@@ -12,7 +18,19 @@ plan_default:
       label: 'Archive'
       from: [active]
       to: archived
+    to_planning:
+      label: 'To Planning'
+      from: [archived, active, done, abandoned]
+      to: planning
     to_active:
-      label: 'Make active'
-      from: [archived]
+      label: 'To active'
+      from: [archived, planning, done, abandoned]
       to: active
+    to_done:
+      label: 'To done'
+      from: [archived, planning, active, abandoned]
+      to: done
+    to_abandoned:
+      label: 'To abandoned'
+      from: [archived, planning, active, done]
+      to: abandoned
