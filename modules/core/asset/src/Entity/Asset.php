@@ -146,14 +146,14 @@ class Asset extends RevisionableContentEntityBase implements AssetInterface {
    * {@inheritdoc}
    */
   public function getArchivedTime() {
-    return $this->get('archived')->value;
+    return $this->get('last_archived')->value;
   }
 
   /**
    * {@inheritdoc}
    */
   public function setArchivedTime($timestamp) {
-    $this->set('archived', $timestamp);
+    $this->set('last_archived', $timestamp);
     return $this;
   }
 
@@ -277,6 +277,11 @@ class Asset extends RevisionableContentEntityBase implements AssetInterface {
     $fields['archived'] = BaseFieldDefinition::create('timestamp')
       ->setLabel(t('Timestamp'))
       ->setDescription(t('The time the asset was archived.'))
+      ->setRevisionable(TRUE);
+
+    $fields['last_archived'] = BaseFieldDefinition::create('timestamp')
+      ->setLabel(t('Last Archived'))
+      ->setDescription(t('The time the asset was last archived.'))
       ->setRevisionable(TRUE);
 
     return $fields;
