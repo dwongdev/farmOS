@@ -15,7 +15,6 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Sql\SqlContentEntityStorage;
 use Drupal\Core\Language\LanguageManagerInterface;
-use Drupal\state_machine\Plugin\Field\FieldType\StateItemInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -89,42 +88,36 @@ class AssetStorage extends SqlContentEntityStorage {
       return $id;
     }
 
-    // Assert field type for PHPStan checks.
-    assert($entity->get('status')->first() instanceof StateItemInterface);
+    // Load new and original archived state to see if it is changed.
+    $archived = $entity->get('archived')->value;
+    $original_archived = $entity->original->get('archived')->value;
+    $archived_changed = $archived != $original_archived;
 
-    // Load new and original states.
-    $new_state = $entity->get('status')->first()->getString();
-    $old_state = $entity->original->get('status')->first()->getString();
-
-    $state_unchanged = $new_state == $old_state;
-
-    // If the entity is not archived and this would otherwise not be a state
-    // transition but the archive timestamp is set, then transition to the
-    // archived state.
-    if ($state_unchanged && $old_state != 'archived' && $entity->getArchivedTime() != NULL) {
-      $entity->get('status')->first()->applyTransitionById('archive');
+    // If the original asset is not archived, and the archived state is not
+    // changing, but the archived timestamp is set, then archive the asset.
+    if (!$original_archived && !$archived_changed && $entity->getArchivedTime() != NULL) {
+      $entity->set('archived', TRUE);
     }
 
-    // If the entity is archived and this would otherwise not be a state
-    // transition but the archive timestemp is NULL, then transition to the
-    // active state.
-    if ($state_unchanged && $old_state == 'archived' && $entity->getArchivedTime() == NULL) {
-      $entity->get('status')->first()->applyTransitionById('to_active');
+    // If the original asset is archived, and the archived state is not
+    // changing, but the archived timestamp is NULL, then unarchive the asset.
+    if ($original_archived && !$archived_changed && $entity->getArchivedTime() == NULL) {
+      $entity->set('archived', FALSE);
     }
 
-    // If the state has not changed, bail.
-    if ($state_unchanged) {
+    // If the archived state has not changed, bail.
+    if (!$archived_changed) {
       return $id;
     }
 
-    // If the state has changed to archived and no archived timestamp was
+    // If the archived state has changed to TRUE and no archived timestamp was
     // specified, set it to the current time.
-    if ($new_state == 'archived' && $entity->getArchivedTime() == NULL) {
+    if ($archived && $entity->getArchivedTime() == NULL) {
       $entity->setArchivedTime($this->time->getRequestTime());
     }
 
-    // Or, if the state has changed from archived, set a null value.
-    elseif ($old_state == 'archived') {
+    // Or, if the archived state has changed from archived, set a null value.
+    elseif ($original_archived) {
       $entity->setArchivedTime(NULL);
     }
 

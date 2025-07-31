@@ -6,7 +6,6 @@ namespace Drupal\Tests\asset\Functional;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\asset\Entity\Asset;
-use Drupal\state_machine\Plugin\Field\FieldType\StateItemInterface;
 
 /**
  * Tests the asset CRUD.
@@ -131,29 +130,26 @@ class AssetCRUDTest extends AssetTestBase {
     $asset = $this->createAssetEntity();
     $asset->save();
 
-    // Assert field type for PHPStan checks.
-    $this->assertInstanceOf(StateItemInterface::class, $asset->get('status')->first());
-
-    $this->assertEquals($asset->get('status')->first()->getString(), 'active', 'New assets are active by default');
+    $this->assertFalse($asset->get('archived')->value, 'New assets are not archived by default');
     $this->assertNull($asset->getArchivedTime(), 'Archived timestamp is null by default');
 
-    $asset->get('status')->first()->applyTransitionById('archive');
+    $asset->set('archived', TRUE);
     $asset->save();
 
-    $this->assertEquals($asset->get('status')->first()->getString(), 'archived', 'Assets can be archived');
+    $this->assertTrue($asset->get('archived')->value, 'Assets can be archived');
     $this->assertNotNull($asset->getArchivedTime(), 'Archived timestamp is saved');
 
-    $asset->get('status')->first()->applyTransitionById('to_active');
+    $asset->set('archived', FALSE);
     $asset->save();
 
-    $this->assertEquals($asset->get('status')->first()->getString(), 'active', 'Assets can be made active');
-    $this->assertNull($asset->getArchivedTime(), 'Asset made active has a null timestamp');
+    $this->assertFalse($asset->get('archived')->value, 'Assets can be unarchived');
+    $this->assertNull($asset->getArchivedTime(), 'Unarchived assets have a null timestamp');
 
-    $asset->get('status')->first()->applyTransitionById('archive');
+    $asset->set('archived', TRUE);
     $asset->setArchivedTime('2021-07-17T19:45:49+00:00');
     $asset->save();
 
-    $this->assertEquals($asset->get('status')->first()->getString(), 'archived', 'Assets can be archived with explicit timestamp');
+    $this->assertTrue($asset->get('archived')->value, 'Assets can be archived with explicit timestamp');
     $this->assertEquals($asset->getArchivedTime(), '2021-07-17T19:45:49+00:00', 'Explicit archived timestamp is saved');
   }
 
@@ -164,20 +160,20 @@ class AssetCRUDTest extends AssetTestBase {
     $asset = $this->createAssetEntity();
     $asset->save();
 
-    $this->assertEquals($asset->get('status')->first()->getString(), 'active', 'New assets are active by default');
+    $this->assertFalse($asset->get('archived')->value, 'New assets are not archived by default');
     $this->assertNull($asset->getArchivedTime(), 'Archived timestamp is null by default');
 
     $asset->setArchivedTime('2021-07-17T19:45:49+00:00');
     $asset->save();
 
-    $this->assertEquals($asset->get('status')->first()->getString(), 'archived', 'Assets can be archived');
+    $this->assertTrue($asset->get('archived')->value, 'Assets can be archived');
     $this->assertEquals($asset->getArchivedTime(), '2021-07-17T19:45:49+00:00', 'Archived timestamp is saved');
 
     $asset->setArchivedTime(NULL);
     $asset->save();
 
-    $this->assertEquals($asset->get('status')->first()->getString(), 'active', 'Assets can be made active');
-    $this->assertNull($asset->getArchivedTime(), 'Asset made active has a null timestamp');
+    $this->assertFalse($asset->get('archived')->value, 'Assets can be unarchived');
+    $this->assertNull($asset->getArchivedTime(), 'Unarchived asset has a null timestamp');
   }
 
 }
