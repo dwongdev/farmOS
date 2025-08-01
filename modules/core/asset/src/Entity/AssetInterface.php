@@ -59,6 +59,12 @@ interface AssetInterface extends ContentEntityInterface, EntityChangedInterface,
    *
    * @return int
    *   Archived timestamp of the asset.
+   *
+   * @deprecated in farm:4.0.0 and is removed from farm:5.0.0.
+   *   The last_archived field will be removed from assets and all data in it
+   *   will be deleted in farmOS 5.x. Users are encouraged to decide if they
+   *   need this information and migrate it to another place.
+   * @see https://www.drupal.org/node/3539444
    */
   public function getArchivedTime();
 
@@ -70,6 +76,12 @@ interface AssetInterface extends ContentEntityInterface, EntityChangedInterface,
    *
    * @return \Drupal\asset\Entity\AssetInterface
    *   The asset entity.
+   *
+   * @deprecated in farm:4.0.0 and is removed from farm:5.0.0.
+   *   The last_archived field will be removed from assets and all data in it
+   *   will be deleted in farmOS 5.x. Users are encouraged to decide if they
+   *   need this information and migrate it to another place.
+   * @see https://www.drupal.org/node/3539444
    */
   public function setArchivedTime($timestamp);
 

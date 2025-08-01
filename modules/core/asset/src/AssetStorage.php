@@ -95,13 +95,13 @@ class AssetStorage extends SqlContentEntityStorage {
 
     // If the original asset is not archived, and the archived state is not
     // changing, but the archived timestamp is set, then archive the asset.
-    if (!$original_archived && !$archived_changed && $entity->getArchivedTime() != NULL) {
+    if (!$original_archived && !$archived_changed && $entity->get('last_archived')->value != NULL) {
       $entity->set('archived', TRUE);
     }
 
     // If the original asset is archived, and the archived state is not
     // changing, but the archived timestamp is NULL, then unarchive the asset.
-    if ($original_archived && !$archived_changed && $entity->getArchivedTime() == NULL) {
+    if ($original_archived && !$archived_changed && $entity->get('last_archived')->value == NULL) {
       $entity->set('archived', FALSE);
     }
 
@@ -112,13 +112,13 @@ class AssetStorage extends SqlContentEntityStorage {
 
     // If the archived state has changed to TRUE and no archived timestamp was
     // specified, set it to the current time.
-    if ($archived && $entity->getArchivedTime() == NULL) {
-      $entity->setArchivedTime($this->time->getRequestTime());
+    if ($archived && $entity->get('last_archived')->value == NULL) {
+      $entity->set('last_archived', $this->time->getRequestTime());
     }
 
     // Or, if the archived state has changed from archived, set a null value.
     elseif ($original_archived) {
-      $entity->setArchivedTime(NULL);
+      $entity->set('last_archived', NULL);
     }
 
     return $id;

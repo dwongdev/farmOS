@@ -130,26 +130,26 @@ class AssetCRUDTest extends AssetTestBase {
     $asset->save();
 
     $this->assertFalse($asset->get('archived')->value, 'New assets are not archived by default');
-    $this->assertNull($asset->getArchivedTime(), 'Archived timestamp is null by default');
+    $this->assertNull($asset->get('last_archived')->value, 'Archived timestamp is null by default');
 
     $asset->set('archived', TRUE);
     $asset->save();
 
     $this->assertTrue($asset->get('archived')->value, 'Assets can be archived');
-    $this->assertNotNull($asset->getArchivedTime(), 'Archived timestamp is saved');
+    $this->assertNotNull($asset->get('last_archived')->value, 'Archived timestamp is saved');
 
     $asset->set('archived', FALSE);
     $asset->save();
 
     $this->assertFalse($asset->get('archived')->value, 'Assets can be unarchived');
-    $this->assertNull($asset->getArchivedTime(), 'Unarchived assets have a null timestamp');
+    $this->assertNull($asset->get('last_archived')->value, 'Unarchived assets have a null timestamp');
 
     $asset->set('archived', TRUE);
-    $asset->setArchivedTime('2021-07-17T19:45:49+00:00');
+    $asset->set('last_archived', '2021-07-17T19:45:49+00:00');
     $asset->save();
 
     $this->assertTrue($asset->get('archived')->value, 'Assets can be archived with explicit timestamp');
-    $this->assertEquals($asset->getArchivedTime(), '2021-07-17T19:45:49+00:00', 'Explicit archived timestamp is saved');
+    $this->assertEquals($asset->get('last_archived')->value, '2021-07-17T19:45:49+00:00', 'Explicit archived timestamp is saved');
   }
 
   /**
@@ -160,19 +160,19 @@ class AssetCRUDTest extends AssetTestBase {
     $asset->save();
 
     $this->assertFalse($asset->get('archived')->value, 'New assets are not archived by default');
-    $this->assertNull($asset->getArchivedTime(), 'Archived timestamp is null by default');
+    $this->assertNull($asset->get('last_archived')->value, 'Archived timestamp is null by default');
 
-    $asset->setArchivedTime('2021-07-17T19:45:49+00:00');
+    $asset->set('last_archived', '2021-07-17T19:45:49+00:00');
     $asset->save();
 
     $this->assertTrue($asset->get('archived')->value, 'Assets can be archived');
-    $this->assertEquals($asset->getArchivedTime(), '2021-07-17T19:45:49+00:00', 'Archived timestamp is saved');
+    $this->assertEquals($asset->get('last_archived')->value, '2021-07-17T19:45:49+00:00', 'Archived timestamp is saved');
 
-    $asset->setArchivedTime(NULL);
+    $asset->set('last_archived', NULL);
     $asset->save();
 
     $this->assertFalse($asset->get('archived')->value, 'Assets can be unarchived');
-    $this->assertNull($asset->getArchivedTime(), 'Unarchived asset has a null timestamp');
+    $this->assertNull($asset->get('last_archived')->value, 'Unarchived asset has a null timestamp');
   }
 
 }
