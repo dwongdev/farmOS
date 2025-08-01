@@ -21,7 +21,6 @@ use Drupal\entity\UncacheableEntityAccessControlHandler;
 use Drupal\entity\UncacheableEntityPermissionProvider;
 use Drupal\plan\Form\PlanForm;
 use Drupal\plan\PlanListBuilder;
-use Drupal\plan\PlanStorage;
 use Drupal\user\EntityOwnerTrait;
 use Drupal\views\EntityViewsData;
 
@@ -46,7 +45,6 @@ use Drupal\views\EntityViewsData;
     'langcode' => 'langcode',
   ],
   handlers: [
-    'storage' => PlanStorage::class,
     'access' => UncacheableEntityAccessControlHandler::class,
     'list_builder' => PlanListBuilder::class,
     'permission_provider' => UncacheableEntityPermissionProvider::class,
@@ -139,21 +137,6 @@ class Plan extends RevisionableContentEntityBase implements PlanInterface {
    */
   public function setCreatedTime($timestamp) {
     $this->set('created', $timestamp);
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getArchivedTime() {
-    return $this->get('archived')->value;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setArchivedTime($timestamp) {
-    $this->set('archived', $timestamp);
     return $this;
   }
 

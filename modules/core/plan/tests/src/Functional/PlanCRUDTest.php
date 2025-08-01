@@ -6,7 +6,6 @@ namespace Drupal\Tests\plan\Functional;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\plan\Entity\Plan;
-use Drupal\state_machine\Plugin\Field\FieldType\StateItemInterface;
 
 /**
  * Tests the plan CRUD.
@@ -26,8 +25,6 @@ class PlanCRUDTest extends PlanTestBase {
     $this->doTestViewPlan();
     $this->doTestEditPlan();
     $this->doTestDeletePlan();
-    $this->doTestArchivePlan();
-    $this->doTestArchivePlanViaTimestamp();
   }
 
   /**
@@ -123,62 +120,6 @@ class PlanCRUDTest extends PlanTestBase {
       '%label' => $label,
     ]));
     $this->assertNull(Plan::load($plan_id));
-  }
-
-  /**
-   * Plan archiving.
-   */
-  public function doTestArchivePlan() {
-    $plan = $this->createPlanEntity();
-    $plan->save();
-
-    // Assert field type for PHPStan checks.
-    $this->assertInstanceOf(StateItemInterface::class, $plan->get('status')->first());
-
-    $this->assertEquals($plan->get('status')->first()->getString(), 'active', 'New plans are active by default');
-    $this->assertNull($plan->getArchivedTime(), 'Archived timestamp is null by default');
-
-    $plan->get('status')->first()->applyTransitionById('archive');
-    $plan->save();
-
-    $this->assertEquals($plan->get('status')->first()->getString(), 'archived', 'Plans can be archived');
-    $this->assertNotNull($plan->getArchivedTime(), 'Archived timestamp is saved');
-
-    $plan->get('status')->first()->applyTransitionById('to_active');
-    $plan->save();
-
-    $this->assertEquals($plan->get('status')->first()->getString(), 'active', 'Plans can be made active');
-    $this->assertNull($plan->getArchivedTime(), 'Plan made active has a null timestamp');
-
-    $plan->get('status')->first()->applyTransitionById('archive');
-    $plan->setArchivedTime('2021-07-17T19:45:49+00:00');
-    $plan->save();
-
-    $this->assertEquals($plan->get('status')->first()->getString(), 'archived', 'Plans can be archived with explicit timestamp');
-    $this->assertEquals($plan->getArchivedTime(), '2021-07-17T19:45:49+00:00', 'Explicit archived timestamp is saved');
-  }
-
-  /**
-   * Plan archiving/unarchiving via timestamp.
-   */
-  public function doTestArchivePlanViaTimestamp() {
-    $plan = $this->createPlanEntity();
-    $plan->save();
-
-    $this->assertEquals($plan->get('status')->first()->getString(), 'active', 'New plans are active by default');
-    $this->assertNull($plan->getArchivedTime(), 'Archived timestamp is null by default');
-
-    $plan->setArchivedTime('2021-07-17T19:45:49+00:00');
-    $plan->save();
-
-    $this->assertEquals($plan->get('status')->first()->getString(), 'archived', 'Plans can be archived');
-    $this->assertEquals($plan->getArchivedTime(), '2021-07-17T19:45:49+00:00', 'Archived timestamp is saved');
-
-    $plan->setArchivedTime(NULL);
-    $plan->save();
-
-    $this->assertEquals($plan->get('status')->first()->getString(), 'active', 'Plans can be made active');
-    $this->assertNull($plan->getArchivedTime(), 'Plan made active has a null timestamp');
   }
 
 }
