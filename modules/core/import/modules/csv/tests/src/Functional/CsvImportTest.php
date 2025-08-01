@@ -88,7 +88,7 @@ class CsvImportTest extends FarmBrowserTestBase {
     $this->drupalGet('import/csv/csv_asset:equipment');
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->pageTextContains('Download template');
-    $log_columns = [
+    $columns = [
       'name: Name of the asset. Required.',
       'parents: Parents of the asset. Accepts asset names, ID tags, UUIDs, and IDs. Multiple assets can be separated by commas with the whole cell wrapped in quotes.',
       'notes: Notes about the asset.',
@@ -104,13 +104,13 @@ class CsvImportTest extends FarmBrowserTestBase {
       'model',
       'serial number',
     ];
-    foreach ($log_columns as $description) {
+    foreach ($columns as $description) {
       $this->assertSession()->pageTextContains($description);
     }
     $this->drupalGet('import/csv/csv_log:harvest');
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->pageTextContains('Download template');
-    $log_columns = [
+    $columns = [
       'name: Name of the log.',
       'timestamp: Timestamp of the log. Accepts most date/time formats. Required.',
       'assets: Assets referenced by the log. Accepts asset names, ID tags, UUIDs, and IDs. Multiple assets can be separated by commas with the whole cell wrapped in quotes.',
@@ -128,20 +128,20 @@ class CsvImportTest extends FarmBrowserTestBase {
       'lot number: If this harvest is part of a batch or lot, enter the lot number here.',
       'test string',
     ];
-    foreach ($log_columns as $description) {
+    foreach ($columns as $description) {
       $this->assertSession()->pageTextContains($description);
     }
     $this->assertSession()->pageTextNotContains('excluded test string');
     $this->drupalGet('import/csv/csv_taxonomy_term:animal_type');
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->pageTextContains('Download template');
-    $log_columns = [
+    $columns = [
       'name: Name of the term. Required.',
       'description: Description of the term.',
       'parent: Parent term in the taxonomy hierarchy.',
       'test config field',
     ];
-    foreach ($log_columns as $description) {
+    foreach ($columns as $description) {
       $this->assertSession()->pageTextContains($description);
     }
   }
