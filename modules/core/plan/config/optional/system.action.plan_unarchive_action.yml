@@ -3,8 +3,8 @@ status: true
 dependencies:
   module:
     - plan
-id: plan_activate_action
+id: plan_unarchive_action
 label: 'Unarchive plan'
 type: plan
-plugin: 'plan_activate_action'
+plugin: 'plan_unarchive_action'
 configuration: {  }
