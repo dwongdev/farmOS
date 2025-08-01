@@ -257,10 +257,30 @@ class Plan extends RevisionableContentEntityBase implements PlanInterface {
       ->setDescription(t('The time the plan was last edited.'))
       ->setRevisionable(TRUE);
 
-    $fields['archived'] = BaseFieldDefinition::create('timestamp')
-      ->setLabel(t('Timestamp'))
-      ->setDescription(t('The time the plan was archived.'))
-      ->setRevisionable(TRUE);
+    $fields['archived'] = BaseFieldDefinition::create('boolean')
+      ->setLabel(t('Archived'))
+      ->setDescription(t('Whether the plan is archived.'))
+      ->setRevisionable(TRUE)
+      ->setDefaultValue(FALSE)
+      ->setSetting('on_label', 'Yes')
+      ->setSetting('off_label', 'No')
+      ->setDisplayOptions('view', [
+        'label' => 'inline',
+        'type' => 'boolean',
+        'settings' => [
+          'format' => 'default',
+          'format_custom_false' => '',
+          'format_custom_true' => '',
+        ],
+        'weight' => 100,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'boolean_checkbox',
+        'settings' => [
+          'display_label' => TRUE,
+        ],
+        'weight' => 100,
+      ]);
 
     return $fields;
   }
