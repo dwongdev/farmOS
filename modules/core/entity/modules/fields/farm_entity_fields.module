@@ -100,14 +100,10 @@ function farm_entity_fields_entity_base_field_info_alter(&$fields, EntityTypeInt
       }
     }
 
-    // Hide the label, if desired.
-    if (!empty($options['label']) && $options['label'] === 'hidden') {
-      $view_display_options['label'] = 'hidden';
-    }
-
-    // Otherwise, set the label to inline.
-    else {
-      $view_display_options['label'] = 'inline';
+    // Set the label to inline by default, but allow overrides.
+    $view_display_options['label'] = 'inline';
+    if (!empty($options['label'])) {
+      $view_display_options['label'] = $options['label'];
     }
 
     switch ($name) {
