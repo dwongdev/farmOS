@@ -162,8 +162,8 @@ function farm_entity_entity_presave(EntityInterface $entity) {
     // If the new revision log message matches the original, then set a blank
     // revision log message. We don't want the same message repeated across
     // every revision created by the API.
-    if (!empty($entity->original)) {
-      if ($entity->original->get('revision_log_message')->value == $entity->get('revision_log_message')->value) {
+    if (!empty($entity->getOriginal())) {
+      if ($entity->getOriginal()->get('revision_log_message')->value == $entity->get('revision_log_message')->value) {
         $entity->setRevisionLogMessage('');
       }
     }

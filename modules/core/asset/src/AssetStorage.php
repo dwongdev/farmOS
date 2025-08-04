@@ -84,13 +84,13 @@ class AssetStorage extends SqlContentEntityStorage {
     $id = parent::doPreSave($entity);
 
     // If there is no original entity, bail.
-    if (empty($entity->original)) {
+    if (empty($entity->getOriginal())) {
       return $id;
     }
 
     // Load new and original archived state to see if it is changed.
     $archived = $entity->get('archived')->value;
-    $original_archived = $entity->original->get('archived')->value;
+    $original_archived = $entity->getOriginal()->get('archived')->value;
     $archived_changed = $archived != $original_archived;
 
     // If the original asset is not archived, and the archived state is not
