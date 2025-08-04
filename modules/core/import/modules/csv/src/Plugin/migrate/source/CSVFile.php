@@ -21,7 +21,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 #[MigrateSource(
   id: 'csv_file',
-  source_module: 'farm_import_csv',
 )]
 class CSVFile extends CSV implements ContainerFactoryPluginInterface {
 
