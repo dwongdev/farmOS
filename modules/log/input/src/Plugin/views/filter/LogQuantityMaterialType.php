@@ -73,6 +73,13 @@ class LogQuantityMaterialType extends TaxonomyIndexTid {
     $this->tableAlias = $this->query->ensureTable($this->view->storage->get('base_table'));
 
     // Use the subquery in a condition on the views query to prevent duplicates.
+    // PHPStan throws the following error on the next line:
+    // Parameter #3 $value of method
+    // Drupal\views\Plugin\views\query\Sql::addWhere() expects array|string|null,
+    // Drupal\Core\Database\Query\SelectInterface given.
+    // We ignore this because subqueries are also accepted, even though they are
+    // not documented.
+    // @phpstan-ignore argument.type
     $this->query->addWhere($this->options['group'], "$this->tableAlias.id", $subquery, 'IN');
   }
 
