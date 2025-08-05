@@ -83,6 +83,7 @@ requirements (inherited from Drupal 11):
 ### Fixed
 
 - [Fix plan_record bundle field providers #969](https://github.com/farmOS/farmOS/pull/969)
+- [Fix logic for forcing entity revision creation #988](https://github.com/farmOS/farmOS/pull/969)
 
 ## farmOS 3.x
 
