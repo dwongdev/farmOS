@@ -64,6 +64,7 @@ requirements (inherited from Drupal 11):
 - [Allow plans without active status in farm_plan View #978](https://github.com/farmOS/farmOS/pull/978)
 - [Rename primary tab in edit forms to General #985](https://github.com/farmOS/farmOS/pull/985)
 - [Inject entity_type.manager and current_user service dependencies into QuickFormBase class #989](https://github.com/farmOS/farmOS/pull/989)
+- [Allow the "type" base field view display to be configured #990](https://github.com/farmOS/farmOS/pull/990)
 
 ### Deprecated
 

@@ -123,4 +123,9 @@ function farm_entity_fields_entity_base_field_info_alter(&$fields, EntityTypeInt
     $fields[$name]->setDisplayOptions('form', $form_display_options);
     $fields[$name]->setDisplayOptions('view', $view_display_options);
   }
+
+  // Allow the "type" base field view display to be configured.
+  if (!empty($fields['type'])) {
+    $fields['type']->setDisplayConfigurable('view', TRUE);
+  }
 }
