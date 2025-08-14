@@ -19,7 +19,7 @@ FROM baseimage AS php-dependencies
 
 # Build and install the GEOS PHP extension.
 # See https://git.osgeo.org/gitea/geos/php-geos
-ARG PHP_GEOS_VERSION=e77d5a16abbf89a59d947d1fe49381a944762c9d
+ARG PHP_GEOS_VERSION=dfe1ab17b0f155cc315bc13c75689371676e02e1
 ADD https://github.com/libgeos/php-geos/archive/${PHP_GEOS_VERSION}.tar.gz /opt/php-geos.tar.gz
 RUN apt-get update && apt-get install -y libgeos-dev \
   && ( tar xzf /opt/php-geos.tar.gz -C /opt/ \
