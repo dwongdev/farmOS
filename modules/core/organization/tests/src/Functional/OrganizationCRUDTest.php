@@ -55,6 +55,15 @@ class OrganizationCRUDTest extends OrganizationTestBase {
 
     $assert_session->pageTextContains("Saved organization: $name");
     $assert_session->pageTextContains($name);
+
+    // Test that organization names must be unique.
+    $this->drupalGet('organization/add/default');
+    $edit = [
+      'name[0][value]' => $organization->get('name')->value,
+    ];
+    $this->submitForm($edit, 'Save');
+    $assert_session->pageTextNotContains("Saved organization: $name");
+    $assert_session->pageTextContains('An organization by this name already exists. Organization names must be unique.');
   }
 
   /**
