@@ -13,24 +13,4 @@ use Drupal\Core\Entity\RevisionableEntityBundleInterface;
  */
 interface OrganizationTypeInterface extends ConfigEntityInterface, EntityDescriptionInterface, RevisionableEntityBundleInterface {
 
-  /**
-   * Gets the organization type's workflow ID.
-   *
-   * Used by the $organization->status field.
-   *
-   * @return string
-   *   The organization type workflow ID.
-   */
-  public function getWorkflowId();
-
-  /**
-   * Sets the workflow ID of the organization type.
-   *
-   * @param string $workflow_id
-   *   The workflow ID.
-   *
-   * @return $this
-   */
-  public function setWorkflowId($workflow_id);
-
 }

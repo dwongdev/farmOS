@@ -11,14 +11,14 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\organization\Entity\OrganizationInterface;
 
 /**
- * Action that archives an organization.
+ * Action that unarchives an organization.
  */
 #[Action(
-  id: 'organization_archive_action',
-  label: new TranslatableMarkup('Archive an organization'),
+  id: 'organization_unarchive_action',
+  label: new TranslatableMarkup('Unarchive an organization'),
   type: 'organization',
 )]
-class OrganizationArchive extends EntityActionBase {
+class OrganizationUnarchive extends EntityActionBase {
 
   /**
    * {@inheritdoc}
@@ -30,12 +30,12 @@ class OrganizationArchive extends EntityActionBase {
       return;
     }
 
-    // Archive the organization if it isn't already.
+    // Unarchive the organization if it is archived.
     $archived = $organization->get('archived')->value;
-    if (!$archived) {
-      $organization->set('archived', TRUE);
+    if ($archived) {
+      $organization->set('archived', FALSE);
       $organization->setNewRevision(TRUE);
-      $organization->setRevisionLogMessage($this->t('Archived')->render());
+      $organization->setRevisionLogMessage($this->t('Unarchived')->render());
       $organization->save();
     }
   }

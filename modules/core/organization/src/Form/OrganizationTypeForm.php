@@ -6,8 +6,6 @@ namespace Drupal\organization\Form;
 
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\state_machine\WorkflowManagerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Form controller for organization type entities.
@@ -22,32 +20,6 @@ class OrganizationTypeForm extends EntityForm {
    * @var \Drupal\organization\Entity\OrganizationTypeInterface
    */
   protected $entity;
-
-  /**
-   * The workflow manager.
-   *
-   * @var \Drupal\state_machine\WorkflowManagerInterface
-   */
-  protected $workflowManager;
-
-  /**
-   * Constructs a new OrganizationTypeForm object.
-   *
-   * @param \Drupal\state_machine\WorkflowManagerInterface $workflow_manager
-   *   The workflow manager.
-   */
-  public function __construct(WorkflowManagerInterface $workflow_manager) {
-    $this->workflowManager = $workflow_manager;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('plugin.manager.workflow')
-    );
-  }
 
   /**
    * {@inheritdoc}
@@ -78,14 +50,6 @@ class OrganizationTypeForm extends EntityForm {
       '#type' => 'textarea',
       '#title' => $this->t('Description'),
       '#default_value' => $organization_type->getDescription(),
-    ];
-
-    $form['workflow'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Workflow'),
-      '#options' => $this->workflowManager->getGroupedLabels('organization'),
-      '#default_value' => $organization_type->getWorkflowId(),
-      '#description' => $this->t('Used by all organizations of this type.'),
     ];
 
     $form['new_revision'] = [

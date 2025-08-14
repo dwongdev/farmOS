@@ -56,7 +56,6 @@ use Drupal\organization\OrganizationTypeListBuilder;
   config_export: [
     'id', 'label',
     'description',
-    'workflow',
     'new_revision',
   ],
 )]
@@ -84,13 +83,6 @@ class OrganizationType extends ConfigEntityBundleBase implements OrganizationTyp
   protected $description;
 
   /**
-   * The organization type workflow ID.
-   *
-   * @var string
-   */
-  protected $workflow;
-
-  /**
    * Default value of the 'Create new revision' checkbox.
    *
    * @var bool
@@ -109,36 +101,6 @@ class OrganizationType extends ConfigEntityBundleBase implements OrganizationTyp
    */
   public function setDescription($description) {
     return $this->set('description', $description);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getWorkflowId() {
-    return $this->workflow;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setWorkflowId($workflow_id) {
-    $this->workflow = $workflow_id;
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function calculateDependencies() {
-    parent::calculateDependencies();
-
-    // The organization type must depend on the module that provides the
-    // workflow.
-    $workflow_manager = \Drupal::service('plugin.manager.workflow');
-    $workflow = $workflow_manager->createInstance($this->getWorkflowId());
-    $this->calculatePluginDependencies($workflow);
-
-    return $this;
   }
 
   /**

@@ -3,8 +3,8 @@ status: true
 dependencies:
   module:
     - organization
-id: organization_activate_action
+id: organization_unarchive_action
 label: 'Unarchive organization'
 type: organization
-plugin: 'organization_activate_action'
+plugin: 'organization_unarchive_action'
 configuration: {  }

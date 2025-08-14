@@ -19,12 +19,4 @@ interface OrganizationTypeInterface extends BundlePluginInterface {
    */
   public function getLabel();
 
-  /**
-   * Gets the organization workflow ID.
-   *
-   * @return string
-   *   The organization workflow ID.
-   */
-  public function getWorkflowId();
-
 }

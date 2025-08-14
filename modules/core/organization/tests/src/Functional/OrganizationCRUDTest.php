@@ -6,7 +6,6 @@ namespace Drupal\Tests\organization\Functional;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\organization\Entity\Organization;
-use Drupal\state_machine\Plugin\Field\FieldType\StateItemInterface;
 
 /**
  * Tests the organization CRUD.
@@ -25,7 +24,6 @@ class OrganizationCRUDTest extends OrganizationTestBase {
     $assert_session = $this->assertSession();
     $assert_session->statusCodeEquals(200);
     $assert_session->fieldExists('name[0][value]');
-    $assert_session->fieldExists('status');
     $assert_session->fieldExists('revision_log_message[0][value]');
     $assert_session->fieldExists('uid[0][target_id]');
     $assert_session->fieldExists('created[0][value][date]');
@@ -109,62 +107,6 @@ class OrganizationCRUDTest extends OrganizationTestBase {
       '%label' => $label,
     ]));
     $this->assertNull(Organization::load($organization_id));
-  }
-
-  /**
-   * Organization archiving.
-   */
-  public function testArchiveOrganization() {
-    $organization = $this->createOrganizationEntity();
-    $organization->save();
-
-    // Assert field type for PHPStan checks.
-    $this->assertInstanceOf(StateItemInterface::class, $organization->get('status')->first());
-
-    $this->assertEquals($organization->get('status')->first()->getString(), 'active', 'New organizations are active by default');
-    $this->assertNull($organization->getArchivedTime(), 'Archived timestamp is null by default');
-
-    $organization->get('status')->first()->applyTransitionById('archive');
-    $organization->save();
-
-    $this->assertEquals($organization->get('status')->first()->getString(), 'archived', 'Organizations can be archived');
-    $this->assertNotNull($organization->getArchivedTime(), 'Archived timestamp is saved');
-
-    $organization->get('status')->first()->applyTransitionById('to_active');
-    $organization->save();
-
-    $this->assertEquals($organization->get('status')->first()->getString(), 'active', 'Organizations can be made active');
-    $this->assertNull($organization->getArchivedTime(), 'Organization made active has a null timestamp');
-
-    $organization->get('status')->first()->applyTransitionById('archive');
-    $organization->setArchivedTime('2021-07-17T19:45:49+00:00');
-    $organization->save();
-
-    $this->assertEquals($organization->get('status')->first()->getString(), 'archived', 'Organizations can be archived with explicit timestamp');
-    $this->assertEquals($organization->getArchivedTime(), '2021-07-17T19:45:49+00:00', 'Explicit archived timestamp is saved');
-  }
-
-  /**
-   * Organization archiving/unarchiving via timestamp.
-   */
-  public function testArchiveOrganizationViaTimestamp() {
-    $organization = $this->createOrganizationEntity();
-    $organization->save();
-
-    $this->assertEquals($organization->get('status')->first()->getString(), 'active', 'New organizations are active by default');
-    $this->assertNull($organization->getArchivedTime(), 'Archived timestamp is null by default');
-
-    $organization->setArchivedTime('2021-07-17T19:45:49+00:00');
-    $organization->save();
-
-    $this->assertEquals($organization->get('status')->first()->getString(), 'archived', 'Organizations can be archived');
-    $this->assertEquals($organization->getArchivedTime(), '2021-07-17T19:45:49+00:00', 'Archived timestamp is saved');
-
-    $organization->setArchivedTime(NULL);
-    $organization->save();
-
-    $this->assertEquals($organization->get('status')->first()->getString(), 'active', 'Organizations can be made active');
-    $this->assertNull($organization->getArchivedTime(), 'Organization made active has a null timestamp');
   }
 
 }

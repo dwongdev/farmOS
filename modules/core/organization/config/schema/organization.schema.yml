@@ -12,9 +12,6 @@ organization.type.*:
     description:
       type: text
       label: 'Description'
-    workflow:
-      type: string
-      label: 'Workflow'
     new_revision:
       type: boolean
       label: 'Create new revision'
@@ -27,13 +24,13 @@ condition.plugin.organization_type:
       sequence:
         type: string
 
-action.configuration.organization_activate_action:
-  type: action_configuration_default
-  label: 'Configuration for the organization activate action'
-
 action.configuration.organization_archive_action:
   type: action_configuration_default
   label: 'Configuration for the organization archive action'
+
+action.configuration.organization_unarchive_action:
+  type: action_configuration_default
+  label: 'Configuration for the organization unarchive action'
 
 action.configuration.organization_clone_action:
   type: action_configuration_default

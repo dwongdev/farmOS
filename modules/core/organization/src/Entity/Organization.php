@@ -21,7 +21,6 @@ use Drupal\entity\UncacheableEntityAccessControlHandler;
 use Drupal\entity\UncacheableEntityPermissionProvider;
 use Drupal\organization\Form\OrganizationForm;
 use Drupal\organization\OrganizationListBuilder;
-use Drupal\organization\OrganizationStorage;
 use Drupal\user\EntityOwnerTrait;
 use Drupal\views\EntityViewsData;
 
@@ -46,7 +45,6 @@ use Drupal\views\EntityViewsData;
     'langcode' => 'langcode',
   ],
   handlers: [
-    'storage' => OrganizationStorage::class,
     'access' => UncacheableEntityAccessControlHandler::class,
     'list_builder' => OrganizationListBuilder::class,
     'permission_provider' => UncacheableEntityPermissionProvider::class,
@@ -145,21 +143,6 @@ class Organization extends RevisionableContentEntityBase implements Organization
   /**
    * {@inheritdoc}
    */
-  public function getArchivedTime() {
-    return $this->get('archived')->value;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setArchivedTime($timestamp) {
-    $this->set('archived', $timestamp);
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function getBundleLabel() {
     /** @var \Drupal\organization\Entity\OrganizationTypeInterface $type */
     $type = $this->entityTypeManager()
@@ -209,25 +192,6 @@ class Organization extends RevisionableContentEntityBase implements Organization
       ])
       ->setDisplayConfigurable('form', TRUE);
 
-    $fields['status'] = BaseFieldDefinition::create('state')
-      ->setLabel(t('Status'))
-      ->setDescription(t('Indicates the status of the organization.'))
-      ->setRevisionable(TRUE)
-      ->setRequired(TRUE)
-      ->setSetting('max_length', 255)
-      ->setDisplayOptions('view', [
-        'label' => 'hidden',
-        'type' => 'state_transition_form',
-        'weight' => 10,
-      ])
-      ->setDisplayOptions('form', [
-        'type' => 'options_select',
-        'weight' => 11,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE)
-      ->setSetting('workflow_callback', ['\Drupal\organization\Entity\Organization', 'getWorkflowId']);
-
     $fields['uid'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Authored by'))
       ->setDescription(t('The user ID of author of the organization.'))
@@ -274,26 +238,32 @@ class Organization extends RevisionableContentEntityBase implements Organization
       ->setDescription(t('The time the organization was last edited.'))
       ->setRevisionable(TRUE);
 
-    $fields['archived'] = BaseFieldDefinition::create('timestamp')
-      ->setLabel(t('Timestamp'))
-      ->setDescription(t('The time the organization was archived.'))
-      ->setRevisionable(TRUE);
+    $fields['archived'] = BaseFieldDefinition::create('boolean')
+      ->setLabel(t('Archived'))
+      ->setDescription(t('Whether the organization is archived.'))
+      ->setRevisionable(TRUE)
+      ->setDefaultValue(FALSE)
+      ->setSetting('on_label', 'Yes')
+      ->setSetting('off_label', 'No')
+      ->setDisplayOptions('view', [
+        'label' => 'inline',
+        'type' => 'boolean',
+        'settings' => [
+          'format' => 'default',
+          'format_custom_false' => '',
+          'format_custom_true' => '',
+        ],
+        'weight' => 100,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'boolean_checkbox',
+        'settings' => [
+          'display_label' => TRUE,
+        ],
+        'weight' => 100,
+      ]);
 
     return $fields;
-  }
-
-  /**
-   * Gets the workflow ID for the state field.
-   *
-   * @param \Drupal\organization\Entity\OrganizationInterface $organization
-   *   The organization entity.
-   *
-   * @return string
-   *   The workflow ID.
-   */
-  public static function getWorkflowId(OrganizationInterface $organization) {
-    $workflow = OrganizationType::load($organization->bundle())->getWorkflowId();
-    return $workflow;
   }
 
 }

@@ -36,20 +36,14 @@ can add additional attributes.
 Attributes that are common to all Organization types include:
 
 - Name
-- Status
 - Notes
 - Data
+- Archived
 
 #### Name
 
 Organizations must have a name that describes them. The name is used in lists of
 Organizations to easily identify them at quick glance.
-
-#### Status
-
-Organizations can be marked as "active" or "archived" to indicate their status.
-Archived Organizations will be hidden from most lists in farmOS unless they are
-explicitly requested.
 
 #### Notes
 
@@ -66,6 +60,12 @@ is to store remote system IDs that correspond to the Organization. So if the
 Organization is created or managed by software outside of farmOS, it can be
 identified easily. It can also be used to store additional structured metadata
 that does not fit into the standard Asset attributes.
+
+#### Archived
+
+Organizations can be marked as "archived" to indicate that they are no longer
+relevant. Archived Organizations will be hidden from most lists in farmOS unless
+they are explicitly requested.
 
 ## Relationships
 

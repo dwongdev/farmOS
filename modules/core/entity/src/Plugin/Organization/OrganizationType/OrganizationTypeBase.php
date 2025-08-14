@@ -21,13 +21,6 @@ abstract class OrganizationTypeBase extends FarmEntityTypeBase implements Organi
   /**
    * {@inheritdoc}
    */
-  public function getWorkflowId() {
-    return $this->pluginDefinition['workflow'];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function buildFieldDefinitions() {
     return [];
   }

@@ -55,26 +55,7 @@ interface OrganizationInterface extends ContentEntityInterface, EntityChangedInt
   public function setCreatedTime($timestamp);
 
   /**
-   * Gets the organization archived timestamp.
-   *
-   * @return int
-   *   Archived timestamp of the organization.
-   */
-  public function getArchivedTime();
-
-  /**
-   * Sets the organization archived timestamp.
-   *
-   * @param int|string|null $timestamp
-   *   Archived timestamp of the organization.
-   *
-   * @return \Drupal\organization\Entity\OrganizationInterface
-   *   The organization entity.
-   */
-  public function setArchivedTime($timestamp);
-
-  /**
-   * Gets the label of the the organization type.
+   * Gets the label of the organization type.
    *
    * @return string
    *   The label of the organization type.
