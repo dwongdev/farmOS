@@ -8,6 +8,8 @@ use Drupal\Component\Plugin\Exception\PluginException;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
+use Drupal\farm_entity\Attribute\OrganizationType;
+use Drupal\farm_entity\Plugin\Organization\OrganizationType\OrganizationTypeInterface;
 
 /**
  * Manages discovery and instantiation of organization type plugins.
@@ -29,8 +31,13 @@ class OrganizationTypeManager extends DefaultPluginManager {
    *   The module handler.
    */
   public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
-    parent::__construct('Plugin/Organization/OrganizationType', $namespaces, $module_handler, 'Drupal\farm_entity\Plugin\Organization\OrganizationType\OrganizationTypeInterface', 'Drupal\farm_entity\Annotation\OrganizationType');
-
+    parent::__construct(
+      'Plugin/Organization/OrganizationType',
+      $namespaces,
+      $module_handler,
+      OrganizationTypeInterface::class,
+      OrganizationType::class
+    );
     $this->alterInfo('organization_type_info');
     $this->setCacheBackend($cache_backend, 'organization_type_plugins');
   }
