@@ -125,8 +125,8 @@ class Group extends QuickFormBase implements QuickFormInterface {
       '#target_type' => 'asset',
       '#selection_settings' => [
         'sort' => [
-          'field' => 'status',
-          'direction' => 'ASC',
+          'field' => 'archived',
+          'direction' => 'DESC',
         ],
       ],
       '#maxlength' => 1024,

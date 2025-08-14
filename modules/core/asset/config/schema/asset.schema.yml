@@ -12,9 +12,6 @@ asset.type.*:
     description:
       type: text
       label: 'Description'
-    workflow:
-      type: string
-      label: 'Workflow'
     new_revision:
       type: boolean
       label: 'Create new revision'
@@ -27,13 +24,13 @@ condition.plugin.asset_type:
       sequence:
         type: string
 
-action.configuration.asset_activate_action:
-  type: action_configuration_default
-  label: 'Configuration for the asset activate action'
-
 action.configuration.asset_archive_action:
   type: action_configuration_default
   label: 'Configuration for the asset archive action'
+
+action.configuration.asset_unarchive_action:
+  type: action_configuration_default
+  label: 'Configuration for the asset unarchive action'
 
 action.configuration.asset_clone_action:
   type: action_configuration_default

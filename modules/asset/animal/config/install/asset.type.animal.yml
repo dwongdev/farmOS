@@ -7,5 +7,4 @@ dependencies:
 id: animal
 label: Animal
 description: ''
-workflow: asset_default
 new_revision: true

@@ -11,14 +11,14 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\asset\Entity\AssetInterface;
 
 /**
- * Action that archives an asset.
+ * Action that unarchives an asset.
  */
 #[Action(
-  id: 'asset_archive_action',
-  label: new TranslatableMarkup('Archive an asset'),
+  id: 'asset_unarchive_action',
+  label: new TranslatableMarkup('Unarchive an Asset'),
   type: 'asset',
 )]
-class AssetArchive extends EntityActionBase {
+class AssetUnarchive extends EntityActionBase {
 
   /**
    * {@inheritdoc}
@@ -30,12 +30,12 @@ class AssetArchive extends EntityActionBase {
       return;
     }
 
-    // Archive the asset if it isn't already.
+    // Unarchive the asset if it is archived.
     $archived = $asset->get('archived')->value;
-    if (!$archived) {
-      $asset->set('archived', TRUE);
+    if ($archived) {
+      $asset->set('archived', FALSE);
       $asset->setNewRevision(TRUE);
-      $asset->setRevisionLogMessage($this->t('Archived')->render());
+      $asset->setRevisionLogMessage($this->t('Unarchived')->render());
       $asset->save();
     }
   }

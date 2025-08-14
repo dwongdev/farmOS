@@ -58,12 +58,12 @@ class LogCsvImportTest extends CsvImportTestBase {
     foreach ($terms as $term) {
       $term->save();
     }
-    $assets[] = Asset::create(['name' => 'Garlic', 'type' => 'plant', 'plant_type' => 1, 'status' => 'active']);
-    $assets[] = Asset::create(['name' => 'Potatoes 1', 'type' => 'plant', 'plant_type' => 2, 'status' => 'active']);
-    $assets[] = Asset::create(['name' => 'Potatoes 2', 'type' => 'plant', 'plant_type' => 2, 'id_tag' => ['id' => '1234'], 'status' => 'active']);
-    $assets[] = Asset::create(['name' => 'Field A', 'type' => 'land', 'land_type' => 'land', 'status' => 'active']);
-    $assets[] = Asset::create(['name' => 'Field B', 'type' => 'land', 'land_type' => 'land', 'status' => 'active']);
-    $assets[] = Asset::create(['name' => 'Field C', 'type' => 'land', 'land_type' => 'land', 'status' => 'active']);
+    $assets[] = Asset::create(['name' => 'Garlic', 'type' => 'plant', 'plant_type' => 1]);
+    $assets[] = Asset::create(['name' => 'Potatoes 1', 'type' => 'plant', 'plant_type' => 2]);
+    $assets[] = Asset::create(['name' => 'Potatoes 2', 'type' => 'plant', 'plant_type' => 2, 'id_tag' => ['id' => '1234']]);
+    $assets[] = Asset::create(['name' => 'Field A', 'type' => 'land', 'land_type' => 'land']);
+    $assets[] = Asset::create(['name' => 'Field B', 'type' => 'land', 'land_type' => 'land']);
+    $assets[] = Asset::create(['name' => 'Field C', 'type' => 'land', 'land_type' => 'land']);
     foreach ($assets as $asset) {
       $asset->save();
     }

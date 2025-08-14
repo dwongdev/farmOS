@@ -21,13 +21,6 @@ abstract class AssetTypeBase extends FarmEntityTypeBase implements AssetTypeInte
   /**
    * {@inheritdoc}
    */
-  public function getWorkflowId() {
-    return $this->pluginDefinition['workflow'];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function buildFieldDefinitions() {
     return [];
   }

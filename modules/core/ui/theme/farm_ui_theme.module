@@ -9,11 +9,14 @@ declare(strict_types=1);
 
 use Drupal\Core\Block\BlockPluginInterface;
 use Drupal\Core\Entity\Display\EntityFormDisplayInterface;
+use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\asset\Entity\AssetInterface;
 use Drupal\farm_ui_theme\Form\AssetForm;
 use Drupal\farm_ui_theme\Form\LogForm;
 use Drupal\farm_ui_theme\Form\PlanForm;
 use Drupal\farm_ui_theme\Form\TaxonomyTermForm;
+use Drupal\plan\Entity\PlanInterface;
 
 /**
  * Implements hook_theme().
@@ -114,6 +117,7 @@ function farm_ui_theme_farm_ui_theme_field_group_items(string $entity_type, stri
       $fields['is_location'] = 'location';
       $fields['is_fixed'] = 'location';
       $fields['id_tag'] = 'id_tag';
+      $fields['archived'] = 'meta';
       break;
 
     case 'log':
@@ -128,6 +132,7 @@ function farm_ui_theme_farm_ui_theme_field_group_items(string $entity_type, stri
       break;
 
     case 'plan':
+      $fields['archived'] = 'meta';
       break;
 
     case 'taxonomy_term':
@@ -180,6 +185,28 @@ function farm_ui_theme_element_info_alter(array &$info) {
   if (isset($info['farm_map'])) {
     $info['farm_map']['#attached']['library'][] = 'farm_ui_theme/map';
   }
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ */
+function farm_ui_theme_form_asset_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  /** @var \Drupal\Core\Entity\EntityForm $form_object */
+  $form_object = $form_state->getFormObject();
+  /** @var \Drupal\asset\Entity\AssetInterface $entity */
+  $entity = $form_object->getEntity();
+  farm_ui_theme_set_archived_message($entity);
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ */
+function farm_ui_theme_form_plan_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  /** @var \Drupal\Core\Entity\EntityForm $form_object */
+  $form_object = $form_state->getFormObject();
+  /** @var \Drupal\asset\Entity\AssetInterface $entity */
+  $entity = $form_object->getEntity();
+  farm_ui_theme_set_archived_message($entity);
 }
 
 /**
@@ -239,6 +266,9 @@ function farm_ui_theme_preprocess_field__image(array &$variables) {
  * Implements hook_preprocess_HOOK().
  */
 function farm_ui_theme_preprocess_asset__full(&$variables) {
+  if (!empty($variables['asset']) && $variables['asset'] instanceof AssetInterface) {
+    farm_ui_theme_set_archived_message($variables['asset']);
+  }
   farm_ui_theme_build_stacked_twocol_layout($variables, 'asset');
   $variables['#attached']['library'][] = 'farm_ui_theme/layout';
 }
@@ -269,6 +299,9 @@ function farm_ui_theme_preprocess_page__dashboard(&$variables) {
  * Implements hook_preprocess_HOOK().
  */
 function farm_ui_theme_preprocess_plan__full(&$variables) {
+  if (!empty($variables['plan']) && $variables['plan'] instanceof PlanInterface) {
+    farm_ui_theme_set_archived_message($variables['plan']);
+  }
   farm_ui_theme_build_stacked_twocol_layout($variables, 'plan');
   $variables['#attached']['library'][] = 'farm_ui_theme/layout';
 }
@@ -278,6 +311,18 @@ function farm_ui_theme_preprocess_plan__full(&$variables) {
  */
 function farm_ui_theme_preprocess_views_view(&$variables) {
   $variables['#attached']['library'][] = 'farm_ui_theme/views';
+}
+
+/**
+ * Adds a warning message to entities that are archived.
+ *
+ * @param \Drupal\Core\Entity\FieldableEntityInterface $entity
+ *   The entity.
+ */
+function farm_ui_theme_set_archived_message(FieldableEntityInterface $entity) {
+  if ($entity->get('archived')->value) {
+    \Drupal::messenger()->addWarning(t('This @entity_type is archived. Archived @entity_types should only be edited if they need corrections.', ['@entity_type' => strtolower($entity->getEntityType()->getLabel()->render()), '@entity_types' => strtolower($entity->getEntityType()->getPluralLabel()->render())]));
+  }
 }
 
 /**
@@ -333,8 +378,8 @@ function farm_ui_theme_farm_ui_theme_region_items(string $entity_type) {
           'is_fixed',
           'location',
           'owner',
-          'status',
           'type',
+          'archived',
         ],
         'bottom' => [
           'api',
@@ -368,6 +413,7 @@ function farm_ui_theme_farm_ui_theme_region_items(string $entity_type) {
         'second' => [
           'status',
           'type',
+          'archived',
         ],
         'bottom' => [
           'image',

@@ -13,24 +13,4 @@ use Drupal\Core\Entity\RevisionableEntityBundleInterface;
  */
 interface AssetTypeInterface extends ConfigEntityInterface, EntityDescriptionInterface, RevisionableEntityBundleInterface {
 
-  /**
-   * Gets the asset type's workflow ID.
-   *
-   * Used by the $asset->status field.
-   *
-   * @return string
-   *   The asset type workflow ID.
-   */
-  public function getWorkflowId();
-
-  /**
-   * Sets the workflow ID of the asset type.
-   *
-   * @param string $workflow_id
-   *   The workflow ID.
-   *
-   * @return $this
-   */
-  public function setWorkflowId($workflow_id);
-
 }

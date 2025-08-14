@@ -97,7 +97,6 @@ class QuickStringTest extends KernelTestBase {
     $asset_type = AssetType::create([
       'id' => 'test',
       'label' => 'Test',
-      'workflow' => 'asset_default',
     ]);
     $asset_type->save();
 
@@ -107,7 +106,6 @@ class QuickStringTest extends KernelTestBase {
       $asset = Asset::create([
         'name' => $this->randomString(),
         'type' => 'test',
-        'status' => 'active',
       ]);
       $asset->save();
       $assets[] = $asset;

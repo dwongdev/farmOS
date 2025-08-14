@@ -11,14 +11,14 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\plan\Entity\PlanInterface;
 
 /**
- * Action that archives a plan.
+ * Action that unarchives a plan.
  */
 #[Action(
-  id: 'plan_archive_action',
-  label: new TranslatableMarkup('Archive a plan'),
+  id: 'plan_unarchive_action',
+  label: new TranslatableMarkup('Unarchive a plan'),
   type: 'plan',
 )]
-class PlanArchive extends EntityActionBase {
+class PlanUnarchive extends EntityActionBase {
 
   /**
    * {@inheritdoc}
@@ -30,12 +30,12 @@ class PlanArchive extends EntityActionBase {
       return;
     }
 
-    // Archive the plan if it isn't already.
+    // Unarchive the plan if it is archived.
     $archived = $plan->get('archived')->value;
-    if (!$archived) {
-      $plan->set('archived', TRUE);
+    if ($archived) {
+      $plan->set('archived', FALSE);
       $plan->setNewRevision(TRUE);
-      $plan->setRevisionLogMessage($this->t('Archived')->render());
+      $plan->setRevisionLogMessage($this->t('Unarchived')->render());
       $plan->save();
     }
   }

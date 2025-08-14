@@ -36,12 +36,10 @@ process:
   # Intrinsic geometry.
   intrinsic_geometry: intrinsic geometry
 
-  # Asset status.
-  status:
-    - plugin: get
-      source: status
-    - plugin: default_value
-      default_value: active
+  # Archived
+  archived:
+    plugin: boolean
+    source: archived
 
 # Describe the base columns.
 third_party_settings:
@@ -59,7 +57,7 @@ third_party_settings:
         description: Whether this asset has a fixed location. Accepts most boolean values. Leave this blank to use the default for this asset type.
       - name: intrinsic geometry
         description: The intrinsic geometry of the asset in WKT format. This is only used if the asset has a fixed location.
-      - name: status
-        description: 'Status of the asset. Allowed values: active, archived. Defaults to active.'
+      - name: archived
+        description: Whether the asset is archived. Accepts most boolean values.
 
 deriver: \Drupal\farm_import_csv\Plugin\Derivative\CsvImportMigrationAsset

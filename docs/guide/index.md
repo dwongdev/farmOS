@@ -30,10 +30,10 @@ to begin using farmOS.
 
 The first thing you will see when you log in is the farmOS dashboard.
 
-On top is the farm map, where you will see all active location Assets that you
-have mapped. You can use this to navigate to your records within farmOS by
-clicking on a location and then clicking on the available links within the
-Asset details popup.
+On top is the farm map, where you will see all location Assets that you have
+mapped. You can use this to navigate to your records within farmOS by clicking
+on a location and then clicking on the available links within the Asset details
+popup.
 
 Below the map you will see "Upcoming tasks" and "Late tasks" on the left, which
 summarize Logs that have a "pending" status. From here you can quickly select

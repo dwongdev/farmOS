@@ -76,7 +76,7 @@ class FarmMetricsBlock extends BlockBase implements ContainerFactoryPluginInterf
     $output = [];
 
     // Create a list of asset metrics.
-    $assets_label = $this->entityTypeManager->getStorage('asset')->getEntityType()->getCollectionLabel() . ' (' . $this->t('active') . ')';
+    $assets_label = $this->entityTypeManager->getStorage('asset')->getEntityType()->getCollectionLabel();
     $output['asset'] = [
       '#theme' => 'item_list',
       '#title' => Link::createFromRoute($assets_label, 'view.farm_asset.page')->toRenderable(),
@@ -139,9 +139,9 @@ class FarmMetricsBlock extends BlockBase implements ContainerFactoryPluginInterf
         ->accessCheck(TRUE)
         ->condition('type', $bundle);
 
-      // Only include active assets.
+      // Exclude archived assets.
       if ($entity_type == 'asset') {
-        $query->condition('status', 'active');
+        $query->condition('archived', FALSE);
       }
 
       $count = $query->count()->execute();

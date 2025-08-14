@@ -103,7 +103,6 @@ class QuickBirthTest extends QuickFormTestBase {
       'type' => 'animal',
       'animal_type' => $breed1,
       'sex' => 'F',
-      'status' => 'active',
     ]);
     $birth_mother->save();
     $genetic_mother = Asset::create([
@@ -111,7 +110,6 @@ class QuickBirthTest extends QuickFormTestBase {
       'type' => 'animal',
       'animal_type' => $breed2,
       'sex' => 'F',
-      'status' => 'active',
     ]);
     $genetic_mother->save();
     $genetic_father = Asset::create([
@@ -119,7 +117,6 @@ class QuickBirthTest extends QuickFormTestBase {
       'type' => 'animal',
       'animal_type' => $breed1,
       'sex' => 'M',
-      'status' => 'active',
     ]);
     $genetic_father->save();
 
@@ -131,7 +128,6 @@ class QuickBirthTest extends QuickFormTestBase {
       'land_type' => 'field',
       'is_fixed' => TRUE,
       'is_location' => TRUE,
-      'status' => 'active',
     ]);
     $location->save();
     $movement = Log::create([
@@ -148,7 +144,6 @@ class QuickBirthTest extends QuickFormTestBase {
     $group = Asset::create([
       'name' => 'Herd 1',
       'type' => 'group',
-      'status' => 'active',
     ]);
     $group->save();
 
@@ -219,7 +214,7 @@ class QuickBirthTest extends QuickFormTestBase {
     $this->assertEquals($genetic_mother->id(), $parents[0]->id());
     $this->assertEquals($genetic_father->id(), $parents[1]->id());
     $this->assertEquals('Child 1 notes', $child1->get('notes')->value);
-    $this->assertEquals('active', $child1->get('status')->value);
+    $this->assertEmpty($child1->get('archived')->value);
     $child_location = $this->assetLocation->getLocation($child1);
     $this->assertEquals($location->id(), reset($child_location)->id());
     $child_group = $this->groupMembership->getGroup($child1);
@@ -236,7 +231,7 @@ class QuickBirthTest extends QuickFormTestBase {
     $this->assertCount(2, $parents);
     $this->assertEquals($genetic_mother->id(), $parents[0]->id());
     $this->assertEquals($genetic_father->id(), $parents[1]->id());
-    $this->assertEquals('archived', $child2->get('status')->value);
+    $this->assertNotEmpty($child2->get('archived')->value);
     $child_location = $this->assetLocation->getLocation($child2);
     $this->assertEquals($location->id(), reset($child_location)->id());
     $child_group = $this->groupMembership->getGroup($child2);

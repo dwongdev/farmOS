@@ -7,5 +7,4 @@ dependencies:
 id: material
 label: Material
 description: ''
-workflow: asset_default
 new_revision: true

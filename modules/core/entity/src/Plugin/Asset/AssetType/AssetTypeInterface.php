@@ -19,12 +19,4 @@ interface AssetTypeInterface extends BundlePluginInterface {
    */
   public function getLabel();
 
-  /**
-   * Gets the asset workflow ID.
-   *
-   * @return string
-   *   The asset workflow ID.
-   */
-  public function getWorkflowId();
-
 }

@@ -90,7 +90,7 @@ class QuickPlantingTest extends QuickFormTestBase {
     $asset = $assets[1];
     $this->assertEquals('plant', $asset->bundle());
     $this->assertEquals("2022 Jacob's Cattle Bean", $asset->label());
-    $this->assertEquals('active', $asset->get('status')->value);
+    $this->assertEmpty($asset->get('archived')->value);
     $this->assertEquals($season->id(), $asset->get('season')->referencedEntities()[0]->id());
     $this->assertEquals($crop->id(), $asset->get('plant_type')->referencedEntities()[0]->id());
 
@@ -171,7 +171,6 @@ class QuickPlantingTest extends QuickFormTestBase {
       'land_type' => 'field',
       'is_fixed' => TRUE,
       'is_location' => TRUE,
-      'status' => 'active',
     ]);
     $land1->save();
     $land2 = Asset::create([
@@ -180,7 +179,6 @@ class QuickPlantingTest extends QuickFormTestBase {
       'land_type' => 'field',
       'is_fixed' => TRUE,
       'is_location' => TRUE,
-      'status' => 'active',
     ]);
     $land2->save();
 

@@ -7,5 +7,4 @@ dependencies:
 id: sensor
 label: Sensor
 description: ''
-workflow: asset_default
 new_revision: true

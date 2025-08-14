@@ -271,8 +271,8 @@ class Birth extends QuickFormBase {
       '#selection_settings' => [
         'target_bundles' => ['animal'],
         'sort' => [
-          'field' => 'status',
-          'direction' => 'ASC',
+          'field' => 'archived',
+          'direction' => 'DESC',
         ],
       ],
     ];
@@ -286,8 +286,8 @@ class Birth extends QuickFormBase {
       '#selection_settings' => [
         'target_bundles' => ['animal'],
         'sort' => [
-          'field' => 'status',
-          'direction' => 'ASC',
+          'field' => 'archived',
+          'direction' => 'DESC',
         ],
       ],
     ];
@@ -301,8 +301,8 @@ class Birth extends QuickFormBase {
       '#selection_settings' => [
         'target_bundles' => ['animal'],
         'sort' => [
-          'field' => 'status',
-          'direction' => 'ASC',
+          'field' => 'archived',
+          'direction' => 'DESC',
         ],
       ],
     ];
@@ -323,8 +323,8 @@ class Birth extends QuickFormBase {
         '#selection_settings' => [
           'target_bundles' => ['group'],
           'sort' => [
-            'field' => 'status',
-            'direction' => 'ASC',
+            'field' => 'archived',
+            'direction' => 'DESC',
           ],
         ],
       ];
@@ -419,7 +419,7 @@ class Birth extends QuickFormBase {
         'animal_type' => $genetic_mother->get('animal_type')->referencedEntities(),
         'parent' => $parents,
         'birthdate' => $birthdate->getTimestamp(),
-        'status' => !empty($child['survived']) ? 'active' : 'archived',
+        'archived' => empty($child['survived']),
       ];
 
       // Set the sex, if available.

@@ -83,13 +83,11 @@ class FarmUiViewsTest extends FarmBrowserTestBase {
     $equipment = Asset::create([
       'name' => 'Equipment asset',
       'type' => 'equipment',
-      'status' => 'active',
     ]);
     $equipment->save();
     $water = Asset::create([
       'name' => 'Water asset',
       'type' => 'water',
-      'status' => 'active',
     ]);
     $water->save();
 
@@ -162,13 +160,11 @@ class FarmUiViewsTest extends FarmBrowserTestBase {
     $equipment = Asset::create([
       'name' => 'Equipment asset',
       'type' => 'equipment',
-      'status' => 'active',
     ]);
     $equipment->save();
     $water = Asset::create([
       'name' => 'Water asset',
       'type' => 'water',
-      'status' => 'active',
     ]);
     $water->save();
 
@@ -218,7 +214,6 @@ class FarmUiViewsTest extends FarmBrowserTestBase {
     $parent = Asset::create([
       'name' => 'Parent asset',
       'type' => 'equipment',
-      'status' => 'active',
     ]);
     $parent->save();
 
@@ -231,7 +226,6 @@ class FarmUiViewsTest extends FarmBrowserTestBase {
       'name' => 'Child asset',
       'type' => 'equipment',
       'parent' => [$parent],
-      'status' => 'active',
     ]);
     $child->save();
 
@@ -266,7 +260,6 @@ class FarmUiViewsTest extends FarmBrowserTestBase {
     $water = Asset::create([
       'name' => 'Cistern',
       'type' => 'equipment',
-      'status' => 'active',
     ]);
     $water->save();
 
@@ -315,7 +308,6 @@ class FarmUiViewsTest extends FarmBrowserTestBase {
     $equipment = Asset::create([
       'name' => 'Equipment asset',
       'type' => 'equipment',
-      'status' => 'active',
     ]);
     $equipment->save();
 

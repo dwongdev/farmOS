@@ -82,7 +82,6 @@ class BirthTest extends KernelTestBase {
       'name' => $this->randomMachineName(),
       'type' => 'animal',
       'animal_type' => ['tid' => $cow->id()],
-      'status' => 'active',
     ]);
     $mother->save();
 
@@ -92,7 +91,6 @@ class BirthTest extends KernelTestBase {
       'name' => $this->randomMachineName(),
       'type' => 'animal',
       'animal_type' => ['tid' => $cow->id()],
-      'status' => 'active',
     ]);
     $child1->save();
     /** @var \Drupal\asset\Entity\AssetInterface $child2 */
@@ -100,7 +98,6 @@ class BirthTest extends KernelTestBase {
       'name' => $this->randomMachineName(),
       'type' => 'animal',
       'animal_type' => ['tid' => $cow->id()],
-      'status' => 'active',
     ]);
     $child2->save();
 
@@ -145,7 +142,6 @@ class BirthTest extends KernelTestBase {
       'name' => $this->randomMachineName(),
       'type' => 'animal',
       'animal_type' => ['tid' => $cow->id()],
-      'status' => 'active',
     ]);
     $mother2->save();
 
@@ -190,7 +186,6 @@ class BirthTest extends KernelTestBase {
       'name' => $this->randomMachineName(),
       'type' => 'animal',
       'animal_type' => ['tid' => $cow->id()],
-      'status' => 'active',
     ]);
     $asset->save();
 

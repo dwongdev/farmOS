@@ -40,6 +40,7 @@ requirements (inherited from Drupal 11):
 ### Added
 
 - [Issue #3304608: Add an "abandoned" log status](https://www.drupal.org/project/farm/issues/3304608)
+- [Add default plan status options: "planning", "done", "abandoned" #986](https://github.com/farmOS/farmOS/pull/986)
 - [Add support for attributes in farmOS plugin types #963](https://github.com/farmOS/farmOS/pull/963)
 - [Add a hook for excluding fields from CSV importers #958](https://github.com/farmOS/farmOS/pull/958)
 - [Include config fields in CSV importers #959](https://github.com/farmOS/farmOS/pull/959)
@@ -50,6 +51,7 @@ requirements (inherited from Drupal 11):
 
 - [farmOS 4.x requires PHP 8.4 #979](https://github.com/farmOS/farmOS/pull/979)
 - [Issue #3488916: Update Drupal core to 11.x](https://www.drupal.org/project/farm/issues/3488916)
+- [Change how assets and plans are archived #986](https://github.com/farmOS/farmOS/pull/986)
 - [Convert equipment to a base field #956](https://github.com/farmOS/farmOS/pull/956)
 - [Convert quick to a base field #957](https://github.com/farmOS/farmOS/pull/957)
 - [Make farmOS API OAuth2 Server optional #973](https://github.com/farmOS/farmOS/pull/973)
@@ -63,9 +65,11 @@ requirements (inherited from Drupal 11):
 ### Deprecated
 
 - [farmOS core plugin type annotations are deprecated](https://www.drupal.org/node/3523485)
+- [Asset entity last_archived base field is deprecated](https://www.drupal.org/node/3539444)
 
 ### Removed
 
+- [Remove asset status field #986](https://github.com/farmOS/farmOS/pull/986)
 - [Remove 2.x and 3.x update hooks](Remove 2.x and 3.x update hooks #962)
 - Remove [deprecated Drupal 7 asset migration source plugin](https://www.drupal.org/node/3410747).
 - Remove [deprecated Drupal 7 plan migration source plugin](https://www.drupal.org/node/3498065).

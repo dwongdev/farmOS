@@ -77,7 +77,6 @@ class InventoryTest extends KernelTestBase {
     $asset = Asset::create([
       'type' => 'container',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $asset->save();
 
@@ -242,7 +241,6 @@ class InventoryTest extends KernelTestBase {
     $asset = Asset::create([
       'type' => 'container',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $asset->save();
 
@@ -316,7 +314,6 @@ class InventoryTest extends KernelTestBase {
     $asset = Asset::create([
       'type' => 'container',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $asset->save();
 

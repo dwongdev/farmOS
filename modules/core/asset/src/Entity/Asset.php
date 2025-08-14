@@ -146,14 +146,14 @@ class Asset extends RevisionableContentEntityBase implements AssetInterface {
    * {@inheritdoc}
    */
   public function getArchivedTime() {
-    return $this->get('archived')->value;
+    return $this->get('last_archived')->value;
   }
 
   /**
    * {@inheritdoc}
    */
   public function setArchivedTime($timestamp) {
-    $this->set('archived', $timestamp);
+    $this->set('last_archived', $timestamp);
     return $this;
   }
 
@@ -209,25 +209,6 @@ class Asset extends RevisionableContentEntityBase implements AssetInterface {
       ])
       ->setDisplayConfigurable('form', TRUE);
 
-    $fields['status'] = BaseFieldDefinition::create('state')
-      ->setLabel(t('Status'))
-      ->setDescription(t('Indicates the status of the asset.'))
-      ->setRevisionable(TRUE)
-      ->setRequired(TRUE)
-      ->setSetting('max_length', 255)
-      ->setDisplayOptions('view', [
-        'label' => 'hidden',
-        'type' => 'state_transition_form',
-        'weight' => 10,
-      ])
-      ->setDisplayOptions('form', [
-        'type' => 'options_select',
-        'weight' => 11,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE)
-      ->setSetting('workflow_callback', ['\Drupal\asset\Entity\Asset', 'getWorkflowId']);
-
     $fields['uid'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Authored by'))
       ->setDescription(t('The user ID of author of the asset.'))
@@ -274,26 +255,37 @@ class Asset extends RevisionableContentEntityBase implements AssetInterface {
       ->setDescription(t('The time the asset was last edited.'))
       ->setRevisionable(TRUE);
 
-    $fields['archived'] = BaseFieldDefinition::create('timestamp')
-      ->setLabel(t('Timestamp'))
-      ->setDescription(t('The time the asset was archived.'))
+    $fields['archived'] = BaseFieldDefinition::create('boolean')
+      ->setLabel(t('Archived'))
+      ->setDescription(t('Whether the asset is archived.'))
+      ->setRevisionable(TRUE)
+      ->setDefaultValue(FALSE)
+      ->setSetting('on_label', 'Yes')
+      ->setSetting('off_label', 'No')
+      ->setDisplayOptions('view', [
+        'label' => 'inline',
+        'type' => 'boolean',
+        'settings' => [
+          'format' => 'default',
+          'format_custom_false' => '',
+          'format_custom_true' => '',
+        ],
+        'weight' => 100,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'boolean_checkbox',
+        'settings' => [
+          'display_label' => TRUE,
+        ],
+        'weight' => 100,
+      ]);
+
+    $fields['last_archived'] = BaseFieldDefinition::create('timestamp')
+      ->setLabel(t('Last Archived'))
+      ->setDescription(t('The time the asset was last archived.'))
       ->setRevisionable(TRUE);
 
     return $fields;
-  }
-
-  /**
-   * Gets the workflow ID for the state field.
-   *
-   * @param \Drupal\asset\Entity\AssetInterface $asset
-   *   The asset entity.
-   *
-   * @return string
-   *   The workflow ID.
-   */
-  public static function getWorkflowId(AssetInterface $asset) {
-    $workflow = AssetType::load($asset->bundle())->getWorkflowId();
-    return $workflow;
   }
 
 }

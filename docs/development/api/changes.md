@@ -2,8 +2,20 @@
 
 ## 4.x vs 3.x
 
+- Assets no longer have a `status` attribute. The `archived` attribute has been
+  converted to a boolean, set to true if the asset had a `status` of `archived`,
+  and the timestamp values that were previously stored in the `archived`
+  attribute have been moved to a new `last_archived` attribute.
+  - Note that the `last_archived` attribute has been deprecated in 4.x and will
+    be removed in 5.x.
 - Logs can now have a status of `abandoned`, in addition to the existing `done`
   and `pending`.
+- Plans no longer have an `archived` option in their `status` attribute. The
+  `archived` attribute has been changed to a boolean, set to true if the plan
+  had a `status` of `archived`. Plans with a status of `archived` were set back
+  to a status of `active`.
+- Plans now have additional options for their `status` attribute: `planning`,
+  `done` and `abandoned`, in addition to the existing `active` option.
 
 ## 3.x vs 2.x
 

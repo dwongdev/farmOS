@@ -59,13 +59,11 @@ class QuickMovementTest extends QuickFormTestBase {
     $equipment1 = Asset::create([
       'name' => 'Tractor',
       'type' => 'equipment',
-      'status' => 'active',
     ]);
     $equipment1->save();
     $equipment2 = Asset::create([
       'name' => "Mike's Combine",
       'type' => 'equipment',
-      'status' => 'active',
     ]);
     $equipment2->save();
     $location1 = Asset::create([
@@ -75,7 +73,6 @@ class QuickMovementTest extends QuickFormTestBase {
       'is_fixed' => TRUE,
       'is_location' => TRUE,
       'intrinsic_geometry' => 'POLYGON ((30 10, 40 40, 20 40, 10 20, 30 10))',
-      'status' => 'active',
     ]);
     $location1->save();
     $location2 = Asset::create([
@@ -85,7 +82,6 @@ class QuickMovementTest extends QuickFormTestBase {
       'is_fixed' => TRUE,
       'is_location' => TRUE,
       'intrinsic_geometry' => 'POLYGON ((20 40, 40 80, 60 60, 10 20, 20 40))',
-      'status' => 'active',
     ]);
     $location2->save();
 

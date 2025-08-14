@@ -22,8 +22,6 @@ function farm_entity_views_views_data_alter(array &$data) {
     'field_name' => 'status',
   ];
   $tables = [
-    'asset_field_data',
-    'asset_field_revision',
     'log_field_data',
     'log_field_revision',
     'plan_field_data',

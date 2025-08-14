@@ -57,7 +57,6 @@ use Drupal\entity\Routing\DefaultHtmlRouteProvider;
     'id',
     'label',
     'description',
-    'workflow',
     'new_revision',
   ],
 )]
@@ -85,13 +84,6 @@ class AssetType extends ConfigEntityBundleBase implements AssetTypeInterface {
   protected $description;
 
   /**
-   * The asset type workflow ID.
-   *
-   * @var string
-   */
-  protected $workflow;
-
-  /**
    * Default value of the 'Create new revision' checkbox of the asset type.
    *
    * @var bool
@@ -110,35 +102,6 @@ class AssetType extends ConfigEntityBundleBase implements AssetTypeInterface {
    */
   public function setDescription($description) {
     return $this->set('description', $description);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getWorkflowId() {
-    return $this->workflow;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setWorkflowId($workflow_id) {
-    $this->workflow = $workflow_id;
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function calculateDependencies() {
-    parent::calculateDependencies();
-
-    // The asset type must depend on the module that provides the workflow.
-    $workflow_manager = \Drupal::service('plugin.manager.workflow');
-    $workflow = $workflow_manager->createInstance($this->getWorkflowId());
-    $this->calculatePluginDependencies($workflow);
-
-    return $this;
   }
 
   /**

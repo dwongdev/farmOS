@@ -8,4 +8,3 @@ dependencies:
   - drupal:user
   - drupal:views
   - entity:entity
-  - state_machine:state_machine

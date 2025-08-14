@@ -57,7 +57,6 @@ attributes.
 Attributes that are common to all Asset types include:
 
 - Name
-- Status
 - Flags
 - Geometry
 - Intrinsic geometry
@@ -66,17 +65,12 @@ Attributes that are common to all Asset types include:
 - Notes
 - ID Tags
 - Data
+- Archived
 
 #### Name
 
 Assets must have a name that describes them. The name is used in lists of Assets
 to easily identify them at quick glance.
-
-#### Status
-
-Assets can be marked as "active" or "archived" to indicate their status.
-Archived Assets will be hidden from most lists in farmOS unless they are
-explicitly requested.
 
 #### Flags
 
@@ -141,6 +135,12 @@ store remote system IDs that correspond to the Asset. So if the Asset is
 created or managed by software outside of farmOS, it can be identified easily.
 It can also be used to store additional structured metadata that does not fit
 into the standard Asset attributes.
+
+#### Archived
+
+Assets can be marked as "archived" to indicate that they are no longer being
+actively managed. Archived Assets will be hidden from most lists in farmOS
+unless they are explicitly requested.
 
 ### Additional attributes
 

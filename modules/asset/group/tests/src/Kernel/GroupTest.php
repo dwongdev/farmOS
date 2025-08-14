@@ -100,7 +100,6 @@ class GroupTest extends KernelTestBase {
     $animal = Asset::create([
       'type' => 'animal',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $animal->save();
 
@@ -112,14 +111,12 @@ class GroupTest extends KernelTestBase {
     $first_group = Asset::create([
       'type' => 'group',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $first_group->save();
     /** @var \Drupal\asset\Entity\AssetInterface $second_group */
     $second_group = Asset::create([
       'type' => 'group',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $second_group->save();
 
@@ -298,7 +295,6 @@ class GroupTest extends KernelTestBase {
     $second_animal = Asset::create([
       'type' => 'animal',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $second_animal->save();
 
@@ -330,7 +326,6 @@ class GroupTest extends KernelTestBase {
     $asset = Asset::create([
       'type' => 'animal',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $asset->save();
 
@@ -340,14 +335,12 @@ class GroupTest extends KernelTestBase {
     $group = Asset::create([
       'type' => 'group',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $group->save();
     $groups[] = $group;
     $group = Asset::create([
       'type' => 'group',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $group->save();
     $groups[] = $group;
@@ -420,7 +413,6 @@ class GroupTest extends KernelTestBase {
     $animal = Asset::create([
       'type' => 'animal',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $animal->save();
 
@@ -429,14 +421,12 @@ class GroupTest extends KernelTestBase {
     $first_group = Asset::create([
       'type' => 'group',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $first_group->save();
     /** @var \Drupal\asset\Entity\AssetInterface $second_group */
     $second_group = Asset::create([
       'type' => 'group',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $second_group->save();
 
@@ -497,14 +487,12 @@ class GroupTest extends KernelTestBase {
     $first_group = Asset::create([
       'type' => 'group',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $first_group->save();
     /** @var \Drupal\asset\Entity\AssetInterface $second_group */
     $second_group = Asset::create([
       'type' => 'group',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $second_group->save();
 
@@ -558,7 +546,6 @@ class GroupTest extends KernelTestBase {
     $third_group = Asset::create([
       'type' => 'group',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $third_group->save();
 
@@ -600,7 +587,6 @@ class GroupTest extends KernelTestBase {
     $animal = Asset::create([
       'type' => 'animal',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $animal->save();
 
@@ -612,7 +598,6 @@ class GroupTest extends KernelTestBase {
     $group = Asset::create([
       'type' => 'group',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $group->save();
 
@@ -638,14 +623,12 @@ class GroupTest extends KernelTestBase {
     $first_pasture = Asset::create([
       'type' => 'pasture',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $first_pasture->save();
     /** @var \Drupal\asset\Entity\AssetInterface $second_pasture */
     $second_pasture = Asset::create([
       'type' => 'pasture',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $second_pasture->save();
 
@@ -773,7 +756,6 @@ class GroupTest extends KernelTestBase {
     $asset = Asset::create([
       'type' => 'animal',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $asset->save();
 
@@ -783,7 +765,6 @@ class GroupTest extends KernelTestBase {
     $location = Asset::create([
       'type' => 'pasture',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
       'intrinsic_geometry' => $this->reduceWkt($this->wktGenerator->wktGeneratePolygon(NULL, rand(3, 7))),
       'is_fixed' => TRUE,
       'is_location' => TRUE,
@@ -793,7 +774,6 @@ class GroupTest extends KernelTestBase {
     $location = Asset::create([
       'type' => 'pasture',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
       'intrinsic_geometry' => $this->reduceWkt($this->wktGenerator->wktGeneratePolygon(NULL, rand(3, 7))),
       'is_fixed' => TRUE,
       'is_location' => TRUE,
@@ -806,7 +786,6 @@ class GroupTest extends KernelTestBase {
     $group = Asset::create([
       'type' => 'group',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $group->save();
 
@@ -957,7 +936,6 @@ class GroupTest extends KernelTestBase {
     $asset = Asset::create([
       'type' => 'animal',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $asset->save();
 
@@ -967,7 +945,6 @@ class GroupTest extends KernelTestBase {
     $location = Asset::create([
       'type' => 'pasture',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
       'intrinsic_geometry' => $this->reduceWkt($this->wktGenerator->wktGeneratePolygon(NULL, rand(3, 7))),
       'is_fixed' => TRUE,
       'is_location' => TRUE,
@@ -977,7 +954,6 @@ class GroupTest extends KernelTestBase {
     $location = Asset::create([
       'type' => 'pasture',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
       'intrinsic_geometry' => $this->reduceWkt($this->wktGenerator->wktGeneratePolygon(NULL, rand(3, 7))),
       'is_fixed' => TRUE,
       'is_location' => TRUE,
@@ -990,7 +966,6 @@ class GroupTest extends KernelTestBase {
     $group = Asset::create([
       'type' => 'group',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $group->save();
 

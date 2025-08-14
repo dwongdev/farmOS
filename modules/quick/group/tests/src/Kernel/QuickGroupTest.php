@@ -59,25 +59,21 @@ class QuickGroupTest extends QuickFormTestBase {
     $equipment1 = Asset::create([
       'name' => 'Tractor',
       'type' => 'equipment',
-      'status' => 'active',
     ]);
     $equipment1->save();
     $equipment2 = Asset::create([
       'name' => "Mike's Combine",
       'type' => 'equipment',
-      'status' => 'active',
     ]);
     $equipment2->save();
     $group1 = Asset::create([
       'name' => 'Group 1',
       'type' => 'group',
-      'status' => 'active',
     ]);
     $group1->save();
     $group2 = Asset::create([
       'name' => 'Group 2',
       'type' => 'group',
-      'status' => 'active',
     ]);
     $group2->save();
 

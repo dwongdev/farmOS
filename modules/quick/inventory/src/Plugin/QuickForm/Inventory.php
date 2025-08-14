@@ -153,8 +153,8 @@ class Inventory extends QuickFormBase implements ConfigurableQuickFormInterface 
       '#target_type' => 'asset',
       '#selection_settings' => [
         'sort' => [
-          'field' => 'status',
-          'direction' => 'ASC',
+          'field' => 'archived',
+          'direction' => 'DESC',
         ],
       ],
       '#maxlength' => 1024,
@@ -434,8 +434,8 @@ class Inventory extends QuickFormBase implements ConfigurableQuickFormInterface 
       '#target_type' => 'asset',
       '#selection_settings' => [
         'sort' => [
-          'field' => 'status',
-          'direction' => 'ASC',
+          'field' => 'archived',
+          'direction' => 'DESC',
         ],
       ],
       '#maxlength' => 1024,

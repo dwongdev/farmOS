@@ -64,7 +64,6 @@ class InventoryTest extends FarmBrowserTestBase {
     $asset = $asset_storage->create([
       'type' => 'container',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $asset->save();
 

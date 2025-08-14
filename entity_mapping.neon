@@ -36,7 +36,7 @@ parameters:
         storage: Drupal\Core\Config\Entity\ConfigEntityStorage
       plan:
         class: Drupal\plan\Entity\Plan
-        storage: Drupal\plan\PlanStorage
+        storage: Drupal\Core\Entity\Sql\SqlContentEntityStorage
       plan_type:
         class: Drupal\plan\Entity\PlanType
         storage: Drupal\Core\Config\Entity\ConfigEntityStorage

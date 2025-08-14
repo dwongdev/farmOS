@@ -108,7 +108,6 @@ class LocationTest extends KernelTestBase {
       $location = Asset::create([
         'type' => 'location',
         'name' => $this->randomMachineName(),
-        'status' => 'active',
         'intrinsic_geometry' => $this->polygons[$i],
         'is_fixed' => TRUE,
         'is_location' => TRUE,
@@ -190,7 +189,6 @@ class LocationTest extends KernelTestBase {
     $object = Asset::create([
       'type' => 'object',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
       'intrinsic_geometry' => $object_geom,
       'is_fixed' => TRUE,
       'is_location' => FALSE,
@@ -249,7 +247,6 @@ class LocationTest extends KernelTestBase {
     $asset = Asset::create([
       'type' => 'object',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $asset->save();
 
@@ -445,7 +442,6 @@ class LocationTest extends KernelTestBase {
     $asset = Asset::create([
       'type' => 'object',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
       'is_fixed' => TRUE,
     ]);
     $asset->save();
@@ -499,7 +495,6 @@ class LocationTest extends KernelTestBase {
     $first_asset = Asset::create([
       'type' => 'object',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $first_asset->save();
     /** @var \Drupal\log\Entity\LogInterface $first_log */
@@ -522,7 +517,6 @@ class LocationTest extends KernelTestBase {
     $second_asset = Asset::create([
       'type' => 'object',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $second_asset->save();
     /** @var \Drupal\log\Entity\LogInterface $first_log */
@@ -609,7 +603,6 @@ class LocationTest extends KernelTestBase {
     $asset = Asset::create([
       'type' => 'object',
       'name' => $this->randomMachineName(),
-      'status' => 'active',
     ]);
     $asset->save();
 

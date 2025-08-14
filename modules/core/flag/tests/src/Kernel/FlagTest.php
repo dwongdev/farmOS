@@ -59,10 +59,11 @@ class FlagTest extends KernelTestBase {
       foreach ($bundles as $bundle_id) {
 
         // Create the bundle.
-        $bundle = \Drupal::entityTypeManager()->getStorage($entity_type_id)->create([
-          'id' => $bundle_id,
-          'workflow' => $entity_type . '_default',
-        ]);
+        $bundle_info = ['id' => $bundle_id];
+        if (in_array($entity_type, ['log', 'plan'])) {
+          $bundle_info['workflow'] = $entity_type . '_default';
+        }
+        $bundle = \Drupal::entityTypeManager()->getStorage($entity_type_id)->create($bundle_info);
         $bundle->save();
 
         // Create a flag that only applies for the bundle.

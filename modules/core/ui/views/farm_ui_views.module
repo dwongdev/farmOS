@@ -36,7 +36,7 @@ function farm_ui_views_help($route_name, RouteMatchInterface $route_match) {
   // Assets View.
   if ($route_name == $entity_routes['asset']) {
     $output .= '<p>' . t('Assets represent things that are being tracked or managed. They store high-level information, but most historical data is stored in the <a href=":logs">logs</a> that reference them.', [':logs' => $entity_urls['log']]) . '</p>';
-    $output .= '<p>' . t('Assets that are no longer active can be archived. Archived assets will be hidden from most lists, but are preserved and searchable for posterity.') . '</p>';
+    $output .= '<p>' . t('Assets that are no longer actively managed can be archived. Archived assets will be hidden from most lists, but are preserved and searchable for posterity.') . '</p>';
   }
 
   // Logs View.

@@ -235,7 +235,7 @@ class LocationHierarchyForm extends FormBase {
     $query = $storage->getQuery()
       ->accessCheck(TRUE)
       ->condition('is_location', TRUE)
-      ->condition('status', 'archived', '!=');
+      ->condition('archived', FALSE);
 
     // Limit to a specific parent or no parent.
     if ($asset) {

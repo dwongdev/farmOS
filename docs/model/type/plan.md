@@ -38,6 +38,7 @@ Attributes that are common to all Plan types include:
 - Flags
 - Notes
 - Data
+- Archived
 
 #### Name
 
@@ -46,9 +47,10 @@ to easily identify them at quick glance.
 
 #### Status
 
-Plans can be marked as "active" or "archived" to indicate their status.
-Archived Plans will be hidden from most lists in farmOS unless they are
-explicitly requested.
+Plans can be given a status to indicate where they are in their process. A
+default set of workflow states is provided by farmOS core, but modules that
+provide Plan types may replace this with their own set of states. The default
+workflow states include: "planning", "active", "done", and "abandoned".
 
 #### Flags
 
@@ -71,6 +73,12 @@ store remote system IDs that correspond to the Plan. So if the Plan is
 created or managed by software outside of farmOS, it can be identified easily.
 It can also be used to store additional structured metadata that does not fit
 into the standard Plan attributes.
+
+#### Archived
+
+Plans can be marked as "archived" to indicate that they are no longer being
+actively managed. Archived Plans will be hidden from most lists in farmOS unless
+they are explicitly requested.
 
 ## Relationships
 

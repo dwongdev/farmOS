@@ -48,7 +48,7 @@ class AssetCsvImportTest extends CsvImportTestBase {
     ]);
 
     // Add an asset to test parent relationship.
-    $asset = Asset::create(['name' => 'Test parent', 'type' => 'equipment', 'status' => 'active']);
+    $asset = Asset::create(['name' => 'Test parent', 'type' => 'equipment']);
     $asset->save();
   }
 
@@ -87,7 +87,7 @@ class AssetCsvImportTest extends CsvImportTestBase {
         ],
         'parents' => [],
         'notes' => 'Inherited from Grandpa',
-        'status' => 'archived',
+        'archived' => TRUE,
       ],
       3 => [
         'name' => 'New tractor',
@@ -104,7 +104,7 @@ class AssetCsvImportTest extends CsvImportTestBase {
         ],
         'parents' => [],
         'notes' => 'Purchased recently',
-        'status' => 'active',
+        'archived' => FALSE,
       ],
       4 => [
         'name' => 'Baler',
@@ -121,7 +121,7 @@ class AssetCsvImportTest extends CsvImportTestBase {
           'Test parent',
         ],
         'notes' => 'Makes big bales',
-        'status' => 'active',
+        'archived' => FALSE,
       ],
     ];
     foreach ($assets as $id => $asset) {
@@ -171,7 +171,7 @@ class AssetCsvImportTest extends CsvImportTestBase {
       $this->assertEquals($expected_values[$id]['notes'], $asset->get('notes')->value);
       $this->assertInstanceOf(TextLongItem::class, $asset->get('notes')->first());
       $this->assertEquals('default', $asset->get('notes')->first()->format);
-      $this->assertEquals($expected_values[$id]['status'], $asset->get('status')->value);
+      $this->assertEquals($expected_values[$id]['archived'], $asset->get('archived')->value);
 
       // Confirm revision message is set.
       $this->assertEquals('Imported via CSV.', $asset->getRevisionLogMessage());
@@ -188,7 +188,7 @@ class AssetCsvImportTest extends CsvImportTestBase {
     $this->assertEquals('POINT(1 2)', $asset->get('intrinsic_geometry')->value);
     $this->assertEquals(1, $asset->get('is_location')->value);
     $this->assertEquals(1, $asset->get('is_fixed')->value);
-    $this->assertEquals('active', $asset->get('status')->value);
+    $this->assertEmpty($asset->get('archived')->value);
     $asset = Asset::load(6);
     $this->assertEquals('land', $asset->bundle());
     $this->assertEquals('Field B', $asset->label());
@@ -196,7 +196,7 @@ class AssetCsvImportTest extends CsvImportTestBase {
     $this->assertEquals('', $asset->get('intrinsic_geometry')->value);
     $this->assertEquals(0, $asset->get('is_location')->value);
     $this->assertEquals(0, $asset->get('is_fixed')->value);
-    $this->assertEquals('active', $asset->get('status')->value);
+    $this->assertEmpty($asset->get('archived')->value);
   }
 
 }

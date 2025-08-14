@@ -55,26 +55,7 @@ interface PlanInterface extends ContentEntityInterface, EntityChangedInterface, 
   public function setCreatedTime($timestamp);
 
   /**
-   * Gets the plan archived timestamp.
-   *
-   * @return int
-   *   Archived timestamp of the plan.
-   */
-  public function getArchivedTime();
-
-  /**
-   * Sets the plan archived timestamp.
-   *
-   * @param int|string|null $timestamp
-   *   Archived timestamp of the plan.
-   *
-   * @return \Drupal\plan\Entity\PlanInterface
-   *   The plan entity.
-   */
-  public function setArchivedTime($timestamp);
-
-  /**
-   * Gets the label of the the plan type.
+   * Gets the label of the plan type.
    *
    * @return string
    *   The label of the plan type.

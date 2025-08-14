@@ -2,5 +2,4 @@ id: default
 label: default
 description: 'Test asset type'
 langcode: en
-workflow: asset_default
 new_revision: TRUE

@@ -64,7 +64,6 @@ class QuickInventoryTest extends QuickFormTestBase {
     $equipment = Asset::create([
       'name' => 'Tractor',
       'type' => 'equipment',
-      'status' => 'active',
     ]);
     $equipment->save();
 
