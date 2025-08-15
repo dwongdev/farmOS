@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Drupal\Tests\farm_api\Kernel;
 
 use Drupal\Component\Serialization\Json;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\Tests\user\Traits\UserCreationTrait;
+use Drupal\asset\Entity\AssetInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -208,6 +210,55 @@ class FarmApiTest extends KernelTestBase {
   }
 
   /**
+   * Test that entity revisions are created with PATCH requests.
+   */
+  public function testEntityRevisions() {
+
+    // Test creating an asset.
+    $asset_type = 'asset--test';
+    $payload = [
+      'type' => $asset_type,
+      'attributes' => [
+        'name' => 'Test asset',
+      ],
+    ];
+    $data = $this->apiRequest('/api/asset/test', 'POST', $payload);
+    $this->assertNotEmpty($data['data']['id']);
+    $this->assertNotEmpty($data['data']['attributes']['drupal_internal__id']);
+    $this->assertEquals($asset_type, $data['data']['type']);
+    $this->assertEquals($payload['attributes']['name'], $data['data']['attributes']['name']);
+
+    // Load the asset.
+    $asset_storage = \Drupal::entityTypeManager()->getStorage('asset');
+    $asset_id = $data['data']['attributes']['drupal_internal__id'];
+    $asset = $asset_storage->load($asset_id);
+    $this->assertInstanceOf(AssetInterface::class, $asset);
+
+    // Confirm that there is a single revision.
+    $revision_ids = $this->revisionIds($asset);
+    $this->assertCount(1, $revision_ids);
+
+    // Update the asset via the API.
+    $payload = [
+      'type' => $asset_type,
+      'id' => $data['data']['id'],
+      'attributes' => [
+        'name' => 'Test asset update',
+      ],
+    ];
+    $data = $this->apiRequest('/api/asset/test/' . $data['data']['id'], 'PATCH', $payload);
+    $data = $this->apiRequest('/api/asset/test/' . $data['data']['id']);
+    $this->assertEquals($payload['attributes']['name'], $data['data']['attributes']['name']);
+
+    // Reload the asset.
+    $asset = $asset_storage->load($asset_id);
+
+    // Confirm that there are two revisions.
+    $revision_ids = $this->revisionIds($asset);
+    $this->assertCount(2, $revision_ids);
+  }
+
+  /**
    * Helper function for performing an API request.
    *
    * @param string $endpoint
@@ -246,6 +297,28 @@ class FarmApiTest extends KernelTestBase {
     }
     $this->assertEquals($expected_response, $response->getStatusCode());
     return Json::decode($response->getContent());
+  }
+
+  /**
+   * Loads all revision IDs of an entity sorted by revision ID descending.
+   *
+   * This is copied+modified from RevisionControllerTrait::revisionIds().
+   *
+   * @param \Drupal\Core\Entity\EntityInterface $entity
+   *   The entity.
+   *
+   * @return mixed[]
+   *   Returns a list of revision IDs.
+   */
+  protected function revisionIds(EntityInterface $entity) {
+    $entity_type = $entity->getEntityType();
+    $result = \Drupal::entityTypeManager()->getStorage($entity_type->id())->getQuery()
+      ->allRevisions()
+      ->condition($entity_type->getKey('id'), $entity->id())
+      ->sort($entity_type->getKey('revision'), 'DESC')
+      ->accessCheck(TRUE)
+      ->execute();
+    return array_keys($result);
   }
 
 }
