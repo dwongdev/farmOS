@@ -44,7 +44,7 @@ class AssetParentActionForm extends ConfirmFormBase {
   /**
    * The entity type.
    *
-   * @var \Drupal\Core\Entity\EntityTypeInterface
+   * @var \Drupal\Core\Entity\EntityTypeInterface|null
    */
   protected $entityType;
 
@@ -152,7 +152,7 @@ class AssetParentActionForm extends ConfirmFormBase {
       $this->entities = $this->tempStore->get((string) $this->user->id());
     }
 
-    $this->entityType = $this->entityTypeManager->getDefinition('asset');
+    $this->entityType = $this->entityTypeManager->getDefinition('asset', FALSE);
     if (!$this->entityType || empty($this->entities)) {
       return new RedirectResponse($this->getCancelUrl()
         ->setAbsolute()

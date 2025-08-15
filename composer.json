@@ -18,7 +18,7 @@
     "require": {
         "cweagans/composer-patches": "^1.6",
         "drupal/admin_toolbar": "^3.5",
-        "drupal/core": "11.1.7",
+        "drupal/core": "11.2.2",
         "drupal/config_update": "^2.0@alpha",
         "drupal/consumers": "1.19",
         "drupal/csv_serialization": "^4.0.1",
@@ -30,7 +30,7 @@
         "drupal/entity_reference_validators": "^2.0",
         "drupal/fraction": "^3.0",
         "drupal/geofield": "^1.62",
-        "drupal/gin": "4.1.0",
+        "drupal/gin": "5.0.3",
         "drupal/inline_entity_form": "^3.0@RC",
         "drupal/inspire_tree": "^1.0.6",
         "drupal/jsonapi_schema": "^1.0",
@@ -60,10 +60,10 @@
                 "Issue #3496751: PHP 8.4: Implicitly nullable parameter declarations deprecated": "https://www.drupal.org/files/issues/2025-05-08/consumers-php8.4-3496751.patch"
             },
             "drupal/core": {
-                "Issue #2339235: Remove taxonomy hard dependency on node module": "https://www.drupal.org/files/issues/2025-03-31/2339235-11.1.x-93.patch",
+                "Issue #2339235: Remove taxonomy hard dependency on node module": "https://www.drupal.org/files/issues/2025-06-25/2339235-11.2.x-94.patch",
                 "Issue #1874838: Allow exposed blocks to use 'Link display' settings": "https://www.drupal.org/files/issues/2021-11-11/1874838-26.patch",
                 "Issue #2909128: Autocomplete not working on Chrome Android": "https://www.drupal.org/files/issues/2023-07-11/2909128-92.patch",
-                "Issue #3129179: Provide some way to rebuild the persistent bundle field map": "https://www.drupal.org/files/issues/2024-07-17/3129179-49.patch"
+                "Issue #3129179: Provide some way to rebuild the persistent bundle field map": "https://www.drupal.org/files/issues/2025-06-25/3129179-55.patch"
             },
             "drupal/entity": {
                 "Issue #3206703: Provide reverse relationships for bundle plugin entity_reference fields.": "https://www.drupal.org/files/issues/2024-08-30/3206703-12.patch"

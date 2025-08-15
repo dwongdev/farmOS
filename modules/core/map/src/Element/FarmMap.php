@@ -78,7 +78,7 @@ class FarmMap extends RenderElementBase {
 
     // Determine the public path for the farmOS-map library.
     // Get the farm_map/farmOS-map library.
-    /** @var \Drupal\Core\Asset\LibraryDiscovery $library_discovery */
+    /** @var \Drupal\Core\Asset\LibraryDiscoveryCollector $library_discovery */
     $library_discovery = \Drupal::service('library.discovery');
     $library_info = $library_discovery->getLibraryByName('farm_map', 'farmOS-map');
 

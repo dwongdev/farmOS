@@ -96,7 +96,7 @@ class LogEventSubscriber implements EventSubscriberInterface {
 
     // If updating an existing inventory log, invalidate the cache.
     // This catches inventory logs changing from done to another status.
-    if (!empty($log->original) && $this->isActiveQuantityLog($log->original)) {
+    if (!empty($log->getOriginal()) && $this->isActiveQuantityLog($log->getOriginal())) {
       $update_asset_cache = TRUE;
     }
 
@@ -110,8 +110,8 @@ class LogEventSubscriber implements EventSubscriberInterface {
     $tags = [];
 
     // Include assets that were previously referenced by inventory adjustments.
-    if (!empty($log->original)) {
-      array_push($tags, ...$this->getInventoryAssetCacheTags($log->original));
+    if (!empty($log->getOriginal())) {
+      array_push($tags, ...$this->getInventoryAssetCacheTags($log->getOriginal()));
     }
 
     // Include assets currently referenced by the log.

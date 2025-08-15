@@ -206,7 +206,7 @@ class EntityTaxonomyTermReferenceArgument extends NumericArgument {
     if (!empty($conditions)) {
       $combined_conditions = implode(" OR ", $conditions);
 
-      $this->query->addWhereExpression(0, "$entity_data_table.id IS NOT NULL AND ($combined_conditions)");
+      $this->query->addWhereExpression('0', "$entity_data_table.id IS NOT NULL AND ($combined_conditions)");
     }
   }
 

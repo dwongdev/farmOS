@@ -57,8 +57,9 @@ interface AssetInterface extends ContentEntityInterface, EntityChangedInterface,
   /**
    * Gets the asset archived timestamp.
    *
-   * @return int
-   *   Archived timestamp of the asset.
+   * @return int|null
+   *   Archived timestamp of the plan, or NULL if the asset has not been
+   *   archived.
    *
    * @deprecated in farm:4.0.0 and is removed from farm:5.0.0.
    *   The last_archived field will be removed from assets and all data in it

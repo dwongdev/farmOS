@@ -48,12 +48,12 @@ class FarmFieldFactory implements FarmFieldFactoryInterface {
   /**
    * Builds a field definition with farmOS opinions.
    *
-   * @param \Drupal\Core\Field\BaseFieldDefinition &$field
+   * @param \Drupal\Core\Field\BaseFieldDefinition $field
    *   A base field definition object.
    * @param array $options
    *   An array of options.
    */
-  protected function buildFieldDefinition(BaseFieldDefinition &$field, array $options = []) {
+  protected function buildFieldDefinition(BaseFieldDefinition $field, array $options = []) {
 
     // Set label.
     if (!empty($options['label'])) {
@@ -218,12 +218,12 @@ class FarmFieldFactory implements FarmFieldFactoryInterface {
   /**
    * Boolean field modifier.
    *
-   * @param \Drupal\Core\Field\BaseFieldDefinition &$field
+   * @param \Drupal\Core\Field\BaseFieldDefinition $field
    *   A base field definition object.
    * @param array $options
    *   An array of options.
    */
-  protected function modifyBooleanField(BaseFieldDefinition &$field, array $options = []) {
+  protected function modifyBooleanField(BaseFieldDefinition $field, array $options = []) {
 
     // Set the on/off labels.
     $field->setSetting('on_label', 'Yes');
@@ -252,12 +252,12 @@ class FarmFieldFactory implements FarmFieldFactoryInterface {
   /**
    * Decimal field modifier.
    *
-   * @param \Drupal\Core\Field\BaseFieldDefinition &$field
+   * @param \Drupal\Core\Field\BaseFieldDefinition $field
    *   A base field definition object.
    * @param array $options
    *   An array of options.
    */
-  protected function modifyDecimalField(BaseFieldDefinition &$field, array $options = []) {
+  protected function modifyDecimalField(BaseFieldDefinition $field, array $options = []) {
 
     // Set the precision and scale, if specified.
     if (!empty($options['precision'])) {
@@ -294,12 +294,12 @@ class FarmFieldFactory implements FarmFieldFactoryInterface {
   /**
    * Email field modifier.
    *
-   * @param \Drupal\Core\Field\BaseFieldDefinition &$field
+   * @param \Drupal\Core\Field\BaseFieldDefinition $field
    *   A base field definition object.
    * @param array $options
    *   An array of options.
    */
-  protected function modifyEmailField(BaseFieldDefinition &$field, array $options = []) {
+  protected function modifyEmailField(BaseFieldDefinition $field, array $options = []) {
 
     // Build form and view display settings.
     $field->setDisplayOptions('form', [
@@ -316,12 +316,12 @@ class FarmFieldFactory implements FarmFieldFactoryInterface {
   /**
    * Entity reference field modifier.
    *
-   * @param \Drupal\Core\Field\BaseFieldDefinition &$field
+   * @param \Drupal\Core\Field\BaseFieldDefinition $field
    *   A base field definition object.
    * @param array $options
    *   An array of options.
    */
-  protected function modifyEntityReferenceField(BaseFieldDefinition &$field, array $options = []) {
+  protected function modifyEntityReferenceField(BaseFieldDefinition $field, array $options = []) {
 
     // If a target type is not specified, throw an exception.
     if (empty($options['target_type'])) {
@@ -525,12 +525,12 @@ class FarmFieldFactory implements FarmFieldFactoryInterface {
   /**
    * Entity reference revisions field modifier.
    *
-   * @param \Drupal\Core\Field\BaseFieldDefinition &$field
+   * @param \Drupal\Core\Field\BaseFieldDefinition $field
    *   A base field definition object.
    * @param array $options
    *   An array of options.
    */
-  protected function modifyEntityReferenceRevisionsField(BaseFieldDefinition &$field, array $options = []) {
+  protected function modifyEntityReferenceRevisionsField(BaseFieldDefinition $field, array $options = []) {
 
     // If a target type is not specified, throw an exception.
     if (empty($options['target_type'])) {
@@ -601,12 +601,12 @@ class FarmFieldFactory implements FarmFieldFactoryInterface {
   /**
    * File and image field modifier.
    *
-   * @param \Drupal\Core\Field\BaseFieldDefinition &$field
+   * @param \Drupal\Core\Field\BaseFieldDefinition $field
    *   A base field definition object.
    * @param array $options
    *   An array of options.
    */
-  protected function modifyFileField(BaseFieldDefinition &$field, array $options = []) {
+  protected function modifyFileField(BaseFieldDefinition $field, array $options = []) {
 
     // Determine the upload directory.
     $file_directory = 'farm/[date:custom:Y]-[date:custom:m]';
@@ -700,12 +700,12 @@ class FarmFieldFactory implements FarmFieldFactoryInterface {
   /**
    * Fraction field modifier.
    *
-   * @param \Drupal\Core\Field\BaseFieldDefinition &$field
+   * @param \Drupal\Core\Field\BaseFieldDefinition $field
    *   A base field definition object.
    * @param array $options
    *   An array of options.
    */
-  protected function modifyFractionField(BaseFieldDefinition &$field, array $options = []) {
+  protected function modifyFractionField(BaseFieldDefinition $field, array $options = []) {
 
     // Build form and view display settings.
     $field->setDisplayOptions('form', [
@@ -732,12 +732,12 @@ class FarmFieldFactory implements FarmFieldFactoryInterface {
   /**
    * Geofield field modifier.
    *
-   * @param \Drupal\Core\Field\BaseFieldDefinition &$field
+   * @param \Drupal\Core\Field\BaseFieldDefinition $field
    *   A base field definition object.
    * @param array $options
    *   An array of options.
    */
-  protected function modifyGeofieldField(BaseFieldDefinition &$field, array $options = []) {
+  protected function modifyGeofieldField(BaseFieldDefinition $field, array $options = []) {
 
     // Set the geofield backend.
     $field->setSetting('backend', 'geofield_backend_default');
@@ -764,12 +764,12 @@ class FarmFieldFactory implements FarmFieldFactoryInterface {
   /**
    * ID tag field modifier.
    *
-   * @param \Drupal\Core\Field\BaseFieldDefinition &$field
+   * @param \Drupal\Core\Field\BaseFieldDefinition $field
    *   A base field definition object.
    * @param array $options
    *   An array of options.
    */
-  protected function modifyIdTagField(BaseFieldDefinition &$field, array $options = []) {
+  protected function modifyIdTagField(BaseFieldDefinition $field, array $options = []) {
 
     // Build form and view display settings.
     $field->setDisplayOptions('form', [
@@ -786,12 +786,12 @@ class FarmFieldFactory implements FarmFieldFactoryInterface {
   /**
    * Integer field modifier.
    *
-   * @param \Drupal\Core\Field\BaseFieldDefinition &$field
+   * @param \Drupal\Core\Field\BaseFieldDefinition $field
    *   A base field definition object.
    * @param array $options
    *   An array of options.
    */
-  protected function modifyIntegerField(BaseFieldDefinition &$field, array $options = []) {
+  protected function modifyIntegerField(BaseFieldDefinition $field, array $options = []) {
 
     // Set the size, if specified.
     if (!empty($options['size'])) {
@@ -821,12 +821,12 @@ class FarmFieldFactory implements FarmFieldFactoryInterface {
   /**
    * Inventory field modifier.
    *
-   * @param \Drupal\Core\Field\BaseFieldDefinition &$field
+   * @param \Drupal\Core\Field\BaseFieldDefinition $field
    *   A base field definition object.
    * @param array $options
    *   An array of options.
    */
-  protected function modifyInventoryField(BaseFieldDefinition &$field, array $options = []) {
+  protected function modifyInventoryField(BaseFieldDefinition $field, array $options = []) {
 
     // Build view display settings.
     $field->setDisplayOptions('view', [
@@ -839,12 +839,12 @@ class FarmFieldFactory implements FarmFieldFactoryInterface {
   /**
    * List string field modifier.
    *
-   * @param \Drupal\Core\Field\BaseFieldDefinition &$field
+   * @param \Drupal\Core\Field\BaseFieldDefinition $field
    *   A base field definition object.
    * @param array $options
    *   An array of options.
    */
-  protected function modifyListStringField(BaseFieldDefinition &$field, array $options = []) {
+  protected function modifyListStringField(BaseFieldDefinition $field, array $options = []) {
 
     // Set the allowed values, if specified.
     if (!empty($options['allowed_values'])) {
@@ -871,12 +871,12 @@ class FarmFieldFactory implements FarmFieldFactoryInterface {
   /**
    * String field modifier.
    *
-   * @param \Drupal\Core\Field\BaseFieldDefinition &$field
+   * @param \Drupal\Core\Field\BaseFieldDefinition $field
    *   A base field definition object.
    * @param array $options
    *   An array of options.
    */
-  protected function modifyStringField(BaseFieldDefinition &$field, array $options = []) {
+  protected function modifyStringField(BaseFieldDefinition $field, array $options = []) {
 
     // Set the maximum length, if specified.
     if (!empty($options['max_length'])) {
@@ -902,12 +902,12 @@ class FarmFieldFactory implements FarmFieldFactoryInterface {
   /**
    * Text field modifier.
    *
-   * @param \Drupal\Core\Field\BaseFieldDefinition &$field
+   * @param \Drupal\Core\Field\BaseFieldDefinition $field
    *   A base field definition object.
    * @param array $options
    *   An array of options.
    */
-  protected function modifyTextField(BaseFieldDefinition &$field, array $options = []) {
+  protected function modifyTextField(BaseFieldDefinition $field, array $options = []) {
 
     // Build form and view display settings.
     $field->setDisplayOptions('form', [
@@ -928,12 +928,12 @@ class FarmFieldFactory implements FarmFieldFactoryInterface {
   /**
    * Timestamp field modifier.
    *
-   * @param \Drupal\Core\Field\BaseFieldDefinition &$field
+   * @param \Drupal\Core\Field\BaseFieldDefinition $field
    *   A base field definition object.
    * @param array $options
    *   An array of options.
    */
-  protected function modifyTimestampField(BaseFieldDefinition &$field, array $options = []) {
+  protected function modifyTimestampField(BaseFieldDefinition $field, array $options = []) {
 
     // Build form and view display settings.
     $field->setDisplayOptions('form', [
@@ -955,12 +955,12 @@ class FarmFieldFactory implements FarmFieldFactoryInterface {
   /**
    * URI field modifier.
    *
-   * @param \Drupal\Core\Field\BaseFieldDefinition &$field
+   * @param \Drupal\Core\Field\BaseFieldDefinition $field
    *   A base field definition object.
    * @param array $options
    *   An array of options.
    */
-  protected function modifyUriField(BaseFieldDefinition &$field, array $options = []) {
+  protected function modifyUriField(BaseFieldDefinition $field, array $options = []) {
 
     // Build form and view display settings.
     $field->setDisplayOptions('form', [

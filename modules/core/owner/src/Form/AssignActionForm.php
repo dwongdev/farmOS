@@ -51,7 +51,7 @@ class AssignActionForm extends ConfirmFormBase {
   /**
    * The entity type.
    *
-   * @var \Drupal\Core\Entity\EntityTypeInterface
+   * @var \Drupal\Core\Entity\EntityTypeInterface|null
    */
   protected $entityType;
 
@@ -140,7 +140,7 @@ class AssignActionForm extends ConfirmFormBase {
     }
 
     // Load the entity type definition.
-    $this->entityType = $this->entityTypeManager->getDefinition($entity_type);
+    $this->entityType = $this->entityTypeManager->getDefinition($entity_type, FALSE);
 
     // Load saved entities.
     $this->entities = $this->tempStore->get((string) $this->user->id());

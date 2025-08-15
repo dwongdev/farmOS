@@ -43,7 +43,7 @@ class LogCategorizeActionForm extends ConfirmFormBase {
   /**
    * The entity type.
    *
-   * @var \Drupal\Core\Entity\EntityTypeInterface
+   * @var \Drupal\Core\Entity\EntityTypeInterface|null
    */
   protected $entityType;
 
@@ -121,7 +121,7 @@ class LogCategorizeActionForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array|RedirectResponse {
-    $this->entityType = $this->entityTypeManager->getDefinition('log');
+    $this->entityType = $this->entityTypeManager->getDefinition('log', FALSE);
     $this->entities = $this->tempStore->get((string) $this->user->id());
     if (!$this->entityType || empty($this->entities)) {
       return new RedirectResponse($this->getCancelUrl()

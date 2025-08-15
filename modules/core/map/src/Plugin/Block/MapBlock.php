@@ -79,7 +79,6 @@ class MapBlock extends BlockBase implements ContainerFactoryPluginInterface {
     // Map type.
     $map_types = $this->entityTypeManager->getStorage('map_type')->loadMultiple();
     $map_type_options = array_map(function ($map_type) {
-      /** @var \Drupal\farm_map\Entity\MapTypeInterface $map_type */
       return $map_type->label();
     }, $map_types);
     $form['map_type'] = [
@@ -92,7 +91,6 @@ class MapBlock extends BlockBase implements ContainerFactoryPluginInterface {
     // Map behaviors.
     $map_behaviors = $this->entityTypeManager->getStorage('map_behavior')->loadMultiple();
     $map_behavior_options = array_map(function ($map_behavior) {
-      /** @var \Drupal\farm_map\Entity\MapBehaviorInterface $map_behavior */
       return $map_behavior->label();
     }, $map_behaviors);
     $form['map_behaviors'] = [

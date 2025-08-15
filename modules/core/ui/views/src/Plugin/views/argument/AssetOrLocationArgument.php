@@ -71,7 +71,7 @@ class AssetOrLocationArgument extends ArgumentPluginBase {
     // so the condition is not combined with other filters from the view.
     $asset_condition = "$asset_alias.asset_target_id IS NOT NULL";
     $location_condition = "$location_alias.location_target_id IS NOT NULL";
-    $this->query->addWhereExpression(0, "$this->table.id IS NOT NULL AND ($asset_condition OR $location_condition)");
+    $this->query->addWhereExpression('0', "$this->table.id IS NOT NULL AND ($asset_condition OR $location_condition)");
   }
 
 }

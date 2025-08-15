@@ -101,6 +101,14 @@ class IdTagFormatter extends FormatterBase {
     }
 
     $elements['#attached']['library'][] = 'farm_id_tag/id_tag_field';
+    // PHPStan throws the following error on the next line:
+    // Method
+    // Drupal\farm_id_tag\Plugin\Field\FieldFormatter\IdTagFormatter::viewElements()
+    // should return array<int, array<int|string, mixed>> but returns
+    // array<int|string, array<string, array<int|string,
+    // Drupal\Core\StringTranslation\TranslatableMarkup|string>>>.
+    // We ignore this because we are following Drupal core's pattern.
+    // @phpstan-ignore return.type
     return $elements;
   }
 

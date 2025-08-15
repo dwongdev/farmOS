@@ -122,7 +122,7 @@ class LogEventSubscriber implements EventSubscriberInterface {
     }
 
     // If this is a new log and it has a geometry, do nothing.
-    if (empty($log->original) && $this->logLocation->hasGeometry($log)) {
+    if (empty($log->getOriginal()) && $this->logLocation->hasGeometry($log)) {
       return;
     }
 
@@ -131,15 +131,15 @@ class LogEventSubscriber implements EventSubscriberInterface {
     // want to proceed if the updated log's geometry is empty because this is
     // an indication that it was cleared manually by the user in order to
     // re-populate it.
-    if (!empty($log->original) && $this->logLocation->hasGeometry($log)) {
+    if (!empty($log->getOriginal()) && $this->logLocation->hasGeometry($log)) {
 
       // If the original log has a custom geometry, do nothing.
-      if ($this->hasCustomGeometry($log->original)) {
+      if ($this->hasCustomGeometry($log->getOriginal())) {
         return;
       }
 
       // If the geometry has changed, do nothing.
-      $old_geometry = $this->logLocation->getGeometry($log->original);
+      $old_geometry = $this->logLocation->getGeometry($log->getOriginal());
       $new_geometry = $this->logLocation->getGeometry($log);
       if ($old_geometry != $new_geometry) {
         return;
@@ -265,7 +265,7 @@ class LogEventSubscriber implements EventSubscriberInterface {
 
     // If updating an existing 'done' movement log, invalidate the cache.
     // This catches any movement logs changing from done to another status.
-    if (!empty($log->original) && $this->isActiveMovementLog($log->original)) {
+    if (!empty($log->getOriginal()) && $this->isActiveMovementLog($log->getOriginal())) {
       $update_asset_cache = TRUE;
     }
 
@@ -279,8 +279,8 @@ class LogEventSubscriber implements EventSubscriberInterface {
     $tags = [];
 
     // Include assets that were previously referenced.
-    if (!empty($log->original)) {
-      foreach ($log->original->get('asset')->referencedEntities() as $asset) {
+    if (!empty($log->getOriginal())) {
+      foreach ($log->getOriginal()->get('asset')->referencedEntities() as $asset) {
         array_push($tags, ...$asset->getCacheTags());
       }
     }

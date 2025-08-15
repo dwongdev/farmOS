@@ -103,7 +103,7 @@ class AssetGroup extends ArgumentPluginBase {
 
     // Filter to only include assets with those IDs.
     $this->ensureMyTable();
-    $this->query->addWhere(0, "$this->tableAlias.id", $asset_ids, 'IN');
+    $this->query->addWhere('0', "$this->tableAlias.id", $asset_ids, 'IN');
   }
 
 }

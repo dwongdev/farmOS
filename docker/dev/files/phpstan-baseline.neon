@@ -1,0 +1,91 @@
+parameters:
+	ignoreErrors:
+
+	  # All of the following are related to QueryInterface::accessCheck().
+	  # These appear to be caused by a bug with mglaman/phpstan-drupal, so they
+	  # can be removed when that is resolved.
+	  # @see https://github.com/mglaman/phpstan-drupal/issues/825
+
+		-
+			message: '#^Call to method Drupal\\Core\\Entity\\Query\\QueryInterface\:\:accessCheck\(\) with true will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: web/profiles/farm/modules/core/asset/tests/src/Functional/AssetCRUDTest.php
+
+		-
+			message: '#^Call to method Drupal\\Core\\Entity\\Query\\QueryInterface\:\:accessCheck\(\) with false will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: web/profiles/farm/modules/core/l10n/src/Form/L10nSettingsForm.php
+
+		-
+			message: '#^Call to method Drupal\\Core\\Entity\\Query\\QueryInterface\:\:accessCheck\(\) with false will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: web/profiles/farm/modules/core/log/modules/quantity/src/EventSubscriber/LogQuantityEventSubscriber.php
+
+		-
+			message: '#^Call to method Drupal\\Core\\Entity\\Query\\QueryInterface\:\:accessCheck\(\) with true will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: web/profiles/farm/modules/core/plan/tests/src/Functional/PlanCRUDTest.php
+
+		-
+			message: '#^Call to method Drupal\\Core\\Entity\\Query\\QueryInterface\:\:accessCheck\(\) with true will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: web/profiles/farm/modules/core/quick/farm_quick.module
+
+		-
+			message: '#^Call to method Drupal\\Core\\Entity\\Query\\QueryInterface\:\:accessCheck\(\) with false will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: web/profiles/farm/modules/core/role/modules/account_admin/farm_role_account_admin.post_update.php
+
+		-
+			message: '#^Call to method Drupal\\Core\\Entity\\Query\\QueryInterface\:\:accessCheck\(\) with false will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: web/profiles/farm/modules/core/role/modules/roles/farm_role_roles.post_update.php
+
+		-
+			message: '#^Call to method Drupal\\Core\\Entity\\Query\\QueryInterface\:\:accessCheck\(\) with true will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: web/profiles/farm/modules/core/ui/location/src/Form/LocationHierarchyForm.php
+
+		-
+			message: '#^Call to method Drupal\\Core\\Entity\\Query\\QueryInterface\:\:accessCheck\(\) with true will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: web/profiles/farm/modules/core/ui/location/src/Plugin/Derivative/AddLocationAssetAction.php
+
+		-
+			message: '#^Call to method Drupal\\Core\\Entity\\Query\\QueryInterface\:\:accessCheck\(\) with true will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: web/profiles/farm/modules/core/ui/metrics/src/Plugin/Block/FarmMetricsBlock.php
+
+		-
+			message: '#^Call to method Drupal\\Core\\Entity\\Query\\QueryInterface\:\:accessCheck\(\) with true will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: web/profiles/farm/modules/core/ui/views/src/Access/FarmAssetChildrenViewsAccessCheck.php
+
+		-
+			message: '#^Call to method Drupal\\Core\\Entity\\Query\\QueryInterface\:\:accessCheck\(\) with true will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: web/profiles/farm/modules/core/ui/views/src/Access/FarmAssetLogViewsAccessCheck.php
+
+		-
+			message: '#^Call to method Drupal\\Core\\Entity\\Query\\QueryInterface\:\:accessCheck\(\) with true will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: web/profiles/farm/modules/log/birth/farm_birth.module
+
+		-
+			message: '#^Call to method Drupal\\Core\\Entity\\Query\\QueryInterface\:\:accessCheck\(\) with false will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: web/profiles/farm/modules/log/birth/src/Plugin/Validation/Constraint/UniqueBirthLogConstraintValidator.php

@@ -109,7 +109,7 @@ class LogEventSubscriber implements EventSubscriberInterface {
 
     // If updating an existing group assignment log, invalidate the cache.
     // This catches group assignment logs changing from done to another status.
-    if (!empty($log->original) && $this->isActiveGroupAssignment($log->original)) {
+    if (!empty($log->getOriginal()) && $this->isActiveGroupAssignment($log->getOriginal())) {
       $update_asset_cache = TRUE;
     }
 
@@ -123,8 +123,8 @@ class LogEventSubscriber implements EventSubscriberInterface {
     $tags = [];
 
     // Include assets that were previously referenced.
-    if (!empty($log->original)) {
-      foreach ($log->original->get('asset')->referencedEntities() as $asset) {
+    if (!empty($log->getOriginal())) {
+      foreach ($log->getOriginal()->get('asset')->referencedEntities() as $asset) {
         array_push($tags, ...$asset->getCacheTags());
       }
     }
@@ -156,7 +156,7 @@ class LogEventSubscriber implements EventSubscriberInterface {
 
     // If updating an existing 'done' movement log, invalidate the cache.
     // This catches any movement logs changing from done to another status.
-    if (!empty($log->original) && LocationLogEventSubscriber::isActiveMovementLog($log->original)) {
+    if (!empty($log->getOriginal()) && LocationLogEventSubscriber::isActiveMovementLog($log->getOriginal())) {
       $update_asset_cache = TRUE;
     }
 
@@ -170,10 +170,10 @@ class LogEventSubscriber implements EventSubscriberInterface {
     $tags = [];
 
     // Include group assets that were previously referenced.
-    if (!empty($log->original)) {
+    if (!empty($log->getOriginal())) {
 
       // Get all group assets.
-      $group_assets = array_filter($log->original->get('asset')->referencedEntities(), function (AssetInterface $asset) {
+      $group_assets = array_filter($log->getOriginal()->get('asset')->referencedEntities(), function (AssetInterface $asset) {
         return $asset->bundle() === 'group';
       });
 
