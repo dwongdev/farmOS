@@ -53,7 +53,6 @@ class CsvImportTestBase extends MigrateTestBase {
     'migrate',
     'migrate_plus',
     'migrate_source_csv',
-    'migrate_source_ui',
     'migrate_tools',
     'options',
     'quantity',
