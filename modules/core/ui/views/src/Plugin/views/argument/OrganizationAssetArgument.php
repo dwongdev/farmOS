@@ -40,7 +40,14 @@ class OrganizationAssetArgument extends ArgumentPluginBase {
     $subquery->condition('af.farm_target_id', $this->argument);
 
     // Use the subquery in a condition on the views query to prevent duplicates.
-    $this->query->addWhere(0, "$this->table.id", $subquery, 'IN');
+    // PHPStan throws the following errors on the next line:
+    // Parameter #3 $value of method
+    // Drupal\views\Plugin\views\query\Sql::addWhere() expects
+    // array|string|null, Drupal\Core\Database\Query\SelectInterface given.
+    // We ignore this because subqueries are also accepted, even though they are
+    // not documented.
+    // @phpstan-ignore argument.type
+    $this->query->addWhere('0', "$this->table.id", $subquery, 'IN');
   }
 
 }
