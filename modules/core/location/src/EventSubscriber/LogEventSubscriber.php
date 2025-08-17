@@ -47,16 +47,6 @@ class LogEventSubscriber implements EventSubscriberInterface {
    */
   protected CacheTagsInvalidatorInterface $cacheTagsInvalidator;
 
-  /**
-   * LogEventSubscriber Constructor.
-   *
-   * @param \Drupal\farm_location\LogLocationInterface $log_location
-   *   Log location service.
-   * @param \Drupal\farm_location\AssetLocationInterface $asset_locaiton
-   *   Asset location service.
-   * @param \Drupal\Core\Cache\CacheTagsInvalidatorInterface $cache_tags_invalidator
-   *   Cache tag invalidator service.
-   */
   public function __construct(LogLocationInterface $log_location, AssetLocationInterface $asset_locaiton, CacheTagsInvalidatorInterface $cache_tags_invalidator) {
     $this->logLocation = $log_location;
     $this->assetLocation = $asset_locaiton;

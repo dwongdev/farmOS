@@ -25,12 +25,6 @@ class ReportController extends ControllerBase {
    */
   protected $menuLinkTree;
 
-  /**
-   * Constructs a new ReportController.
-   *
-   * @param \Drupal\Core\Menu\MenuLinkTreeInterface $menu_link_tree
-   *   The menu link tree service.
-   */
   public function __construct(MenuLinkTreeInterface $menu_link_tree) {
     $this->menuLinkTree = $menu_link_tree;
   }

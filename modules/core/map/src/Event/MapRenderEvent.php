@@ -38,16 +38,6 @@ class MapRenderEvent extends Event {
    */
   protected $entityTypeManager;
 
-  /**
-   * MapRenderEvent constructor.
-   *
-   * @param \Drupal\farm_map\Entity\MapTypeInterface $map_type
-   *   The farm_map render element.
-   * @param array $element
-   *   The farm_map render array.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   */
   public function __construct(MapTypeInterface $map_type, array $element, EntityTypeManagerInterface $entity_type_manager) {
     $this->element = $element;
     $this->mapType = $map_type;

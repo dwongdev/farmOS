@@ -31,12 +31,6 @@ class ContentEntityGeometryNormalizer implements NormalizerInterface, Serializer
    */
   protected $geoPHP;
 
-  /**
-   * ContentEntityGeometryNormalizer constructor.
-   *
-   * @param \Drupal\geofield\GeoPHP\GeoPHPInterface $geo_PHP
-   *   The GeoPHP service.
-   */
   public function __construct(GeoPHPInterface $geo_PHP) {
     $this->geoPHP = $geo_PHP;
   }

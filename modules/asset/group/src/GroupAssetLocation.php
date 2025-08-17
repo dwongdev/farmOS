@@ -27,22 +27,6 @@ class GroupAssetLocation extends AssetLocation implements AssetLocationInterface
    */
   protected GroupMembershipInterface $groupMembership;
 
-  /**
-   * Class constructor.
-   *
-   * @param \Drupal\farm_location\LogLocationInterface $log_location
-   *   Log location service.
-   * @param \Drupal\farm_log\LogQueryFactoryInterface $log_query_factory
-   *   Log query factory.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   Entity type manager.
-   * @param \Drupal\Component\Datetime\TimeInterface $time
-   *   The time service.
-   * @param \Drupal\Core\Database\Connection $database
-   *   The database service.
-   * @param \Drupal\farm_group\GroupMembershipInterface $group_membership
-   *   The group membership service.
-   */
   public function __construct(LogLocationInterface $log_location, LogQueryFactoryInterface $log_query_factory, EntityTypeManagerInterface $entity_type_manager, TimeInterface $time, Connection $database, GroupMembershipInterface $group_membership) {
     parent::__construct($log_location, $log_query_factory, $entity_type_manager, $time, $database);
     $this->groupMembership = $group_membership;

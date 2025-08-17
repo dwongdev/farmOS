@@ -20,12 +20,6 @@ class LogEventSubscriber implements EventSubscriberInterface {
    */
   protected $currentUser;
 
-  /**
-   * LogEventSubscriber constructor.
-   *
-   * @param \Drupal\Core\Session\AccountInterface $current_user
-   *   The current user.
-   */
   public function __construct(AccountInterface $current_user) {
     $this->currentUser = $current_user;
   }

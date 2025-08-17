@@ -63,30 +63,6 @@ class GeofieldWidget extends GeofieldBaseWidget {
     'wkt' => 'wkt',
   ];
 
-  /**
-   * GeofieldWidget constructor.
-   *
-   * @param string $plugin_id
-   *   The plugin_id for the formatter.
-   * @param mixed $plugin_definition
-   *   The plugin implementation definition.
-   * @param \Drupal\Core\Field\FieldDefinitionInterface $field_definition
-   *   The definition of the field to which the formatter is associated.
-   * @param array $settings
-   *   The formatter settings.
-   * @param array $third_party_settings
-   *   Any third party settings settings.
-   * @param \Drupal\geofield\GeoPHP\GeoPHPInterface $geophp_wrapper
-   *   The geoPhpWrapper.
-   * @param \Drupal\geofield\WktGeneratorInterface $wkt_generator
-   *   The WKT format Generator service.
-   * @param \Drupal\geofield\Plugin\GeofieldBackendManager $geofield_backend_manager
-   *   The geofieldBackendManager.
-   * @param \Drupal\Core\File\FileSystem $file_system
-   *   The file system service.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   */
   public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, array $third_party_settings, GeoPHPInterface $geophp_wrapper, WktGeneratorInterface $wkt_generator, GeofieldBackendManager $geofield_backend_manager, FileSystem $file_system, EntityTypeManagerInterface $entity_type_manager) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $third_party_settings, $geophp_wrapper, $wkt_generator, $geofield_backend_manager);
     $this->fileSystem = $file_system;

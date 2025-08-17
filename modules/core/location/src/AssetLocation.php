@@ -72,20 +72,6 @@ class AssetLocation implements AssetLocationInterface {
    */
   protected $database;
 
-  /**
-   * Class constructor.
-   *
-   * @param \Drupal\farm_location\LogLocationInterface $log_location
-   *   Log location service.
-   * @param \Drupal\farm_log\LogQueryFactoryInterface $log_query_factory
-   *   Log query factory.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   Entity type manager.
-   * @param \Drupal\Component\Datetime\TimeInterface $time
-   *   The time service.
-   * @param \Drupal\Core\Database\Connection $database
-   *   The database service.
-   */
   public function __construct(LogLocationInterface $log_location, LogQueryFactoryInterface $log_query_factory, EntityTypeManagerInterface $entity_type_manager, TimeInterface $time, Connection $database) {
     $this->logLocation = $log_location;
     $this->logQueryFactory = $log_query_factory;

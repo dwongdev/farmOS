@@ -71,24 +71,6 @@ class FarmUpdate implements FarmUpdateInterface {
    */
   protected $configUpdate;
 
-  /**
-   * Constructs a FarmUpdate object.
-   *
-   * @param \Psr\Log\LoggerInterface $logger
-   *   The logger.
-   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
-   *   The module handler.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_manager
-   *   The entity type manager.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
-   *   The config factory.
-   * @param \Drupal\config_update\ConfigDiffer $config_diff
-   *   The config differ.
-   * @param \Drupal\config_update\ConfigListerWithProviders $config_list
-   *   The config lister.
-   * @param \Drupal\config_update\ConfigReverter $config_update
-   *   The config reverter.
-   */
   public function __construct(LoggerInterface $logger, ModuleHandlerInterface $module_handler, EntityTypeManagerInterface $entity_manager, ConfigFactoryInterface $config_factory, ConfigDiffer $config_diff, ConfigListerWithProviders $config_list, ConfigReverter $config_update) {
     $this->logger = $logger;
     $this->moduleHandler = $module_handler;

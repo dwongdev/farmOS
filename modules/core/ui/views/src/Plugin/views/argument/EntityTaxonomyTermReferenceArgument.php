@@ -51,24 +51,6 @@ class EntityTaxonomyTermReferenceArgument extends NumericArgument {
    */
   protected $entityFieldManager;
 
-  /**
-   * EntityTaxonomyTermReferenceArgument constructor.
-   *
-   * @param array $configuration
-   *   A configuration array containing information about the plugin instance.
-   * @param string $plugin_id
-   *   The plugin ID for the plugin instance.
-   * @param mixed $plugin_definition
-   *   The plugin implementation definition.
-   * @param \Drupal\taxonomy\TermStorageInterface $term_storage
-   *   The taxonomy term storage service.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $entity_bundle_info
-   *   The entity type bundle info service.
-   * @param \Drupal\Core\Entity\EntityFieldManagerInterface $entity_field_manager
-   *   The entity field manager service.
-   */
   public function __construct(
     array $configuration,
     $plugin_id,

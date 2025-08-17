@@ -23,12 +23,6 @@ class LogEventSubscriber implements EventSubscriberInterface {
    */
   protected $messenger;
 
-  /**
-   * MyModuleService constructor.
-   *
-   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
-   *   The messenger service.
-   */
   public function __construct(MessengerInterface $messenger) {
     $this->messenger = $messenger;
   }

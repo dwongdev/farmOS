@@ -13,22 +13,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 #[\Attribute(\Attribute::TARGET_CLASS)]
 class QuickForm extends Plugin {
 
-  /**
-   * Constructs a quick form attribute.
-   *
-   * @param string $id
-   *   The quick form ID.
-   * @param \Drupal\Core\StringTranslation\TranslatableMarkup $label
-   *   The quick form label.
-   * @param \Drupal\Core\StringTranslation\TranslatableMarkup|null $description
-   *   The quick form description.
-   * @param \Drupal\Core\StringTranslation\TranslatableMarkup|null $helpText
-   *   The quick form help text.
-   * @param string[] $permissions
-   *   An array of access permissions for the quick form.
-   * @param bool $requiresEntity
-   *   Require a quick form instance entity to instantiate.
-   */
   public function __construct(
     public readonly string $id,
     public readonly TranslatableMarkup $label,

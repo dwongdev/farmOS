@@ -21,12 +21,6 @@ class CsvImportMigrationAccess {
    */
   protected $pluginManagerMigration;
 
-  /**
-   * MigrateSourceUiForm constructor.
-   *
-   * @param \Drupal\migrate\Plugin\MigrationPluginManager $plugin_manager_migration
-   *   The migration plugin manager.
-   */
   public function __construct(MigrationPluginManager $plugin_manager_migration) {
     $this->pluginManagerMigration = $plugin_manager_migration;
   }

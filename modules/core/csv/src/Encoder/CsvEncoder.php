@@ -18,22 +18,6 @@ class CsvEncoder extends ContribCsvEncoder {
    */
   protected $sanitize = TRUE;
 
-  /**
-   * Constructs the class.
-   *
-   * @param string $delimiter
-   *   Indicates the character used to delimit fields. Defaults to ",".
-   * @param string $enclosure
-   *   Indicates the character used for field enclosure. Defaults to '"'.
-   * @param string $escape_char
-   *   Indicates the character used for escaping. Defaults to "\".
-   * @param bool $strip_tags
-   *   Whether to strip tags from values or not. Defaults to TRUE.
-   * @param bool $trim_values
-   *   Whether to trim values or not. Defaults to TRUE.
-   * @param bool $sanitize
-   *   Whether to sanitize values against formula injection. Defaults to TRUE.
-   */
   public function __construct($delimiter = ",", $enclosure = '"', $escape_char = "\\", $strip_tags = TRUE, $trim_values = TRUE, $sanitize = TRUE) {
     parent::__construct($delimiter, $enclosure, $escape_char, $strip_tags, $trim_values);
     $this->sanitize = $sanitize;

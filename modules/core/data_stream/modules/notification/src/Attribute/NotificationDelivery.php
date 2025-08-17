@@ -13,17 +13,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 #[\Attribute(\Attribute::TARGET_CLASS)]
 class NotificationDelivery extends Plugin {
 
-  /**
-   * Constructs a notification delivery attribute.
-   *
-   * @param string $id
-   *   The notification delivery ID.
-   * @param \Drupal\Core\StringTranslation\TranslatableMarkup $label
-   *   The notification delivery label.
-   * @param \Drupal\Core\Plugin\Context\ContextDefinitionInterface[] $context_definitions
-   *   (optional) An array of context definitions describing the context used by
-   *   the plugin. The array is keyed by context names.
-   */
   public function __construct(
     public readonly string $id,
     public readonly TranslatableMarkup $label,

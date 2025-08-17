@@ -23,12 +23,6 @@ class FieldModuleController extends ControllerBase {
    */
   protected $libraryDiscovery;
 
-  /**
-   * FieldModuleController constructor.
-   *
-   * @param \Drupal\Core\Asset\LibraryDiscoveryInterface $library_discovery
-   *   The library discovery service.
-   */
   public function __construct(LibraryDiscoveryInterface $library_discovery) {
     $this->libraryDiscovery = $library_discovery;
   }

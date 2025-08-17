@@ -23,16 +23,6 @@ class QuickFormListBuilder extends ConfigEntityListBuilder {
    */
   protected $quickFormInstanceManager;
 
-  /**
-   * Constructs a new QuickFormListBuilder object.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
-   *   The entity type definition.
-   * @param \Drupal\Core\Entity\EntityStorageInterface $storage
-   *   The entity storage class.
-   * @param \Drupal\farm_quick\QuickFormInstanceManagerInterface $quick_form_instance_manager
-   *   The quick form instance manager.
-   */
   public function __construct(EntityTypeInterface $entity_type, EntityStorageInterface $storage, QuickFormInstanceManagerInterface $quick_form_instance_manager) {
     parent::__construct($entity_type, $storage);
     $this->quickFormInstanceManager = $quick_form_instance_manager;

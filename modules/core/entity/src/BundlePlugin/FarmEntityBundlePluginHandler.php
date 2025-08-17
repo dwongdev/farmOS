@@ -24,16 +24,6 @@ class FarmEntityBundlePluginHandler extends BundlePluginHandler {
    */
   protected $moduleHandler;
 
-  /**
-   * Constructs a new FarmEntityBundlePluginHandler object.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
-   *   The entity type.
-   * @param \Drupal\Component\Plugin\PluginManagerInterface $plugin_manager
-   *   The bundle plugin manager.
-   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
-   *   The module handler.
-   */
   public function __construct(EntityTypeInterface $entity_type, PluginManagerInterface $plugin_manager, ModuleHandlerInterface $module_handler) {
     parent::__construct($entity_type, $plugin_manager);
     $this->moduleHandler = $module_handler;

@@ -29,22 +29,6 @@ class FarmRoleStorage extends RoleStorage {
    */
   protected $managedRolePermissionsManager;
 
-  /**
-   * Constructs a ConfigEntityStorage object.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
-   *   The entity type definition.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
-   *   The config factory service.
-   * @param \Drupal\Component\Uuid\UuidInterface $uuid_service
-   *   The UUID service.
-   * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
-   *   The language manager.
-   * @param \Drupal\Core\Cache\MemoryCache\MemoryCacheInterface $memory_cache
-   *   The memory cache backend.
-   * @param \Drupal\farm_role\ManagedRolePermissionsManagerInterface $managed_role_permissions_manager
-   *   The managed role permissions manager.
-   */
   public function __construct(EntityTypeInterface $entity_type, ConfigFactoryInterface $config_factory, UuidInterface $uuid_service, LanguageManagerInterface $language_manager, MemoryCacheInterface $memory_cache, ManagedRolePermissionsManagerInterface $managed_role_permissions_manager) {
     parent::__construct($entity_type, $config_factory, $uuid_service, $language_manager, $memory_cache);
     $this->managedRolePermissionsManager = $managed_role_permissions_manager;

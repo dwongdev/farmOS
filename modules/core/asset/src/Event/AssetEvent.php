@@ -24,12 +24,6 @@ class AssetEvent extends Event {
    */
   public AssetInterface $asset;
 
-  /**
-   * Constructs the object.
-   *
-   * @param \Drupal\asset\Entity\AssetInterface $asset
-   *   The Asset entity.
-   */
   public function __construct(AssetInterface $asset) {
     $this->asset = $asset;
   }

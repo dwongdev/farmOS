@@ -28,16 +28,6 @@ class ManagedRolePermissionChecker extends PermissionChecker {
    */
   protected $managedRolePermissionsManager;
 
-  /**
-   * Class constructor.
-   *
-   * @param \Drupal\Core\Session\AccessPolicyProcessorInterface $processor
-   *   The access policy processor.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager.
-   * @param \Drupal\farm_role\ManagedRolePermissionsManagerInterface $managed_role_permissions_manager
-   *   The managed role permissions manager.
-   */
   public function __construct(protected AccessPolicyProcessorInterface $processor, EntityTypeManagerInterface $entity_type_manager, ManagedRolePermissionsManagerInterface $managed_role_permissions_manager) {
     parent::__construct($processor);
     $this->entityTypeManager = $entity_type_manager;

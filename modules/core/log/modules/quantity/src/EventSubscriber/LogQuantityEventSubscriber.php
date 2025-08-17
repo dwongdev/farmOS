@@ -24,9 +24,6 @@ class LogQuantityEventSubscriber implements EventSubscriberInterface {
    */
   protected EntityTypeManagerInterface $entityTypeManager;
 
-  /**
-   * {@inheritdoc}
-   */
   public function __construct(EntityTypeManagerInterface $entity_type_manager) {
     $this->entityTypeManager = $entity_type_manager;
   }

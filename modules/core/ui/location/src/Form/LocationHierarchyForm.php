@@ -32,9 +32,6 @@ class LocationHierarchyForm extends BaseLocationHierarchyForm {
    */
   protected $assetLocation;
 
-  /**
-   * {@inheritdoc}
-   */
   public function __construct(EntityTypeManagerInterface $entity_type_manager, AssetLocationInterface $asset_location) {
     parent::__construct($entity_type_manager, $asset_location);
     $this->entityTypeManager = $entity_type_manager;

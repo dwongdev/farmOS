@@ -19,9 +19,6 @@ final class FarmUpdateCommands extends DrushCommands {
 
   use AutowireTrait;
 
-  /**
-   * Constructs a FarmUpdateCommands object.
-   */
   public function __construct(
     #[Autowire(service: 'farm.update')]
     private readonly FarmUpdateInterface $farmUpdate,

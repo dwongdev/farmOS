@@ -23,12 +23,6 @@ class CircularGroupMembershipConstraintValidator extends ConstraintValidator imp
    */
   protected $groupMembership;
 
-  /**
-   * CircularGroupMembershipConstraintValidator constructor.
-   *
-   * @param \Drupal\farm_group\GroupMembershipInterface $group_membership
-   *   Group membership service.
-   */
   public function __construct(GroupMembershipInterface $group_membership) {
     $this->groupMembership = $group_membership;
   }

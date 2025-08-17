@@ -39,16 +39,6 @@ class LogEventSubscriber implements EventSubscriberInterface {
    */
   protected $groupMembership;
 
-  /**
-   * LogEventSubscriber Constructor.
-   *
-   * @param \Drupal\Core\Cache\CacheTagsInvalidatorInterface $cache_tags_invalidator
-   *   Cache tag invalidator service.
-   * @param \Drupal\Component\Datetime\TimeInterface $date_time
-   *   Datetime time service.
-   * @param \Drupal\farm_group\GroupMembershipInterface $group_membership
-   *   Group membership service.
-   */
   public function __construct(CacheTagsInvalidatorInterface $cache_tags_invalidator, TimeInterface $date_time, GroupMembershipInterface $group_membership) {
     $this->time = $date_time;
     $this->cacheTagsInvalidator = $cache_tags_invalidator;

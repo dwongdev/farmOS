@@ -33,16 +33,6 @@ class L10nSettingsForm extends NegotiationSelectedForm {
    */
   protected $entityTypeManager;
 
-  /**
-   * Constructor for L10nSettingsForm.
-   *
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
-   *   The factory for configuration objects.
-   * @param \Drupal\Core\Config\TypedConfigManagerInterface $typedConfigManager
-   *   The typed config manager.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   */
   public function __construct(ConfigFactoryInterface $config_factory, protected TypedConfigManagerInterface $typedConfigManager, EntityTypeManagerInterface $entity_type_manager) {
     parent::__construct($config_factory, $typedConfigManager);
     $this->entityTypeManager = $entity_type_manager;

@@ -63,20 +63,6 @@ class CsvImportController extends ControllerBase {
    */
   protected $database;
 
-  /**
-   * Constructs a new CsvImportController.
-   *
-   * @param \Drupal\Core\Menu\MenuLinkTreeInterface $menu_link_tree
-   *   The menu link tree service.
-   * @param \Drupal\Core\Form\FormBuilderInterface $form_builder
-   *   The form builder.
-   * @param \Drupal\migrate\Plugin\MigrationPluginManager $plugin_manager_migration
-   *   The migration plugin manager.
-   * @param \Drupal\farm_import_csv\Access\CsvImportMigrationAccess $migration_access
-   *   The CSV import migration access service.
-   * @param \Drupal\Core\Database\Connection $database
-   *   The database connection.
-   */
   public function __construct(MenuLinkTreeInterface $menu_link_tree, FormBuilderInterface $form_builder, MigrationPluginManager $plugin_manager_migration, CsvImportMigrationAccess $migration_access, Connection $database) {
     $this->menuLinkTree = $menu_link_tree;
     $this->formBuilder = $form_builder;

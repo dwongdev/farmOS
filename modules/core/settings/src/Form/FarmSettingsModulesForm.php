@@ -44,12 +44,6 @@ class FarmSettingsModulesForm extends FormBase {
     return 'farm_settings_modules_form';
   }
 
-  /**
-   * Constructs a new FarmSettingsModulesForm.
-   *
-   * @param \Drupal\Core\Extension\ModuleExtensionList $module_extension_list
-   *   The module extension list.
-   */
   public function __construct(ModuleExtensionList $module_extension_list) {
     $this->moduleExtensionList = $module_extension_list;
   }

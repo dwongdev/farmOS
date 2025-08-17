@@ -29,14 +29,6 @@ class FarmAssetChildrenViewsAccessCheck implements AccessInterface {
    */
   protected $assetLocation;
 
-  /**
-   * FarmAssetChildrenViewsAccessCheck constructor.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   * @param \Drupal\farm_location\AssetLocationInterface $asset_location
-   *   The asset location service.
-   */
   public function __construct(EntityTypeManagerInterface $entity_type_manager, AssetLocationInterface $asset_location) {
     $this->assetStorage = $entity_type_manager->getStorage('asset');
     $this->assetLocation = $asset_location;

@@ -29,14 +29,6 @@ class AccountAdminSettingsForm extends ConfigFormbase {
    */
   protected $cacheTagsInvalidator;
 
-  /**
-   * Constructs a \Drupal\system\ConfigFormBase object.
-   *
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
-   *   The factory for configuration objects.
-   * @param \Drupal\Core\Cache\CacheTagsInvalidatorInterface $cache_tags_invalidator
-   *   The cache tags invalidator.
-   */
   public function __construct(ConfigFactoryInterface $config_factory, CacheTagsInvalidatorInterface $cache_tags_invalidator) {
     $this->setConfigFactory($config_factory);
     $this->cacheTagsInvalidator = $cache_tags_invalidator;

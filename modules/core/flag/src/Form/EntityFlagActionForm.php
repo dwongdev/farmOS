@@ -71,18 +71,6 @@ class EntityFlagActionForm extends ConfirmFormBase {
    */
   protected $flagFieldName = 'flag';
 
-  /**
-   * Constructs an EntityFlagActionForm form object.
-   *
-   * @param \Drupal\Core\TempStore\PrivateTempStoreFactory $temp_store_factory
-   *   The tempstore factory.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager.
-   * @param \Drupal\Core\Entity\EntityFieldManagerInterface $entity_field_manager
-   *   The entity field manager.
-   * @param \Drupal\Core\Session\AccountInterface $user
-   *   The current user.
-   */
   public function __construct(PrivateTempStoreFactory $temp_store_factory, EntityTypeManagerInterface $entity_type_manager, EntityFieldManagerInterface $entity_field_manager, AccountInterface $user) {
     $this->tempStore = $temp_store_factory->get('entity_flag_confirm');
     $this->entityTypeManager = $entity_type_manager;

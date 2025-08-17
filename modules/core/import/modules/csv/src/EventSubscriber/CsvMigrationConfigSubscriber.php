@@ -21,12 +21,6 @@ class CsvMigrationConfigSubscriber implements EventSubscriberInterface {
    */
   protected $routerBuilder;
 
-  /**
-   * Constructs the CsvMigrationConfigSubscriber.
-   *
-   * @param \Drupal\Core\Routing\RouteBuilderInterface $router_builder
-   *   The router builder service.
-   */
   public function __construct(RouteBuilderInterface $router_builder) {
     $this->routerBuilder = $router_builder;
   }

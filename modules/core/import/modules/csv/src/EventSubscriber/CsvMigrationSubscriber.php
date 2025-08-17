@@ -49,18 +49,6 @@ class CsvMigrationSubscriber implements EventSubscriberInterface {
    */
   protected $messenger;
 
-  /**
-   * CsvMigrationSubscriber constructor.
-   *
-   * @param \Drupal\Core\Database\Connection $database
-   *   The database connection.
-   * @param \Drupal\Core\Session\AccountInterface $current_user
-   *   The current user.
-   * @param \Drupal\Core\TempStore\PrivateTempStoreFactory $temp_store_factory
-   *   The tempstore service.
-   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
-   *   The messenger.
-   */
   public function __construct(Connection $database, AccountInterface $current_user, PrivateTempStoreFactory $temp_store_factory, MessengerInterface $messenger) {
     $this->database = $database;
     $this->currentUser = $current_user;

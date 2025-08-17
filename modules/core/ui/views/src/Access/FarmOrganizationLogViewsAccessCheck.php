@@ -28,12 +28,6 @@ class FarmOrganizationLogViewsAccessCheck implements AccessInterface {
    */
   protected $organizationStorage;
 
-  /**
-   * FarmOrganizationAssetViewsAccessCheck constructor.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   */
   public function __construct(EntityTypeManagerInterface $entity_type_manager) {
     $this->logStorage = $entity_type_manager->getStorage('log');
     $this->organizationStorage = $entity_type_manager->getStorage('organization');

@@ -13,14 +13,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 #[\Attribute(\Attribute::TARGET_CLASS)]
 class PlanRecordType extends Plugin {
 
-  /**
-   * Constructs a plan record type attribute.
-   *
-   * @param string $id
-   *   The plan record type ID.
-   * @param \Drupal\Core\StringTranslation\TranslatableMarkup $label
-   *   The plan record type label.
-   */
   public function __construct(
     public readonly string $id,
     public readonly TranslatableMarkup $label,

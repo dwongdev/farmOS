@@ -21,9 +21,6 @@ abstract class FarmEntityTypeBase extends PluginBase implements ContainerFactory
    */
   protected $farmFieldFactory;
 
-  /**
-   * {@inheritdoc}
-   */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, FarmFieldFactoryInterface $farm_field_factory) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->farmFieldFactory = $farm_field_factory;

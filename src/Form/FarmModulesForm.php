@@ -23,12 +23,6 @@ class FarmModulesForm extends FormBase {
    */
   protected $state;
 
-  /**
-   * Constructs a new FarmModulesForm.
-   *
-   * @param \Drupal\Core\State\StateInterface $state
-   *   The state keyvalue collection to use.
-   */
   public function __construct(StateInterface $state) {
     $this->state = $state;
   }

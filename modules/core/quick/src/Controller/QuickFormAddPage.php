@@ -23,9 +23,6 @@ class QuickFormAddPage extends ControllerBase {
    */
   protected $quickFormPluginManager;
 
-  /**
-   * Constructs a new QuickFormAddPage object.
-   */
   public function __construct(QuickFormPluginManager $quick_form_plugin_manager) {
     $this->quickFormPluginManager = $quick_form_plugin_manager;
   }

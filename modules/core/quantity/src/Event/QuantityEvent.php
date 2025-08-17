@@ -22,12 +22,6 @@ class QuantityEvent extends Event {
    */
   public QuantityInterface $quantity;
 
-  /**
-   * Constructs the object.
-   *
-   * @param \Drupal\quantity\Entity\QuantityInterface $quantity
-   *   The Quantity entity.
-   */
   public function __construct(QuantityInterface $quantity) {
     $this->quantity = $quantity;
   }

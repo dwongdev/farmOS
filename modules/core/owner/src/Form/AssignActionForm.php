@@ -62,18 +62,6 @@ class AssignActionForm extends ConfirmFormBase {
    */
   protected $entities;
 
-  /**
-   * Constructs an AssignActionForm form object.
-   *
-   * @param \Drupal\Core\TempStore\PrivateTempStoreFactory $temp_store_factory
-   *   The tempstore factory.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager.
-   * @param \Drupal\farm_role\ManagedRolePermissionsManagerInterface $managed_role_permissions_manager
-   *   The managed role permissions manager.
-   * @param \Drupal\Core\Session\AccountInterface $user
-   *   The current user.
-   */
   public function __construct(PrivateTempStoreFactory $temp_store_factory, EntityTypeManagerInterface $entity_type_manager, ManagedRolePermissionsManagerInterface $managed_role_permissions_manager, AccountInterface $user) {
     $this->tempStore = $temp_store_factory->get('entity_assign_confirm');
     $this->entityTypeManager = $entity_type_manager;

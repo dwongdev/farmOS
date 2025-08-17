@@ -62,18 +62,6 @@ class AssetParentActionForm extends ConfirmFormBase {
    */
   protected $request;
 
-  /**
-   * Constructs an AssetParentActionForm form object.
-   *
-   * @param \Drupal\Core\TempStore\PrivateTempStoreFactory $temp_store_factory
-   *   The tempstore factory.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager.
-   * @param \Drupal\Core\Session\AccountInterface $user
-   *   The current user.
-   * @param \Symfony\Component\HttpFoundation\Request $request
-   *   The current Request object.
-   */
   public function __construct(PrivateTempStoreFactory $temp_store_factory, EntityTypeManagerInterface $entity_type_manager, AccountInterface $user, Request $request) {
     $this->tempStore = $temp_store_factory->get('asset_parent_confirm');
     $this->entityTypeManager = $entity_type_manager;

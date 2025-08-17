@@ -36,14 +36,6 @@ class AssetInventory implements AssetInventoryInterface {
    */
   protected EntityTypeManagerInterface $entityTypeManager;
 
-  /**
-   * Class constructor.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   Entity type manager.
-   * @param \Drupal\Component\Datetime\TimeInterface $time
-   *   The time service.
-   */
   public function __construct(EntityTypeManagerInterface $entity_type_manager, TimeInterface $time) {
     $this->database = Database::getConnection();
     $this->entityTypeManager = $entity_type_manager;

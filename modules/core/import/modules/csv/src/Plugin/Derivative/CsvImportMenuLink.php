@@ -21,12 +21,6 @@ class CsvImportMenuLink extends DeriverBase implements ContainerDeriverInterface
    */
   protected MigrationPluginManagerInterface $migrationPluginManager;
 
-  /**
-   * CsvImportMenuLink constructor.
-   *
-   * @param \Drupal\migrate\Plugin\MigrationPluginManagerInterface $migration_plugin_manager
-   *   The migration plugin manager.
-   */
   public function __construct(MigrationPluginManagerInterface $migration_plugin_manager) {
     $this->migrationPluginManager = $migration_plugin_manager;
   }

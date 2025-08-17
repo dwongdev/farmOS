@@ -51,18 +51,6 @@ class GroupMembership implements GroupMembershipInterface {
    */
   protected $database;
 
-  /**
-   * Class constructor.
-   *
-   * @param \Drupal\farm_log\LogQueryFactoryInterface $log_query_factory
-   *   Log query factory.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   Entity type manager.
-   * @param \Drupal\Component\Datetime\TimeInterface $time
-   *   The time service.
-   * @param \Drupal\Core\Database\Connection $database
-   *   The database service.
-   */
   public function __construct(LogQueryFactoryInterface $log_query_factory, EntityTypeManagerInterface $entity_type_manager, TimeInterface $time, Connection $database) {
     $this->logQueryFactory = $log_query_factory;
     $this->entityTypeManager = $entity_type_manager;

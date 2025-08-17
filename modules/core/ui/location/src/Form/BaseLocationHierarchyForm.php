@@ -35,14 +35,6 @@ abstract class BaseLocationHierarchyForm extends FormBase {
    */
   protected $assetLocation;
 
-  /**
-   * Constructs a new BaseLocationHierarchyForm.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager.
-   * @param \Drupal\farm_location\AssetLocationInterface $asset_location
-   *   The asset location service.
-   */
   public function __construct(EntityTypeManagerInterface $entity_type_manager, AssetLocationInterface $asset_location) {
     $this->entityTypeManager = $entity_type_manager;
     $this->assetLocation = $asset_location;

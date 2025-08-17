@@ -25,14 +25,6 @@ class DefaultSecondaryLocalTaskProvider implements EntityLocalTaskProviderInterf
    */
   protected $entityType;
 
-  /**
-   * Constructs a DefaultEntityLocalTaskProvider object.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
-   *   The entity type.
-   * @param \Drupal\Core\StringTranslation\TranslationInterface $string_translation
-   *   The string translation.
-   */
   public function __construct(EntityTypeInterface $entity_type, TranslationInterface $string_translation) {
     $this->entityType = $entity_type;
     $this->setStringTranslation($string_translation);

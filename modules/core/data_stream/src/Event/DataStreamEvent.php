@@ -28,14 +28,6 @@ class DataStreamEvent extends Event {
    */
   public array $context;
 
-  /**
-   * Constructs the DataStreamEvent object.
-   *
-   * @param \Drupal\data_stream\Entity\DataStreamInterface $data_stream
-   *   The data stream entity.
-   * @param array $context
-   *   The event context.
-   */
   public function __construct(DataStreamInterface $data_stream, array $context = []) {
     $this->dataStream = $data_stream;
     $this->context = $context + ['data_stream' => $data_stream];

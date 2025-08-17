@@ -30,14 +30,6 @@ class GeometryWrapper {
    */
   public array $properties;
 
-  /**
-   * GeometryWrapper constructor.
-   *
-   * @param \Geometry $geometry
-   *   The GeoPHP geometry object.
-   * @param array $properties
-   *   Associative array of property values.
-   */
   public function __construct(\Geometry $geometry, array $properties = []) {
     $this->geometry = $geometry;
     $this->properties = $properties;

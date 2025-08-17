@@ -24,12 +24,6 @@ class OrganizationEvent extends Event {
    */
   public OrganizationInterface $organization;
 
-  /**
-   * Constructs the object.
-   *
-   * @param \Drupal\organization\Entity\OrganizationInterface $organization
-   *   The Organization entity.
-   */
   public function __construct(OrganizationInterface $organization) {
     $this->organization = $organization;
   }

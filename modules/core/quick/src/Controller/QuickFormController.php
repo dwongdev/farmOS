@@ -27,12 +27,6 @@ class QuickFormController extends ControllerBase {
    */
   protected $quickFormInstanceManager;
 
-  /**
-   * Quick form controller constructor.
-   *
-   * @param \Drupal\farm_quick\QuickFormInstanceManagerInterface $quick_form_instance_manager
-   *   The quick form instance manager.
-   */
   public function __construct(QuickFormInstanceManagerInterface $quick_form_instance_manager) {
     $this->quickFormInstanceManager = $quick_form_instance_manager;
   }

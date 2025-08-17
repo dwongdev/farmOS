@@ -37,14 +37,6 @@ class FarmViewsMenuLink extends ViewsMenuLink {
    */
   protected $entityTypeManager;
 
-  /**
-   * Constructs a FarmActions object.
-   *
-   * @param \Drupal\Core\Entity\EntityStorageInterface $view_storage
-   *   The view storage.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   */
   public function __construct(EntityStorageInterface $view_storage, EntityTypeManagerInterface $entity_type_manager) {
     parent::__construct($view_storage);
     $this->entityTypeManager = $entity_type_manager;

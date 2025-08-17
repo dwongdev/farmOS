@@ -43,20 +43,6 @@ class Email extends NotificationDeliveryBase implements ContainerFactoryPluginIn
    */
   protected $mailManager;
 
-  /**
-   * Constructs an Email object.
-   *
-   * @param array $configuration
-   *   A configuration array containing information about the plugin instance.
-   * @param string $plugin_id
-   *   The plugin_id for the plugin instance.
-   * @param mixed $plugin_definition
-   *   The plugin implementation definition.
-   * @param \Drupal\Component\Utility\EmailValidatorInterface $email_validator
-   *   The email validator service.
-   * @param \Drupal\Core\Mail\MailManagerInterface $mail_manager
-   *   The mail manager service.
-   */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, EmailValidatorInterface $email_validator, MailManagerInterface $mail_manager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->emailValidator = $email_validator;

@@ -46,18 +46,6 @@ class FarmEntryPoint extends EntryPoint {
    */
   protected $moduleHandler;
 
-  /**
-   * EntryPoint constructor.
-   *
-   * @param \Drupal\jsonapi\ResourceType\ResourceTypeRepositoryInterface $resource_type_repository
-   *   The resource type repository.
-   * @param \Drupal\Core\Session\AccountInterface $user
-   *   The current user.
-   * @param \Drupal\Core\Extension\ProfileExtensionList $profile_extension_list
-   *   The profile extension list service.
-   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
-   *   The module handler.
-   */
   public function __construct(ResourceTypeRepositoryInterface $resource_type_repository, AccountInterface $user, ProfileExtensionList $profile_extension_list, ModuleHandlerInterface $module_handler) {
     parent::__construct($resource_type_repository, $user);
     $this->farmProfileInfo = $profile_extension_list->getExtensionInfo('farm');

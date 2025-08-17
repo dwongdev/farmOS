@@ -54,16 +54,6 @@ class LogCategorizeActionForm extends ConfirmFormBase {
    */
   protected $entities;
 
-  /**
-   * Constructs a LogCategorizeActionForm form object.
-   *
-   * @param \Drupal\Core\TempStore\PrivateTempStoreFactory $temp_store_factory
-   *   The tempstore factory.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager.
-   * @param \Drupal\Core\Session\AccountInterface $user
-   *   The current user.
-   */
   public function __construct(PrivateTempStoreFactory $temp_store_factory, EntityTypeManagerInterface $entity_type_manager, AccountInterface $user) {
     $this->tempStore = $temp_store_factory->get('log_categorize_confirm');
     $this->entityTypeManager = $entity_type_manager;

@@ -39,9 +39,6 @@ class DashboardController extends ControllerBase {
    */
   protected $currentUser;
 
-  /**
-   * Class constructor.
-   */
   public function __construct(LayoutPluginManagerInterface $layout_plugin_manager, BlockManagerInterface $block_manager, AccountInterface $current_user) {
     $this->layoutPluginManager = $layout_plugin_manager;
     $this->blockManager = $block_manager;

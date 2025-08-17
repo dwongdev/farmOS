@@ -44,16 +44,6 @@ class KmlImporter extends FormBase {
    */
   protected $fileSystem;
 
-  /**
-   * Constructs a new KmlImporter object.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   * @param \Symfony\Component\Serializer\SerializerInterface $serializer
-   *   The serializer service.
-   * @param \Drupal\Core\File\FileSystemInterface $file_system
-   *   The file system service.
-   */
   public function __construct(EntityTypeManagerInterface $entity_type_manager, SerializerInterface $serializer, FileSystemInterface $file_system) {
     $this->entityTypeManager = $entity_type_manager;
     $this->serializer = $serializer;

@@ -44,18 +44,6 @@ class FarmTaxonomyTermEntityViewsAccessCheck implements AccessInterface {
    */
   protected $entityFieldManager;
 
-  /**
-   * FarmTaxonomyTermEntityViewsAccessCheck constructor.
-   *
-   * @param string $base_entity_type
-   *   The base entity type of the views this access check will be applied to.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $entity_bundle_info
-   *   The entity type bundle info service.
-   * @param \Drupal\Core\Entity\EntityFieldManagerInterface $entity_field_manager
-   *   The entity field manager service.
-   */
   public function __construct(string $base_entity_type, EntityTypeManagerInterface $entity_type_manager, EntityTypeBundleInfoInterface $entity_bundle_info, EntityFieldManagerInterface $entity_field_manager) {
     $this->baseEntityType = $base_entity_type;
     $this->taxonomyTermStorage = $entity_type_manager->getStorage('taxonomy_term');

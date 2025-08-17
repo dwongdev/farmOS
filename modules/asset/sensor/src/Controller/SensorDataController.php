@@ -30,12 +30,6 @@ class SensorDataController extends ControllerBase {
    */
   protected $basicDataStream;
 
-  /**
-   * SensorDataController constructor.
-   *
-   * @param \Drupal\data_stream\DataStreamTypeManager $data_stream_type_manager
-   *   The data stream type manager.
-   */
   public function __construct(DataStreamTypeManager $data_stream_type_manager) {
     $this->basicDataStream = $data_stream_type_manager->createInstance('basic');
   }

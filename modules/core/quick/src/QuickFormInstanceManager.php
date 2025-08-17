@@ -27,14 +27,6 @@ class QuickFormInstanceManager implements QuickFormInstanceManagerInterface {
    */
   protected $quickFormPluginManager;
 
-  /**
-   * Constructs a QuickFormInstanceManager object.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   * @param \Drupal\farm_quick\QuickFormPluginManager $quick_form_plugin_manager
-   *   The quick form plugin manager.
-   */
   public function __construct(EntityTypeManagerInterface $entity_type_manager, QuickFormPluginManager $quick_form_plugin_manager) {
     $this->entityTypeManager = $entity_type_manager;
     $this->quickFormPluginManager = $quick_form_plugin_manager;

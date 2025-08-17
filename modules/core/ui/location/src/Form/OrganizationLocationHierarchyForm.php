@@ -27,9 +27,6 @@ class OrganizationLocationHierarchyForm extends BaseLocationHierarchyForm {
    */
   protected $routeMatch;
 
-  /**
-   * {@inheritdoc}
-   */
   public function __construct(EntityTypeManagerInterface $entity_type_manager, AssetLocationInterface $asset_location, RouteMatchInterface $route_match) {
     parent::__construct($entity_type_manager, $asset_location);
     $this->routeMatch = $route_match;

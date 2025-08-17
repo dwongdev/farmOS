@@ -33,12 +33,6 @@ class KmlNormalizer implements NormalizerInterface, DenormalizerInterface {
    */
   protected $geoPHP;
 
-  /**
-   * KMLNormalizer constructor.
-   *
-   * @param \Drupal\geofield\GeoPHP\GeoPHPInterface $geo_PHP
-   *   The GeoPHP service.
-   */
   public function __construct(GeoPHPInterface $geo_PHP) {
     $this->geoPHP = $geo_PHP;
   }

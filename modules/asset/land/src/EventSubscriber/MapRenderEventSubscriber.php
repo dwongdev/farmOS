@@ -32,14 +32,6 @@ class MapRenderEventSubscriber implements EventSubscriberInterface {
    */
   protected $layerStyleLoader;
 
-  /**
-   * MapRenderEventSubscriber Constructor.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   * @param \Drupal\farm_map\LayerStyleLoaderInterface $layer_style_loader
-   *   The layer style loader service.
-   */
   public function __construct(EntityTypeManagerInterface $entity_type_manager, LayerStyleLoaderInterface $layer_style_loader) {
     $this->landAssetType = $entity_type_manager->getStorage('asset_type')->load('land');
     $this->layerStyleLoader = $layer_style_loader;

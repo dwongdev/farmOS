@@ -22,12 +22,6 @@ class DataStreamEventSubscriber implements EventSubscriberInterface {
    */
   protected $notificationStorage;
 
-  /**
-   * Constructs a DataStreamEventSubscriber object.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   */
   public function __construct(EntityTypeManagerInterface $entity_type_manager) {
     $this->notificationStorage = $entity_type_manager->getStorage('data_stream_notification');
   }

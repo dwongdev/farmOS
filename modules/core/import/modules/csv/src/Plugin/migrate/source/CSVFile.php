@@ -31,9 +31,6 @@ class CSVFile extends CSV implements ContainerFactoryPluginInterface {
    */
   protected $fileStorage;
 
-  /**
-   * {@inheritdoc}
-   */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, MigrationInterface $migration, EntityTypeManagerInterface $entity_type_manager) {
 
     // Uniqueness of rows will be determined by file ID + row number, so we
