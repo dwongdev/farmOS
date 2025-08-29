@@ -65,6 +65,7 @@ requirements (inherited from Drupal 11):
 - [Rename primary tab in edit forms to General #985](https://github.com/farmOS/farmOS/pull/985)
 - [Inject entity_type.manager and current_user service dependencies into QuickFormBase class #989](https://github.com/farmOS/farmOS/pull/989)
 - [Allow the "type" base field view display to be configured #990](https://github.com/farmOS/farmOS/pull/990)
+- [Title improvements to entity forms, buttons, and Views #996](https://github.com/farmOS/farmOS/pull/996)
 
 ### Deprecated
 
