@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Drupal\farm_entity\Routing;
 
 use Drupal\Core\Entity\EntityTypeInterface;
-use Drupal\entity\Routing\DefaultHtmlRouteProvider as EntityDefaultHtmlRouteProvider;
+use Drupal\entity\Routing\DefaultHtmlRouteProvider;
 
 /**
  * Deny access to the entity type add form.
@@ -14,7 +14,7 @@ use Drupal\entity\Routing\DefaultHtmlRouteProvider as EntityDefaultHtmlRouteProv
  *
  * @See https://www.drupal.org/project/farm/issues/3196423
  */
-class DefaultHtmlRouteProvider extends EntityDefaultHtmlRouteProvider {
+class BundleEntityTypeRouteProvider extends DefaultHtmlRouteProvider {
 
   /**
    * {@inheritdoc}
