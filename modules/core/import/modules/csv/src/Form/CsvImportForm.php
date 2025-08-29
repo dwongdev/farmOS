@@ -12,8 +12,8 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\KeyValueStore\KeyValueFactoryInterface;
 use Drupal\Core\StringTranslation\TranslationManager;
 use Drupal\Core\TempStore\PrivateTempStoreFactory;
-use Drupal\farm_import_csv\StubMigrationMessage;
 use Drupal\file\FileUsage\FileUsageInterface;
+use Drupal\migrate\MigrateMessage;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\Plugin\MigrationPluginManager;
 use Drupal\migrate_tools\MigrateBatchExecutable;
@@ -220,7 +220,7 @@ class CsvImportForm extends FormBase {
         ],
       ],
     ];
-    $executable = new MigrateBatchExecutable($migration, new StubMigrationMessage(), $this->keyValueFactory, $this->time, $this->translationManager, $this->migrationPluginManager, $batch_options);
+    $executable = new MigrateBatchExecutable($migration, new MigrateMessage(), $this->keyValueFactory, $this->time, $this->translationManager, $this->migrationPluginManager, $batch_options);
     $executable->batchImport();
   }
 
