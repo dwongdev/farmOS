@@ -125,12 +125,12 @@ function farm_ui_views_views_pre_render(ViewExecutable $view) {
   }
 
   // If this is a "By type" display and a bundle argument is specified, load
-  // the bundle label and set the title.
+  // the bundle label and add it to the title.
   $bundle = farm_ui_views_get_bundle_argument($view, $view->current_display, $view->args);
   if (!empty($bundle)) {
     $bundles = \Drupal::service('entity_type.bundle.info')->getBundleInfo($view->getBaseEntityType()->id());
     if (!empty($bundles[$bundle])) {
-      $title = $bundles[$bundle]['label'] . ' ' . $view->getBaseEntityType()->getPluralLabel();
+      $title = $view->getTitle() . ': ' . $bundles[$bundle]['label'];
     }
   }
 
