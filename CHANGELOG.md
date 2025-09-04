@@ -89,6 +89,7 @@ requirements (inherited from Drupal 11):
 - [Fix plan_record bundle field providers #969](https://github.com/farmOS/farmOS/pull/969)
 - [Fix logic for forcing entity revision creation #988](https://github.com/farmOS/farmOS/pull/969)
 - [Fix CSV importer compatibility with migrate_source_ui v1.3+ #993](https://github.com/farmOS/farmOS/pull/993)
+- [Check that real path exists before loading exif data #1000](https://github.com/farmOS/farmOS/pull/1000)
 
 ## farmOS 3.x
 
