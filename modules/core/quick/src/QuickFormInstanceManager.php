@@ -13,24 +13,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class QuickFormInstanceManager implements QuickFormInstanceManagerInterface {
 
-  /**
-   * The entity type manager service.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
-   * The quick form plugin manager.
-   *
-   * @var \Drupal\farm_quick\QuickFormPluginManager
-   */
-  protected $quickFormPluginManager;
-
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, QuickFormPluginManager $quick_form_plugin_manager) {
-    $this->entityTypeManager = $entity_type_manager;
-    $this->quickFormPluginManager = $quick_form_plugin_manager;
-  }
+  public function __construct(
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected QuickFormPluginManager $quickFormPluginManager,
+  ) {}
 
   /**
    * {@inheritdoc}

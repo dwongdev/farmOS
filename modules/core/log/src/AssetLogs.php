@@ -12,24 +12,10 @@ use Drupal\asset\Entity\AssetInterface;
  */
 class AssetLogs implements AssetLogsInterface {
 
-  /**
-   * Entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected EntityTypeManagerInterface $entityTypeManager;
-
-  /**
-   * Log query factory.
-   *
-   * @var \Drupal\farm_log\LogQueryFactoryInterface
-   */
-  protected LogQueryFactoryInterface $logQueryFactory;
-
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, LogQueryFactoryInterface $log_query_factory) {
-    $this->entityTypeManager = $entity_type_manager;
-    $this->logQueryFactory = $log_query_factory;
-  }
+  public function __construct(
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected LogQueryFactoryInterface $logQueryFactory,
+  ) {}
 
   /**
    * {@inheritdoc}

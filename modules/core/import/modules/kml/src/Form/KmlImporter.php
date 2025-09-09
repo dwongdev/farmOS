@@ -23,32 +23,11 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 class KmlImporter extends FormBase {
 
-  /**
-   * The entity type manager service.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
-   * The serializer service.
-   *
-   * @var \Symfony\Component\Serializer\SerializerInterface
-   */
-  protected $serializer;
-
-  /**
-   * The file system service.
-   *
-   * @var \Drupal\Core\File\FileSystemInterface
-   */
-  protected $fileSystem;
-
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, SerializerInterface $serializer, FileSystemInterface $file_system) {
-    $this->entityTypeManager = $entity_type_manager;
-    $this->serializer = $serializer;
-    $this->fileSystem = $file_system;
-  }
+  public function __construct(
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected SerializerInterface $serializer,
+    protected FileSystemInterface $fileSystem,
+  ) {}
 
   /**
    * {@inheritdoc}

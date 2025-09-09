@@ -22,17 +22,17 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 )]
 class GeofieldFormatter extends FormatterBase {
 
-  /**
-   * The geofield.geophp service.
-   *
-   * @var \Drupal\geofield\GeoPHP\GeoPHPInterface
-   */
-  protected $geoPhp;
-
-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, GeoPHPInterface $geo_php) {
+  public function __construct(
+    $plugin_id,
+    $plugin_definition,
+    FieldDefinitionInterface $field_definition,
+    array $settings,
+    $label,
+    $view_mode,
+    array $third_party_settings,
+    protected GeoPHPInterface $geoPhp,
+  ) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
-
-    $this->geoPhp = $geo_php;
   }
 
   /**

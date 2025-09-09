@@ -41,40 +41,18 @@ class Birth extends QuickFormBase {
   use QuickLogTrait;
   use QuickStringTrait;
 
-  /**
-   * The module handler.
-   *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface
-   */
-  protected $moduleHandler;
-
-  /**
-   * The config factory service.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  protected $configFactory;
-
-  /**
-   * Asset location service.
-   *
-   * @var \Drupal\farm_location\AssetLocationInterface
-   */
-  protected $assetLocation;
-
-  /**
-   * Group membership service.
-   *
-   * @var \Drupal\farm_group\GroupMembershipInterface|null
-   */
-  protected $groupMembership = NULL;
-
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, AccountInterface $current_user, ModuleHandlerInterface $module_handler, ConfigFactoryInterface $config_factory, AssetLocationInterface $asset_location, ?GroupMembershipInterface $group_membership = NULL) {
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    EntityTypeManagerInterface $entity_type_manager,
+    AccountInterface $current_user,
+    protected ModuleHandlerInterface $moduleHandler,
+    protected ConfigFactoryInterface $configFactory,
+    protected AssetLocationInterface $assetLocation,
+    protected ?GroupMembershipInterface $groupMembership = NULL,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager, $current_user);
-    $this->moduleHandler = $module_handler;
-    $this->configFactory = $config_factory;
-    $this->assetLocation = $asset_location;
-    $this->groupMembership = $group_membership;
   }
 
   /**

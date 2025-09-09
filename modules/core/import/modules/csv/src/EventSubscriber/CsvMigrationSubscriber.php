@@ -19,42 +19,15 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  * Subscribe to migration events.
  */
 class CsvMigrationSubscriber implements EventSubscriberInterface {
+
   use StringTranslationTrait;
 
-  /**
-   * The database connection.
-   *
-   * @var \Drupal\Core\Database\Connection
-   */
-  protected $database;
-
-  /**
-   * The current user.
-   *
-   * @var \Drupal\Core\Session\AccountInterface
-   */
-  protected $currentUser;
-
-  /**
-   * The private tempstore factory.
-   *
-   * @var \Drupal\Core\TempStore\PrivateTempStoreFactory
-   */
-  protected $tempStoreFactory;
-
-  /**
-   * The messenger.
-   *
-   * @var \Drupal\Core\Messenger\MessengerInterface
-   */
-  protected $messenger;
-
-  public function __construct(Connection $database, AccountInterface $current_user, PrivateTempStoreFactory $temp_store_factory, MessengerInterface $messenger) {
-    $this->database = $database;
-    $this->currentUser = $current_user;
-    $this->tempStoreFactory = $temp_store_factory;
-    $this->messenger = $messenger;
-  }
+  public function __construct(
+    protected Connection $database,
+    protected AccountInterface $currentUser,
+    protected PrivateTempStoreFactory $tempStoreFactory,
+    protected MessengerInterface $messenger,
+  ) {}
 
   /**
    * Get subscribed events.

@@ -31,16 +31,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class FarmEntryPoint extends EntryPoint {
 
-  /**
-   * The profile extension list.
-   *
-   * @var \Drupal\Core\Extension\ExtensionList
-   */
-  protected $profileExtensionList;
-
-  public function __construct(ResourceTypeRepositoryInterface $resource_type_repository, AccountInterface $user, ProfileExtensionList $profile_extension_list) {
-    parent::__construct($resource_type_repository, $user);
-    $this->profileExtensionList = $profile_extension_list;
+  public function __construct(
+    ResourceTypeRepositoryInterface $resourceTypeRepository,
+    AccountInterface $user,
+    protected ProfileExtensionList $profileExtensionList,
+  ) {
+    parent::__construct($resourceTypeRepository, $user);
   }
 
   /**

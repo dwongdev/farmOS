@@ -16,40 +16,12 @@ use Drupal\Core\Routing\RouteMatchInterface;
  */
 class FarmTaxonomyTermEntityViewsAccessCheck implements AccessInterface {
 
-  /**
-   * The base entity type of the views this access check will be applied to.
-   *
-   * @var string
-   */
-  protected $baseEntityType;
-
-  /**
-   * The entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
-   * The entity type bundle info.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeBundleInfoInterface
-   */
-  protected $entityTypeBundleInfo;
-
-  /**
-   * The entity field manager service.
-   *
-   * @var \Drupal\Core\Entity\EntityFieldManagerInterface
-   */
-  protected $entityFieldManager;
-
-  public function __construct(string $base_entity_type, EntityTypeManagerInterface $entity_type_manager, EntityTypeBundleInfoInterface $entity_bundle_info, EntityFieldManagerInterface $entity_field_manager) {
-    $this->baseEntityType = $base_entity_type;
-    $this->entityTypeManager = $entity_type_manager;
-    $this->entityTypeBundleInfo = $entity_bundle_info;
-    $this->entityFieldManager = $entity_field_manager;
-  }
+  public function __construct(
+    protected string $baseEntityType,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected EntityTypeBundleInfoInterface $entityTypeBundleInfo,
+    protected EntityFieldManagerInterface $entityFieldManager,
+  ) {}
 
   /**
    * A custom access check to filter out irrelevant entity bundles.

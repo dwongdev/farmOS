@@ -29,24 +29,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 )]
 class Email extends NotificationDeliveryBase implements ContainerFactoryPluginInterface {
 
-  /**
-   * The email validator service.
-   *
-   * @var \Drupal\Component\Utility\EmailValidatorInterface
-   */
-  protected $emailValidator;
-
-  /**
-   * The mail manager service.
-   *
-   * @var \Drupal\Core\Mail\MailManagerInterface
-   */
-  protected $mailManager;
-
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EmailValidatorInterface $email_validator, MailManagerInterface $mail_manager) {
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    protected EmailValidatorInterface $emailValidator,
+    protected MailManagerInterface $mailManager,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->emailValidator = $email_validator;
-    $this->mailManager = $mail_manager;
   }
 
   /**

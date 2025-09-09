@@ -28,62 +28,6 @@ use Symfony\Component\Serializer\SerializerInterface;
 class EntityCsvActionForm extends ConfirmFormBase implements BaseFormIdInterface {
 
   /**
-   * The private tempstore factory.
-   *
-   * @var \Drupal\Core\TempStore\PrivateTempStoreFactory
-   */
-  protected $tempStoreFactory;
-
-  /**
-   * The entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
-   * The entity field manager.
-   *
-   * @var \Drupal\Core\Entity\EntityFieldManagerInterface
-   */
-  protected $entityFieldManager;
-
-  /**
-   * The serializer service.
-   *
-   * @var \Symfony\Component\Serializer\SerializerInterface
-   */
-  protected $serializer;
-
-  /**
-   * The file system service.
-   *
-   * @var \Drupal\Core\File\FileSystemInterface
-   */
-  protected $fileSystem;
-
-  /**
-   * The file repository service.
-   *
-   * @var \Drupal\file\FileRepositoryInterface
-   */
-  protected $fileRepository;
-
-  /**
-   * The file URL generator.
-   *
-   * @var \Drupal\Core\File\FileUrlGeneratorInterface
-   */
-  protected $fileUrlGenerator;
-
-  /**
-   * The current user.
-   *
-   * @var \Drupal\Core\Session\AccountInterface
-   */
-  protected $user;
-
-  /**
    * The entity type.
    *
    * @var \Drupal\Core\Entity\EntityTypeInterface
@@ -97,16 +41,16 @@ class EntityCsvActionForm extends ConfirmFormBase implements BaseFormIdInterface
    */
   protected $entities;
 
-  public function __construct(PrivateTempStoreFactory $temp_store_factory, EntityTypeManagerInterface $entity_type_manager, EntityFieldManagerInterface $entity_field_manager, SerializerInterface $serializer, FileSystemInterface $file_system, FileRepositoryInterface $file_repository, FileUrlGeneratorInterface $file_url_generator, AccountInterface $user) {
-    $this->tempStoreFactory = $temp_store_factory;
-    $this->entityTypeManager = $entity_type_manager;
-    $this->entityFieldManager = $entity_field_manager;
-    $this->serializer = $serializer;
-    $this->fileSystem = $file_system;
-    $this->fileRepository = $file_repository;
-    $this->fileUrlGenerator = $file_url_generator;
-    $this->user = $user;
-  }
+  public function __construct(
+    protected PrivateTempStoreFactory $tempStoreFactory,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected EntityFieldManagerInterface $entityFieldManager,
+    protected SerializerInterface $serializer,
+    protected FileSystemInterface $fileSystem,
+    protected FileRepositoryInterface $fileRepository,
+    protected FileUrlGeneratorInterface $fileUrlGenerator,
+    protected AccountInterface $user,
+  ) {}
 
   /**
    * {@inheritdoc}
@@ -298,7 +242,7 @@ class EntityCsvActionForm extends ConfirmFormBase implements BaseFormIdInterface
 
       // CSV encoder settings.
       'csv_settings' => [
-        'sanitize' => $form_state->getValue('sanitize'),
+        'sanitize' => (bool) $form_state->getValue('sanitize'),
         'strip_tags' => FALSE,
       ],
     ];

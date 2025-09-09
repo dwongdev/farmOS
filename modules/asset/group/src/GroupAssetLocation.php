@@ -20,16 +20,15 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class GroupAssetLocation extends AssetLocation implements AssetLocationInterface {
 
-  /**
-   * Group membership service.
-   *
-   * @var \Drupal\farm_group\GroupMembershipInterface
-   */
-  protected GroupMembershipInterface $groupMembership;
-
-  public function __construct(LogLocationInterface $log_location, LogQueryFactoryInterface $log_query_factory, EntityTypeManagerInterface $entity_type_manager, TimeInterface $time, Connection $database, GroupMembershipInterface $group_membership) {
-    parent::__construct($log_location, $log_query_factory, $entity_type_manager, $time, $database);
-    $this->groupMembership = $group_membership;
+  public function __construct(
+    protected LogLocationInterface $logLocation,
+    protected LogQueryFactoryInterface $logQueryFactory,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected TimeInterface $time,
+    protected Connection $database,
+    protected GroupMembershipInterface $groupMembership,
+  ) {
+    parent::__construct($logLocation, $logQueryFactory, $entityTypeManager, $time, $database);
   }
 
   /**

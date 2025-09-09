@@ -23,16 +23,12 @@ class AccountAdminSettingsForm extends ConfigFormbase {
    */
   const SETTINGS = 'farm_account_admin.settings';
 
-  /**
-   * The cache tags invalidator.
-   *
-   * @var \Drupal\Core\Cache\CacheTagsInvalidatorInterface
-   */
-  protected $cacheTagsInvalidator;
-
-  public function __construct(ConfigFactoryInterface $config_factory, TypedConfigManagerInterface $typed_config_manager, CacheTagsInvalidatorInterface $cache_tags_invalidator) {
+  public function __construct(
+    ConfigFactoryInterface $config_factory,
+    TypedConfigManagerInterface $typed_config_manager,
+    protected CacheTagsInvalidatorInterface $cacheTagsInvalidator,
+  ) {
     parent::__construct($config_factory, $typed_config_manager);
-    $this->cacheTagsInvalidator = $cache_tags_invalidator;
   }
 
   /**

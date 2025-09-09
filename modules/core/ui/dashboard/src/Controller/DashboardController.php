@@ -17,24 +17,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class DashboardController extends ControllerBase {
 
-  /**
-   * The layout plugin manager.
-   *
-   * @var \Drupal\Core\Layout\LayoutPluginManagerInterface
-   */
-  protected $layoutPluginManager;
-
-  /**
-   * The block manager.
-   *
-   * @var \Drupal\Core\Block\BlockManagerInterface
-   */
-  protected $blockManager;
-
-  public function __construct(LayoutPluginManagerInterface $layout_plugin_manager, BlockManagerInterface $block_manager) {
-    $this->layoutPluginManager = $layout_plugin_manager;
-    $this->blockManager = $block_manager;
-  }
+  public function __construct(
+    protected LayoutPluginManagerInterface $layoutPluginManager,
+    protected BlockManagerInterface $blockManager,
+  ) {}
 
   /**
    * {@inheritdoc}

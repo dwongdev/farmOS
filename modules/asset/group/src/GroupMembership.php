@@ -23,40 +23,12 @@ class GroupMembership implements GroupMembershipInterface {
    */
   const LOG_FIELD_GROUP = 'group';
 
-  /**
-   * Log query factory.
-   *
-   * @var \Drupal\farm_log\LogQueryFactoryInterface
-   */
-  protected LogQueryFactoryInterface $logQueryFactory;
-
-  /**
-   * Entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected EntityTypeManagerInterface $entityTypeManager;
-
-  /**
-   * The time service.
-   *
-   * @var \Drupal\Component\Datetime\TimeInterface
-   */
-  protected $time;
-
-  /**
-   * The database service.
-   *
-   * @var \Drupal\Core\Database\Connection
-   */
-  protected $database;
-
-  public function __construct(LogQueryFactoryInterface $log_query_factory, EntityTypeManagerInterface $entity_type_manager, TimeInterface $time, Connection $database) {
-    $this->logQueryFactory = $log_query_factory;
-    $this->entityTypeManager = $entity_type_manager;
-    $this->time = $time;
-    $this->database = $database;
-  }
+  public function __construct(
+    protected LogQueryFactoryInterface $logQueryFactory,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected TimeInterface $time,
+    protected Connection $database,
+  ) {}
 
   /**
    * {@inheritdoc}

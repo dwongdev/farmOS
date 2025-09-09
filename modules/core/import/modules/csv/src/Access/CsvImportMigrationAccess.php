@@ -7,23 +7,16 @@ namespace Drupal\farm_import_csv\Access;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Session\AccountInterface;
-use Drupal\migrate\Plugin\MigrationPluginManager;
+use Drupal\migrate\Plugin\MigrationPluginManagerInterface;
 
 /**
  * Access checking logic for CSV importers.
  */
 class CsvImportMigrationAccess {
 
-  /**
-   * The migration plugin manager.
-   *
-   * @var \Drupal\migrate\Plugin\MigrationPluginManager
-   */
-  protected $pluginManagerMigration;
-
-  public function __construct(MigrationPluginManager $plugin_manager_migration) {
-    $this->pluginManagerMigration = $plugin_manager_migration;
-  }
+  public function __construct(
+    protected MigrationPluginManagerInterface $pluginManagerMigration,
+  ) {}
 
   /**
    * Checks access to a migration.

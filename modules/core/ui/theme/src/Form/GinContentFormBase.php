@@ -22,16 +22,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class GinContentFormBase extends ContentEntityForm implements RenderCallbackInterface {
 
-  /**
-   * The date formatter service.
-   *
-   * @var \Drupal\Core\Datetime\DateFormatterInterface
-   */
-  protected $dateFormatter;
-
-  public function __construct(EntityRepositoryInterface $entity_repository, EntityTypeBundleInfoInterface $entity_type_bundle_info, TimeInterface $time, DateFormatterInterface $date_formatter, ModuleHandlerInterface $module_handler) {
+  public function __construct(
+    EntityRepositoryInterface $entity_repository,
+    EntityTypeBundleInfoInterface $entity_type_bundle_info,
+    TimeInterface $time,
+    protected DateFormatterInterface $dateFormatter,
+    ModuleHandlerInterface $module_handler,
+  ) {
     parent::__construct($entity_repository, $entity_type_bundle_info, $time);
-    $this->dateFormatter = $date_formatter;
     $this->setModuleHandler($module_handler);
   }
 

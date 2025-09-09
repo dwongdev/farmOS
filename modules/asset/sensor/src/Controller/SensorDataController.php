@@ -23,16 +23,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class SensorDataController extends ControllerBase {
 
-  /**
-   * Data stream type manager.
-   *
-   * @var \Drupal\data_stream\DataStreamTypeManager
-   */
-  protected $dataStreamTypeManager;
-
-  public function __construct(DataStreamTypeManager $data_stream_type_manager) {
-    $this->dataStreamTypeManager = $data_stream_type_manager;
-  }
+  public function __construct(
+    protected DataStreamTypeManager $dataStreamTypeManager,
+  ) {}
 
   /**
    * {@inheritdoc}

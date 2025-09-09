@@ -15,32 +15,11 @@ use Drupal\fraction\Fraction;
  */
 class AssetInventory implements AssetInventoryInterface {
 
-  /**
-   * The database object.
-   *
-   * @var \Drupal\Core\Database\Connection
-   */
-  protected $database;
-
-  /**
-   * The time service.
-   *
-   * @var \Drupal\Component\Datetime\TimeInterface
-   */
-  protected $time;
-
-  /**
-   * Entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected EntityTypeManagerInterface $entityTypeManager;
-
-  public function __construct(Connection $database, EntityTypeManagerInterface $entity_type_manager, TimeInterface $time) {
-    $this->database = $database;
-    $this->entityTypeManager = $entity_type_manager;
-    $this->time = $time;
-  }
+  public function __construct(
+    protected Connection $database,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected TimeInterface $time,
+  ) {}
 
   /**
    * {@inheritdoc}

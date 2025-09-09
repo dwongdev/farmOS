@@ -40,16 +40,15 @@ class Group extends QuickFormBase implements QuickFormInterface {
   use QuickPrepopulateTrait;
   use QuickStringTrait;
 
-  /**
-   * Group membership service.
-   *
-   * @var \Drupal\farm_group\GroupMembershipInterface
-   */
-  protected $groupMembership;
-
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, AccountInterface $current_user, GroupMembershipInterface $group_membership) {
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    EntityTypeManagerInterface $entity_type_manager,
+    AccountInterface $current_user,
+    protected GroupMembershipInterface $groupMembership,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager, $current_user);
-    $this->groupMembership = $group_membership;
   }
 
   /**

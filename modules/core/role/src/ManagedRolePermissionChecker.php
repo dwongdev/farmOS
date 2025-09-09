@@ -14,24 +14,12 @@ use Drupal\Core\Session\PermissionChecker;
  */
 class ManagedRolePermissionChecker extends PermissionChecker {
 
-  /**
-   * The entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
-   * The managed role permissions manager.
-   *
-   * @var \Drupal\farm_role\ManagedRolePermissionsManagerInterface
-   */
-  protected $managedRolePermissionsManager;
-
-  public function __construct(protected AccessPolicyProcessorInterface $processor, EntityTypeManagerInterface $entity_type_manager, ManagedRolePermissionsManagerInterface $managed_role_permissions_manager) {
+  public function __construct(
+    protected AccessPolicyProcessorInterface $processor,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected ManagedRolePermissionsManagerInterface $managedRolePermissionsManager,
+  ) {
     parent::__construct($processor);
-    $this->entityTypeManager = $entity_type_manager;
-    $this->managedRolePermissionsManager = $managed_role_permissions_manager;
   }
 
   /**

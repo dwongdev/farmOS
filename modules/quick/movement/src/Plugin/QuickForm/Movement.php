@@ -42,16 +42,15 @@ class Movement extends QuickFormBase implements QuickFormInterface {
   use QuickStringTrait;
   use WktTrait;
 
-  /**
-   * Asset location service.
-   *
-   * @var \Drupal\farm_location\AssetLocationInterface
-   */
-  protected $assetLocation;
-
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, AccountInterface $current_user, AssetLocationInterface $asset_location) {
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    EntityTypeManagerInterface $entity_type_manager,
+    AccountInterface $current_user,
+    protected AssetLocationInterface $assetLocation,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager, $current_user);
-    $this->assetLocation = $asset_location;
   }
 
   /**

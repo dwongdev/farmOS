@@ -37,48 +37,13 @@ class AssetLocation implements AssetLocationInterface {
    */
   const ASSET_FIELD_FIXED = 'is_fixed';
 
-  /**
-   * Log location service.
-   *
-   * @var \Drupal\farm_location\LogLocationInterface
-   */
-  protected LogLocationInterface $logLocation;
-
-  /**
-   * Log query factory.
-   *
-   * @var \Drupal\farm_log\LogQueryFactoryInterface
-   */
-  protected LogQueryFactoryInterface $logQueryFactory;
-
-  /**
-   * Entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected EntityTypeManagerInterface $entityTypeManager;
-
-  /**
-   * The time service.
-   *
-   * @var \Drupal\Component\Datetime\TimeInterface
-   */
-  protected $time;
-
-  /**
-   * The database service.
-   *
-   * @var \Drupal\Core\Database\Connection
-   */
-  protected $database;
-
-  public function __construct(LogLocationInterface $log_location, LogQueryFactoryInterface $log_query_factory, EntityTypeManagerInterface $entity_type_manager, TimeInterface $time, Connection $database) {
-    $this->logLocation = $log_location;
-    $this->logQueryFactory = $log_query_factory;
-    $this->entityTypeManager = $entity_type_manager;
-    $this->time = $time;
-    $this->database = $database;
-  }
+  public function __construct(
+    protected LogLocationInterface $logLocation,
+    protected LogQueryFactoryInterface $logQueryFactory,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected TimeInterface $time,
+    protected Connection $database,
+  ) {}
 
   /**
    * {@inheritdoc}

@@ -17,15 +17,8 @@ class AssetEvent extends Event {
   const UPDATE = 'asset_update';
   const DELETE = 'asset_delete';
 
-  /**
-   * The Asset entity.
-   *
-   * @var \Drupal\asset\Entity\AssetInterface
-   */
-  public AssetInterface $asset;
-
-  public function __construct(AssetInterface $asset) {
-    $this->asset = $asset;
-  }
+  public function __construct(
+    public AssetInterface $asset,
+  ) {}
 
 }

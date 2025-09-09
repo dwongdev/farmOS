@@ -27,40 +27,12 @@ class CsvImportController extends ControllerBase {
 
   use StringTranslationTrait;
 
-  /**
-   * The menu link tree service.
-   *
-   * @var \Drupal\Core\Menu\MenuLinkTreeInterface
-   */
-  protected $menuLinkTree;
-
-  /**
-   * The migration plugin manager.
-   *
-   * @var \Drupal\migrate\Plugin\MigrationPluginManager
-   */
-  protected $pluginManagerMigration;
-
-  /**
-   * The CSV import migration access service.
-   *
-   * @var \Drupal\farm_import_csv\Access\CsvImportMigrationAccess
-   */
-  protected $migrationAccess;
-
-  /**
-   * The database connection.
-   *
-   * @var \Drupal\Core\Database\Connection
-   */
-  protected $database;
-
-  public function __construct(MenuLinkTreeInterface $menu_link_tree, MigrationPluginManager $plugin_manager_migration, CsvImportMigrationAccess $migration_access, Connection $database) {
-    $this->menuLinkTree = $menu_link_tree;
-    $this->pluginManagerMigration = $plugin_manager_migration;
-    $this->migrationAccess = $migration_access;
-    $this->database = $database;
-  }
+  public function __construct(
+    protected MenuLinkTreeInterface $menuLinkTree,
+    protected MigrationPluginManager $pluginManagerMigration,
+    protected CsvImportMigrationAccess $migrationAccess,
+    protected Connection $database,
+  ) {}
 
   /**
    * {@inheritdoc}

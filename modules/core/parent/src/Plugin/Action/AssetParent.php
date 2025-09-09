@@ -23,24 +23,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 )]
 class AssetParent extends EntityActionBase {
 
-  /**
-   * The private tempstore factory.
-   *
-   * @var \Drupal\Core\TempStore\PrivateTempStoreFactory
-   */
-  protected $tempStoreFactory;
-
-  /**
-   * The current user.
-   *
-   * @var \Drupal\Core\Session\AccountInterface
-   */
-  protected $currentUser;
-
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, PrivateTempStoreFactory $temp_store_factory, AccountInterface $current_user) {
-    $this->currentUser = $current_user;
-    $this->tempStoreFactory = $temp_store_factory;
-
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    EntityTypeManagerInterface $entity_type_manager,
+    protected PrivateTempStoreFactory $tempStoreFactory,
+    protected AccountInterface $currentUser,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager);
   }
 

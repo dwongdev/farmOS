@@ -24,64 +24,15 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class CsvImportForm extends FormBase {
 
-  /**
-   * The migration plugin manager.
-   *
-   * @var \Drupal\migrate\Plugin\MigrationPluginManager
-   */
-  protected MigrationPluginManager $migrationPluginManager;
-
-  /**
-   * The file system service.
-   *
-   * @var \Drupal\Core\File\FileSystemInterface
-   */
-  protected FileSystemInterface $fileSystem;
-
-  /**
-   * The time service.
-   *
-   * @var \Drupal\Component\Datetime\TimeInterface
-   */
-  protected TimeInterface $time;
-
-  /**
-   * The key-value factory.
-   *
-   * @var \Drupal\Core\KeyValueStore\KeyValueFactoryInterface
-   */
-  protected KeyValueFactoryInterface $keyValueFactory;
-
-  /**
-   * The translation manager.
-   *
-   * @var \Drupal\Core\StringTranslation\TranslationManager
-   */
-  protected TranslationManager $translationManager;
-
-  /**
-   * The file usage service.
-   *
-   * @var \Drupal\file\FileUsage\FileUsageInterface
-   */
-  protected $fileUsage;
-
-  /**
-   * The private tempstore factory.
-   *
-   * @var \Drupal\Core\TempStore\PrivateTempStoreFactory
-   */
-  protected $tempStoreFactory;
-
-  public function __construct(MigrationPluginManager $plugin_manager_migration, FileSystemInterface $file_system, TimeInterface $time, KeyValueFactoryInterface $key_value, TranslationManager $translation_manager, FileUsageInterface $file_usage, PrivateTempStoreFactory $temp_store_factory) {
-    $this->migrationPluginManager = $plugin_manager_migration;
-    $this->fileSystem = $file_system;
-    $this->time = $time;
-    $this->keyValueFactory = $key_value;
-    $this->translationManager = $translation_manager;
-    $this->fileUsage = $file_usage;
-    $this->tempStoreFactory = $temp_store_factory;
-  }
+  public function __construct(
+    protected MigrationPluginManager $migrationPluginManager,
+    protected FileSystemInterface $fileSystem,
+    protected TimeInterface $time,
+    protected KeyValueFactoryInterface $keyValueFactory,
+    protected TranslationManager $translationManager,
+    protected FileUsageInterface $fileUsage,
+    protected PrivateTempStoreFactory $tempStoreFactory,
+  ) {}
 
   /**
    * {@inheritdoc}

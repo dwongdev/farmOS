@@ -11,16 +11,15 @@ use Drupal\csv_serialization\Encoder\CsvEncoder as ContribCsvEncoder;
  */
 class CsvEncoder extends ContribCsvEncoder {
 
-  /**
-   * Whether to sanitize cell values.
-   *
-   * @var bool
-   */
-  protected $sanitize = TRUE;
-
-  public function __construct($delimiter = ",", $enclosure = '"', $escape_char = "\\", $strip_tags = TRUE, $trim_values = TRUE, $sanitize = TRUE) {
+  public function __construct(
+    $delimiter = ",",
+    $enclosure = '"',
+    $escape_char = "\\",
+    $strip_tags = TRUE,
+    $trim_values = TRUE,
+    protected bool $sanitize = TRUE,
+  ) {
     parent::__construct($delimiter, $enclosure, $escape_char, $strip_tags, $trim_values);
-    $this->sanitize = $sanitize;
   }
 
   /**

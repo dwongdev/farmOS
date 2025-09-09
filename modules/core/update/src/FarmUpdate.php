@@ -22,64 +22,15 @@ class FarmUpdate implements FarmUpdateInterface {
 
   use StringTranslationTrait;
 
-  /**
-   * The logger.
-   *
-   * @var \Psr\Log\LoggerInterface
-   */
-  protected $logger;
-
-  /**
-   * The module handler.
-   *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface
-   */
-  protected $moduleHandler;
-
-  /**
-   * The entity manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityManager;
-
-  /**
-   * The config factory.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  protected $configFactory;
-
-  /**
-   * The config differ.
-   *
-   * @var \Drupal\config_update\ConfigDiffer
-   */
-  protected $configDiff;
-
-  /**
-   * The config lister.
-   *
-   * @var \Drupal\config_update\ConfigListerWithProviders
-   */
-  protected $configList;
-
-  /**
-   * The config reverter.
-   *
-   * @var \Drupal\config_update\ConfigReverter
-   */
-  protected $configUpdate;
-
-  public function __construct(LoggerInterface $logger, ModuleHandlerInterface $module_handler, EntityTypeManagerInterface $entity_manager, ConfigFactoryInterface $config_factory, ConfigDiffer $config_diff, ConfigListerWithProviders $config_list, ConfigReverter $config_update) {
-    $this->logger = $logger;
-    $this->moduleHandler = $module_handler;
-    $this->entityManager = $entity_manager;
-    $this->configFactory = $config_factory;
-    $this->configDiff = $config_diff;
-    $this->configList = $config_list;
-    $this->configUpdate = $config_update;
-  }
+  public function __construct(
+    protected LoggerInterface $logger,
+    protected ModuleHandlerInterface $moduleHandler,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected ConfigFactoryInterface $configFactory,
+    protected ConfigDiffer $configDiff,
+    protected ConfigListerWithProviders $configList,
+    protected ConfigReverter $configUpdate,
+  ) {}
 
   /**
    * {@inheritdoc}
@@ -206,7 +157,7 @@ class FarmUpdate implements FarmUpdateInterface {
     $shortname = $name;
     if ($type != 'system.simple') {
       /** @var \Drupal\Core\Config\Entity\ConfigEntityTypeInterface $definition */
-      $definition = $this->entityManager->getDefinition($type);
+      $definition = $this->entityTypeManager->getDefinition($type);
       $prefix = $definition->getConfigPrefix() . '.';
       if (str_starts_with($name, $prefix)) {
         $shortname = substr($name, strlen($prefix));

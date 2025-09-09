@@ -38,29 +38,6 @@ class Basic extends DataStreamTypeBase implements DataStreamStorageInterface, Da
   use DataStreamPrivateKeyAccess;
 
   /**
-   * A database connection.
-   *
-   * @var \Drupal\Core\Database\Connection
-   *
-   * @see DataStreamSqlStorage
-   */
-  protected $connection;
-
-  /**
-   * The event dispatcher service.
-   *
-   * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
-   */
-  protected $eventDispatcher;
-
-  /**
-   * The time service.
-   *
-   * @var \Drupal\Component\Datetime\TimeInterface
-   */
-  protected $time;
-
-  /**
    * Database table.
    *
    * @var string
@@ -69,11 +46,15 @@ class Basic extends DataStreamTypeBase implements DataStreamStorageInterface, Da
    */
   protected $tableName = 'data_stream_basic';
 
-  public function __construct(array $configuration, string $plugin_id, $plugin_definition, Connection $connection, EventDispatcherInterface $event_dispatcher, TimeInterface $time) {
+  public function __construct(
+    array $configuration,
+    string $plugin_id,
+    $plugin_definition,
+    protected Connection $connection,
+    protected EventDispatcherInterface $eventDispatcher,
+    protected TimeInterface $time,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->connection = $connection;
-    $this->eventDispatcher = $event_dispatcher;
-    $this->time = $time;
   }
 
   /**

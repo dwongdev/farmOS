@@ -14,16 +14,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 abstract class FarmEntityTypeBase extends PluginBase implements ContainerFactoryPluginInterface {
 
-  /**
-   * The farm_field.factory service.
-   *
-   * @var \Drupal\farm_field\FarmFieldFactoryInterface
-   */
-  protected $farmFieldFactory;
-
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, FarmFieldFactoryInterface $farm_field_factory) {
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    protected FarmFieldFactoryInterface $farmFieldFactory,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->farmFieldFactory = $farm_field_factory;
   }
 
   /**

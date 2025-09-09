@@ -14,16 +14,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class CsvImportMenuLink extends DeriverBase implements ContainerDeriverInterface {
 
-  /**
-   * The migration plugin manager.
-   *
-   * @var \Drupal\migrate\Plugin\MigrationPluginManagerInterface
-   */
-  protected MigrationPluginManagerInterface $migrationPluginManager;
-
-  public function __construct(MigrationPluginManagerInterface $migration_plugin_manager) {
-    $this->migrationPluginManager = $migration_plugin_manager;
-  }
+  public function __construct(
+    protected MigrationPluginManagerInterface $migrationPluginManager,
+  ) {}
 
   /**
    * {@inheritdoc}

@@ -16,16 +16,9 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
  */
 class FieldModuleController extends ControllerBase {
 
-  /**
-   * The library discovery service.
-   *
-   * @var \Drupal\Core\Asset\LibraryDiscoveryInterface
-   */
-  protected $libraryDiscovery;
-
-  public function __construct(LibraryDiscoveryInterface $library_discovery) {
-    $this->libraryDiscovery = $library_discovery;
-  }
+  public function __construct(
+    protected LibraryDiscoveryInterface $libraryDiscovery,
+  ) {}
 
   /**
    * {@inheritdoc}

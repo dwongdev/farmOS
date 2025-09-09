@@ -14,16 +14,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class JsonApiBuildSubscriber implements EventSubscriberInterface {
 
-  /**
-   * The module handler.
-   *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface
-   */
-  protected $moduleHandler;
-
-  public function __construct(ModuleHandlerInterface $module_handler) {
-    $this->moduleHandler = $module_handler;
-  }
+  public function __construct(
+    protected ModuleHandlerInterface $moduleHandler,
+  ) {}
 
   /**
    * {@inheritdoc}

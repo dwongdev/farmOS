@@ -25,16 +25,18 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class AssetStorage extends SqlContentEntityStorage {
 
-  /**
-   * The time service.
-   *
-   * @var \Drupal\Component\Datetime\TimeInterface
-   */
-  protected $time;
-
-  public function __construct(EntityTypeInterface $entity_type, Connection $database, EntityFieldManagerInterface $entity_field_manager, CacheBackendInterface $cache, LanguageManagerInterface $language_manager, MemoryCacheInterface $memory_cache, EntityTypeBundleInfoInterface $entity_type_bundle_info, EntityTypeManagerInterface $entity_type_manager, TimeInterface $time) {
+  public function __construct(
+    EntityTypeInterface $entity_type,
+    Connection $database,
+    EntityFieldManagerInterface $entity_field_manager,
+    CacheBackendInterface $cache,
+    LanguageManagerInterface $language_manager,
+    MemoryCacheInterface $memory_cache,
+    EntityTypeBundleInfoInterface $entity_type_bundle_info,
+    EntityTypeManagerInterface $entity_type_manager,
+    protected TimeInterface $time,
+  ) {
     parent::__construct($entity_type, $database, $entity_field_manager, $cache, $language_manager, $memory_cache, $entity_type_bundle_info, $entity_type_manager);
-    $this->time = $time;
   }
 
   /**

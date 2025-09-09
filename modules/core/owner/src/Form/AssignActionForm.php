@@ -21,34 +21,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class AssignActionForm extends ConfirmFormBase {
 
   /**
-   * The private tempstore factory.
-   *
-   * @var \Drupal\Core\TempStore\PrivateTempStoreFactory
-   */
-  protected $tempStoreFactory;
-
-  /**
-   * The entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
-   * The managed role permissions manager.
-   *
-   * @var \Drupal\farm_role\ManagedRolePermissionsManagerInterface
-   */
-  protected $managedRolePermissionsManager;
-
-  /**
-   * The current user.
-   *
-   * @var \Drupal\Core\Session\AccountInterface
-   */
-  protected $user;
-
-  /**
    * The entity type.
    *
    * @var \Drupal\Core\Entity\EntityTypeInterface|null
@@ -62,12 +34,12 @@ class AssignActionForm extends ConfirmFormBase {
    */
   protected $entities;
 
-  public function __construct(PrivateTempStoreFactory $temp_store_factory, EntityTypeManagerInterface $entity_type_manager, ManagedRolePermissionsManagerInterface $managed_role_permissions_manager, AccountInterface $user) {
-    $this->tempStoreFactory = $temp_store_factory;
-    $this->entityTypeManager = $entity_type_manager;
-    $this->managedRolePermissionsManager = $managed_role_permissions_manager;
-    $this->user = $user;
-  }
+  public function __construct(
+    protected PrivateTempStoreFactory $tempStoreFactory,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected ManagedRolePermissionsManagerInterface $managedRolePermissionsManager,
+    protected AccountInterface $user,
+  ) {}
 
   /**
    * {@inheritdoc}

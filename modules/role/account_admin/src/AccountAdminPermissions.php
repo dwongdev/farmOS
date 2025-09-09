@@ -15,24 +15,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class AccountAdminPermissions implements ContainerInjectionInterface {
 
-  /**
-   * The managed role permissions manager.
-   *
-   * @var \Drupal\farm_role\ManagedRolePermissionsManagerInterface
-   */
-  protected $managedRolePermissionsManager;
-
-  /**
-   * The config factory service.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  protected $configFactory;
-
-  public function __construct(ManagedRolePermissionsManagerInterface $managed_role_permissions_manager, ConfigFactoryInterface $config_factory) {
-    $this->managedRolePermissionsManager = $managed_role_permissions_manager;
-    $this->configFactory = $config_factory;
-  }
+  public function __construct(
+    protected ManagedRolePermissionsManagerInterface $managedRolePermissionsManager,
+    protected ConfigFactoryInterface $configFactory,
+  ) {}
 
   /**
    * {@inheritdoc}

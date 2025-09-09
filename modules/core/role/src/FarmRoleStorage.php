@@ -22,16 +22,15 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class FarmRoleStorage extends RoleStorage {
 
-  /**
-   * The managed role permissions manager interface.
-   *
-   * @var \Drupal\farm_role\ManagedRolePermissionsManagerInterface
-   */
-  protected $managedRolePermissionsManager;
-
-  public function __construct(EntityTypeInterface $entity_type, ConfigFactoryInterface $config_factory, UuidInterface $uuid_service, LanguageManagerInterface $language_manager, MemoryCacheInterface $memory_cache, ManagedRolePermissionsManagerInterface $managed_role_permissions_manager) {
+  public function __construct(
+    EntityTypeInterface $entity_type,
+    ConfigFactoryInterface $config_factory,
+    UuidInterface $uuid_service,
+    LanguageManagerInterface $language_manager,
+    MemoryCacheInterface $memory_cache,
+    protected ManagedRolePermissionsManagerInterface $managedRolePermissionsManager,
+  ) {
     parent::__construct($entity_type, $config_factory, $uuid_service, $language_manager, $memory_cache);
-    $this->managedRolePermissionsManager = $managed_role_permissions_manager;
   }
 
   /**

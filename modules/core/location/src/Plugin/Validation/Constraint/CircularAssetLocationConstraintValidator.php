@@ -16,16 +16,9 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 class CircularAssetLocationConstraintValidator extends ConstraintValidator implements ContainerInjectionInterface {
 
-  /**
-   * Asset location service.
-   *
-   * @var \Drupal\farm_location\AssetLocationInterface
-   */
-  protected $assetLocation;
-
-  public function __construct(AssetLocationInterface $asset_location) {
-    $this->assetLocation = $asset_location;
-  }
+  public function __construct(
+    protected AssetLocationInterface $assetLocation,
+  ) {}
 
   /**
    * {@inheritdoc}

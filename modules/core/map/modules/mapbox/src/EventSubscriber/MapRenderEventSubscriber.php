@@ -15,16 +15,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class MapRenderEventSubscriber implements EventSubscriberInterface {
 
-  /**
-   * The config factory service.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  private $configFactory;
-
-  public function __construct(ConfigFactoryInterface $config_factory) {
-    $this->configFactory = $config_factory;
-  }
+  public function __construct(
+    private ConfigFactoryInterface $configFactory,
+  ) {}
 
   /**
    * {@inheritdoc}

@@ -13,16 +13,13 @@ use Drupal\Core\Plugin\DefaultSingleLazyPluginCollection;
  */
 class QuickFormPluginCollection extends DefaultSingleLazyPluginCollection {
 
-  /**
-   * The quick form ID this plugin collection belongs to.
-   *
-   * @var string
-   */
-  protected $quickFormId;
-
-  public function __construct(PluginManagerInterface $manager, $instance_id, array $configuration, $quick_form_id) {
+  public function __construct(
+    PluginManagerInterface $manager,
+    $instance_id,
+    array $configuration,
+    protected ?string $quickFormId = NULL,
+  ) {
     parent::__construct($manager, $instance_id, $configuration);
-    $this->quickFormId = $quick_form_id;
   }
 
   /**

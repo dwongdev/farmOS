@@ -14,23 +14,11 @@ class DataStreamEvent extends Event {
 
   const DATA_RECEIVE = 'data_stream_data_receive';
 
-  /**
-   * The data steam entity.
-   *
-   * @var \Drupal\data_stream\Entity\DataStreamInterface
-   */
-  public DataStreamInterface $dataStream;
-
-  /**
-   * The context associated with the event.
-   *
-   * @var array
-   */
-  public array $context;
-
-  public function __construct(DataStreamInterface $data_stream, array $context = []) {
-    $this->dataStream = $data_stream;
-    $this->context = $context + ['data_stream' => $data_stream];
+  public function __construct(
+    public DataStreamInterface $dataStream,
+    public array $context = [],
+  ) {
+    $this->context = $context + ['data_stream' => $dataStream];
   }
 
 }

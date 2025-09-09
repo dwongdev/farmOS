@@ -19,24 +19,10 @@ class MapRenderEventSubscriber implements EventSubscriberInterface {
 
   use StringTranslationTrait;
 
-  /**
-   * The entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
-   * The layer style loader service.
-   *
-   * @var \Drupal\farm_map\LayerStyleLoaderInterface
-   */
-  protected $layerStyleLoader;
-
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, LayerStyleLoaderInterface $layer_style_loader) {
-    $this->entityTypeManager = $entity_type_manager;
-    $this->layerStyleLoader = $layer_style_loader;
-  }
+  public function __construct(
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected LayerStyleLoaderInterface $layerStyleLoader,
+  ) {}
 
   /**
    * {@inheritdoc}

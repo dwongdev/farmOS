@@ -19,24 +19,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 #[ViewsArgument("asset_group")]
 class AssetGroup extends ArgumentPluginBase {
 
-  /**
-   * The entity type manager service.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
-   * The group membership service.
-   *
-   * @var \Drupal\farm_group\GroupMembershipInterface
-   */
-  protected $groupMembership;
-
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, GroupMembershipInterface $group_membership) {
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected GroupMembershipInterface $groupMembership,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->entityTypeManager = $entity_type_manager;
-    $this->groupMembership = $group_membership;
   }
 
   /**

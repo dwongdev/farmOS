@@ -27,48 +27,18 @@ use Symfony\Component\Serializer\SerializerInterface;
 )]
 class EntityKml extends EntityActionBase {
 
-  /**
-   * The serializer service.
-   *
-   * @var \Symfony\Component\Serializer\SerializerInterface
-   */
-  protected $serializer;
-
-  /**
-   * The file system service.
-   *
-   * @var \Drupal\Core\File\FileSystemInterface
-   */
-  protected $fileSystem;
-
-  /**
-   * The config factory.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  protected $configFactory;
-
-  /**
-   * The file repository service.
-   *
-   * @var \Drupal\file\FileRepositoryInterface
-   */
-  protected $fileRepository;
-
-  /**
-   * The file URL generator.
-   *
-   * @var \Drupal\Core\File\FileUrlGeneratorInterface
-   */
-  protected $fileUrlGenerator;
-
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, SerializerInterface $serializer, FileSystemInterface $file_system, ConfigFactoryInterface $config_factory, FileRepositoryInterface $file_repository, FileUrlGeneratorInterface $file_url_generator) {
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    EntityTypeManagerInterface $entity_type_manager,
+    protected SerializerInterface $serializer,
+    protected FileSystemInterface $fileSystem,
+    protected ConfigFactoryInterface $configFactory,
+    protected FileRepositoryInterface $fileRepository,
+    protected FileUrlGeneratorInterface $fileUrlGenerator,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager);
-    $this->serializer = $serializer;
-    $this->fileSystem = $file_system;
-    $this->configFactory = $config_factory;
-    $this->fileRepository = $file_repository;
-    $this->fileUrlGenerator = $file_url_generator;
   }
 
   /**

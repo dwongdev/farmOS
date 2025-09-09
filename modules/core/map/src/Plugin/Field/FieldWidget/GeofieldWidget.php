@@ -35,20 +35,6 @@ class GeofieldWidget extends GeofieldBaseWidget {
   use WktTrait;
 
   /**
-   * The file system service.
-   *
-   * @var \Drupal\Core\File\FileSystemInterface
-   */
-  protected $fileSystem;
-
-  /**
-   * The entity type manager service.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
    * Supported GeoPHP file types.
    *
    * @var string[]
@@ -63,10 +49,19 @@ class GeofieldWidget extends GeofieldBaseWidget {
     'wkt' => 'wkt',
   ];
 
-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, array $third_party_settings, GeoPHPInterface $geophp_wrapper, WktGeneratorInterface $wkt_generator, GeofieldBackendManager $geofield_backend_manager, FileSystem $file_system, EntityTypeManagerInterface $entity_type_manager) {
+  public function __construct(
+    $plugin_id,
+    $plugin_definition,
+    FieldDefinitionInterface $field_definition,
+    array $settings,
+    array $third_party_settings,
+    GeoPHPInterface $geophp_wrapper,
+    WktGeneratorInterface $wkt_generator,
+    GeofieldBackendManager $geofield_backend_manager,
+    protected FileSystem $fileSystem,
+    protected EntityTypeManagerInterface $entityTypeManager,
+  ) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $third_party_settings, $geophp_wrapper, $wkt_generator, $geofield_backend_manager);
-    $this->fileSystem = $file_system;
-    $this->entityTypeManager = $entity_type_manager;
   }
 
   /**

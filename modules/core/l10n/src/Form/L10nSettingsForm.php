@@ -26,16 +26,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class L10nSettingsForm extends NegotiationSelectedForm {
 
-  /**
-   * The entity type manager service.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  public function __construct(ConfigFactoryInterface $config_factory, protected TypedConfigManagerInterface $typedConfigManager, EntityTypeManagerInterface $entity_type_manager) {
+  public function __construct(
+    ConfigFactoryInterface $config_factory,
+    protected TypedConfigManagerInterface $typedConfigManager,
+    protected EntityTypeManagerInterface $entityTypeManager,
+  ) {
     parent::__construct($config_factory, $typedConfigManager);
-    $this->entityTypeManager = $entity_type_manager;
   }
 
   /**

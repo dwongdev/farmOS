@@ -14,25 +14,9 @@ namespace Drupal\farm_geo;
  */
 class GeometryWrapper {
 
-  /**
-   * The geometry to wrap.
-   *
-   * @var \Geometry
-   *   The GeoPHP Geometry object.
-   */
-  public \Geometry $geometry;
-
-  /**
-   * Properties associated with the geometry.
-   *
-   * @var array
-   *   Associative array of property values.
-   */
-  public array $properties;
-
-  public function __construct(\Geometry $geometry, array $properties = []) {
-    $this->geometry = $geometry;
-    $this->properties = $properties;
-  }
+  public function __construct(
+    public \Geometry $geometry,
+    public array $properties = [],
+  ) {}
 
 }

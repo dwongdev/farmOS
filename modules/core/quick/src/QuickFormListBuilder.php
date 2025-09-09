@@ -16,16 +16,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class QuickFormListBuilder extends ConfigEntityListBuilder {
 
-  /**
-   * The quick form instance manager.
-   *
-   * @var \Drupal\farm_quick\QuickFormInstanceManagerInterface
-   */
-  protected $quickFormInstanceManager;
-
-  public function __construct(EntityTypeInterface $entity_type, EntityStorageInterface $storage, QuickFormInstanceManagerInterface $quick_form_instance_manager) {
+  public function __construct(
+    EntityTypeInterface $entity_type,
+    EntityStorageInterface $storage,
+    protected QuickFormInstanceManagerInterface $quickFormInstanceManager,
+  ) {
     parent::__construct($entity_type, $storage);
-    $this->quickFormInstanceManager = $quick_form_instance_manager;
   }
 
   /**

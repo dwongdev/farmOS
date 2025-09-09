@@ -22,16 +22,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 )]
 class AssetClone extends EntityActionBase {
 
-  /**
-   * The current user.
-   *
-   * @var \Drupal\Core\Session\AccountInterface
-   */
-  protected $currentUser;
-
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, AccountInterface $current_user) {
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    EntityTypeManagerInterface $entity_type_manager,
+    protected AccountInterface $currentUser,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager);
-    $this->currentUser = $current_user;
   }
 
   /**

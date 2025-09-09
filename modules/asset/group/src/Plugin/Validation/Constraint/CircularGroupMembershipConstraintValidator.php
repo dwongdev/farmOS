@@ -16,16 +16,9 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 class CircularGroupMembershipConstraintValidator extends ConstraintValidator implements ContainerInjectionInterface {
 
-  /**
-   * Group membership service.
-   *
-   * @var \Drupal\farm_group\GroupMembershipInterface
-   */
-  protected $groupMembership;
-
-  public function __construct(GroupMembershipInterface $group_membership) {
-    $this->groupMembership = $group_membership;
-  }
+  public function __construct(
+    protected GroupMembershipInterface $groupMembership,
+  ) {}
 
   /**
    * {@inheritdoc}

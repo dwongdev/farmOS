@@ -19,27 +19,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class AssetAddLogActionForm extends ConfirmFormBase {
 
   /**
-   * The private tempstore factory.
-   *
-   * @var \Drupal\Core\TempStore\PrivateTempStoreFactory
-   */
-  protected $tempStoreFactory;
-
-  /**
-   * The entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
-   * The current user.
-   *
-   * @var \Drupal\Core\Session\AccountInterface
-   */
-  protected $user;
-
-  /**
    * The entity type.
    *
    * @var \Drupal\Core\Entity\EntityTypeInterface|null
@@ -53,11 +32,11 @@ class AssetAddLogActionForm extends ConfirmFormBase {
    */
   protected $entities;
 
-  public function __construct(PrivateTempStoreFactory $temp_store_factory, EntityTypeManagerInterface $entity_type_manager, AccountInterface $user) {
-    $this->tempStoreFactory = $temp_store_factory;
-    $this->entityTypeManager = $entity_type_manager;
-    $this->user = $user;
-  }
+  public function __construct(
+    protected PrivateTempStoreFactory $tempStoreFactory,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected AccountInterface $user,
+  ) {}
 
   /**
    * {@inheritdoc}

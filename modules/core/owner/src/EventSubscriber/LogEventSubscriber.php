@@ -13,16 +13,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class LogEventSubscriber implements EventSubscriberInterface {
 
-  /**
-   * The current user.
-   *
-   * @var \Drupal\Core\Session\AccountInterface
-   */
-  protected $currentUser;
-
-  public function __construct(AccountInterface $current_user) {
-    $this->currentUser = $current_user;
-  }
+  public function __construct(
+    protected AccountInterface $currentUser,
+  ) {}
 
   /**
    * {@inheritdoc}

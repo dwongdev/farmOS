@@ -21,22 +21,15 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 class QuickForm extends FormBase implements BaseFormIdInterface {
 
   /**
-   * The quick form instance manager.
-   *
-   * @var \Drupal\farm_quick\QuickFormInstanceManagerInterface
-   */
-  protected $quickFormInstanceManager;
-
-  /**
    * The quick form ID.
    *
    * @var string
    */
   protected $quickFormId;
 
-  public function __construct(QuickFormInstanceManagerInterface $quick_form_instance_manager) {
-    $this->quickFormInstanceManager = $quick_form_instance_manager;
-  }
+  public function __construct(
+    protected QuickFormInstanceManagerInterface $quickFormInstanceManager,
+  ) {}
 
   /**
    * {@inheritdoc}
