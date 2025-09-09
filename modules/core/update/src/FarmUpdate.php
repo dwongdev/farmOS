@@ -173,7 +173,7 @@ class FarmUpdate implements FarmUpdateInterface {
    * installed modules, themes, or install profile. See config-diff to show
    * what the differences are.
    *
-   * This method is copied directly from ConfigUpdateUiCliService.
+   * This method is copied directly from ConfigUpdateUiCommands.
    *
    * @param string $type
    *   Run the report for: module, theme, profile, or "type" for config entity
@@ -186,7 +186,7 @@ class FarmUpdate implements FarmUpdateInterface {
    * @return array
    *   An array of differing configuration items.
    *
-   * @see \Drupal\config_update_ui\ConfigUpdateUiCliService::getDifferentItems()
+   * @see \Drupal\config_update_ui\Commands\ConfigUpdateUiCommands::getDifferentItems()
    */
   protected function getDifferentItems($type, $name) {
     [$activeList, $installList, $optionalList] = $this->configList->listConfig($type, $name);
@@ -208,7 +208,7 @@ class FarmUpdate implements FarmUpdateInterface {
   /**
    * Gets the config item shortname given the type and name.
    *
-   * This method is copied directly from ConfigUpdateUiCliService.
+   * This method is copied directly from ConfigUpdateUiCommands.
    *
    * @param string $type
    *   The type of the config item.
@@ -218,7 +218,7 @@ class FarmUpdate implements FarmUpdateInterface {
    * @return string
    *   The shortname for the configuration item.
    *
-   * @see \Drupal\config_update_ui\ConfigUpdateUiCliService::getConfigShortname()
+   * @see \Drupal\config_update_ui\Commands\ConfigUpdateUiCommands::getConfigShortname()
    */
   protected function getConfigShortname($type, $name) {
     $shortname = $name;
@@ -226,7 +226,7 @@ class FarmUpdate implements FarmUpdateInterface {
       /** @var \Drupal\Core\Config\Entity\ConfigEntityTypeInterface $definition */
       $definition = $this->entityManager->getDefinition($type);
       $prefix = $definition->getConfigPrefix() . '.';
-      if (strpos($name, $prefix) === 0) {
+      if (str_starts_with($name, $prefix)) {
         $shortname = substr($name, strlen($prefix));
       }
     }
