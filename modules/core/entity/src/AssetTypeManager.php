@@ -16,7 +16,11 @@ use Drupal\farm_entity\Plugin\Asset\AssetType\AssetTypeInterface;
  */
 class AssetTypeManager extends DefaultPluginManager {
 
-  public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
+  public function __construct(
+    \Traversable $namespaces,
+    CacheBackendInterface $cache_backend,
+    ModuleHandlerInterface $module_handler,
+  ) {
     parent::__construct(
       'Plugin/Asset/AssetType',
       $namespaces,

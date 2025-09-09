@@ -16,7 +16,11 @@ use Drupal\farm_entity\Plugin\Quantity\QuantityType\QuantityTypeInterface;
  */
 class QuantityTypeManager extends DefaultPluginManager {
 
-  public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
+  public function __construct(
+    \Traversable $namespaces,
+    CacheBackendInterface $cache_backend,
+    ModuleHandlerInterface $module_handler,
+  ) {
     parent::__construct(
       'Plugin/Quantity/QuantityType',
       $namespaces,

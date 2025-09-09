@@ -17,7 +17,11 @@ use Drupal\data_stream_notification\Plugin\DataStream\NotificationCondition\Noti
  */
 class NotificationConditionManager extends DefaultPluginManager implements NotificationConditionManagerInterface {
 
-  public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
+  public function __construct(
+    \Traversable $namespaces,
+    CacheBackendInterface $cache_backend,
+    ModuleHandlerInterface $module_handler,
+  ) {
     parent::__construct(
       'Plugin/DataStream/NotificationCondition',
       $namespaces,
