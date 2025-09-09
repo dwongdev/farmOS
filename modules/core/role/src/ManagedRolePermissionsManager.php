@@ -13,6 +13,7 @@ use Drupal\Core\Plugin\DefaultPluginManager;
 use Drupal\Core\Plugin\Discovery\ContainerDerivativeDiscoveryDecorator;
 use Drupal\Core\Plugin\Discovery\YamlDiscovery;
 use Drupal\user\RoleInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * ManagedRolePermissions Plugin Manager.
@@ -43,7 +44,9 @@ class ManagedRolePermissionsManager extends DefaultPluginManager implements Mana
   protected $rolePermissions = [];
 
   public function __construct(
+    #[Autowire(service: 'container.namespaces')]
     \Traversable $namespaces,
+    #[Autowire(service: 'cache.discovery')]
     CacheBackendInterface $cache_backend,
     ModuleHandlerInterface $module_handler,
     protected ControllerResolverInterface $controllerResolver,

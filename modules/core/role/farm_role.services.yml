@@ -1,5 +1,6 @@
 services:
+  _defaults:
+    autowire: true
   plugin.manager.managed_role_permissions:
     class: Drupal\farm_role\ManagedRolePermissionsManager
-    arguments: ['@container.namespaces', '@cache.discovery', '@module_handler', '@controller_resolver', '@entity_type.bundle.info', '@entity_type.manager']
   Drupal\farm_role\ManagedRolePermissionsManagerInterface: '@plugin.manager.managed_role_permissions'

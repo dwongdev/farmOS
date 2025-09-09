@@ -1,12 +1,10 @@
 services:
+  _defaults:
+    autowire: true
   asset.inventory:
     class: Drupal\farm_inventory\AssetInventory
-    arguments:
-      [ '@database', '@entity_type.manager', '@datetime.time' ]
   Drupal\farm_inventory\AssetInventoryInterface: '@asset.inventory'
   farm_inventory.log_event_subscriber:
     class: Drupal\farm_inventory\EventSubscriber\LogEventSubscriber
-    arguments:
-      [ '@cache_tags.invalidator', '@datetime.time' ]
     tags:
       - { name: 'event_subscriber' }

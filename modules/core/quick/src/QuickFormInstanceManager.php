@@ -6,6 +6,7 @@ namespace Drupal\farm_quick;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\farm_quick\Entity\QuickFormInstance;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -15,6 +16,7 @@ class QuickFormInstanceManager implements QuickFormInstanceManagerInterface {
 
   public function __construct(
     protected EntityTypeManagerInterface $entityTypeManager,
+    #[Autowire(service: 'plugin.manager.quick_form')]
     protected QuickFormPluginManager $quickFormPluginManager,
   ) {}
 

@@ -1,4 +1,6 @@
 services:
+  _defaults:
+    autowire: true
   farm_csv.encoder.csv:
     class: Drupal\farm_csv\Encoder\CsvEncoder
     tags:
@@ -7,12 +9,10 @@ services:
     class: Drupal\farm_csv\Normalizer\ContentEntityNormalizer
     tags:
       - { name: normalizer, priority: 10 }
-    arguments: ['@entity_type.manager', '@entity_type.repository', '@entity_field.manager']
   farm_csv.normalizer.quantity_normalizer:
     class: Drupal\farm_csv\Normalizer\QuantityNormalizer
     tags:
       - { name: normalizer, priority: 15 }
-    arguments: [ '@entity_type.manager', '@entity_type.repository', '@entity_field.manager' ]
   farm_csv.normalizer.fraction_field_item:
     class: Drupal\farm_csv\Normalizer\FractionFieldItemNormalizer
     tags:
@@ -29,7 +29,6 @@ services:
     class: Drupal\farm_csv\Normalizer\EntityReferenceFieldItemNormalizer
     tags:
       - { name: normalizer, priority: 10 }
-    arguments: ['@entity.repository']
   farm_csv.normalizer.timestamp_item:
     class: Drupal\farm_csv\Normalizer\TimestampItemNormalizer
     tags:
