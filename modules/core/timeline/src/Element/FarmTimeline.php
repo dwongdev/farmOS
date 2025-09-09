@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Drupal\farm_timeline\Element;
 
+use Drupal\Core\Render\Attribute\RenderElement;
 use Drupal\Component\Serialization\Json;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Render\Element\RenderElementBase;
 
 /**
  * Provides a farm timeline render element.
- *
- * @RenderElement("farm_timeline")
  */
+#[RenderElement("farm_timeline")]
 class FarmTimeline extends RenderElementBase {
 
   /**
