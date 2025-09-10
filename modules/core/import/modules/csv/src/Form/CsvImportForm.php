@@ -140,7 +140,7 @@ class CsvImportForm extends FormBase {
       '#title' => $this->t('Upload the source file'),
       '#upload_validators' => [
         'FileExtension' => [
-          'extensions' => 'json csv xml',
+          'extensions' => 'csv',
         ],
       ],
     ];
