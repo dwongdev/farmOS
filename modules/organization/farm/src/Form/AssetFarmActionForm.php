@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\farm_farm\Form;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\ConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -11,14 +12,14 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\TempStore\PrivateTempStoreFactory;
 use Drupal\Core\Url;
 use Drupal\asset\Entity\AssetInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Provides a form for assigning asset to a farm organization.
  */
 class AssetFarmActionForm extends ConfirmFormBase {
+
+  use AutowireTrait;
 
   /**
    * The entity type.
@@ -38,20 +39,7 @@ class AssetFarmActionForm extends ConfirmFormBase {
     protected PrivateTempStoreFactory $tempStoreFactory,
     protected EntityTypeManagerInterface $entityTypeManager,
     protected AccountInterface $user,
-    protected Request $request,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('tempstore.private'),
-      $container->get('entity_type.manager'),
-      $container->get('current_user'),
-      $container->get('request_stack')->getCurrentRequest(),
-    );
-  }
 
   /**
    * {@inheritdoc}
@@ -95,7 +83,7 @@ class AssetFarmActionForm extends ConfirmFormBase {
   public function buildForm(array $form, FormStateInterface $form_state): array|RedirectResponse {
 
     // Check if asset IDs were provided in the asset query param.
-    if ($asset_ids = $this->request->get('asset')) {
+    if ($asset_ids = $this->getRequest()->get('asset')) {
 
       // Wrap in an array, if necessary.
       if (!is_array($asset_ids)) {

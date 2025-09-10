@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\farm_quick\Routing;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\farm_quick\Form\QuickForm;
 use Drupal\farm_quick\QuickFormInstanceManagerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
@@ -16,18 +16,11 @@ use Symfony\Component\Routing\RouteCollection;
  */
 class QuickFormRoutes implements ContainerInjectionInterface {
 
+  use AutowireTrait;
+
   public function __construct(
     protected QuickFormInstanceManagerInterface $quickFormInstanceManager,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('quick_form.instance_manager'),
-    );
-  }
 
   /**
    * Provides routes for quick forms.

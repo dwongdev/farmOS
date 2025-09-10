@@ -5,30 +5,22 @@ declare(strict_types=1);
 namespace Drupal\farm_account_admin;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\farm_role\ManagedRolePermissionsManagerInterface;
 use Drupal\user\RoleInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Add permissions to the Account Admin role.
  */
 class AccountAdminPermissions implements ContainerInjectionInterface {
 
+  use AutowireTrait;
+
   public function __construct(
     protected ManagedRolePermissionsManagerInterface $managedRolePermissionsManager,
     protected ConfigFactoryInterface $configFactory,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('plugin.manager.managed_role_permissions'),
-      $container->get('config.factory'),
-    );
-  }
 
   /**
    * Add permissions to default farmOS roles.

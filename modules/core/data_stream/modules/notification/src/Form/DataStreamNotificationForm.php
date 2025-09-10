@@ -4,18 +4,21 @@ declare(strict_types=1);
 
 namespace Drupal\data_stream_notification\Form;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Form\SubformState;
 use Drupal\data_stream_notification\NotificationConditionManagerInterface;
 use Drupal\data_stream_notification\NotificationDeliveryManagerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Data stream notification entity form.
  */
 class DataStreamNotificationForm extends EntityForm {
+
+  use AutowireTrait;
 
   /**
    * The data stream notification entity.
@@ -25,19 +28,11 @@ class DataStreamNotificationForm extends EntityForm {
   protected $entity;
 
   public function __construct(
+    #[Autowire(service: 'plugin.manager.data_stream_notification_condition')]
     protected NotificationConditionManagerInterface $conditionManager,
+    #[Autowire(service: 'plugin.manager.data_stream_notification_delivery')]
     protected NotificationDeliveryManagerInterface $deliveryManager,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('plugin.manager.data_stream_notification_condition'),
-      $container->get('plugin.manager.data_stream_notification_delivery'),
-    );
-  }
 
   /**
    * {@inheritdoc}

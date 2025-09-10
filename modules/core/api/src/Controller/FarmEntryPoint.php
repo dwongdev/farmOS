@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\farm_api\Controller;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Extension\ProfileExtensionList;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\jsonapi\CacheableResourceResponse;
@@ -12,7 +13,6 @@ use Drupal\jsonapi\JsonApiResource\JsonApiDocumentTopLevel;
 use Drupal\jsonapi\JsonApiResource\NullIncludedData;
 use Drupal\jsonapi\JsonApiResource\ResourceObjectData;
 use Drupal\jsonapi\ResourceType\ResourceTypeRepositoryInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Extend the core jsonapi EntryPoint controller.
@@ -31,23 +31,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class FarmEntryPoint extends EntryPoint {
 
+  use AutowireTrait;
+
   public function __construct(
     ResourceTypeRepositoryInterface $resourceTypeRepository,
     AccountInterface $user,
     protected ProfileExtensionList $profileExtensionList,
   ) {
     parent::__construct($resourceTypeRepository, $user);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('jsonapi.resource_type.repository'),
-      $container->get('current_user'),
-      $container->get('extension.list.profile'),
-    );
   }
 
   /**

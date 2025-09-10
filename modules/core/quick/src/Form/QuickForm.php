@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Drupal\farm_quick\Form;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityMalformedException;
 use Drupal\Core\Form\BaseFormIdInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\farm_quick\QuickFormInstanceManagerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 /**
@@ -19,6 +19,8 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
  * @ingroup farm
  */
 class QuickForm extends FormBase implements BaseFormIdInterface {
+
+  use AutowireTrait;
 
   /**
    * The quick form ID.
@@ -30,15 +32,6 @@ class QuickForm extends FormBase implements BaseFormIdInterface {
   public function __construct(
     protected QuickFormInstanceManagerInterface $quickFormInstanceManager,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('quick_form.instance_manager'),
-    );
-  }
 
   /**
    * {@inheritdoc}

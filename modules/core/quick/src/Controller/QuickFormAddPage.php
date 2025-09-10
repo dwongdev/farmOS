@@ -6,28 +6,23 @@ namespace Drupal\farm_quick\Controller;
 
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Link;
 use Drupal\farm_quick\Plugin\QuickForm\ConfigurableQuickFormInterface;
 use Drupal\farm_quick\QuickFormPluginManager;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Page that renders links to create instances of quick form plugins.
  */
 class QuickFormAddPage extends ControllerBase {
 
+  use AutowireTrait;
+
   public function __construct(
+    #[Autowire(service: 'plugin.manager.quick_form')]
     protected QuickFormPluginManager $quickFormPluginManager,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('plugin.manager.quick_form'),
-    );
-  }
 
   /**
    * Add quick form page callback.

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\farm_location\Plugin\Validation\Constraint;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\asset\Entity\AssetInterface;
 use Drupal\farm_location\AssetLocationInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -16,18 +16,11 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 class CircularAssetLocationConstraintValidator extends ConstraintValidator implements ContainerInjectionInterface {
 
+  use AutowireTrait;
+
   public function __construct(
     protected AssetLocationInterface $assetLocation,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('asset.location'),
-    );
-  }
 
   /**
    * {@inheritdoc}

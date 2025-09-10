@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\farm_owner\Form;
 
 use Drupal\Component\Plugin\Exception\PluginException;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\ConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -12,13 +13,14 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\TempStore\PrivateTempStoreFactory;
 use Drupal\Core\Url;
 use Drupal\farm_role\ManagedRolePermissionsManagerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Provides an assign confirmation form.
  */
 class AssignActionForm extends ConfirmFormBase {
+
+  use AutowireTrait;
 
   /**
    * The entity type.
@@ -40,18 +42,6 @@ class AssignActionForm extends ConfirmFormBase {
     protected ManagedRolePermissionsManagerInterface $managedRolePermissionsManager,
     protected AccountInterface $user,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('tempstore.private'),
-      $container->get('entity_type.manager'),
-      $container->get('plugin.manager.managed_role_permissions'),
-      $container->get('current_user')
-    );
-  }
 
   /**
    * {@inheritdoc}

@@ -7,14 +7,16 @@ namespace Drupal\farm_account_admin\Form;
 use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\TypedConfigManagerInterface;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a settings form for the Account Admin Role module.
  */
 class AccountAdminSettingsForm extends ConfigFormbase {
+
+  use AutowireTrait;
 
   /**
    * Config settings.
@@ -29,17 +31,6 @@ class AccountAdminSettingsForm extends ConfigFormbase {
     protected CacheTagsInvalidatorInterface $cacheTagsInvalidator,
   ) {
     parent::__construct($config_factory, $typed_config_manager);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('config.factory'),
-      $container->get('config.typed'),
-      $container->get('cache_tags.invalidator'),
-    );
   }
 
   /**

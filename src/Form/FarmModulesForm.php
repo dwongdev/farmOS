@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\farm\Form;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\State\StateInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Form for selecting farmOS modules to install.
@@ -16,18 +16,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class FarmModulesForm extends FormBase {
 
+  use AutowireTrait;
+
   public function __construct(
     protected StateInterface $state,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('state'),
-    );
-  }
 
   /**
    * {@inheritdoc}

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\farm_group\Plugin\Validation\Constraint;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\asset\Entity\AssetInterface;
 use Drupal\farm_group\GroupMembershipInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -16,18 +16,11 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 class CircularGroupMembershipConstraintValidator extends ConstraintValidator implements ContainerInjectionInterface {
 
+  use AutowireTrait;
+
   public function __construct(
     protected GroupMembershipInterface $groupMembership,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('group.membership'),
-    );
-  }
 
   /**
    * {@inheritdoc}

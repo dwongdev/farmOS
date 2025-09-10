@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\farm_ui_location\Form;
 
 use Drupal\Component\Serialization\Json;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Core\Form\FormBase;
@@ -12,7 +13,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\asset\Entity\AssetInterface;
 use Drupal\farm_location\AssetLocationInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Base form for changing the hierarchy of location assets.
@@ -21,20 +21,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 abstract class BaseLocationHierarchyForm extends FormBase {
 
+  use AutowireTrait;
+
   public function __construct(
     protected EntityTypeManagerInterface $entityTypeManager,
     protected AssetLocationInterface $assetLocation,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('entity_type.manager'),
-      $container->get('asset.location'),
-    );
-  }
 
   /**
    * Helper function to build the location form.
