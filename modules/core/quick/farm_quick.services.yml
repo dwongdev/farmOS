@@ -6,3 +6,4 @@ services:
     class: Drupal\farm_quick\QuickFormInstanceManager
     arguments:
       ['@entity_type.manager', '@plugin.manager.quick_form']
+  Drupal\farm_quick\QuickFormInstanceManagerInterface: '@quick_form.instance_manager'

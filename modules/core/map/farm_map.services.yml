@@ -7,3 +7,4 @@ services:
       - { name: 'event_subscriber' }
   farm_map.layer_style_loader:
     class: Drupal\farm_map\LayerStyleLoader
+  Drupal\farm_map\LayerStyleLoaderInterface: '@farm_map.layer_style_loader'
