@@ -14,8 +14,8 @@ use Drupal\farm_quick\Plugin\Action\QuickFormActionBase;
 #[Action(
   id: 'quick_group',
   label: new TranslatableMarkup('Assign group membership'),
-  type: 'asset',
   confirm_form_route_name: 'farm.quick.group',
+  type: 'asset',
 )]
 class Group extends QuickFormActionBase {
 

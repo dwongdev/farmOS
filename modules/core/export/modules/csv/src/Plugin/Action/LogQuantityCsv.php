@@ -18,8 +18,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 #[Action(
   id: 'farm_export_csv:log_quantity',
   action_label: new TranslatableMarkup('Export Quantities CSV'),
-  type: 'log',
   confirm_form_route_name: 'entity.quantity.csv_form',
+  type: 'log',
 )]
 class LogQuantityCsv extends EntityActionBase {
 
