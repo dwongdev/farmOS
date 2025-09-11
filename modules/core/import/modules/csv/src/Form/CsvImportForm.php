@@ -67,11 +67,11 @@ class CsvImportForm extends FormBase {
   protected $fileUsage;
 
   /**
-   * The farm_import_csv temp store.
+   * The private tempstore factory.
    *
-   * @var \Drupal\Core\TempStore\PrivateTempStore
+   * @var \Drupal\Core\TempStore\PrivateTempStoreFactory
    */
-  protected $tempStore;
+  protected $tempStoreFactory;
 
   public function __construct(MigrationPluginManager $plugin_manager_migration, FileSystemInterface $file_system, TimeInterface $time, KeyValueFactoryInterface $key_value, TranslationManager $translation_manager, FileUsageInterface $file_usage, PrivateTempStoreFactory $temp_store_factory) {
     $this->migrationPluginManager = $plugin_manager_migration;
@@ -80,7 +80,7 @@ class CsvImportForm extends FormBase {
     $this->keyValueFactory = $key_value;
     $this->translationManager = $translation_manager;
     $this->fileUsage = $file_usage;
-    $this->tempStore = $temp_store_factory->get('farm_import_csv');
+    $this->tempStoreFactory = $temp_store_factory;
   }
 
   /**
@@ -176,7 +176,7 @@ class CsvImportForm extends FormBase {
     $this->fileUsage->add($file, 'farm_import_csv', 'migration', $form_state->getValue('migration_id'));
 
     // Save the file ID to the private tempstore.
-    $this->tempStore->set($this->currentUser()->id() . ':' . $form_state->getValue('migration_id'), $file->id());
+    $this->tempStoreFactory->get('farm_import_csv')->set($this->currentUser()->id() . ':' . $form_state->getValue('migration_id'), $file->id());
   }
 
   /**

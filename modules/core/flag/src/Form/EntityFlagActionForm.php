@@ -23,11 +23,11 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class EntityFlagActionForm extends ConfirmFormBase {
 
   /**
-   * The private temp store.
+   * The private tempstore factory.
    *
-   * @var \Drupal\Core\TempStore\PrivateTempStore
+   * @var \Drupal\Core\TempStore\PrivateTempStoreFactory
    */
-  protected $tempStore;
+  protected $tempStoreFactory;
 
   /**
    * The entity type manager.
@@ -72,7 +72,7 @@ class EntityFlagActionForm extends ConfirmFormBase {
   protected $flagFieldName = 'flag';
 
   public function __construct(PrivateTempStoreFactory $temp_store_factory, EntityTypeManagerInterface $entity_type_manager, EntityFieldManagerInterface $entity_field_manager, AccountInterface $user) {
-    $this->tempStore = $temp_store_factory->get('entity_flag_confirm');
+    $this->tempStoreFactory = $temp_store_factory;
     $this->entityTypeManager = $entity_type_manager;
     $this->entityFieldManager = $entity_field_manager;
     $this->user = $user;
@@ -134,7 +134,7 @@ class EntityFlagActionForm extends ConfirmFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state, $entity_type_id = NULL): array|RedirectResponse {
     $this->entityType = $this->entityTypeManager->getDefinition($entity_type_id);
-    $this->entities = $this->tempStore->get($this->user->id() . ':' . $entity_type_id);
+    $this->entities = $this->tempStoreFactory->get('entity_flag_confirm')->get($this->user->id() . ':' . $entity_type_id);
     if (empty($entity_type_id) || empty($this->entities)) {
       return new RedirectResponse($this->getCancelUrl()
         ->setAbsolute()
@@ -248,7 +248,7 @@ class EntityFlagActionForm extends ConfirmFormBase {
       ]));
     }
 
-    $this->tempStore->delete($this->currentUser()->id() . ':' . $this->entityType->id());
+    $this->tempStoreFactory->get('entity_flag_confirm')->delete($this->currentUser()->id() . ':' . $this->entityType->id());
     $form_state->setRedirectUrl($this->getCancelUrl());
   }
 

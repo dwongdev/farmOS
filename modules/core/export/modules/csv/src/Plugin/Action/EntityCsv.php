@@ -24,11 +24,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class EntityCsv extends EntityActionBase {
 
   /**
-   * The private temp store.
+   * The private tempstore factory.
    *
-   * @var \Drupal\Core\TempStore\PrivateTempStore
+   * @var \Drupal\Core\TempStore\PrivateTempStoreFactory
    */
-  protected $tempStore;
+  protected $tempStoreFactory;
 
   /**
    * The current user.
@@ -39,7 +39,7 @@ class EntityCsv extends EntityActionBase {
 
   public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, PrivateTempStoreFactory $temp_store_factory, AccountInterface $current_user) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager);
-    $this->tempStore = $temp_store_factory->get('entity_csv_confirm');
+    $this->tempStoreFactory = $temp_store_factory;
     $this->currentUser = $current_user;
   }
 
@@ -62,7 +62,7 @@ class EntityCsv extends EntityActionBase {
    */
   public function executeMultiple(array $entities) {
     /** @var \Drupal\Core\Entity\EntityInterface[] $entities */
-    $this->tempStore->set($this->currentUser->id() . ':' . $this->getPluginDefinition()['type'], $entities);
+    $this->tempStoreFactory->get('entity_csv_confirm')->set($this->currentUser->id() . ':' . $this->getPluginDefinition()['type'], $entities);
   }
 
   /**

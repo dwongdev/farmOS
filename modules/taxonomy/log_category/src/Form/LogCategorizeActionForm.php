@@ -20,11 +20,11 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class LogCategorizeActionForm extends ConfirmFormBase {
 
   /**
-   * The private temp store.
+   * The private tempstore factory.
    *
-   * @var \Drupal\Core\TempStore\PrivateTempStore
+   * @var \Drupal\Core\TempStore\PrivateTempStoreFactory
    */
-  protected $tempStore;
+  protected $tempStoreFactory;
 
   /**
    * The entity type manager.
@@ -55,7 +55,7 @@ class LogCategorizeActionForm extends ConfirmFormBase {
   protected $entities;
 
   public function __construct(PrivateTempStoreFactory $temp_store_factory, EntityTypeManagerInterface $entity_type_manager, AccountInterface $user) {
-    $this->tempStore = $temp_store_factory->get('log_categorize_confirm');
+    $this->tempStoreFactory = $temp_store_factory;
     $this->entityTypeManager = $entity_type_manager;
     $this->user = $user;
   }
@@ -112,7 +112,7 @@ class LogCategorizeActionForm extends ConfirmFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state): array|RedirectResponse {
     $this->entityType = $this->entityTypeManager->getDefinition('log', FALSE);
-    $this->entities = $this->tempStore->get((string) $this->user->id());
+    $this->entities = $this->tempStoreFactory->get('log_categorize_confirm')->get((string) $this->user->id());
     if (!$this->entityType || empty($this->entities)) {
       return new RedirectResponse($this->getCancelUrl()
         ->setAbsolute()
@@ -226,7 +226,7 @@ class LogCategorizeActionForm extends ConfirmFormBase {
       ]));
     }
 
-    $this->tempStore->delete($this->currentUser()->id() . ':' . $this->entityType->id());
+    $this->tempStoreFactory->get('log_categorize_confirm')->delete($this->currentUser()->id() . ':' . $this->entityType->id());
     $form_state->setRedirectUrl($this->getCancelUrl());
   }
 

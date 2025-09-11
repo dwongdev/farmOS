@@ -24,11 +24,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class EntityFlag extends EntityActionBase {
 
   /**
-   * The private temp store.
+   * The private tempstore factory.
    *
-   * @var \Drupal\Core\TempStore\PrivateTempStore
+   * @var \Drupal\Core\TempStore\PrivateTempStoreFactory
    */
-  protected $tempStore;
+  protected $tempStoreFactory;
 
   /**
    * The current user.
@@ -39,7 +39,7 @@ class EntityFlag extends EntityActionBase {
 
   public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, PrivateTempStoreFactory $temp_store_factory, AccountInterface $current_user) {
     $this->currentUser = $current_user;
-    $this->tempStore = $temp_store_factory->get('entity_flag_confirm');
+    $this->tempStoreFactory = $temp_store_factory;
 
     parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager);
   }
@@ -63,7 +63,7 @@ class EntityFlag extends EntityActionBase {
    */
   public function executeMultiple(array $entities) {
     /** @var \Drupal\Core\Entity\EntityInterface[] $entities */
-    $this->tempStore->set($this->currentUser->id() . ':' . $this->getPluginDefinition()['type'], $entities);
+    $this->tempStoreFactory->get('entity_flag_confirm')->set($this->currentUser->id() . ':' . $this->getPluginDefinition()['type'], $entities);
   }
 
   /**

@@ -21,11 +21,11 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class AssignActionForm extends ConfirmFormBase {
 
   /**
-   * The private temp store.
+   * The private tempstore factory.
    *
-   * @var \Drupal\Core\TempStore\PrivateTempStore
+   * @var \Drupal\Core\TempStore\PrivateTempStoreFactory
    */
-  protected $tempStore;
+  protected $tempStoreFactory;
 
   /**
    * The entity type manager.
@@ -63,7 +63,7 @@ class AssignActionForm extends ConfirmFormBase {
   protected $entities;
 
   public function __construct(PrivateTempStoreFactory $temp_store_factory, EntityTypeManagerInterface $entity_type_manager, ManagedRolePermissionsManagerInterface $managed_role_permissions_manager, AccountInterface $user) {
-    $this->tempStore = $temp_store_factory->get('entity_assign_confirm');
+    $this->tempStoreFactory = $temp_store_factory;
     $this->entityTypeManager = $entity_type_manager;
     $this->managedRolePermissionsManager = $managed_role_permissions_manager;
     $this->user = $user;
@@ -131,7 +131,7 @@ class AssignActionForm extends ConfirmFormBase {
     $this->entityType = $this->entityTypeManager->getDefinition($entity_type, FALSE);
 
     // Load saved entities.
-    $this->entities = $this->tempStore->get((string) $this->user->id());
+    $this->entities = $this->tempStoreFactory->get('entity_assign_confirm')->get((string) $this->user->id());
 
     // If there are no entities, or if the entity type definition didn't load,
     // redirect the user to the cancel URL.
@@ -252,7 +252,7 @@ class AssignActionForm extends ConfirmFormBase {
       ]));
     }
 
-    $this->tempStore->delete((string) $this->currentUser()->id());
+    $this->tempStoreFactory->get('entity_assign_confirm')->delete((string) $this->currentUser()->id());
     $form_state->setRedirectUrl($this->getCancelUrl());
   }
 

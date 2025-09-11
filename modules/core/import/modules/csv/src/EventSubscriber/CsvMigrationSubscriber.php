@@ -36,11 +36,11 @@ class CsvMigrationSubscriber implements EventSubscriberInterface {
   protected $currentUser;
 
   /**
-   * The private temp store.
+   * The private tempstore factory.
    *
-   * @var \Drupal\Core\TempStore\PrivateTempStore
+   * @var \Drupal\Core\TempStore\PrivateTempStoreFactory
    */
-  protected $tempStore;
+  protected $tempStoreFactory;
 
   /**
    * The messenger.
@@ -52,7 +52,7 @@ class CsvMigrationSubscriber implements EventSubscriberInterface {
   public function __construct(Connection $database, AccountInterface $current_user, PrivateTempStoreFactory $temp_store_factory, MessengerInterface $messenger) {
     $this->database = $database;
     $this->currentUser = $current_user;
-    $this->tempStore = $temp_store_factory->get('farm_import_csv');
+    $this->tempStoreFactory = $temp_store_factory;
     $this->messenger = $messenger;
   }
 
@@ -117,7 +117,7 @@ class CsvMigrationSubscriber implements EventSubscriberInterface {
     // Load the file ID from temporary storage (set during CSV upload form
     // submit), and show any messages associated with it.
     $tempstore_key = $this->currentUser->id() . ':' . $event->getMigration()->id();
-    $file_id = $this->tempStore->get($tempstore_key);
+    $file_id = $this->tempStoreFactory->get('farm_import_csv')->get($tempstore_key);
     if (!is_null($file_id)) {
 
       // Query the migrate_map_* table, if it exists.

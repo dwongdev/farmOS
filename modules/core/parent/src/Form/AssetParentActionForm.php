@@ -21,11 +21,11 @@ use Symfony\Component\HttpFoundation\Request;
 class AssetParentActionForm extends ConfirmFormBase {
 
   /**
-   * The private temp store.
+   * The private tempstore factory.
    *
-   * @var \Drupal\Core\TempStore\PrivateTempStore
+   * @var \Drupal\Core\TempStore\PrivateTempStoreFactory
    */
-  protected $tempStore;
+  protected $tempStoreFactory;
 
   /**
    * The entity type manager.
@@ -63,7 +63,7 @@ class AssetParentActionForm extends ConfirmFormBase {
   protected $request;
 
   public function __construct(PrivateTempStoreFactory $temp_store_factory, EntityTypeManagerInterface $entity_type_manager, AccountInterface $user, Request $request) {
-    $this->tempStore = $temp_store_factory->get('asset_parent_confirm');
+    $this->tempStoreFactory = $temp_store_factory;
     $this->entityTypeManager = $entity_type_manager;
     $this->user = $user;
     $this->request = $request;
@@ -137,7 +137,7 @@ class AssetParentActionForm extends ConfirmFormBase {
     }
     // Else load entities from the tempStore state.
     else {
-      $this->entities = $this->tempStore->get((string) $this->user->id());
+      $this->entities = $this->tempStoreFactory->get('asset_parent_confirm')->get((string) $this->user->id());
     }
 
     $this->entityType = $this->entityTypeManager->getDefinition('asset', FALSE);
@@ -262,7 +262,7 @@ class AssetParentActionForm extends ConfirmFormBase {
       ]));
     }
 
-    $this->tempStore->delete((string) $this->currentUser()->id());
+    $this->tempStoreFactory->get('asset_parent_confirm')->delete((string) $this->currentUser()->id());
     $form_state->setRedirectUrl($this->getCancelUrl());
   }
 

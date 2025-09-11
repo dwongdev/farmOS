@@ -29,11 +29,11 @@ use Symfony\Component\Serializer\SerializerInterface;
 class EntityCsvActionForm extends ConfirmFormBase implements BaseFormIdInterface {
 
   /**
-   * The private temp store.
+   * The private tempstore factory.
    *
-   * @var \Drupal\Core\TempStore\PrivateTempStore
+   * @var \Drupal\Core\TempStore\PrivateTempStoreFactory
    */
-  protected $tempStore;
+  protected $tempStoreFactory;
 
   /**
    * The entity type manager.
@@ -106,7 +106,7 @@ class EntityCsvActionForm extends ConfirmFormBase implements BaseFormIdInterface
   protected $entities;
 
   public function __construct(PrivateTempStoreFactory $temp_store_factory, EntityTypeManagerInterface $entity_type_manager, EntityFieldManagerInterface $entity_field_manager, SerializerInterface $serializer, FileSystemInterface $file_system, ConfigFactoryInterface $config_factory, FileRepositoryInterface $file_repository, FileUrlGeneratorInterface $file_url_generator, AccountInterface $user) {
-    $this->tempStore = $temp_store_factory->get('entity_csv_confirm');
+    $this->tempStoreFactory = $temp_store_factory;
     $this->entityTypeManager = $entity_type_manager;
     $this->entityFieldManager = $entity_field_manager;
     $this->serializer = $serializer;
@@ -187,7 +187,7 @@ class EntityCsvActionForm extends ConfirmFormBase implements BaseFormIdInterface
 
     // If we don't have an entity type or list of entities, redirect.
     $this->entityType = $this->entityTypeManager->getDefinition($entity_type_id);
-    $this->entities = $this->tempStore->get($this->user->id() . ':' . $entity_type_id);
+    $this->entities = $this->tempStoreFactory->get('entity_csv_confirm')->get($this->user->id() . ':' . $entity_type_id);
     if (empty($entity_type_id) || empty($this->entities)) {
       return new RedirectResponse($this->getCancelUrl()
         ->setAbsolute()
@@ -359,7 +359,7 @@ class EntityCsvActionForm extends ConfirmFormBase implements BaseFormIdInterface
       '%filename' => $file->label(),
     ]));
 
-    $this->tempStore->delete($this->currentUser()->id() . ':' . $this->entityType->id());
+    $this->tempStoreFactory->get('entity_csv_confirm')->delete($this->currentUser()->id() . ':' . $this->entityType->id());
     $form_state->setRedirectUrl($this->getCancelUrl());
   }
 
