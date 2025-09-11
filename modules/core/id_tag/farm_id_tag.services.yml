@@ -1,0 +1,5 @@
+
+services:
+  Drupal\farm_id_tag\Hook\FarmIdTagHooks:
+    class: Drupal\farm_id_tag\Hook\FarmIdTagHooks
+    autowire: true

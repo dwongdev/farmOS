@@ -5,3 +5,7 @@ services:
     class: Drupal\farm_log_quantity\EventSubscriber\LogQuantityEventSubscriber
     tags:
       - { name: 'event_subscriber' }
+
+  Drupal\farm_log_quantity\Hook\FarmLogQuantityHooks:
+    class: Drupal\farm_log_quantity\Hook\FarmLogQuantityHooks
+    autowire: true

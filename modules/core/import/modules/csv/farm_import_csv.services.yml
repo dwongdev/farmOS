@@ -13,3 +13,11 @@ services:
     class: Drupal\farm_import_csv\EventSubscriber\CsvMigrationConfigSubscriber
     tags:
       - { name: 'event_subscriber' }
+
+  Drupal\farm_import_csv\Hook\FarmImportCsvHooks:
+    class: Drupal\farm_import_csv\Hook\FarmImportCsvHooks
+    autowire: true
+
+  Drupal\farm_import_csv\Hook\FarmImportCsvViewsHooks:
+    class: Drupal\farm_import_csv\Hook\FarmImportCsvViewsHooks
+    autowire: true

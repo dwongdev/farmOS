@@ -1,0 +1,9 @@
+
+services:
+  Drupal\farm_input\Hook\FarmInputViewsHooks:
+    class: Drupal\farm_input\Hook\FarmInputViewsHooks
+    autowire: true
+
+  Drupal\farm_input\Hook\FarmInputViewsExecutionHooks:
+    class: Drupal\farm_input\Hook\FarmInputViewsExecutionHooks
+    autowire: true

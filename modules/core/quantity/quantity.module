@@ -7,6 +7,8 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\quantity\Hook\QuantityHooks;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Render\Element;
@@ -112,10 +114,10 @@ function quantity_measure_field_allowed_values(FieldStorageDefinitionInterface $
 /**
  * Implements hook_farm_api_meta_alter().
  */
+#[LegacyHook]
 function quantity_farm_api_meta_alter(&$data) {
 
-  // Add the quantity system of measurement.
-  $data['system_of_measurement'] = \Drupal::config('quantity.settings')->get('system_of_measurement');
+  \Drupal::service(QuantityHooks::class)->farmApiMetaAlter($data);
 }
 
 /**
@@ -145,48 +147,27 @@ function quantity_quantity_delete(QuantityInterface $quantity) {
 /**
  * Implements hook_theme().
  */
+#[LegacyHook]
 function quantity_theme() {
-  return [
-    'quantity' => [
-      'render element' => 'elements',
-    ],
-    'field__quantity__field' => [
-      'template' => 'field--quantity--field',
-      'base hook' => 'field',
-    ],
-  ];
+  return \Drupal::service(QuantityHooks::class)->theme();
 }
 
 /**
  * Implements hook_theme_suggestions_HOOK().
  */
-function quantity_theme_suggestions_field(array $variables) {
-  $suggestions = [];
-
-  // Add a theme hook suggestion for theming all fields on quantity entities.
-  // Note that the field__quantity theme hook is used for any entity with
-  // a field called "quantity", such as the log.quantity entity reference.
-  if ($variables['element']['#entity_type'] == 'quantity') {
-    $suggestions[] = 'field__quantity__field';
-  }
-  return $suggestions;
+#[LegacyHook]
+function quantity_theme_suggestions_field(array $variables)
+{
+    return \Drupal::service(QuantityHooks::class)->themeSuggestionsField($variables);
 }
 
 /**
  * Implements hook_theme_suggestions_HOOK().
  */
-function quantity_theme_suggestions_quantity(array $variables) {
-  $suggestions = [];
-  $quantity = $variables['elements']['#quantity'];
-  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
-
-  $suggestions[] = 'quantity__' . $sanitized_view_mode;
-  $suggestions[] = 'quantity__' . $quantity->bundle();
-  $suggestions[] = 'quantity__' . $quantity->bundle() . '__' . $sanitized_view_mode;
-  $suggestions[] = 'quantity__' . $quantity->id();
-  $suggestions[] = 'quantity__' . $quantity->id() . '__' . $sanitized_view_mode;
-
-  return $suggestions;
+#[LegacyHook]
+function quantity_theme_suggestions_quantity(array $variables)
+{
+    return \Drupal::service(QuantityHooks::class)->themeSuggestionsQuantity($variables);
 }
 
 /**

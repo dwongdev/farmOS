@@ -7,19 +7,14 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\farm_inventory\Hook\FarmInventoryViewsHooks;
+
 /**
  * Implements hook_views_data_alter().
  */
+#[LegacyHook]
 function farm_inventory_views_data_alter(array &$data) {
 
-  // Add computed inventory field to assets.
-  if (isset($data['asset'])) {
-    $data['asset']['inventory'] = [
-      'title' => t('Current inventory'),
-      'field' => [
-        'id' => 'asset_inventory',
-        'field_name' => 'inventory',
-      ],
-    ];
-  }
+  \Drupal::service(FarmInventoryViewsHooks::class)->viewsDataAlter($data);
 }

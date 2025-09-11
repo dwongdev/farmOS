@@ -7,16 +7,14 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\farm_image\Hook\FarmImageHooks;
+
 /**
  * Implements hook_farm_update_exclude_config().
  */
+#[LegacyHook]
 function farm_image_farm_update_exclude_config() {
 
-  // Exclude config that we have overridden in hook_install().
-  return [
-    'image.style.large',
-    'image.style.medium',
-    'image.style.thumbnail',
-    'image.style.wide',
-  ];
+  return \Drupal::service(FarmImageHooks::class)->farmUpdateExcludeConfig();
 }

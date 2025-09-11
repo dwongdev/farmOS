@@ -11,3 +11,7 @@ services:
     class: Drupal\data_stream_notification\EventSubscriber\DataStreamEventSubscriber
     tags:
       - { name: 'event_subscriber' }
+
+  Drupal\data_stream_notification\Hook\DataStreamNotificationHooks:
+    class: Drupal\data_stream_notification\Hook\DataStreamNotificationHooks
+    autowire: true

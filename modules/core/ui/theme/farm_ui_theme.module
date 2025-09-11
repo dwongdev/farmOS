@@ -7,6 +7,8 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\farm_ui_theme\Hook\FarmUiThemeHooks;
 use Drupal\Core\Block\BlockPluginInterface;
 use Drupal\Core\Entity\Display\EntityFormDisplayInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
@@ -23,175 +25,78 @@ use Drupal\plan\Entity\PlanInterface;
 /**
  * Implements hook_theme().
  */
+#[LegacyHook]
 function farm_ui_theme_theme($existing, $type, $theme, $path) {
-  return [
-    'html__asset__map_popup' => [
-      'base hook' => 'html',
-    ],
-    'menu_local_tasks__farm' => [
-      'base hook' => 'menu_local_tasks',
-    ],
-    'menu_local_task__secondary' => [
-      'base hook' => 'menu_local_task',
-    ],
-    'page__asset__map_popup' => [
-      'base hook' => 'page',
-    ],
-    // Implement the node edit form theme hook.
-    // See https://www.drupal.org/project/gin/issues/3342164
-    'node_edit_form' => [
-      'render element' => 'form',
-    ],
-  ];
+  return \Drupal::service(FarmUiThemeHooks::class)->theme($existing, $type, $theme, $path);
 }
 
 /**
  * Implements hook_theme_registry_alter().
  */
+#[LegacyHook]
 function farm_ui_theme_theme_registry_alter(&$theme_registry) {
-  $theme_registry['comment']['path'] = \Drupal::service('extension.list.module')->getPath('farm_ui_theme') . '/templates';
+  \Drupal::service(FarmUiThemeHooks::class)->themeRegistryAlter($theme_registry);
 }
 
 /**
  * Implements hook_theme_suggestions_HOOK().
  */
-function farm_ui_theme_theme_suggestions_menu_local_task(array $variables) {
-  // Add suggestions for primary and secondary task levels.
-  $suggestions = [];
-  if (isset($variables['element']['#level'])) {
-    $suggestions[] = 'menu_local_task__' . $variables['element']['#level'];
-  }
-  return $suggestions;
+#[LegacyHook]
+function farm_ui_theme_theme_suggestions_menu_local_task(array $variables)
+{
+    return \Drupal::service(FarmUiThemeHooks::class)->themeSuggestionsMenuLocalTask($variables);
 }
 
 /**
  * Implements hook_theme_suggestions_HOOK().
  */
+#[LegacyHook]
 function farm_ui_theme_theme_suggestions_menu_local_tasks(array $variables) {
-  return ['menu_local_tasks__farm'];
+  return \Drupal::service(FarmUiThemeHooks::class)->themeSuggestionsMenuLocalTasks($variables);
 }
 
 /**
  * Implements hook_entity_form_display_alter().
  */
-function farm_ui_theme_entity_form_display_alter(EntityFormDisplayInterface $form_display, array $context) {
-
-  // Only alter farm entity types.
-  $entity_types = ['asset', 'log', 'organization', 'plan', 'taxonomy_term'];
-  if (!in_array($context['entity_type'], $entity_types)) {
-    return;
-  }
-
-  // Ask modules for a list of field group items.
-  $field_map = \Drupal::moduleHandler()->invokeAll(
-    'farm_ui_theme_field_group_items',
-    [$context['entity_type'], $context['bundle']],
-  );
-
-  // Apply the field group mapping if not already specified on the form display.
-  foreach ($field_map as $field_id => $field_group) {
-    if (($renderer = $form_display->getRenderer($field_id)) && !$renderer->getThirdPartySetting('farm_ui_theme', 'field_group', FALSE)) {
-      $renderer->setThirdPartySetting('farm_ui_theme', 'field_group', $field_group);
-    }
-  }
+#[LegacyHook]
+function farm_ui_theme_entity_form_display_alter(EntityFormDisplayInterface $form_display, array $context)
+{
+    return \Drupal::service(FarmUiThemeHooks::class)->entityFormDisplayAlter($form_display, $context);
 }
 
 /**
  * Implements hook_farm_ui_theme_field_group_items().
  */
-function farm_ui_theme_farm_ui_theme_field_group_items(string $entity_type, string $bundle) {
-
-  // Define base fields for asset, log, and plans on behalf of core modules.
-  $fields = [
-    'name' => 'default',
-    'status' => 'meta',
-    'flag' => 'meta',
-    'file' => 'file',
-    'image' => 'file',
-    'revision' => 'revision',
-    'revision_log_message' => 'revision',
-  ];
-  switch ($entity_type) {
-    case 'asset':
-      $fields['owner'] = 'meta';
-      $fields['parent'] = 'parent';
-      $fields['intrinsic_geometry'] = 'location';
-      $fields['is_location'] = 'location';
-      $fields['is_fixed'] = 'location';
-      $fields['id_tag'] = 'id_tag';
-      $fields['archived'] = 'meta';
-      break;
-
-    case 'log':
-      $fields['timestamp'] = 'default';
-      $fields['category'] = 'meta';
-      $fields['owner'] = 'meta';
-      $fields['asset'] = 'asset';
-      $fields['geometry'] = 'location';
-      $fields['location'] = 'location';
-      $fields['is_movement'] = 'location';
-      $fields['quantity'] = 'quantity';
-      break;
-
-    case 'organization':
-      $fields['archived'] = 'meta';
-      break;
-
-    case 'plan':
-      $fields['archived'] = 'meta';
-      break;
-
-    case 'taxonomy_term':
-      $fields['external_uri'] = 'reference';
-      break;
-
-    default:
-      $fields = [];
-  }
-  return $fields;
+#[LegacyHook]
+function farm_ui_theme_farm_ui_theme_field_group_items(string $entity_type, string $bundle)
+{
+    return \Drupal::service(FarmUiThemeHooks::class)->farmUiThemeFieldGroupItems($entity_type, $bundle);
 }
 
 /**
  * Implements hook_gin_content_form_routes().
  */
-function farm_ui_theme_gin_content_form_routes() {
-  $routes = [];
-  $entity_types = ['asset', 'log', 'organization', 'plan', 'taxonomy_term'];
-  foreach ($entity_types as $entity_type) {
-    $routes[] = "entity.$entity_type.add_form";
-    $routes[] = "entity.$entity_type.edit_form";
-  }
-  return $routes;
+#[LegacyHook]
+function farm_ui_theme_gin_content_form_routes()
+{
+    return \Drupal::service(FarmUiThemeHooks::class)->ginContentFormRoutes();
 }
 
 /**
  * Implements hook_entity_type_build().
  */
-function farm_ui_theme_entity_type_build(array &$entity_types) {
-  // Override the default add and edit form class.
-  $target_entity_types = [
-    'asset' => AssetForm::class,
-    'log' => LogForm::class,
-    'organization' => OrganizationForm::class,
-    'plan' => PlanForm::class,
-    'taxonomy_term' => TaxonomyTermForm::class,
-  ];
-  foreach ($target_entity_types as $entity_type => $form_class) {
-    if (isset($entity_types[$entity_type])) {
-      $entity_types[$entity_type]->setFormClass('default', $form_class);
-      $entity_types[$entity_type]->setFormClass('add', $form_class);
-      $entity_types[$entity_type]->setFormClass('edit', $form_class);
-    }
-  }
+#[LegacyHook]
+function farm_ui_theme_entity_type_build(array &$entity_types)
+{
+    \Drupal::service(FarmUiThemeHooks::class)->entityTypeBuild($entity_types);
 }
 
 /**
  * Implements hook_element_info_alter().
  */
+#[LegacyHook]
 function farm_ui_theme_element_info_alter(array &$info) {
-  if (isset($info['farm_map'])) {
-    $info['farm_map']['#attached']['library'][] = 'farm_ui_theme/map';
-  }
+  \Drupal::service(FarmUiThemeHooks::class)->elementInfoAlter($info);
 }
 
 /**
@@ -379,80 +284,17 @@ function farm_ui_theme_build_stacked_twocol_layout(array &$variables, string $en
 /**
  * Implements hook_farm_ui_theme_region_items().
  */
+#[LegacyHook]
 function farm_ui_theme_farm_ui_theme_region_items(string $entity_type) {
 
-  // Define common asset, log, and plan region items on behalf of core modules.
-  switch ($entity_type) {
-
-    case 'asset':
-      return [
-        'top' => [
-          'geometry',
-        ],
-        'first' => [],
-        'second' => [
-          'inventory',
-          'is_location',
-          'is_fixed',
-          'location',
-          'owner',
-          'type',
-          'archived',
-        ],
-        'bottom' => [
-          'api',
-          'image',
-          'file',
-        ],
-      ];
-
-    case 'log':
-      return [
-        'top' => [
-          'geometry',
-        ],
-        'first' => [],
-        'second' => [
-          'is_movement',
-          'owner',
-          'status',
-          'type',
-        ],
-        'bottom' => [
-          'image',
-          'file',
-        ],
-      ];
-
-    case 'plan':
-      return [
-        'top' => [],
-        'first' => [],
-        'second' => [
-          'status',
-          'type',
-          'archived',
-        ],
-        'bottom' => [
-          'image',
-          'file',
-        ],
-      ];
-
-    default:
-      return [];
-  }
+  return \Drupal::service(FarmUiThemeHooks::class)->farmUiThemeRegionItems($entity_type);
 }
 
 /**
  * Implements hook_farm_update_exclude_config().
  */
+#[LegacyHook]
 function farm_ui_theme_farm_update_exclude_config() {
 
-  // Exclude config that we have overridden in hook_install() or the
-  // farm_ui_theme.overrider service.
-  return [
-    'block.block.gin_local_actions',
-    'block.block.gin_content',
-  ];
+  return \Drupal::service(FarmUiThemeHooks::class)->farmUpdateExcludeConfig();
 }

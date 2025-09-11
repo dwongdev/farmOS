@@ -7,6 +7,8 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\plan\Hook\PlanHooks;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Routing\RouteMatchInterface;
@@ -14,17 +16,10 @@ use Drupal\Core\Routing\RouteMatchInterface;
 /**
  * Implements hook_help().
  */
-function plan_help($route_name, RouteMatchInterface $route_match) {
-  $output = '';
-
-  // Main module help for the plan module.
-  if ($route_name == 'help.page.plan') {
-    $output = '';
-    $output .= '<h3>' . t('About') . '</h3>';
-    $output .= '<p>' . t('Provides plan entity') . '</p>';
-  }
-
-  return $output;
+#[LegacyHook]
+function plan_help($route_name, RouteMatchInterface $route_match)
+{
+    return \Drupal::service(PlanHooks::class)->help($route_name, $route_match);
 }
 
 /**
@@ -50,29 +45,18 @@ function plan_plan_delete(EntityInterface $entity) {
 /**
  * Implements hook_theme().
  */
+#[LegacyHook]
 function plan_theme() {
-  return [
-    'plan' => [
-      'render element' => 'elements',
-    ],
-  ];
+  return \Drupal::service(PlanHooks::class)->theme();
 }
 
 /**
  * Implements hook_theme_suggestions_HOOK().
  */
-function plan_theme_suggestions_plan(array $variables) {
-  $suggestions = [];
-  $plan = $variables['elements']['#plan'];
-  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
-
-  $suggestions[] = 'plan__' . $sanitized_view_mode;
-  $suggestions[] = 'plan__' . $plan->bundle();
-  $suggestions[] = 'plan__' . $plan->bundle() . '__' . $sanitized_view_mode;
-  $suggestions[] = 'plan__' . $plan->id();
-  $suggestions[] = 'plan__' . $plan->id() . '__' . $sanitized_view_mode;
-
-  return $suggestions;
+#[LegacyHook]
+function plan_theme_suggestions_plan(array $variables)
+{
+    return \Drupal::service(PlanHooks::class)->themeSuggestionsPlan($variables);
 }
 
 /**

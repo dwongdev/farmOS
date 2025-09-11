@@ -7,6 +7,8 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\farm_flag\Hook\FarmFlagHooks;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
@@ -16,26 +18,10 @@ use Drupal\farm_flag\Routing\EntityFlagActionRouteProvider;
 /**
  * Implements hook_entity_base_field_info().
  */
-function farm_flag_entity_base_field_info(EntityTypeInterface $entity_type) {
-  $fields = [];
-
-  // Add flag field to farmOS entities.
-  if (in_array($entity_type->id(), ['asset', 'log', 'plan'])) {
-    $field_info = [
-      'type' => 'list_string',
-      'label' => t('Flags'),
-      'description' => t('Add flags to enable better sorting and filtering of records.'),
-      'allowed_values_function' => 'farm_flag_field_allowed_values',
-      'multiple' => TRUE,
-      'weight' => [
-        'form' => -75,
-        'view' => -75,
-      ],
-    ];
-    $fields['flag'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($field_info);
-  }
-
-  return $fields;
+#[LegacyHook]
+function farm_flag_entity_base_field_info(EntityTypeInterface $entity_type)
+{
+    return \Drupal::service(FarmFlagHooks::class)->entityBaseFieldInfo($entity_type);
 }
 
 /**
@@ -130,34 +116,18 @@ function farm_flag_field_allowed_values(FieldStorageDefinitionInterface $definit
 /**
  * Implements hook_farm_ui_theme_region_items().
  */
+#[LegacyHook]
 function farm_flag_farm_ui_theme_region_items(string $entity_type) {
 
-  // Define common asset, log, and plan region items on behalf of core modules.
-  switch ($entity_type) {
-
-    case 'asset':
-    case 'log':
-    case 'plan':
-      return [
-        'second' => [
-          'flag',
-        ],
-      ];
-
-    default:
-      return [];
-  }
+  return \Drupal::service(FarmFlagHooks::class)->farmUiThemeRegionItems($entity_type);
 }
 
 /**
  * Implements hook_theme().
  */
+#[LegacyHook]
 function farm_flag_theme() {
-  return [
-    'field__flag' => [
-      'base hook' => 'field',
-    ],
-  ];
+  return \Drupal::service(FarmFlagHooks::class)->theme();
 }
 
 /**
@@ -191,23 +161,16 @@ function template_preprocess_field__flag(array &$variables) {
 /**
  * Implements hook_entity_type_build().
  */
+#[LegacyHook]
 function farm_flag_entity_type_build(array &$entity_types) {
 
-  // Enable the entity flag action on entity types with a flag field.
-  foreach (['asset', 'log', 'plan'] as $entity_type) {
-    if (!empty($entity_types[$entity_type])) {
-      $route_providers = $entity_types[$entity_type]->getRouteProviderClasses();
-      $route_providers['flag'] = EntityFlagActionRouteProvider::class;
-      $entity_types[$entity_type]->setHandlerClass('route_provider', $route_providers);
-      $entity_types[$entity_type]->setLinkTemplate('flag-action-form', '/' . $entity_type . '/flag');
-      $entity_types[$entity_type]->setFormClass('flag-action-form', EntityFlagActionForm::class);
-    }
-  }
+  \Drupal::service(FarmFlagHooks::class)->entityTypeBuild($entity_types);
 }
 
 /**
  * Implements hook_farm_api_allow_resource_types().
  */
+#[LegacyHook]
 function farm_flag_farm_api_allow_resource_types() {
-  return ['flag'];
+  return \Drupal::service(FarmFlagHooks::class)->farmApiAllowResourceTypes();
 }

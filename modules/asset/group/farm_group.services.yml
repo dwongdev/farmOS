@@ -16,3 +16,11 @@ services:
     class: Drupal\farm_group\Access\FarmGroupMembersViewsAccessCheck
     tags:
       - { name: access_check, applies_to: _group_members_access }
+
+  Drupal\farm_group\Hook\FarmGroupHooks:
+    class: Drupal\farm_group\Hook\FarmGroupHooks
+    autowire: true
+
+  Drupal\farm_group\Hook\FarmGroupViewsHooks:
+    class: Drupal\farm_group\Hook\FarmGroupViewsHooks
+    autowire: true

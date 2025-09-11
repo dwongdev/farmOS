@@ -1,0 +1,203 @@
+<?php
+
+namespace Drupal\farm_ui_views\Hook;
+
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
+use Drupal\views\ViewExecutable;
+use Drupal\Core\Hook\Attribute\Hook;
+/**
+ * Hook implementations for farm_ui_views.
+ */
+class FarmUiViewsHooks
+{
+    /**
+     * Implements hook_help().
+     */
+    #[Hook('help')]
+    public function help($route_name, \Drupal\Core\Routing\RouteMatchInterface $route_match)
+    {
+        $output = '';
+        // Define common route names and URLs for primary entity types.
+        $entity_routes = [
+            'asset' => 'entity.asset.collection',
+            'log' => 'entity.log.collection',
+            'quantity' => 'view.farm_log_quantity.page',
+            'people' => 'view.farm_people.page',
+        ];
+        $entity_urls = [
+            'asset' => \Drupal\Core\Url::fromRoute($entity_routes['asset'])->toString(),
+            'log' => \Drupal\Core\Url::fromRoute($entity_routes['log'])->toString(),
+            'quantity' => \Drupal\Core\Url::fromRoute($entity_routes['quantity'])->toString(),
+            'people' => \Drupal\Core\Url::fromRoute($entity_routes['people'])->toString(),
+        ];
+        // Assets View.
+        if ($route_name == $entity_routes['asset']) {
+            $output .= '<p>' . t('Assets represent things that are being tracked or managed. They store high-level information, but most historical data is stored in the <a href=":logs">logs</a> that reference them.', [
+                ':logs' => $entity_urls['log'],
+            ]) . '</p>';
+            $output .= '<p>' . t('Assets that are no longer actively managed can be archived. Archived assets will be hidden from most lists, but are preserved and searchable for posterity.') . '</p>';
+        }
+        // Logs View.
+        if ($route_name == $entity_routes['log']) {
+            $output .= '<p>' . t('Logs represent events that take place in relation to <a href=":assets">assets</a> and other records. They have a timestamp to represent when they take place, and a status to designate that they are "Done", "Pending", or "Abandoned".', [
+                ':assets' => $entity_urls['asset'],
+            ]) . '</p>';
+            $output .= '<p>' . t('Logs can be assigned to <a href=":people">people</a> for task management purposes.', [
+                ':people' => $entity_urls['people'],
+            ]) . '</p>';
+        }
+        // Quantities View.
+        if ($route_name == $entity_routes['quantity']) {
+            $output .= '<p>' . t('Quantities are granular units of quantitative data that represent a single data point within a <a href=":logs">log</a>.', [
+                ':logs' => $entity_urls['log'],
+            ]) . '</p>';
+            $output .= '<p>' . t('All quantities can optionally include a measure, value, units, and label. Specific quantity types may collect additional information.') . '</p>';
+        }
+        // Plans View.
+        if ($route_name == 'entity.plan.collection') {
+            $output .= '<p>' . t('Plans provide features for planning, managing, and organizing <a href=":assets">assets</a>, <a href=":logs">logs</a>, and <a href=":people">people</a> around a particular goal.', [
+                ':assets' => $entity_urls['asset'],
+                ':logs' => $entity_urls['log'],
+                ':people' => $entity_urls['people'],
+            ]) . '</p>';
+        }
+        return $output;
+    }
+    /**
+     * Implements hook_entity_type_build().
+     */
+    #[Hook('entity_type_build')]
+    public function entityTypeBuild(array &$entity_types)
+    {
+        /** @var \Drupal\Core\Entity\EntityTypeInterface[] $entity_types */
+        // Override the "collection" link path for assets, logs, and plans to use
+        // the Views provided by this module.
+        $collection_paths = [
+            'asset' => '/assets',
+            'log' => '/logs',
+            'plan' => '/plans',
+        ];
+        foreach ($collection_paths as $entity_type => $path) {
+            if (!empty($entity_types[$entity_type])) {
+                $entity_types[$entity_type]->setLinkTemplate('collection', $path);
+            }
+        }
+    }
+    /**
+     * Implements hook_local_tasks_alter().
+     */
+    #[Hook('local_tasks_alter')]
+    public function localTasksAlter(&$local_tasks)
+    {
+        // Remove the local task plugin definition for farm entity collection links.
+        $entity_types = [
+            'asset',
+            'log',
+            'organization',
+            'plan',
+        ];
+        foreach ($entity_types as $type) {
+            if (!empty($local_tasks["entity.{$type}.collection"])) {
+                unset($local_tasks["entity.{$type}.collection"]);
+            }
+        }
+    }
+    /**
+     * Implements hook_farm_dashboard_groups().
+     */
+    #[Hook('farm_dashboard_groups')]
+    public function farmDashboardGroups()
+    {
+        $groups = [
+        ];
+        // If the plan module is enabled, add a plans group.
+        if (\Drupal::service('module_handler')->moduleExists('plan')) {
+            $groups['second']['plans'] = [
+                '#weight' => 10,
+            ];
+        }
+        // Add a logs group.
+        $groups['first']['logs'] = [
+            '#weight' => 10,
+        ];
+        return $groups;
+    }
+    /**
+     * Implements hook_farm_dashboard_panes().
+     */
+    #[Hook('farm_dashboard_panes')]
+    public function farmDashboardPanes()
+    {
+        $panes = [
+        ];
+        // If the plan module is enabled, add active plans pane.
+        if (\Drupal::service('module_handler')->moduleExists('plan')) {
+            $panes['active_plans'] = [
+                'view' => 'farm_plan',
+                'view_display_id' => 'block_active',
+                'group' => 'plans',
+                'region' => 'second',
+                'weight' => 0,
+            ];
+        }
+        // Add upcoming and late logs panes.
+        $panes['upcoming_tasks'] = [
+            'view' => 'farm_log',
+            'view_display_id' => 'block_upcoming',
+            'group' => 'logs',
+            'region' => 'first',
+            'weight' => 10,
+        ];
+        $panes['late_tasks'] = [
+            'view' => 'farm_log',
+            'view_display_id' => 'block_late',
+            'group' => 'logs',
+            'region' => 'first',
+            'weight' => 11,
+        ];
+        return $panes;
+    }
+    /**
+     * Implements hook_entity_base_field_info_alter().
+     */
+    #[Hook('entity_base_field_info_alter')]
+    public function entityBaseFieldInfoAlter(&$fields, \Drupal\Core\Entity\EntityTypeInterface $entity_type)
+    {
+        // Use Entity Browser widget for certain asset reference fields.
+        $alter_fields = [
+            'log' => [
+                'asset',
+            ],
+            'quantity' => [
+                'inventory_asset',
+            ],
+        ];
+        foreach ($alter_fields as $entity_type_id => $field_names) {
+            if ($entity_type->id() != $entity_type_id) {
+                continue;
+            }
+            foreach ($field_names as $field_name) {
+                if (!empty($fields[$field_name])) {
+                    /** @var \Drupal\Core\Field\BaseFieldDefinition[] $fields */
+                    $form_display_options = $fields[$field_name]->getDisplayOptions('form');
+                    $form_display_options['type'] = 'entity_browser_entity_reference';
+                    $form_display_options['settings'] = [
+                        'entity_browser' => 'farm_asset',
+                        'field_widget_display' => 'label',
+                        'field_widget_remove' => TRUE,
+                        'open' => TRUE,
+                        'selection_mode' => 'selection_append',
+                        'field_widget_edit' => FALSE,
+                        'field_widget_replace' => FALSE,
+                        'field_widget_display_settings' => [
+                        ],
+                    ];
+                    $fields[$field_name]->setDisplayOptions('form', $form_display_options);
+                }
+            }
+        }
+    }
+}

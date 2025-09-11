@@ -7,6 +7,8 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\farm_quick\Hook\FarmQuickHooks;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -15,100 +17,34 @@ use Drupal\Core\Routing\RouteMatchInterface;
 /**
  * Implements hook_help().
  */
-function farm_quick_help($route_name, RouteMatchInterface $route_match) {
-  $output = '';
-
-  // Quick forms index help text.
-  if ($route_name == 'farm.quick') {
-    $output .= '<p>' . t('Quick forms make it easy to record common activities.') . '</p>';
-  }
-
-  // Load help text for individual quick forms.
-  if (strpos($route_name, 'farm.quick.') === 0) {
-    $quick_form_id = $route_match->getParameter('id');
-    if ($route_name == 'farm.quick.' . $quick_form_id) {
-      /** @var \Drupal\farm_quick\Entity\QuickFormInstanceInterface $quick_form */
-      $quick_form = \Drupal::service('quick_form.instance_manager')->getInstance($quick_form_id);
-      $output = [
-        '#type' => 'html_tag',
-        '#tag' => 'p',
-        '#value' => Html::escape($quick_form->getHelpText()),
-        '#cache' => [
-          'tags' => $quick_form->getCacheTags(),
-        ],
-      ];
-    }
-  }
-
-  return $output;
+#[LegacyHook]
+function farm_quick_help($route_name, RouteMatchInterface $route_match)
+{
+    return \Drupal::service(FarmQuickHooks::class)->help($route_name, $route_match);
 }
 
 /**
  * Implements hook_entity_base_field_info().
  */
-function farm_quick_entity_base_field_info(EntityTypeInterface $entity_type) {
-  $fields = [];
-
-  // We only act on asset and log entities.
-  if (!in_array($entity_type->id(), ['asset', 'log'])) {
-    return $fields;
-  }
-
-  // Add a hidden quick form field.
-  $options = [
-    'type' => 'string',
-    'label' => t('Quick form'),
-    'description' => t('References the quick form that was used to create this record.'),
-    'multiple' => TRUE,
-    'hidden' => TRUE,
-  ];
-  $fields['quick'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
-
-  return $fields;
+#[LegacyHook]
+function farm_quick_entity_base_field_info(EntityTypeInterface $entity_type)
+{
+    return \Drupal::service(FarmQuickHooks::class)->entityBaseFieldInfo($entity_type);
 }
 
 /**
  * Implements hook_form_alter().
  */
-function farm_quick_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-
-  // Only alter views_form_ forms.
-  if (!str_starts_with($form_id, 'views_form_')) {
-    return;
-  }
-
-  $target = NULL;
-  if (isset($form['header']['asset_bulk_form']['action'])) {
-    $target = 'asset_bulk_form';
-  }
-  if (isset($form['header']['log_bulk_form']['action'])) {
-    $target = 'log_bulk_form';
-  }
-
-  // Alter action options for the target entity type bulk form.
-  if ($target) {
-
-    // Check for disabled quick forms.
-    $disabled_quick_forms = \Drupal::entityTypeManager()->getStorage('quick_form')->getQuery()
-      ->accessCheck(TRUE)
-      ->condition('status', FALSE)
-      ->execute();
-    if (empty($disabled_quick_forms)) {
-      return;
-    }
-
-    // Remove system actions that end with quick_* for a disabled quick form.
-    foreach (array_keys($form['header'][$target]['action']['#options']) as $option_id) {
-      if ((preg_match("/quick_(.*)/", $option_id, $matches)) && in_array($matches[1], $disabled_quick_forms)) {
-        unset($form['header'][$target]['action']['#options'][$option_id]);
-      }
-    }
-  }
+#[LegacyHook]
+function farm_quick_form_alter(&$form, FormStateInterface $form_state, $form_id)
+{
+    return \Drupal::service(FarmQuickHooks::class)->formAlter($form, $form_state, $form_id);
 }
 
 /**
  * Implements hook_farm_api_allow_resource_types().
  */
+#[LegacyHook]
 function farm_quick_farm_api_allow_resource_types() {
-  return ['quick_form'];
+  return \Drupal::service(FarmQuickHooks::class)->farmApiAllowResourceTypes();
 }

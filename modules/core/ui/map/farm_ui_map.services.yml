@@ -5,3 +5,11 @@ services:
     class: Drupal\farm_ui_map\EventSubscriber\MapRenderEventSubscriber
     tags:
       - { name: 'event_subscriber' }
+
+  Drupal\farm_ui_map\Hook\FarmUiMapHooks:
+    class: Drupal\farm_ui_map\Hook\FarmUiMapHooks
+    autowire: true
+
+  Drupal\farm_ui_map\Hook\FarmUiMapViewsExecutionHooks:
+    class: Drupal\farm_ui_map\Hook\FarmUiMapViewsExecutionHooks
+    autowire: true

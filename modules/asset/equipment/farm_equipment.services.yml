@@ -1,0 +1,5 @@
+
+services:
+  Drupal\farm_equipment\Hook\FarmEquipmentHooks:
+    class: Drupal\farm_equipment\Hook\FarmEquipmentHooks
+    autowire: true

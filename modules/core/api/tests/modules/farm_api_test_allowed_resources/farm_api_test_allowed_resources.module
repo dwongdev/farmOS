@@ -7,22 +7,23 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\farm_api_test_allowed_resources\Hook\FarmApiTestAllowedResourcesHooks;
+
 /**
  * Implements hook_farm_api_allow_resource_types().
  */
+#[LegacyHook]
 function farm_api_test_allowed_resources_farm_api_allow_resource_types() {
 
-  // Allow view entities.
-  return ['view'];
+  return \Drupal::service(FarmApiTestAllowedResourcesHooks::class)->farmApiAllowResourceTypes();
 }
 
 /**
  * Implements hook_farm_api_allow_resource_types_alter().
  */
+#[LegacyHook]
 function farm_api_test_allowed_resources_farm_api_allow_resource_types_alter(&$entity_types) {
 
-  // Disallow log entities.
-  if (in_array('log', $entity_types)) {
-    unset($entity_types[array_search('log', $entity_types)]);
-  }
+  \Drupal::service(FarmApiTestAllowedResourcesHooks::class)->farmApiAllowResourceTypesAlter($entity_types);
 }

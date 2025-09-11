@@ -7,18 +7,17 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\farm_role\Hook\FarmRoleHooks;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Implements hook_entity_type_alter().
  */
+#[LegacyHook]
 function farm_role_entity_type_alter(array &$entity_types) {
 
-  /** @var \Drupal\Core\Entity\EntityTypeInterface[] $entity_types */
-
-  // Replace the storage handler class for Roles.
-  $entity_types['user_role']
-    ->setHandlerClass('storage', 'Drupal\farm_role\FarmRoleStorage');
+  \Drupal::service(FarmRoleHooks::class)->entityTypeAlter($entity_types);
 }
 
 /**

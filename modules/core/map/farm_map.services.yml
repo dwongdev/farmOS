@@ -8,3 +8,7 @@ services:
   farm_map.layer_style_loader:
     class: Drupal\farm_map\LayerStyleLoader
   Drupal\farm_map\LayerStyleLoaderInterface: '@farm_map.layer_style_loader'
+
+  Drupal\farm_map\Hook\FarmMapHooks:
+    class: Drupal\farm_map\Hook\FarmMapHooks
+    autowire: true

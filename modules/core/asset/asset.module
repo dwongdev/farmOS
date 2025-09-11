@@ -7,6 +7,8 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\asset\Hook\AssetHooks;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\asset\Entity\AssetInterface;
@@ -15,17 +17,10 @@ use Drupal\asset\Event\AssetEvent;
 /**
  * Implements hook_help().
  */
-function asset_help($route_name, RouteMatchInterface $route_match) {
-  $output = '';
-
-  // Main module help for the asset module.
-  if ($route_name == 'help.page.asset') {
-    $output = '';
-    $output .= '<h3>' . t('About') . '</h3>';
-    $output .= '<p>' . t('Provides asset entity') . '</p>';
-  }
-
-  return $output;
+#[LegacyHook]
+function asset_help($route_name, RouteMatchInterface $route_match)
+{
+    return \Drupal::service(AssetHooks::class)->help($route_name, $route_match);
 }
 
 /**
@@ -79,29 +74,18 @@ function asset_asset_delete(AssetInterface $asset) {
 /**
  * Implements hook_theme().
  */
+#[LegacyHook]
 function asset_theme() {
-  return [
-    'asset' => [
-      'render element' => 'elements',
-    ],
-  ];
+  return \Drupal::service(AssetHooks::class)->theme();
 }
 
 /**
  * Implements hook_theme_suggestions_HOOK().
  */
-function asset_theme_suggestions_asset(array $variables) {
-  $suggestions = [];
-  $asset = $variables['elements']['#asset'];
-  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
-
-  $suggestions[] = 'asset__' . $sanitized_view_mode;
-  $suggestions[] = 'asset__' . $asset->bundle();
-  $suggestions[] = 'asset__' . $asset->bundle() . '__' . $sanitized_view_mode;
-  $suggestions[] = 'asset__' . $asset->id();
-  $suggestions[] = 'asset__' . $asset->id() . '__' . $sanitized_view_mode;
-
-  return $suggestions;
+#[LegacyHook]
+function asset_theme_suggestions_asset(array $variables)
+{
+    return \Drupal::service(AssetHooks::class)->themeSuggestionsAsset($variables);
 }
 
 /**

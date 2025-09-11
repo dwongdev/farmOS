@@ -2,3 +2,11 @@ services:
   plugin.manager.data_stream_type:
     class: Drupal\data_stream\DataStreamTypeManager
     parent: default_plugin_manager
+
+  Drupal\data_stream\Hook\DataStreamHooks:
+    class: Drupal\data_stream\Hook\DataStreamHooks
+    autowire: true
+
+  Drupal\data_stream\Hook\DataStreamViewsHooks:
+    class: Drupal\data_stream\Hook\DataStreamViewsHooks
+    autowire: true

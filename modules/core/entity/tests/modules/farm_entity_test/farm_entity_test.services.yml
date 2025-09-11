@@ -1,0 +1,5 @@
+
+services:
+  Drupal\farm_entity_test\Hook\FarmEntityTestHooks:
+    class: Drupal\farm_entity_test\Hook\FarmEntityTestHooks
+    autowire: true

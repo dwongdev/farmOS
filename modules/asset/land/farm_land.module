@@ -7,6 +7,8 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\farm_land\Hook\FarmLandHooks;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 
@@ -46,26 +48,16 @@ function farm_land_type_field_allowed_values(FieldStorageDefinitionInterface $de
 /**
  * Implements hook_farm_ui_theme_region_items().
  */
+#[LegacyHook]
 function farm_land_farm_ui_theme_region_items(string $entity_type) {
 
-  // Define common asset, log, and plan region items on behalf of core modules.
-  switch ($entity_type) {
-
-    case 'asset':
-      return [
-        'second' => [
-          'land_type',
-        ],
-      ];
-
-    default:
-      return [];
-  }
+  return \Drupal::service(FarmLandHooks::class)->farmUiThemeRegionItems($entity_type);
 }
 
 /**
  * Implements hook_farm_api_allow_resource_types().
  */
+#[LegacyHook]
 function farm_land_farm_api_allow_resource_types() {
-  return ['land_type'];
+  return \Drupal::service(FarmLandHooks::class)->farmApiAllowResourceTypes();
 }

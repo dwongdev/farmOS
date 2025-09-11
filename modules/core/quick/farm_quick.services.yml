@@ -7,3 +7,7 @@ services:
   quick_form.instance_manager:
     class: Drupal\farm_quick\QuickFormInstanceManager
   Drupal\farm_quick\QuickFormInstanceManagerInterface: '@quick_form.instance_manager'
+
+  Drupal\farm_quick\Hook\FarmQuickHooks:
+    class: Drupal\farm_quick\Hook\FarmQuickHooks
+    autowire: true

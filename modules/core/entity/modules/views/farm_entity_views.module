@@ -7,6 +7,8 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\farm_entity_views\Hook\FarmEntityViewsHooks;
 use Drupal\farm_entity_views\FarmEntityViewsData;
 use Drupal\farm_entity_views\FarmLogViewsData;
 use Drupal\farm_entity_views\FarmQuantityViewsData;
@@ -30,37 +32,17 @@ function farm_entity_views_module_implements_alter(&$implementations, $hook) {
 /**
  * Implements hook_modules_installed().
  */
+#[LegacyHook]
 function farm_entity_views_modules_installed($modules, $is_syncing) {
 
-  // Reset the views data after installing modules.
-  // See https://www.drupal.org/project/entity/issues/3206703#comment-14073184
-  if (\Drupal::hasService('views.views_data')) {
-    \Drupal::service('views.views_data')->clear();
-  }
+  \Drupal::service(FarmEntityViewsHooks::class)->modulesInstalled($modules, $is_syncing);
 }
 
 /**
  * Implements hook_entity_type_build().
  */
+#[LegacyHook]
 function farm_entity_views_entity_type_build(array &$entity_types) {
 
-  // Set the views data handler class to FarmEntityViewsData.
-  foreach (['asset', 'log', 'organization', 'plan', 'plan_record', 'quantity'] as $entity_type) {
-    if (!empty($entity_types[$entity_type])) {
-
-      // Use the correct class for each entity type.
-      // Logs and quantities provide their own that we must extend from.
-      $views_data_class = FarmEntityViewsData::class;
-      switch ($entity_type) {
-        case 'log':
-          $views_data_class = FarmLogViewsData::class;
-          break;
-
-        case 'quantity':
-          $views_data_class = FarmQuantityViewsData::class;
-          break;
-      }
-      $entity_types[$entity_type]->setHandlerClass('views_data', $views_data_class);
-    }
-  }
+  \Drupal::service(FarmEntityViewsHooks::class)->entityTypeBuild($entity_types);
 }

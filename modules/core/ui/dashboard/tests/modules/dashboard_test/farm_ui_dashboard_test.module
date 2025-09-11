@@ -7,17 +7,13 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\farm_ui_dashboard_test\Hook\FarmUiDashboardTestHooks;
+
 /**
  * Implements hook_farm_dashboard_panes().
  */
+#[LegacyHook]
 function farm_ui_dashboard_test_farm_dashboard_panes() {
-  return [
-    'dashboard_block' => [
-      'block' => 'dashboard_test_block',
-    ],
-    'dashboard_view' => [
-      'view' => 'dashboard_test_view',
-      'view_display_id' => 'user_list',
-    ],
-  ];
+  return \Drupal::service(FarmUiDashboardTestHooks::class)->farmDashboardPanes();
 }

@@ -1,0 +1,5 @@
+
+services:
+  Drupal\farm_parent\Hook\FarmParentHooks:
+    class: Drupal\farm_parent\Hook\FarmParentHooks
+    autowire: true

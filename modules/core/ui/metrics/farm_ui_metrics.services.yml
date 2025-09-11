@@ -1,0 +1,5 @@
+
+services:
+  Drupal\farm_ui_metrics\Hook\FarmUiMetricsHooks:
+    class: Drupal\farm_ui_metrics\Hook\FarmUiMetricsHooks
+    autowire: true

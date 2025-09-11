@@ -7,19 +7,14 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\farm_farm\Hook\FarmFarmViewsHooks;
+
 /**
  * Implements hook_views_data_alter().
  */
+#[LegacyHook]
 function farm_farm_views_data_alter(array &$data) {
 
-  // Provide a farm_organization_asset argument for views of logs.
-  if (isset($data['log_field_data'])) {
-    $data['log_field_data']['farm_organization_asset'] = [
-      'title' => t('Farm organization asset'),
-      'help' => t('Assets that are associated with the farm organization.'),
-      'argument' => [
-        'id' => 'farm_organization_asset',
-      ],
-    ];
-  }
+  \Drupal::service(FarmFarmViewsHooks::class)->viewsDataAlter($data);
 }

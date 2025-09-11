@@ -5,3 +5,7 @@ services:
     class: Drupal\farm_owner\EventSubscriber\LogEventSubscriber
     tags:
       - { name: 'event_subscriber' }
+
+  Drupal\farm_owner\Hook\FarmOwnerHooks:
+    class: Drupal\farm_owner\Hook\FarmOwnerHooks
+    autowire: true

@@ -1,0 +1,5 @@
+
+services:
+  Drupal\farm_quick_movement\Hook\FarmQuickMovementHooks:
+    class: Drupal\farm_quick_movement\Hook\FarmQuickMovementHooks
+    autowire: true

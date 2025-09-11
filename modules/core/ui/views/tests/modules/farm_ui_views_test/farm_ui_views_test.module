@@ -7,36 +7,24 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\farm_ui_views_test\Hook\FarmUiViewsTestHooks;
 use Drupal\Core\Entity\EntityTypeInterface;
 
 /**
  * Implements hook_entity_base_field_info().
  */
-function farm_ui_views_test_entity_base_field_info(EntityTypeInterface $entity_type) {
-  $fields = [];
-
-  // Add a test string base field to logs.
-  if ($entity_type->id() == 'log') {
-    $options = [
-      'type' => 'string',
-      'label' => t('Test string'),
-    ];
-    $fields['test_string'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
-  }
-
-  return $fields;
+#[LegacyHook]
+function farm_ui_views_test_entity_base_field_info(EntityTypeInterface $entity_type)
+{
+    return \Drupal::service(FarmUiViewsTestHooks::class)->entityBaseFieldInfo($entity_type);
 }
 
 /**
  * Implements hook_farm_ui_views_base_fields().
  */
-function farm_ui_views_test_farm_ui_views_base_fields(string $entity_type) {
-  $base_fields = [];
-
-  // Add test string base field to farmOS log Views.
-  if ($entity_type == 'log') {
-    $base_fields[] = 'test_string';
-  }
-
-  return $base_fields;
+#[LegacyHook]
+function farm_ui_views_test_farm_ui_views_base_fields(string $entity_type)
+{
+    return \Drupal::service(FarmUiViewsTestHooks::class)->farmUiViewsBaseFields($entity_type);
 }

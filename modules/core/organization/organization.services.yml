@@ -1,0 +1,5 @@
+
+services:
+  Drupal\organization\Hook\OrganizationHooks:
+    class: Drupal\organization\Hook\OrganizationHooks
+    autowire: true

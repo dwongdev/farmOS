@@ -3,3 +3,7 @@ services:
     class: Drupal\farm_ui_theme\Config\FarmUiThemeConfigOverride
     tags:
       - {name: config.factory.override, priority: 5}
+
+  Drupal\farm_ui_theme\Hook\FarmUiThemeHooks:
+    class: Drupal\farm_ui_theme\Hook\FarmUiThemeHooks
+    autowire: true

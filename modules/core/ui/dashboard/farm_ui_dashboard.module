@@ -7,13 +7,14 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\farm_ui_dashboard\Hook\FarmUiDashboardHooks;
+
 /**
  * Implements hook_toolbar_alter().
  */
+#[LegacyHook]
 function farm_ui_dashboard_toolbar_alter(&$items) {
 
-  // Rename home item to "Dashboard".
-  if (!empty($items['home'])) {
-    $items['home']['tab']['#title'] = t('Dashboard');
-  }
+  \Drupal::service(FarmUiDashboardHooks::class)->toolbarAlter($items);
 }

@@ -1,0 +1,5 @@
+
+services:
+  Drupal\farm_plant_type\Hook\FarmPlantTypeHooks:
+    class: Drupal\farm_plant_type\Hook\FarmPlantTypeHooks
+    autowire: true

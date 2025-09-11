@@ -1,0 +1,9 @@
+
+services:
+  Drupal\farm_farm\Hook\FarmFarmHooks:
+    class: Drupal\farm_farm\Hook\FarmFarmHooks
+    autowire: true
+
+  Drupal\farm_farm\Hook\FarmFarmViewsHooks:
+    class: Drupal\farm_farm\Hook\FarmFarmViewsHooks
+    autowire: true

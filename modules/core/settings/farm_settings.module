@@ -7,18 +7,15 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\farm_settings\Hook\FarmSettingsHooks;
 use Drupal\Core\Routing\RouteMatchInterface;
 
 /**
  * Implements hook_help().
  */
-function farm_settings_help($route_name, RouteMatchInterface $route_match) {
-  $output = '';
-
-  // Modules form.
-  if ($route_name == 'farm_settings.modules_form') {
-    $output .= '<p>' . t('Select the core and community farmOS modules that you would like to be installed.') . '</p>';
-  }
-
-  return $output;
+#[LegacyHook]
+function farm_settings_help($route_name, RouteMatchInterface $route_match)
+{
+    return \Drupal::service(FarmSettingsHooks::class)->help($route_name, $route_match);
 }

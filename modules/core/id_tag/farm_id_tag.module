@@ -7,33 +7,17 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\farm_id_tag\Hook\FarmIdTagHooks;
 use Drupal\Core\Entity\EntityTypeInterface;
 
 /**
  * Implements hook_entity_base_field_info().
  */
-function farm_id_tag_entity_base_field_info(EntityTypeInterface $entity_type) {
-  $fields = [];
-
-  // Add ID tag field to assets.
-  if ($entity_type->id() == 'asset') {
-    $field_info = [
-      'type' => 'id_tag',
-      'label' => t('ID tags'),
-      'description' => t('List any identification tags that this asset has. Use the fields below to describe the type, location, and ID of each.'),
-      'multiple' => TRUE,
-      'weight' => [
-        'form' => 20,
-        'view' => 20,
-      ],
-    ];
-    $fields['id_tag'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($field_info);
-
-    // Add an ID tag type constraint to ID tag fields to ensure valid type.
-    $fields['id_tag']->addConstraint('IdTagType');
-  }
-
-  return $fields;
+#[LegacyHook]
+function farm_id_tag_entity_base_field_info(EntityTypeInterface $entity_type)
+{
+    return \Drupal::service(FarmIdTagHooks::class)->entityBaseFieldInfo($entity_type);
 }
 
 /**
@@ -61,18 +45,15 @@ function farm_id_tag_type_options(string $bundle) {
 /**
  * Implements hook_theme().
  */
+#[LegacyHook]
 function farm_id_tag_theme() {
-  return [
-    'field__id_tag' => [
-      'template' => 'field--id-tag',
-      'base hook' => 'field',
-    ],
-  ];
+  return \Drupal::service(FarmIdTagHooks::class)->theme();
 }
 
 /**
  * Implements hook_farm_api_allow_resource_types().
  */
+#[LegacyHook]
 function farm_id_tag_farm_api_allow_resource_types() {
-  return ['tag_type'];
+  return \Drupal::service(FarmIdTagHooks::class)->farmApiAllowResourceTypes();
 }

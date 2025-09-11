@@ -1,0 +1,5 @@
+
+services:
+  Drupal\farm_ui_menu\Hook\FarmUiMenuHooks:
+    class: Drupal\farm_ui_menu\Hook\FarmUiMenuHooks
+    autowire: true

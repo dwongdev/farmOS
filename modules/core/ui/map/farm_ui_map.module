@@ -7,22 +7,17 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\farm_ui_map\Hook\FarmUiMapHooks;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 
 /**
  * Implements hook_farm_dashboard_panes().
  */
+#[LegacyHook]
 function farm_ui_map_farm_dashboard_panes() {
-  return [
-    'dashboard_map' => [
-      'block' => 'map_block',
-      'args' => [
-        'map_type' => 'dashboard',
-      ],
-      'region'  => 'top',
-    ],
-  ];
+  return \Drupal::service(FarmUiMapHooks::class)->farmDashboardPanes();
 }
 
 /**
@@ -42,13 +37,9 @@ function farm_ui_map_module_implements_alter(&$implementations, $hook) {
 /**
  * Implements hook_menu_local_actions_alter().
  */
+#[LegacyHook]
 function farm_ui_map_menu_local_actions_alter(&$local_actions) {
-  // Include asset.add.log.* location actions on the asset.map_popup route.
-  foreach ($local_actions as $id => $local_action) {
-    if (strpos($id, 'farm.actions:farm.asset.add.log.') === 0) {
-      $local_actions[$id]['appears_on'][] = 'farm_ui_map.asset.map_popup';
-    }
-  }
+  \Drupal::service(FarmUiMapHooks::class)->menuLocalActionsAlter($local_actions);
 }
 
 /**

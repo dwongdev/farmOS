@@ -1,0 +1,5 @@
+
+services:
+  Drupal\farm_import_csv_test\Hook\FarmImportCsvTestHooks:
+    class: Drupal\farm_import_csv_test\Hook\FarmImportCsvTestHooks
+    autowire: true

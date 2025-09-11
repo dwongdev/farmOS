@@ -1,0 +1,5 @@
+
+services:
+  Drupal\farm_transplanting\Hook\FarmTransplantingHooks:
+    class: Drupal\farm_transplanting\Hook\FarmTransplantingHooks
+    autowire: true

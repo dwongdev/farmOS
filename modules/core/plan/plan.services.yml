@@ -1,0 +1,5 @@
+
+services:
+  Drupal\plan\Hook\PlanHooks:
+    class: Drupal\plan\Hook\PlanHooks
+    autowire: true

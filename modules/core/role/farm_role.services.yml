@@ -4,3 +4,7 @@ services:
   plugin.manager.managed_role_permissions:
     class: Drupal\farm_role\ManagedRolePermissionsManager
   Drupal\farm_role\ManagedRolePermissionsManagerInterface: '@plugin.manager.managed_role_permissions'
+
+  Drupal\farm_role\Hook\FarmRoleHooks:
+    class: Drupal\farm_role\Hook\FarmRoleHooks
+    autowire: true

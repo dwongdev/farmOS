@@ -5,3 +5,7 @@ services:
     class: Drupal\farm_birth\EventSubscriber\LogEventSubscriber
     tags:
       - { name: 'event_subscriber' }
+
+  Drupal\farm_birth\Hook\FarmBirthHooks:
+    class: Drupal\farm_birth\Hook\FarmBirthHooks
+    autowire: true

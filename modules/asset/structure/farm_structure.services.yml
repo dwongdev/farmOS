@@ -5,3 +5,11 @@ services:
     class: Drupal\farm_structure\EventSubscriber\MapRenderEventSubscriber
     tags:
       - { name: 'event_subscriber' }
+
+  Drupal\farm_structure\Hook\FarmStructureHooks:
+    class: Drupal\farm_structure\Hook\FarmStructureHooks
+    autowire: true
+
+  Drupal\farm_structure\Hook\FarmStructureViewsExecutionHooks:
+    class: Drupal\farm_structure\Hook\FarmStructureViewsExecutionHooks
+    autowire: true

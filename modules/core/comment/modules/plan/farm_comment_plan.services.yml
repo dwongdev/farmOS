@@ -1,0 +1,5 @@
+
+services:
+  Drupal\farm_comment_plan\Hook\FarmCommentPlanHooks:
+    class: Drupal\farm_comment_plan\Hook\FarmCommentPlanHooks
+    autowire: true

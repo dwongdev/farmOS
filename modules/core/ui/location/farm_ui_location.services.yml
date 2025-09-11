@@ -1,0 +1,5 @@
+
+services:
+  Drupal\farm_ui_location\Hook\FarmUiLocationHooks:
+    class: Drupal\farm_ui_location\Hook\FarmUiLocationHooks
+    autowire: true

@@ -7,6 +7,8 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\organization\Hook\OrganizationHooks;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\organization\Entity\OrganizationInterface;
@@ -15,17 +17,10 @@ use Drupal\organization\Event\OrganizationEvent;
 /**
  * Implements hook_help().
  */
-function organization_help($route_name, RouteMatchInterface $route_match) {
-  $output = '';
-
-  // Main module help for the organization module.
-  if ($route_name == 'help.page.organization') {
-    $output = '';
-    $output .= '<h3>' . t('About') . '</h3>';
-    $output .= '<p>' . t('Provides organization entity') . '</p>';
-  }
-
-  return $output;
+#[LegacyHook]
+function organization_help($route_name, RouteMatchInterface $route_match)
+{
+    return \Drupal::service(OrganizationHooks::class)->help($route_name, $route_match);
 }
 
 /**
@@ -79,29 +74,18 @@ function organization_organization_delete(OrganizationInterface $organization) {
 /**
  * Implements hook_theme().
  */
+#[LegacyHook]
 function organization_theme() {
-  return [
-    'organization' => [
-      'render element' => 'elements',
-    ],
-  ];
+  return \Drupal::service(OrganizationHooks::class)->theme();
 }
 
 /**
  * Implements hook_theme_suggestions_HOOK().
  */
-function organization_theme_suggestions_organization(array $variables) {
-  $suggestions = [];
-  $organization = $variables['elements']['#organization'];
-  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
-
-  $suggestions[] = 'organization__' . $sanitized_view_mode;
-  $suggestions[] = 'organization__' . $organization->bundle();
-  $suggestions[] = 'organization__' . $organization->bundle() . '__' . $sanitized_view_mode;
-  $suggestions[] = 'organization__' . $organization->id();
-  $suggestions[] = 'organization__' . $organization->id() . '__' . $sanitized_view_mode;
-
-  return $suggestions;
+#[LegacyHook]
+function organization_theme_suggestions_organization(array $variables)
+{
+    return \Drupal::service(OrganizationHooks::class)->themeSuggestionsOrganization($variables);
 }
 
 /**

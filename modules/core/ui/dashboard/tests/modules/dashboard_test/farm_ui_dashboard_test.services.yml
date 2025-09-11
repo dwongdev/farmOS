@@ -1,0 +1,5 @@
+
+services:
+  Drupal\farm_ui_dashboard_test\Hook\FarmUiDashboardTestHooks:
+    class: Drupal\farm_ui_dashboard_test\Hook\FarmUiDashboardTestHooks
+    autowire: true

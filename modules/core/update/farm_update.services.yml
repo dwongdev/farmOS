@@ -8,3 +8,7 @@ services:
   farm.update:
     class: Drupal\farm_update\FarmUpdate
   Drupal\farm_update\FarmUpdateInterface: '@farm.update'
+
+  Drupal\farm_update\Hook\FarmUpdateHooks:
+    class: Drupal\farm_update\Hook\FarmUpdateHooks
+    autowire: true

@@ -7,6 +7,8 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\farm_location\Hook\FarmLocationHooks;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
@@ -29,33 +31,18 @@ function farm_location_form_asset_form_alter(&$form, FormStateInterface $form_st
 /**
  * Implements hook_entity_base_field_info().
  */
-function farm_location_entity_base_field_info(EntityTypeInterface $entity_type) {
-  \Drupal::moduleHandler()->loadInclude('farm_location', 'inc', 'farm_location.base_fields');
-  switch ($entity_type->id()) {
-
-    // Build asset base fields.
-    case 'asset':
-      return farm_location_asset_base_fields();
-
-    // Build log base fields.
-    case 'log':
-      return farm_location_log_base_fields();
-
-    default:
-      return [];
-  }
+#[LegacyHook]
+function farm_location_entity_base_field_info(EntityTypeInterface $entity_type)
+{
+    return \Drupal::service(FarmLocationHooks::class)->entityBaseFieldInfo($entity_type);
 }
 
 /**
  * Implements hook_entity_base_field_info_alter().
  */
+#[LegacyHook]
 function farm_location_entity_base_field_info_alter(&$fields, EntityTypeInterface $entity_type) {
-  /** @var \Drupal\field\Entity\FieldConfig[] $fields */
-
-  // Prevent creating circular asset location.
-  if ($entity_type->id() == 'log' && !empty($fields['asset'])) {
-    $fields['asset']->addConstraint('CircularAssetLocation');
-  }
+  \Drupal::service(FarmLocationHooks::class)->entityBaseFieldInfoAlter($fields, $entity_type);
 }
 
 /**
