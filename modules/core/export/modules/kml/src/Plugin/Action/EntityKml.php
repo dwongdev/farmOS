@@ -42,11 +42,11 @@ class EntityKml extends EntityActionBase {
   protected $fileSystem;
 
   /**
-   * The default file scheme.
+   * The config factory.
    *
-   * @var string
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
    */
-  protected $defaultFileScheme;
+  protected $configFactory;
 
   /**
    * The file repository service.
@@ -66,7 +66,7 @@ class EntityKml extends EntityActionBase {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager);
     $this->serializer = $serializer;
     $this->fileSystem = $file_system;
-    $this->defaultFileScheme = $config_factory->get('system.file')->get('default_scheme') ?? 'public';
+    $this->configFactory = $config_factory;
     $this->fileRepository = $file_repository;
     $this->fileUrlGenerator = $file_url_generator;
   }
@@ -110,7 +110,8 @@ class EntityKml extends EntityActionBase {
     }
 
     // Prepare the file directory.
-    $directory = $this->defaultFileScheme . '://kml';
+    $default_file_scheme = $this->configFactory->get('system.file')->get('default_scheme') ?? 'public';
+    $directory = $default_file_scheme . '://kml';
     $this->fileSystem->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY);
 
     // Create the file.
