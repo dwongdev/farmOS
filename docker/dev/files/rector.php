@@ -10,6 +10,7 @@ declare(strict_types=1);
 use DrupalFinder\DrupalFinderComposerRuntime;
 use DrupalRector\Drupal10\Rector\Deprecation\AnnotationToAttributeRector;
 use DrupalRector\Drupal10\Rector\ValueObject\AnnotationToAttributeConfiguration;
+use DrupalRector\Rector\Convert\HookConvertRector;
 use DrupalRector\Rector\PHPUnit\ShouldCallParentMethodsRector;
 use DrupalRector\Set\Drupal10SetList;
 use Rector\Config\RectorConfig;
@@ -85,4 +86,7 @@ return static function (RectorConfig $rectorConfig): void {
   $rectorConfig->ruleWithConfiguration(ClassPropertyAssignToConstructorPromotionRector::class, [
     ClassPropertyAssignToConstructorPromotionRector::INLINE_PUBLIC => TRUE,
   ]);
+
+  // Convert procedural hook implementations to Hook classes.
+  $rectorConfig->rule(HookConvertRector::class);
 };
