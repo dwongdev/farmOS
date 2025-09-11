@@ -7,7 +7,6 @@ namespace Drupal\farm_quick\Plugin\QuickForm;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Plugin\PluginBase;
@@ -44,11 +43,10 @@ class QuickFormBase extends PluginBase implements QuickFormInterface, ContainerF
    */
   protected $currentUser;
 
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, AccountInterface $current_user, MessengerInterface $messenger) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, AccountInterface $current_user) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_type_manager;
     $this->currentUser = $current_user;
-    $this->messenger = $messenger;
   }
 
   /**
@@ -61,7 +59,6 @@ class QuickFormBase extends PluginBase implements QuickFormInterface, ContainerF
       $plugin_definition,
       $container->get('entity_type.manager'),
       $container->get('current_user'),
-      $container->get('messenger'),
     );
   }
 

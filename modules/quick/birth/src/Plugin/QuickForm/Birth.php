@@ -9,7 +9,6 @@ use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
@@ -70,8 +69,8 @@ class Birth extends QuickFormBase {
    */
   protected $groupMembership = NULL;
 
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, AccountInterface $current_user, MessengerInterface $messenger, ModuleHandlerInterface $module_handler, ConfigFactoryInterface $config_factory, AssetLocationInterface $asset_location, ?GroupMembershipInterface $group_membership = NULL) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager, $current_user, $messenger);
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, AccountInterface $current_user, ModuleHandlerInterface $module_handler, ConfigFactoryInterface $config_factory, AssetLocationInterface $asset_location, ?GroupMembershipInterface $group_membership = NULL) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager, $current_user);
     $this->moduleHandler = $module_handler;
     $this->configFactory = $config_factory;
     $this->assetLocation = $asset_location;
@@ -88,7 +87,6 @@ class Birth extends QuickFormBase {
       $plugin_definition,
       $container->get('entity_type.manager'),
       $container->get('current_user'),
-      $container->get('messenger'),
       $container->get('module_handler'),
       $container->get('config.factory'),
       $container->get('asset.location'),

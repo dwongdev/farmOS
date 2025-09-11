@@ -53,7 +53,7 @@ trait ConfigurableQuickFormTrait {
     // @todo Save configuration entity.
 
     // Add a status message.
-    $this->messenger->addStatus($this->t('Configuration saved.'));
+    $this->messenger()->addStatus($this->t('Configuration saved.'));
   }
 
 }

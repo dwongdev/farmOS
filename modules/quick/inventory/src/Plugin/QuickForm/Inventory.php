@@ -8,7 +8,6 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
@@ -49,8 +48,8 @@ class Inventory extends QuickFormBase implements ConfigurableQuickFormInterface 
    */
   protected $assetInventory;
 
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, AccountInterface $current_user, MessengerInterface $messenger, AssetInventoryInterface $asset_inventory) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager, $current_user, $messenger);
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, AccountInterface $current_user, AssetInventoryInterface $asset_inventory) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager, $current_user);
     $this->assetInventory = $asset_inventory;
   }
 
@@ -64,7 +63,6 @@ class Inventory extends QuickFormBase implements ConfigurableQuickFormInterface 
       $plugin_definition,
       $container->get('entity_type.manager'),
       $container->get('current_user'),
-      $container->get('messenger'),
       $container->get('asset.inventory'),
     );
   }

@@ -7,7 +7,6 @@ namespace Drupal\farm_quick_group\Plugin\QuickForm;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
@@ -48,8 +47,8 @@ class Group extends QuickFormBase implements QuickFormInterface {
    */
   protected $groupMembership;
 
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, AccountInterface $current_user, MessengerInterface $messenger, GroupMembershipInterface $group_membership) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager, $current_user, $messenger);
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, AccountInterface $current_user, GroupMembershipInterface $group_membership) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager, $current_user);
     $this->groupMembership = $group_membership;
   }
 
@@ -63,7 +62,6 @@ class Group extends QuickFormBase implements QuickFormInterface {
       $plugin_definition,
       $container->get('entity_type.manager'),
       $container->get('current_user'),
-      $container->get('messenger'),
       $container->get('group.membership'),
     );
   }
