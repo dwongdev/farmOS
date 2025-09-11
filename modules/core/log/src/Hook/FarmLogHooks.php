@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\farm_log\Hook;
 
+use Drupal\Core\Entity\EntityFormInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
@@ -55,6 +56,48 @@ class FarmLogHooks {
       }
       $entity->set('asset', $asset_ids);
     }
+  }
+
+  /**
+   * Implements hook_form_BASE_FORM_ID_alter().
+   */
+  #[Hook('form_log_form_alter')]
+  public function formLogFormAlter(&$form, FormStateInterface $form_state, $form_id) {
+
+    // Alter the Quantity inline entity form to set the default quantity type.
+    if (!empty($form['quantity']['widget']['actions']['bundle']['#options'])) {
+      $bundle_select = &$form['quantity']['widget']['actions']['bundle'];
+
+      // Load the log type storage.
+      assert($form_state->getFormObject() instanceof EntityFormInterface);
+      /** @var \Drupal\log\Entity\Log $entity */
+      $entity = $form_state->getFormObject()->getEntity();
+
+      // Determine the default quantity type.
+      $default_type = farm_log_quantity_default_type($entity->bundle());
+
+      // Set the default value.
+      if (array_key_exists($default_type, $bundle_select['#options'])) {
+        $bundle_select['#default_value'] = $default_type;
+      }
+    }
+  }
+
+  /**
+   * Implements hook_form_FORM_ID_alter().
+   */
+  #[Hook('form_quantity_delete_multiple_confirm_form_alter')]
+  public function formQuantityDeleteMultipleConfirmFormAlter(&$form, FormStateInterface $form_state, $form_id) {
+
+    // Add a warning to bulk quantity delete confirmation form, to emphasize
+    // that the quantity will be deleted from all log revisions.
+    $message = t('Warning: Deleting quantities will remove them from all revisions of records that reference them.');
+    $form['warning'] = [
+      '#type' => 'html_tag',
+      '#tag' => 'strong',
+      '#value' => $message,
+      '#weight' => -10,
+    ];
   }
 
 }

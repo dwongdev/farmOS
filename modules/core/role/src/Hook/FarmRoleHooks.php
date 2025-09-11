@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\farm_role\Hook;
 
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 
 /**
@@ -20,6 +21,68 @@ class FarmRoleHooks {
 
     // Replace the storage handler class for Roles.
     $entity_types['user_role']->setHandlerClass('storage', 'Drupal\farm_role\FarmRoleStorage');
+  }
+
+  /**
+   * Implements hook_form_BASE_FORM_ID_alter().
+   */
+  #[Hook('form_user_admin_permissions_alter')]
+  public function formUserAdminPermissionsAlter(&$form, FormStateInterface $form_state, $form_id) {
+
+    // Attach managed role CSS.
+    $form['#attached']['library'][] = 'farm_role/managed_role';
+
+    // Get the managed role permissions service.
+    /** @var \Drupal\farm_role\ManagedRolePermissionsManagerInterface $managed_role_manager */
+    $managed_role_manager = \Drupal::service('plugin.manager.managed_role_permissions');
+
+    // Save a list of managed role IDs keyed by their index in the form.
+    $managed_roles = $managed_role_manager->getMangedRoles();
+    $managed_roles_indices = array_intersect(
+      array_keys($form['role_names']['#value']),
+      array_keys($managed_roles)
+    );
+
+    // Append '(managed)' to managed role labels in the table header.
+    foreach ($managed_roles_indices as $index => $role) {
+
+      // Offset by 1 for the first table column.
+      $offset = $index + 1;
+
+      // Build new label.
+      $label = $form['permissions']['#header'][$offset]['data'];
+      $new = $label . ' (' . t('managed') . ')';
+
+      // Set new label.
+      $form['permissions']['#header'][$offset]['data'] = $new;
+    }
+
+    // Get a list of permissions.
+    $permissions = \Drupal::service('user.permissions')->getPermissions();
+    $permission_names = array_keys($permissions);
+
+    // Iterate over each permission in the form.
+    foreach ($form['permissions'] as $name => $permission) {
+
+      // Only check permission arrays, skip high level form and wrapper
+      // elements.
+      if (in_array($name, $permission_names)) {
+
+        // Iterate over each role under the permission.
+        foreach (array_keys($permission) as $rid) {
+
+          // Disable the checkbox for all managed roles.
+          if (in_array($rid, $managed_roles_indices)) {
+            $form['permissions'][$name][$rid]['#disabled'] = TRUE;
+
+            // If the permission is enabled on the role, add CSS class.
+            if ($managed_role_manager->isPermissionInRole($name, $managed_roles[$rid])) {
+              $form['permissions'][$name][$rid]['#attributes']['class'][] = 'managed';
+            }
+          }
+        }
+      }
+    }
   }
 
 }

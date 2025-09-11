@@ -9,21 +9,6 @@ declare(strict_types=1);
 
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
-use Drupal\Core\Form\FormStateInterface;
-
-/**
- * Implements hook_form_BASE_FORM_ID_alter().
- */
-function farm_location_form_asset_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-
-  // Check if the form has the required location fields.
-  if (isset($form['intrinsic_geometry']) && isset($form['is_fixed'])) {
-
-    // Set the visible state of the asset.intrinsic_geometry field.
-    // Only display if is_fixed is checked.
-    $form['intrinsic_geometry']['#states']['visible'] = [':input[name="is_fixed[value]"]' => ['checked' => TRUE]];
-  }
-}
 
 /**
  * Sets the default value for asset is_location boolean field.

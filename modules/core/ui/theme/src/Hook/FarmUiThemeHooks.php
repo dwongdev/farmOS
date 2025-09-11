@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\farm_ui_theme\Hook;
 
 use Drupal\Core\Entity\Display\EntityFormDisplayInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\farm_ui_theme\Form\AssetForm;
 use Drupal\farm_ui_theme\Form\LogForm;
@@ -16,6 +17,38 @@ use Drupal\farm_ui_theme\Form\TaxonomyTermForm;
  * Hook implementations for farm_ui_theme.
  */
 class FarmUiThemeHooks {
+
+  /**
+   * Implements hook_form_BASE_FORM_ID_alter().
+   */
+  #[Hook('form_asset_form_alter')]
+  public function formAssetFormAlter(&$form, FormStateInterface $form_state, $form_id) {
+    /** @var \Drupal\Core\Entity\EntityForm $form_object */
+    $form_object = $form_state->getFormObject();
+    /** @var \Drupal\asset\Entity\AssetInterface $entity */
+    $entity = $form_object->getEntity();
+    farm_ui_theme_set_archived_message($entity);
+  }
+
+  /**
+   * Implements hook_form_BASE_FORM_ID_alter().
+   */
+  #[Hook('form_plan_form_alter')]
+  public function formPlanFormAlter(&$form, FormStateInterface $form_state, $form_id) {
+    /** @var \Drupal\Core\Entity\EntityForm $form_object */
+    $form_object = $form_state->getFormObject();
+    /** @var \Drupal\asset\Entity\AssetInterface $entity */
+    $entity = $form_object->getEntity();
+    farm_ui_theme_set_archived_message($entity);
+  }
+
+  /**
+   * Implements hook_form_BASE_FORM_ID_alter().
+   */
+  #[Hook('form_quick_form_alter')]
+  public function formQuickFormAlter(&$form, FormStateInterface $form_state, $form_id) {
+    $form['#attached']['library'][] = 'farm_ui_theme/quick';
+  }
 
   /**
    * Implements hook_theme().
