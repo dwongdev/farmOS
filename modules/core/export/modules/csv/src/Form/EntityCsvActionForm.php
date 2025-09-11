@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\farm_export_csv\Form;
 
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystemInterface;
@@ -64,13 +63,6 @@ class EntityCsvActionForm extends ConfirmFormBase implements BaseFormIdInterface
   protected $fileSystem;
 
   /**
-   * The default file scheme.
-   *
-   * @var string
-   */
-  protected $defaultFileScheme;
-
-  /**
    * The file repository service.
    *
    * @var \Drupal\file\FileRepositoryInterface
@@ -105,13 +97,12 @@ class EntityCsvActionForm extends ConfirmFormBase implements BaseFormIdInterface
    */
   protected $entities;
 
-  public function __construct(PrivateTempStoreFactory $temp_store_factory, EntityTypeManagerInterface $entity_type_manager, EntityFieldManagerInterface $entity_field_manager, SerializerInterface $serializer, FileSystemInterface $file_system, ConfigFactoryInterface $config_factory, FileRepositoryInterface $file_repository, FileUrlGeneratorInterface $file_url_generator, AccountInterface $user) {
+  public function __construct(PrivateTempStoreFactory $temp_store_factory, EntityTypeManagerInterface $entity_type_manager, EntityFieldManagerInterface $entity_field_manager, SerializerInterface $serializer, FileSystemInterface $file_system, FileRepositoryInterface $file_repository, FileUrlGeneratorInterface $file_url_generator, AccountInterface $user) {
     $this->tempStoreFactory = $temp_store_factory;
     $this->entityTypeManager = $entity_type_manager;
     $this->entityFieldManager = $entity_field_manager;
     $this->serializer = $serializer;
     $this->fileSystem = $file_system;
-    $this->defaultFileScheme = $config_factory->get('system.file')->get('default_scheme') ?? 'public';
     $this->fileRepository = $file_repository;
     $this->fileUrlGenerator = $file_url_generator;
     $this->user = $user;
@@ -127,7 +118,6 @@ class EntityCsvActionForm extends ConfirmFormBase implements BaseFormIdInterface
       $container->get('entity_field.manager'),
       $container->get('serializer'),
       $container->get('file_system'),
-      $container->get('config.factory'),
       $container->get('file.repository'),
       $container->get('file_url_generator'),
       $container->get('current_user'),
@@ -315,7 +305,8 @@ class EntityCsvActionForm extends ConfirmFormBase implements BaseFormIdInterface
     $output = $this->serializer->serialize($accessible_entities, 'csv', $context);
 
     // Prepare the file directory.
-    $directory = $this->defaultFileScheme . '://csv';
+    $default_file_scheme = $this->config('system.file')->get('default_scheme') ?? 'public';
+    $directory = $default_file_scheme . '://csv';
     $this->fileSystem->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY);
 
     // Create the file.
