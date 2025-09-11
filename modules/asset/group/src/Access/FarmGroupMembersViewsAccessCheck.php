@@ -15,14 +15,14 @@ use Drupal\Core\Routing\RouteMatchInterface;
 class FarmGroupMembersViewsAccessCheck implements AccessInterface {
 
   /**
-   * The asset storage.
+   * The entity type manager.
    *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $assetStorage;
+  protected $entityTypeManager;
 
   public function __construct(EntityTypeManagerInterface $entity_type_manager) {
-    $this->assetStorage = $entity_type_manager->getStorage('asset');
+    $this->entityTypeManager = $entity_type_manager;
   }
 
   /**
@@ -39,9 +39,12 @@ class FarmGroupMembersViewsAccessCheck implements AccessInterface {
       return AccessResult::allowed();
     }
 
-    // Allow access if the asset is a group.
+    // Load the asset.
+    $asset_storage = $this->entityTypeManager->getStorage('asset');
     /** @var \Drupal\asset\Entity\AssetInterface $asset */
-    $asset = $this->assetStorage->load($asset_id);
+    $asset = $asset_storage->load($asset_id);
+
+    // Allow access if the asset is a group.
     $access = AccessResult::allowedIf($asset->bundle() == 'group');
 
     // Invalidate the access result when assets are changed.

@@ -24,11 +24,11 @@ class FarmTaxonomyTermEntityViewsAccessCheck implements AccessInterface {
   protected $baseEntityType;
 
   /**
-   * The taxonomy term storage.
+   * The entity type manager.
    *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $taxonomyTermStorage;
+  protected $entityTypeManager;
 
   /**
    * The entity type bundle info.
@@ -46,7 +46,7 @@ class FarmTaxonomyTermEntityViewsAccessCheck implements AccessInterface {
 
   public function __construct(string $base_entity_type, EntityTypeManagerInterface $entity_type_manager, EntityTypeBundleInfoInterface $entity_bundle_info, EntityFieldManagerInterface $entity_field_manager) {
     $this->baseEntityType = $base_entity_type;
-    $this->taxonomyTermStorage = $entity_type_manager->getStorage('taxonomy_term');
+    $this->entityTypeManager = $entity_type_manager;
     $this->entityTypeBundleInfo = $entity_bundle_info;
     $this->entityFieldManager = $entity_field_manager;
   }
@@ -64,7 +64,7 @@ class FarmTaxonomyTermEntityViewsAccessCheck implements AccessInterface {
     // filter validation returns a 404.
     $term_id = $route_match->getParameter('taxonomy_term');
     /** @var \Drupal\taxonomy\TermInterface|null $term */
-    $term = $this->taxonomyTermStorage->load($term_id);
+    $term = $this->entityTypeManager->getStorage('taxonomy_term')->load($term_id);
     if (is_null($term)) {
       return AccessResult::allowed();
     }

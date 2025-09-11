@@ -15,22 +15,14 @@ use Drupal\Core\Routing\RouteMatchInterface;
 class FarmOrganizationAssetViewsAccessCheck implements AccessInterface {
 
   /**
-   * The asset storage.
+   * The entity type manager.
    *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $assetStorage;
-
-  /**
-   * The organization storage.
-   *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
-   */
-  protected $organizationStorage;
+  protected $entityTypeManager;
 
   public function __construct(EntityTypeManagerInterface $entity_type_manager) {
-    $this->assetStorage = $entity_type_manager->getStorage('asset');
-    $this->organizationStorage = $entity_type_manager->getStorage('organization');
+    $this->entityTypeManager = $entity_type_manager;
   }
 
   /**
@@ -46,7 +38,7 @@ class FarmOrganizationAssetViewsAccessCheck implements AccessInterface {
     // contextual filter validation returns a 404.
     $organization_id = $route_match->getParameter('organization');
     /** @var \Drupal\organization\Entity\OrganizationInterface|null $organization */
-    $organization = $this->organizationStorage->load($organization_id);
+    $organization = $this->entityTypeManager->getStorage('organization')->load($organization_id);
     if (is_null($organization)) {
       return AccessResult::allowed();
     }
@@ -60,7 +52,7 @@ class FarmOrganizationAssetViewsAccessCheck implements AccessInterface {
 
     // Build a count query for asset of this type.
     // Only include assets that reference the organization.
-    $query = $this->assetStorage->getAggregateQuery()
+    $query = $this->entityTypeManager->getStorage('asset')->getAggregateQuery()
       ->accessCheck(TRUE)
       ->condition('type', $asset_type)
       ->condition('farm.entity.id', $organization_id)

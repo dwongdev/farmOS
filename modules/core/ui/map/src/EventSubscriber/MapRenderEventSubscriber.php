@@ -20,11 +20,11 @@ class MapRenderEventSubscriber implements EventSubscriberInterface {
   use StringTranslationTrait;
 
   /**
-   * Asset types.
+   * The entity type manager.
    *
-   * @var \Drupal\asset\Entity\AssetTypeInterface[]
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $assetTypes;
+  protected $entityTypeManager;
 
   /**
    * The layer style loader service.
@@ -34,7 +34,7 @@ class MapRenderEventSubscriber implements EventSubscriberInterface {
   protected $layerStyleLoader;
 
   public function __construct(EntityTypeManagerInterface $entity_type_manager, LayerStyleLoaderInterface $layer_style_loader) {
-    $this->assetTypes = $entity_type_manager->getStorage('asset_type')->loadMultiple();
+    $this->entityTypeManager = $entity_type_manager;
     $this->layerStyleLoader = $layer_style_loader;
   }
 
@@ -91,7 +91,8 @@ class MapRenderEventSubscriber implements EventSubscriberInterface {
 
       // Add separate layers for all asset types that are locations by default.
       $other_location_asset_types = [];
-      foreach ($this->assetTypes as $type) {
+      $asset_types = $this->entityTypeManager->getStorage('asset_type')->loadMultiple();
+      foreach ($asset_types as $type) {
 
         // Add a dedicated layer if the asset type is a location by default.
         if ($type->getThirdPartySetting('farm_location', 'is_location', FALSE)) {

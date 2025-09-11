@@ -23,15 +23,15 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class IdTagFormatter extends FormatterBase {
 
   /**
-   * The tag_type entity storage.
+   * The entity type manager.
    *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $tagTypeStorage;
+  protected $entityTypeManager;
 
   public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, EntityTypeManagerInterface $entity_type_manager) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
-    $this->tagTypeStorage = $entity_type_manager->getStorage('tag_type');
+    $this->entityTypeManager = $entity_type_manager;
   }
 
   /**
@@ -66,7 +66,8 @@ class IdTagFormatter extends FormatterBase {
       }
 
       // Render the type if it exists. Use the tag_type label.
-      if (!empty($item->type) && $tag_type = $this->tagTypeStorage->load($item->type)) {
+      $tag_type_storage = $this->entityTypeManager->getStorage('tag_type');
+      if (!empty($item->type) && $tag_type = $tag_type_storage->load($item->type)) {
         $elements[$delta]['type'] = [
           '#markup' => $this->t('Type: @value', ['@value' => $tag_type->label()]),
         ];

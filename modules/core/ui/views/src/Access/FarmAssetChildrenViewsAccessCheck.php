@@ -16,11 +16,11 @@ use Drupal\farm_location\AssetLocationInterface;
 class FarmAssetChildrenViewsAccessCheck implements AccessInterface {
 
   /**
-   * The asset storage.
+   * The entity type manager.
    *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $assetStorage;
+  protected $entityTypeManager;
 
   /**
    * The asset location service.
@@ -30,7 +30,7 @@ class FarmAssetChildrenViewsAccessCheck implements AccessInterface {
   protected $assetLocation;
 
   public function __construct(EntityTypeManagerInterface $entity_type_manager, AssetLocationInterface $asset_location) {
-    $this->assetStorage = $entity_type_manager->getStorage('asset');
+    $this->entityTypeManager = $entity_type_manager;
     $this->assetLocation = $asset_location;
   }
 
@@ -42,12 +42,15 @@ class FarmAssetChildrenViewsAccessCheck implements AccessInterface {
    */
   public function access(RouteMatchInterface $route_match) {
 
+    // Get asset storage.
+    $asset_storage = $this->entityTypeManager->getStorage('asset');
+
     // Get the "asset" parameter and attempt to load the asset.
     // If the asset cannot be loaded, allow access so that Views contextual
     // filter validation returns a 404.
     $asset_id = $route_match->getParameter('asset');
     /** @var \Drupal\asset\Entity\AssetInterface|null $asset */
-    $asset = $this->assetStorage->load($asset_id);
+    $asset = $asset_storage->load($asset_id);
     if (is_null($asset)) {
       return AccessResult::allowed();
     }
@@ -60,7 +63,7 @@ class FarmAssetChildrenViewsAccessCheck implements AccessInterface {
 
     // Run a count query to see if there are any assets that reference this
     // asset as a parent.
-    $count = $this->assetStorage->getAggregateQuery()
+    $count = $asset_storage->getAggregateQuery()
       ->accessCheck(TRUE)
       ->condition('parent.entity.id', $asset_id)
       ->count()

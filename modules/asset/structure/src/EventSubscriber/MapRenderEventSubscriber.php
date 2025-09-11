@@ -19,11 +19,11 @@ class MapRenderEventSubscriber implements EventSubscriberInterface {
   use StringTranslationTrait;
 
   /**
-   * Structure asset type.
+   * The entity type manager.
    *
-   * @var \Drupal\asset\Entity\AssetTypeInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $structureAssetType;
+  protected $entityTypeManager;
 
   /**
    * The layer style loader service.
@@ -33,7 +33,7 @@ class MapRenderEventSubscriber implements EventSubscriberInterface {
   protected $layerStyleLoader;
 
   public function __construct(EntityTypeManagerInterface $entity_type_manager, LayerStyleLoaderInterface $layer_style_loader) {
-    $this->structureAssetType = $entity_type_manager->getStorage('asset_type')->load('structure');
+    $this->entityTypeManager = $entity_type_manager;
     $this->layerStyleLoader = $layer_style_loader;
   }
 
@@ -65,10 +65,13 @@ class MapRenderEventSubscriber implements EventSubscriberInterface {
       // Define the parent group.
       $group = $this->t('Locations');
 
+      // Load the structure asset type.
+      $structure_asset_type = $this->entityTypeManager->getStorage('asset_type')->load('structure');
+
       // Create a layer group for the asset type.
       $layers['structure'] = [
         'group' => $group,
-        'label' => $this->structureAssetType->label(),
+        'label' => $structure_asset_type->label(),
         'is_group' => TRUE,
       ];
 
@@ -87,7 +90,7 @@ class MapRenderEventSubscriber implements EventSubscriberInterface {
           $color = $layer_style->get('color');
         }
         $layers['structure_' . $structure_type->id()] = [
-          'group' => $this->structureAssetType->label(),
+          'group' => $structure_asset_type->label(),
           'label' => $structure_type->label(),
           'asset_type' => 'structure',
           'filters' => $filters + ['structure_type_value[]' => $structure_type->id()],

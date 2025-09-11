@@ -15,14 +15,14 @@ use Drupal\Core\Routing\RouteMatchInterface;
 class FarmInventoryAssetViewsAccessCheck implements AccessInterface {
 
   /**
-   * The asset storage.
+   * The entity type manager.
    *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $assetStorage;
+  protected $entityTypeManager;
 
   public function __construct(EntityTypeManagerInterface $entity_type_manager) {
-    $this->assetStorage = $entity_type_manager->getStorage('asset');
+    $this->entityTypeManager = $entity_type_manager;
   }
 
   /**
@@ -38,7 +38,7 @@ class FarmInventoryAssetViewsAccessCheck implements AccessInterface {
     // filter validation returns a 404.
     $asset_id = $route_match->getParameter('asset');
     /** @var \Drupal\asset\Entity\AssetInterface|null $asset */
-    $asset = $this->assetStorage->load($asset_id);
+    $asset = $this->entityTypeManager->getStorage('asset')->load($asset_id);
     if (is_null($asset)) {
       return AccessResult::allowed();
     }

@@ -15,22 +15,14 @@ use Drupal\Core\Routing\RouteMatchInterface;
 class FarmAssetLogViewsAccessCheck implements AccessInterface {
 
   /**
-   * The asset storage.
+   * The entity type manager.
    *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $assetStorage;
-
-  /**
-   * The log storage.
-   *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
-   */
-  protected $logStorage;
+  protected $entityTypeManager;
 
   public function __construct(EntityTypeManagerInterface $entity_type_manager) {
-    $this->assetStorage = $entity_type_manager->getStorage('asset');
-    $this->logStorage = $entity_type_manager->getStorage('log');
+    $this->entityTypeManager = $entity_type_manager;
   }
 
   /**
@@ -46,7 +38,7 @@ class FarmAssetLogViewsAccessCheck implements AccessInterface {
     // filter validation returns a 404.
     $asset_id = $route_match->getParameter('asset');
     /** @var \Drupal\asset\Entity\AssetInterface|null $asset */
-    $asset = $this->assetStorage->load($asset_id);
+    $asset = $this->entityTypeManager->getStorage('asset')->load($asset_id);
     if (is_null($asset)) {
       return AccessResult::allowed();
     }
@@ -59,7 +51,7 @@ class FarmAssetLogViewsAccessCheck implements AccessInterface {
     }
 
     // Build a count query for logs of this type.
-    $query = $this->logStorage->getAggregateQuery()
+    $query = $this->entityTypeManager->getStorage('log')->getAggregateQuery()
       ->accessCheck(TRUE)
       ->condition('type', $log_type)
       ->count();

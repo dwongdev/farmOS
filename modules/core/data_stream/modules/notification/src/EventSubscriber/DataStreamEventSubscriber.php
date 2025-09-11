@@ -16,14 +16,14 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class DataStreamEventSubscriber implements EventSubscriberInterface {
 
   /**
-   * The data stream notification entity storage.
+   * The entity type manager.
    *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $notificationStorage;
+  protected $entityTypeManager;
 
   public function __construct(EntityTypeManagerInterface $entity_type_manager) {
-    $this->notificationStorage = $entity_type_manager->getStorage('data_stream_notification');
+    $this->entityTypeManager = $entity_type_manager;
   }
 
   /**
@@ -45,7 +45,7 @@ class DataStreamEventSubscriber implements EventSubscriberInterface {
 
     // Load any notifications configured for the data stream.
     /** @var \Drupal\data_stream_notification\Entity\DataStreamNotificationInterface[] $notifications */
-    $notifications = $this->notificationStorage->loadByProperties([
+    $notifications = $this->entityTypeManager->getStorage('data_stream_notification')->loadByProperties([
       'status' => TRUE,
       'data_stream' => $event->dataStream->id(),
     ]);

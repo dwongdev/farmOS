@@ -19,11 +19,11 @@ class MapRenderEventSubscriber implements EventSubscriberInterface {
   use StringTranslationTrait;
 
   /**
-   * Land asset type.
+   * The entity type manager.
    *
-   * @var \Drupal\asset\Entity\AssetTypeInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $landAssetType;
+  protected $entityTypeManager;
 
   /**
    * The layer style loader service.
@@ -33,7 +33,7 @@ class MapRenderEventSubscriber implements EventSubscriberInterface {
   protected $layerStyleLoader;
 
   public function __construct(EntityTypeManagerInterface $entity_type_manager, LayerStyleLoaderInterface $layer_style_loader) {
-    $this->landAssetType = $entity_type_manager->getStorage('asset_type')->load('land');
+    $this->entityTypeManager = $entity_type_manager;
     $this->layerStyleLoader = $layer_style_loader;
   }
 
@@ -65,10 +65,13 @@ class MapRenderEventSubscriber implements EventSubscriberInterface {
       // Define the parent group.
       $group = $this->t('Locations');
 
+      // Load the land asset type.
+      $land_asset_type = $this->entityTypeManager->getStorage('asset_type')->load('land');
+
       // Create a layer group for the asset type.
       $layers['land'] = [
         'group' => $group,
-        'label' => $this->landAssetType->label(),
+        'label' => $land_asset_type->label(),
         'is_group' => TRUE,
       ];
 
@@ -87,7 +90,7 @@ class MapRenderEventSubscriber implements EventSubscriberInterface {
           $color = $layer_style->get('color');
         }
         $layers['land_' . $land_type->id()] = [
-          'group' => $this->landAssetType->label(),
+          'group' => $land_asset_type->label(),
           'label' => $land_type->label(),
           'asset_type' => 'land',
           'filters' => $filters + ['land_type_value[]' => $land_type->id()],
