@@ -20,6 +20,7 @@ class FarmUiViewsHooks {
   #[Hook('help')]
   public function help($route_name, RouteMatchInterface $route_match) {
     $output = '';
+
     // Define common route names and URLs for primary entity types.
     $entity_routes = [
       'asset' => 'entity.asset.collection',
@@ -33,6 +34,7 @@ class FarmUiViewsHooks {
       'quantity' => Url::fromRoute($entity_routes['quantity'])->toString(),
       'people' => Url::fromRoute($entity_routes['people'])->toString(),
     ];
+
     // Assets View.
     if ($route_name == $entity_routes['asset']) {
       $output .= '<p>' . t('Assets represent things that are being tracked or managed. They store high-level information, but most historical data is stored in the <a href=":logs">logs</a> that reference them.', [
@@ -40,6 +42,7 @@ class FarmUiViewsHooks {
       ]) . '</p>';
       $output .= '<p>' . t('Assets that are no longer actively managed can be archived. Archived assets will be hidden from most lists, but are preserved and searchable for posterity.') . '</p>';
     }
+
     // Logs View.
     if ($route_name == $entity_routes['log']) {
       $output .= '<p>' . t('Logs represent events that take place in relation to <a href=":assets">assets</a> and other records. They have a timestamp to represent when they take place, and a status to designate that they are "Done", "Pending", or "Abandoned".', [
@@ -49,6 +52,7 @@ class FarmUiViewsHooks {
         ':people' => $entity_urls['people'],
       ]) . '</p>';
     }
+
     // Quantities View.
     if ($route_name == $entity_routes['quantity']) {
       $output .= '<p>' . t('Quantities are granular units of quantitative data that represent a single data point within a <a href=":logs">log</a>.', [
@@ -56,6 +60,7 @@ class FarmUiViewsHooks {
       ]) . '</p>';
       $output .= '<p>' . t('All quantities can optionally include a measure, value, units, and label. Specific quantity types may collect additional information.') . '</p>';
     }
+
     // Plans View.
     if ($route_name == 'entity.plan.collection') {
       $output .= '<p>' . t('Plans provide features for planning, managing, and organizing <a href=":assets">assets</a>, <a href=":logs">logs</a>, and <a href=":people">people</a> around a particular goal.', [
@@ -73,6 +78,7 @@ class FarmUiViewsHooks {
   #[Hook('entity_type_build')]
   public function entityTypeBuild(array &$entity_types) {
     /** @var \Drupal\Core\Entity\EntityTypeInterface[] $entity_types */
+
     // Override the "collection" link path for assets, logs, and plans to use
     // the Views provided by this module.
     $collection_paths = [
@@ -92,6 +98,7 @@ class FarmUiViewsHooks {
    */
   #[Hook('local_tasks_alter')]
   public function localTasksAlter(&$local_tasks) {
+
     // Remove the local task plugin definition for farm entity collection links.
     $entity_types = [
       'asset',
@@ -112,12 +119,14 @@ class FarmUiViewsHooks {
   #[Hook('farm_dashboard_groups')]
   public function farmDashboardGroups() {
     $groups = [];
+
     // If the plan module is enabled, add a plans group.
     if (\Drupal::service('module_handler')->moduleExists('plan')) {
       $groups['second']['plans'] = [
         '#weight' => 10,
       ];
     }
+
     // Add a logs group.
     $groups['first']['logs'] = [
       '#weight' => 10,
@@ -131,6 +140,7 @@ class FarmUiViewsHooks {
   #[Hook('farm_dashboard_panes')]
   public function farmDashboardPanes() {
     $panes = [];
+
     // If the plan module is enabled, add active plans pane.
     if (\Drupal::service('module_handler')->moduleExists('plan')) {
       $panes['active_plans'] = [
@@ -141,6 +151,7 @@ class FarmUiViewsHooks {
         'weight' => 0,
       ];
     }
+
     // Add upcoming and late logs panes.
     $panes['upcoming_tasks'] = [
       'view' => 'farm_log',
@@ -156,6 +167,7 @@ class FarmUiViewsHooks {
       'region' => 'first',
       'weight' => 11,
     ];
+
     return $panes;
   }
 
@@ -164,6 +176,7 @@ class FarmUiViewsHooks {
    */
   #[Hook('entity_base_field_info_alter')]
   public function entityBaseFieldInfoAlter(&$fields, EntityTypeInterface $entity_type) {
+
     // Use Entity Browser widget for certain asset reference fields.
     $alter_fields = [
       'log' => [

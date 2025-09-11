@@ -16,6 +16,7 @@ class FarmApiHooks {
    */
   #[Hook('farm_api_allow_resource_types')]
   public function farmApiAllowResourceTypes() {
+
     // Allow farmOS core entity types on behalf of the modules that provide
     // them.
     return [

@@ -18,10 +18,12 @@ class FarmCommentPlanHooks {
   #[Hook('entity_base_field_info')]
   public function entityBaseFieldInfo(EntityTypeInterface $entity_type) {
     $fields = [];
+
     // Add comment base field to plans.
     if ($entity_type->id() == 'plan') {
       $fields['comment'] = farm_comment_base_field_definition('plan');
     }
+
     return $fields;
   }
 

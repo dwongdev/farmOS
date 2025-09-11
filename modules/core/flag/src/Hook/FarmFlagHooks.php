@@ -20,12 +20,9 @@ class FarmFlagHooks {
   #[Hook('entity_base_field_info')]
   public function entityBaseFieldInfo(EntityTypeInterface $entity_type) {
     $fields = [];
+
     // Add flag field to farmOS entities.
-    if (in_array($entity_type->id(), [
-      'asset',
-      'log',
-      'plan',
-    ])) {
+    if (in_array($entity_type->id(), ['asset', 'log', 'plan'])) {
       $field_info = [
         'type' => 'list_string',
         'label' => t('Flags'),
@@ -39,6 +36,7 @@ class FarmFlagHooks {
       ];
       $fields['flag'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($field_info);
     }
+
     return $fields;
   }
 
@@ -47,6 +45,7 @@ class FarmFlagHooks {
    */
   #[Hook('farm_ui_theme_region_items')]
   public function farmUiThemeRegionItems(string $entity_type) {
+
     // Define common asset, log, and plan region items on behalf of core modules.
     switch ($entity_type) {
       case 'asset':
@@ -80,12 +79,9 @@ class FarmFlagHooks {
    */
   #[Hook('entity_type_build')]
   public function entityTypeBuild(array &$entity_types) {
+
     // Enable the entity flag action on entity types with a flag field.
-    foreach ([
-      'asset',
-      'log',
-      'plan',
-    ] as $entity_type) {
+    foreach (['asset', 'log', 'plan'] as $entity_type) {
       if (!empty($entity_types[$entity_type])) {
         $route_providers = $entity_types[$entity_type]->getRouteProviderClasses();
         $route_providers['flag'] = EntityFlagActionRouteProvider::class;

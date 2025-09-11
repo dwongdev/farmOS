@@ -18,12 +18,14 @@ class AssetHooks {
   #[Hook('help')]
   public function help($route_name, RouteMatchInterface $route_match) {
     $output = '';
+
     // Main module help for the asset module.
     if ($route_name == 'help.page.asset') {
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
       $output .= '<p>' . t('Provides asset entity') . '</p>';
     }
+
     return $output;
   }
 

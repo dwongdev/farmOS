@@ -18,6 +18,7 @@ class FarmIdTagHooks {
   #[Hook('entity_base_field_info')]
   public function entityBaseFieldInfo(EntityTypeInterface $entity_type) {
     $fields = [];
+
     // Add ID tag field to assets.
     if ($entity_type->id() == 'asset') {
       $field_info = [
@@ -31,9 +32,11 @@ class FarmIdTagHooks {
         ],
       ];
       $fields['id_tag'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($field_info);
+
       // Add an ID tag type constraint to ID tag fields to ensure valid type.
       $fields['id_tag']->addConstraint('IdTagType');
     }
+
     return $fields;
   }
 

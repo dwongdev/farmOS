@@ -16,8 +16,10 @@ class FarmLocationViewsHooks {
    */
   #[Hook('views_data_alter')]
   public function viewsDataAlter(array &$data) {
+
     // Add computed fields to assets.
     if (isset($data['asset'])) {
+
       // Computed geometry.
       $data['asset']['geometry'] = [
         'title' => t('Geometry'),
@@ -26,6 +28,7 @@ class FarmLocationViewsHooks {
           'field_name' => 'geometry',
         ],
       ];
+
       // Computed location.
       $data['asset']['location'] = [
         'title' => t('Current location'),

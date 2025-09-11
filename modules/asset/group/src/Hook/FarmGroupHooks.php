@@ -19,6 +19,7 @@ class FarmGroupHooks {
   public function entityBaseFieldInfo(EntityTypeInterface $entity_type) {
     \Drupal::moduleHandler()->loadInclude('farm_group', 'inc', 'farm_group.base_fields');
     switch ($entity_type->id()) {
+
       // Build asset base fields.
       case 'asset':
         return farm_group_asset_base_fields();
@@ -38,6 +39,7 @@ class FarmGroupHooks {
   #[Hook('entity_base_field_info_alter')]
   public function entityBaseFieldInfoAlter(&$fields, EntityTypeInterface $entity_type) {
     /** @var \Drupal\field\Entity\FieldConfig[] $fields */
+
     // Prevent creating circular group memberships.
     if ($entity_type->id() == 'log' && !empty($fields['asset'])) {
       $fields['asset']->addConstraint('CircularGroupMembership');
@@ -50,11 +52,13 @@ class FarmGroupHooks {
   #[Hook('farm_import_csv_base_fields')]
   public function farmImportCsvBaseFields(string $entity_type) {
     $base_fields = [];
+
     // Add group and is_group_assignment base fields to log CSV importers.
     if ($entity_type == 'log') {
       $base_fields[] = 'group';
       $base_fields[] = 'is_group_assignment';
     }
+
     return $base_fields;
   }
 
@@ -64,17 +68,17 @@ class FarmGroupHooks {
   #[Hook('farm_ui_views_base_fields')]
   public function farmUiViewsBaseFields(string $entity_type) {
     $base_fields = [];
+
     // Add group base field to farmOS asset and log Views.
-    if (in_array($entity_type, [
-      'asset',
-      'log',
-    ])) {
+    if (in_array($entity_type, ['asset', 'log'])) {
       $base_fields[] = 'group';
     }
+
     // Add is_group_assignment base field to log Views.
     if ($entity_type == 'log') {
       $base_fields[] = 'is_group_assignment';
     }
+
     return $base_fields;
   }
 
@@ -112,6 +116,7 @@ class FarmGroupHooks {
    */
   #[Hook('farm_ui_theme_field_groups')]
   public function farmUiThemeFieldGroups(string $entity_type, string $bundle) {
+
     // Add a field group for group membership fields on logs.
     if ($entity_type == 'log') {
       return [

@@ -18,10 +18,12 @@ class FarmCommentAssetHooks {
   #[Hook('entity_base_field_info')]
   public function entityBaseFieldInfo(EntityTypeInterface $entity_type) {
     $fields = [];
+
     // Add comment base field to assets.
     if ($entity_type->id() == 'asset') {
       $fields['comment'] = farm_comment_base_field_definition('asset');
     }
+
     return $fields;
   }
 

@@ -19,6 +19,7 @@ class FarmLocationHooks {
   public function entityBaseFieldInfo(EntityTypeInterface $entity_type) {
     \Drupal::moduleHandler()->loadInclude('farm_location', 'inc', 'farm_location.base_fields');
     switch ($entity_type->id()) {
+
       // Build asset base fields.
       case 'asset':
         return farm_location_asset_base_fields();
@@ -38,6 +39,7 @@ class FarmLocationHooks {
   #[Hook('entity_base_field_info_alter')]
   public function entityBaseFieldInfoAlter(&$fields, EntityTypeInterface $entity_type) {
     /** @var \Drupal\field\Entity\FieldConfig[] $fields */
+
     // Prevent creating circular asset location.
     if ($entity_type->id() == 'log' && !empty($fields['asset'])) {
       $fields['asset']->addConstraint('CircularAssetLocation');

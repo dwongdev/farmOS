@@ -17,10 +17,12 @@ class FarmLogAssetHooks {
    */
   #[Hook('entity_base_field_info')]
   public function entityBaseFieldInfo(EntityTypeInterface $entity_type) {
+
     // We only care about log entities.
     if ($entity_type->id() != 'log') {
       return [];
     }
+
     // Add an asset reference field to logs.
     $field_info = [
       'type' => 'entity_reference',
@@ -34,6 +36,7 @@ class FarmLogAssetHooks {
       ],
     ];
     $fields['asset'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($field_info);
+
     return $fields;
   }
 

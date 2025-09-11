@@ -18,10 +18,12 @@ class FarmCommentLogHooks {
   #[Hook('entity_base_field_info')]
   public function entityBaseFieldInfo(EntityTypeInterface $entity_type) {
     $fields = [];
+
     // Add comment base field to logs.
     if ($entity_type->id() == 'log') {
       $fields['comment'] = farm_comment_base_field_definition('log');
     }
+
     return $fields;
   }
 

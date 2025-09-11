@@ -16,6 +16,7 @@ class FarmFarmViewsHooks {
    */
   #[Hook('views_data_alter')]
   public function viewsDataAlter(array &$data) {
+
     // Provide a farm_organization_asset argument for views of logs.
     if (isset($data['log_field_data'])) {
       $data['log_field_data']['farm_organization_asset'] = [

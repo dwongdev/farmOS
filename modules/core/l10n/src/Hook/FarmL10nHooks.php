@@ -18,10 +18,12 @@ class FarmL10nHooks {
   #[Hook('help')]
   public function help($route_name, RouteMatchInterface $route_match) {
     $output = '';
+
     // Help text for the farm/settings/language form.
     if ($route_name == 'farm_l10n.settings') {
       $output .= '<p>' . t('Select the default language for the user interface. Individual users can override this by editing their profile.') . '</p>';
     }
+
     return $output;
   }
 
@@ -30,6 +32,7 @@ class FarmL10nHooks {
    */
   #[Hook('entity_bundle_info_alter')]
   public function entityBundleInfoAlter(&$bundles) {
+
     // If the content translation module is not enabled, alter all entity type
     // bundles to mark them as not translatable. This fixes an issue with
     // JSON:API PATCH requests when authenticated as a user with a non-default

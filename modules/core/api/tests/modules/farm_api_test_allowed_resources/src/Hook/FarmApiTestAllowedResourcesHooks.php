@@ -16,6 +16,7 @@ class FarmApiTestAllowedResourcesHooks {
    */
   #[Hook('farm_api_allow_resource_types')]
   public function farmApiAllowResourceTypes() {
+
     // Allow view entities.
     return [
       'view',
@@ -27,6 +28,7 @@ class FarmApiTestAllowedResourcesHooks {
    */
   #[Hook('farm_api_allow_resource_types_alter')]
   public function farmApiAllowResourceTypesAlter(&$entity_types) {
+
     // Disallow log entities.
     if (in_array('log', $entity_types)) {
       unset($entity_types[array_search('log', $entity_types)]);

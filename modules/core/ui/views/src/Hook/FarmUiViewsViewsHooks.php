@@ -16,6 +16,7 @@ class FarmUiViewsViewsHooks {
    */
   #[Hook('views_data_alter')]
   public function viewsDataAlter(array &$data) {
+
     // Use core entity_reference filter plugin for all entity reference fields.
     // @todo Refactor/remove this when the following core issues are resolved.
     // @see https://www.drupal.org/project/drupal/issues/3458099
@@ -30,6 +31,7 @@ class FarmUiViewsViewsHooks {
         }
       }
     }
+
     // Provide an asset_or_location argument for views of logs.
     if (isset($data['log_field_data'])) {
       $data['log_field_data']['asset_or_location'] = [
@@ -40,6 +42,7 @@ class FarmUiViewsViewsHooks {
         ],
       ];
     }
+
     // Provide an asset_taxonomy_term_reference argument for views of assets.
     if (isset($data['asset_field_data'])) {
       $data['asset_field_data']['asset_taxonomy_term_reference'] = [
@@ -50,6 +53,7 @@ class FarmUiViewsViewsHooks {
         ],
       ];
     }
+
     // Provide a log_taxonomy_term_reference argument for views of logs.
     if (isset($data['log_field_data'])) {
       $data['log_field_data']['log_taxonomy_term_reference'] = [

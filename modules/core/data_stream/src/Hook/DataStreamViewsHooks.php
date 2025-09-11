@@ -17,8 +17,10 @@ class DataStreamViewsHooks {
   #[Hook('views_data')]
   public function viewsData() {
     $data = [];
+
     /** @var \Drupal\data_stream\DataStreamTypeManager $manager */
     $manager = \Drupal::service('plugin.manager.data_stream_type');
+
     // Collect views data from all data stream type plugins.
     $data_stream_types = $manager->getDefinitions();
     foreach (array_keys($data_stream_types) as $plugin_id) {
@@ -26,6 +28,7 @@ class DataStreamViewsHooks {
       $plugin = $manager->createInstance($plugin_id);
       $data = array_replace_recursive($data, $plugin->getViewsData());
     }
+
     return $data;
   }
 

@@ -19,6 +19,7 @@ class FarmEntityViewsHooks {
    */
   #[Hook('modules_installed')]
   public function modulesInstalled($modules, $is_syncing) {
+
     // Reset the views data after installing modules.
     // See https://www.drupal.org/project/entity/issues/3206703#comment-14073184
     if (\Drupal::hasService('views.views_data')) {
@@ -31,16 +32,11 @@ class FarmEntityViewsHooks {
    */
   #[Hook('entity_type_build')]
   public function entityTypeBuild(array &$entity_types) {
+
     // Set the views data handler class to FarmEntityViewsData.
-    foreach ([
-      'asset',
-      'log',
-      'organization',
-      'plan',
-      'plan_record',
-      'quantity',
-    ] as $entity_type) {
+    foreach (['asset', 'log', 'organization', 'plan', 'plan_record', 'quantity'] as $entity_type) {
       if (!empty($entity_types[$entity_type])) {
+
         // Use the correct class for each entity type.
         // Logs and quantities provide their own that we must extend from.
         $views_data_class = FarmEntityViewsData::class;

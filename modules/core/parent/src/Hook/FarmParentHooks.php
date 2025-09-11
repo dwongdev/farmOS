@@ -17,8 +17,9 @@ class FarmParentHooks {
    */
   #[Hook('entity_base_field_info')]
   public function entityBaseFieldInfo(EntityTypeInterface $entity_type) {
-    // Add parent base field to all asset types.
     $fields = [];
+
+    // Add parent base field to all asset types.
     if ($entity_type->id() == 'asset') {
       $parent_info = [
         'type' => 'entity_reference',
@@ -32,6 +33,7 @@ class FarmParentHooks {
         ],
       ];
       $fields['parent'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($parent_info);
+
       // Add entity_reference_validators constraints to parent field.
       // See entity_reference_validators_entity_base_field_info_alter.
       $fields['parent']->addConstraint('CircularReference', [
@@ -39,6 +41,7 @@ class FarmParentHooks {
       ]);
       $fields['parent']->addConstraint('DuplicateReference');
     }
+
     return $fields;
   }
 

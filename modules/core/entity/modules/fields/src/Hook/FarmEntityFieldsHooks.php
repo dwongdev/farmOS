@@ -17,8 +17,10 @@ class FarmEntityFieldsHooks {
    */
   #[Hook('entity_base_field_info')]
   public function entityBaseFieldInfo(EntityTypeInterface $entity_type) {
+
     // Include helper functions.
     \Drupal::moduleHandler()->loadInclude('farm_entity_fields', 'inc', 'farm_entity_fields.base_fields');
+
     // Add common base fields to all asset types.
     if ($entity_type->id() == 'asset') {
       return farm_entity_fields_asset_base_fields();
@@ -43,6 +45,7 @@ class FarmEntityFieldsHooks {
    */
   #[Hook('entity_base_field_info_alter')]
   public function entityBaseFieldInfoAlter(&$fields, EntityTypeInterface $entity_type) {
+
     // Only alter asset, log, organization, and plan fields.
     if (!in_array($entity_type->id(), [
       'asset',
@@ -75,17 +78,21 @@ class FarmEntityFieldsHooks {
       ],
     ];
     foreach ($alter_fields as $name => $options) {
+
       // If the field does not exist on this entity type, skip it.
       if (empty($fields[$name])) {
         continue;
       }
+
       // Load the form and view display options.
       $form_display_options = $fields[$name]->getDisplayOptions('form');
       $view_display_options = $fields[$name]->getDisplayOptions('view');
+
       // Set the field weight.
       if (!empty($options['weight'])) {
         $form_display_options['weight'] = $view_display_options['weight'] = $options['weight'];
       }
+
       // Hide the field, if desired.
       if (!empty($options['hidden'])) {
         /** @var bool|string $hidden */
@@ -97,12 +104,14 @@ class FarmEntityFieldsHooks {
           $view_display_options['region'] = 'hidden';
         }
       }
+
       // Set the label to inline by default, but allow overrides.
       $view_display_options['label'] = 'inline';
       if (!empty($options['label'])) {
         $view_display_options['label'] = $options['label'];
       }
       switch ($name) {
+
         // Change state field from transition form to default.
         case 'status':
           $view_display_options['type'] = 'list_default';
@@ -113,10 +122,12 @@ class FarmEntityFieldsHooks {
           $view_display_options['settings']['link'] = FALSE;
           break;
       }
+
       // Save the options.
       $fields[$name]->setDisplayOptions('form', $form_display_options);
       $fields[$name]->setDisplayOptions('view', $view_display_options);
     }
+
     // Allow the "type" base field view display to be configured.
     if (!empty($fields['type'])) {
       $fields['type']->setDisplayConfigurable('view', TRUE);

@@ -17,8 +17,10 @@ class FarmImportCsvViewsHooks {
   #[Hook('views_data')]
   public function viewsData() {
     $data = [];
+
     // Describe the farm_import_csv_entity table.
     $data['farm_import_csv_entity']['table']['group'] = t('CSV');
+
     // Provide a relationship to the file entity.
     $data['farm_import_csv_entity']['file_id'] = [
       'title' => t('CSV file'),
@@ -30,6 +32,7 @@ class FarmImportCsvViewsHooks {
         'id' => 'standard',
       ],
     ];
+
     // Provide a field and sort for the row number.
     $data['farm_import_csv_entity']['rownum'] = [
       'title' => t('Row number'),
@@ -41,6 +44,7 @@ class FarmImportCsvViewsHooks {
         'id' => 'standard',
       ],
     ];
+
     // Provide a contextual filter argument for the migration ID.
     $data['farm_import_csv_entity']['migration'] = [
       'title' => t('Migration ID'),
@@ -49,37 +53,39 @@ class FarmImportCsvViewsHooks {
         'id' => 'string',
       ],
     ];
+
     // Create implicit joins to the asset, log, and taxonomy term data tables.
     $data['farm_import_csv_entity']['table']['join']['asset_field_data'] = [
       'left_field' => 'id',
       'field' => 'entity_id',
       'extra' => [
-              [
-                'field' => 'entity_type',
-                'value' => 'asset',
-              ],
+        [
+          'field' => 'entity_type',
+          'value' => 'asset',
+        ],
       ],
     ];
     $data['farm_import_csv_entity']['table']['join']['log_field_data'] = [
       'left_field' => 'id',
       'field' => 'entity_id',
       'extra' => [
-              [
-                'field' => 'entity_type',
-                'value' => 'log',
-              ],
+        [
+          'field' => 'entity_type',
+          'value' => 'log',
+        ],
       ],
     ];
     $data['farm_import_csv_entity']['table']['join']['taxonomy_term_field_data'] = [
       'left_field' => 'tid',
       'field' => 'entity_id',
       'extra' => [
-              [
-                'field' => 'entity_type',
-                'value' => 'taxonomy_term',
-              ],
+        [
+          'field' => 'entity_type',
+          'value' => 'taxonomy_term',
+        ],
       ],
     ];
+
     return $data;
   }
 

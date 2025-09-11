@@ -16,6 +16,7 @@ class FarmInventoryViewsHooks {
    */
   #[Hook('views_data_alter')]
   public function viewsDataAlter(array &$data) {
+
     // Add computed inventory field to assets.
     if (isset($data['asset'])) {
       $data['asset']['inventory'] = [

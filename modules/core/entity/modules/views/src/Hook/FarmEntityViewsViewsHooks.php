@@ -16,9 +16,11 @@ class FarmEntityViewsViewsHooks {
    */
   #[Hook('views_data_alter')]
   public function viewsDataAlter(array &$data) {
+
     // Because Drupal core does not provide full Views integration for base
     // fields we must manually add support for certain fields.
     // Workaround for core issue #2489476.
+
     // Add support for state_machine filters.
     $status_filter = [
       'id' => 'state_machine_state',

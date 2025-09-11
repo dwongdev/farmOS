@@ -16,6 +16,7 @@ class FarmWorkerHooks {
    */
   #[Hook('oauth2_scope_info_alter')]
   public function oauth2ScopeInfoAlter(array &$scopes) {
+
     // Enable the password grant for static role scopes.
     if (\Drupal::moduleHandler()->moduleExists('simple_oauth_password_grant')) {
       $target_scopes = [

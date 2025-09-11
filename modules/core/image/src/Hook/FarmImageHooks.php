@@ -16,6 +16,7 @@ class FarmImageHooks {
    */
   #[Hook('farm_update_exclude_config')]
   public function farmUpdateExcludeConfig() {
+
     // Exclude config that we have overridden in hook_install().
     return [
       'image.style.large',

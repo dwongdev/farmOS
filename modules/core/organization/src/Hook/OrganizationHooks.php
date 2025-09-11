@@ -18,12 +18,14 @@ class OrganizationHooks {
   #[Hook('help')]
   public function help($route_name, RouteMatchInterface $route_match) {
     $output = '';
+
     // Main module help for the organization module.
     if ($route_name == 'help.page.organization') {
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
       $output .= '<p>' . t('Provides organization entity') . '</p>';
     }
+
     return $output;
   }
 

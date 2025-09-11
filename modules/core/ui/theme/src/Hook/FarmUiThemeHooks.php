@@ -35,8 +35,9 @@ class FarmUiThemeHooks {
       'page__asset__map_popup' => [
         'base hook' => 'page',
       ],
-          // Implement the node edit form theme hook.
-          // See https://www.drupal.org/project/gin/issues/3342164
+
+      // Implement the node edit form theme hook.
+      // See https://www.drupal.org/project/gin/issues/3342164
       'node_edit_form' => [
         'render element' => 'form',
       ],
@@ -56,6 +57,7 @@ class FarmUiThemeHooks {
    */
   #[Hook('theme_suggestions_menu_local_task')]
   public function themeSuggestionsMenuLocalTask(array $variables) {
+
     // Add suggestions for primary and secondary task levels.
     $suggestions = [];
     if (isset($variables['element']['#level'])) {
@@ -79,6 +81,7 @@ class FarmUiThemeHooks {
    */
   #[Hook('entity_form_display_alter')]
   public function entityFormDisplayAlter(EntityFormDisplayInterface $form_display, array $context) {
+
     // Only alter farm entity types.
     $entity_types = [
       'asset',
@@ -90,11 +93,13 @@ class FarmUiThemeHooks {
     if (!in_array($context['entity_type'], $entity_types)) {
       return;
     }
+
     // Ask modules for a list of field group items.
     $field_map = \Drupal::moduleHandler()->invokeAll('farm_ui_theme_field_group_items', [
       $context['entity_type'],
       $context['bundle'],
     ]);
+
     // Apply the field group mapping if not already specified on the form
     // display.
     foreach ($field_map as $field_id => $field_group) {
@@ -109,6 +114,7 @@ class FarmUiThemeHooks {
    */
   #[Hook('farm_ui_theme_field_group_items')]
   public function farmUiThemeFieldGroupItems(string $entity_type, string $bundle) {
+
     // Define base fields for asset, log, and plans on behalf of core modules.
     $fields = [
       'name' => 'default',
@@ -184,6 +190,7 @@ class FarmUiThemeHooks {
    */
   #[Hook('entity_type_build')]
   public function entityTypeBuild(array &$entity_types) {
+
     // Override the default add and edit form class.
     $target_entity_types = [
       'asset' => AssetForm::class,
@@ -216,6 +223,7 @@ class FarmUiThemeHooks {
    */
   #[Hook('farm_ui_theme_region_items')]
   public function farmUiThemeRegionItems(string $entity_type) {
+
     // Define common asset, log, and plan region items on behalf of core
     // modules.
     switch ($entity_type) {
@@ -284,6 +292,7 @@ class FarmUiThemeHooks {
    */
   #[Hook('farm_update_exclude_config')]
   public function farmUpdateExcludeConfig() {
+
     // Exclude config that we have overridden in hook_install() or the
     // farm_ui_theme.overrider service.
     return [

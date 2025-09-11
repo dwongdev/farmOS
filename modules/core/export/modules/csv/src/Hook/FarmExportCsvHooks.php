@@ -18,12 +18,9 @@ class FarmExportCsvHooks {
    */
   #[Hook('entity_type_build')]
   public function entityTypeBuild(array &$entity_types) {
+
     // Enable the entity CSV export action on assets, logs, and quantities.
-    foreach ([
-      'asset',
-      'log',
-      'quantity',
-    ] as $entity_type) {
+    foreach (['asset', 'log', 'quantity'] as $entity_type) {
       if (!empty($entity_types[$entity_type])) {
         $route_providers = $entity_types[$entity_type]->getRouteProviderClasses();
         $route_providers['csv'] = EntityCsvActionRouteProvider::class;

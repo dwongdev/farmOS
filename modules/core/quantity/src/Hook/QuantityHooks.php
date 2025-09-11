@@ -16,6 +16,7 @@ class QuantityHooks {
    */
   #[Hook('farm_api_meta_alter')]
   public function farmApiMetaAlter(&$data) {
+
     // Add the quantity system of measurement.
     $data['system_of_measurement'] = \Drupal::config('quantity.settings')->get('system_of_measurement');
   }
@@ -42,12 +43,14 @@ class QuantityHooks {
   #[Hook('theme_suggestions_field')]
   public function themeSuggestionsField(array $variables) {
     $suggestions = [];
+
     // Add a theme hook suggestion for theming all fields on quantity entities.
     // Note that the field__quantity theme hook is used for any entity with
     // a field called "quantity", such as the log.quantity entity reference.
     if ($variables['element']['#entity_type'] == 'quantity') {
       $suggestions[] = 'field__quantity__field';
     }
+
     return $suggestions;
   }
 

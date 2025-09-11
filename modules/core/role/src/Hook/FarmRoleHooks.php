@@ -17,6 +17,7 @@ class FarmRoleHooks {
   #[Hook('entity_type_alter')]
   public function entityTypeAlter(array &$entity_types) {
     /** @var \Drupal\Core\Entity\EntityTypeInterface[] $entity_types */
+
     // Replace the storage handler class for Roles.
     $entity_types['user_role']->setHandlerClass('storage', 'Drupal\farm_role\FarmRoleStorage');
   }

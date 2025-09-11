@@ -18,6 +18,7 @@ class FarmOwnerHooks {
   #[Hook('entity_base_field_info')]
   public function entityBaseFieldInfo(EntityTypeInterface $entity_type) {
     $fields = [];
+
     // Add owner field to logs and assets.
     if (in_array($entity_type->id(), [
       'asset',
@@ -36,6 +37,7 @@ class FarmOwnerHooks {
       ];
       $fields['owner'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($field_info);
     }
+
     return $fields;
   }
 

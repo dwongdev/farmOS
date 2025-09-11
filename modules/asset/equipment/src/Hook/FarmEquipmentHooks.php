@@ -18,6 +18,7 @@ class FarmEquipmentHooks {
   #[Hook('entity_base_field_info')]
   public function entityBaseFieldInfo(EntityTypeInterface $entity_type) {
     $fields = [];
+
     // Add an Equipment reference field to logs.
     if ($entity_type->id() == 'log') {
       $options = [
@@ -34,6 +35,7 @@ class FarmEquipmentHooks {
       ];
       $fields['equipment'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
     }
+
     return $fields;
   }
 
@@ -43,10 +45,12 @@ class FarmEquipmentHooks {
   #[Hook('farm_import_csv_base_fields')]
   public function farmImportCsvBaseFields(string $entity_type) {
     $base_fields = [];
+
     // Add equipment base field to log CSV importers.
     if ($entity_type == 'log') {
       $base_fields[] = 'equipment';
     }
+
     return $base_fields;
   }
 
@@ -56,10 +60,12 @@ class FarmEquipmentHooks {
   #[Hook('farm_ui_views_base_fields')]
   public function farmUiViewsBaseFields(string $entity_type) {
     $base_fields = [];
+
     // Add equipment base field to farmOS log Views.
     if ($entity_type == 'log') {
       $base_fields[] = 'equipment';
     }
+
     return $base_fields;
   }
 

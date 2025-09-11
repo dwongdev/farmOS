@@ -18,10 +18,12 @@ class FarmImportKmlHooks {
   #[Hook('help')]
   public function help($route_name, RouteMatchInterface $route_match) {
     $output = '';
+
     // KML importer.
     if ($route_name == 'farm.import.kml') {
       $output .= '<p>' . t('This KML importer will create multiple Land assets from a single KML file. Select the KML file you would like to upload, as well as the default land type, then click "Parse".') . '</p>';
     }
+
     return $output;
   }
 

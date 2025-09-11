@@ -18,16 +18,16 @@ class FarmEntityContribTestHooks {
   #[Hook('farm_entity_bundle_field_info')]
   public function farmEntityBundleFieldInfo(EntityTypeInterface $entity_type, string $bundle) {
     $fields = [];
+
     // Add a new bundle field to test logs.
-    if ($entity_type->id() == 'log' && in_array($bundle, [
-      'test',
-    ])) {
+    if ($entity_type->id() == 'log' && in_array($bundle, ['test'])) {
       $options = [
         'type' => 'string',
         'label' => t('Test hook bundle field'),
       ];
       $fields['test_contrib_hook_bundle_field'] = \Drupal::service('farm_field.factory')->bundleFieldDefinition($options);
     }
+
     return $fields;
   }
 

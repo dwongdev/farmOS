@@ -20,6 +20,7 @@ class FarmApiOauthHooks {
   #[Hook('entity_base_field_info')]
   public function entityBaseFieldInfo(EntityTypeInterface $entity_type) {
     $fields = [];
+
     // Add allowed_origins field to the consumer entity.
     if ($entity_type->id() == 'consumer') {
       $fields['allowed_origins'] = BundleFieldDefinition::create('string')->setLabel(t('Allowed origins'))->setDescription(t('Configure CORS origins for this consumer.'))->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)->setDisplayOptions('form', [
@@ -30,6 +31,7 @@ class FarmApiOauthHooks {
         ],
       ]);
     }
+
     return $fields;
   }
 

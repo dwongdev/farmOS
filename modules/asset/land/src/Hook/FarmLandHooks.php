@@ -16,9 +16,11 @@ class FarmLandHooks {
    */
   #[Hook('farm_ui_theme_region_items')]
   public function farmUiThemeRegionItems(string $entity_type) {
+
     // Define common asset, log, and plan region items on behalf of core
     // modules.
     switch ($entity_type) {
+
       case 'asset':
         return [
           'second' => [

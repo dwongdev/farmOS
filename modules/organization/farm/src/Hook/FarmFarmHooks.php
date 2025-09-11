@@ -18,6 +18,7 @@ class FarmFarmHooks {
   #[Hook('entity_base_field_info')]
   public function entityBaseFieldInfo(EntityTypeInterface $entity_type) {
     $fields = [];
+
     // Add a Farm reference field to assets.
     if ($entity_type->id() == 'asset') {
       $options = [
@@ -33,13 +34,16 @@ class FarmFarmHooks {
         ],
       ];
       $fields['farm'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
+
       // Add a constraint to ensure that assets are in the same farm as their
       // parents and children.
       $fields['farm']->addConstraint('AssetParentFarm');
+
       // Add a constraint to ensure that the farm does not change if there are
       // any movement logs that reference it (in either asset or location
       // field).
       $fields['farm']->addConstraint('AssetMovementFarm');
+
       // If the farm_group module is installed, add a constraint to ensure that
       // the farm does not change if there are any group assignment logs that
       // reference it (in either asset or group field).
@@ -55,15 +59,18 @@ class FarmFarmHooks {
    */
   #[Hook('entity_base_field_info_alter')]
   public function entityBaseFieldInfoAlter(&$fields, EntityTypeInterface $entity_type) {
+
     // Only modify log fields.
     if ($entity_type->id() != 'log') {
       return;
     }
+
     // If the is_movement field exists, add a constraint to ensure that assets
     // can't be moved between farms.
     if (!empty($fields['is_movement'])) {
       $fields['is_movement']->addConstraint('LogMovementFarm');
     }
+
     // If the is_group_membership field exists, add a constraint to ensure that
     // assets can't be assigned to groups in a different farm.
     if (!empty($fields['is_group_assignment'])) {
@@ -77,10 +84,12 @@ class FarmFarmHooks {
   #[Hook('farm_import_csv_base_fields')]
   public function farmImportCsvBaseFields(string $entity_type) {
     $base_fields = [];
+
     // Add farm organization base field to asset CSV importers.
     if ($entity_type == 'asset') {
       $base_fields[] = 'farm';
     }
+
     return $base_fields;
   }
 
@@ -90,10 +99,12 @@ class FarmFarmHooks {
   #[Hook('farm_ui_views_base_fields')]
   public function farmUiViewsBaseFields(string $entity_type) {
     $base_fields = [];
+
     // Add farm organization base field to farmOS asset Views.
     if ($entity_type == 'asset') {
       $base_fields[] = 'farm';
     }
+
     return $base_fields;
   }
 

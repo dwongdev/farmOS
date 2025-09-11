@@ -18,6 +18,7 @@ class FarmEntityTestHooks {
   #[Hook('entity_base_field_info')]
   public function entityBaseFieldInfo(EntityTypeInterface $entity_type) {
     $fields = [];
+
     // Add a new base field to all logs.
     if ($entity_type->id() == 'log') {
       $options = [
@@ -26,6 +27,7 @@ class FarmEntityTestHooks {
       ];
       $fields['test_hook_base_field'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
     }
+
     return $fields;
   }
 
@@ -35,17 +37,16 @@ class FarmEntityTestHooks {
   #[Hook('farm_entity_bundle_field_info')]
   public function farmEntityBundleFieldInfo(EntityTypeInterface $entity_type, string $bundle) {
     $fields = [];
+
     // Add a new bundle field to test logs.
-    if ($entity_type->id() == 'log' && in_array($bundle, [
-      'test',
-      'test_override',
-    ])) {
+    if ($entity_type->id() == 'log' && in_array($bundle, ['test', 'test_override'])) {
       $options = [
         'type' => 'string',
         'label' => t('Test hook bundle field'),
       ];
       $fields['test_hook_bundle_field'] = \Drupal::service('farm_field.factory')->bundleFieldDefinition($options);
     }
+
     // Add bundle specific fields to all log types.
     if ($entity_type->id() == 'log') {
       $options = [
@@ -57,6 +58,7 @@ class FarmEntityTestHooks {
       $field_name = 'test_hook_bundle_' . $bundle . '_specific_field';
       $fields[$field_name] = \Drupal::service('farm_field.factory')->bundleFieldDefinition($options);
     }
+
     return $fields;
   }
 

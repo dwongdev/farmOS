@@ -17,10 +17,12 @@ class FarmLogQuantityHooks {
    */
   #[Hook('entity_base_field_info')]
   public function entityBaseFieldInfo(EntityTypeInterface $entity_type) {
+
     // We only care about log entities.
     if ($entity_type->id() != 'log') {
       return [];
     }
+
     // Add a quantity reference field to logs.
     $field_info = [
       'quantity' => [
@@ -39,6 +41,7 @@ class FarmLogQuantityHooks {
     foreach ($field_info as $name => $info) {
       $fields[$name] = \Drupal::service('farm_field.factory')->baseFieldDefinition($info);
     }
+
     return $fields;
   }
 

@@ -18,14 +18,17 @@ class FarmImportCsvTestHooks {
   #[Hook('entity_base_field_info')]
   public function entityBaseFieldInfo(EntityTypeInterface $entity_type) {
     $fields = [];
+
     // Add base fields to logs.
     if ($entity_type->id() == 'log') {
+
       // Add a test string base field.
       $options = [
         'type' => 'string',
         'label' => t('Test string'),
       ];
       $fields['test_string'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
+
       // Add an excluded test string base field.
       $options = [
         'type' => 'string',
@@ -33,6 +36,7 @@ class FarmImportCsvTestHooks {
       ];
       $fields['excluded_test_string'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
     }
+
     return $fields;
   }
 
@@ -42,13 +46,17 @@ class FarmImportCsvTestHooks {
   #[Hook('farm_import_csv_base_fields')]
   public function farmImportCsvBaseFields(string $entity_type) {
     $base_fields = [];
+
     // Add log base fields to log CSV importers.
     if ($entity_type == 'log') {
+
       // Add test string base field.
       $base_fields[] = 'test_string';
+
       // Add excluded test string base field (so that it can be excluded).
       $base_fields[] = 'excluded_test_string';
     }
+
     return $base_fields;
   }
 
@@ -58,10 +66,12 @@ class FarmImportCsvTestHooks {
   #[Hook('farm_import_csv_exclude_fields')]
   public function farmImportCsvExcludeFields(string $entity_type) {
     $exclude_fields = [];
+
     // Exclude the excluded_test_string field from log CSV importers.
     if ($entity_type == 'log') {
       $exclude_fields[] = 'excluded_test_string';
     }
+
     return $exclude_fields;
   }
 

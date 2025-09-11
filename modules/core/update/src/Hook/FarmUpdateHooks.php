@@ -24,6 +24,7 @@ class FarmUpdateHooks {
    */
   #[Hook('farm_update_exclude_config')]
   public function farmUpdateExcludeConfig() {
+
     // Exclude Drupal core configurations from automatic updates.
     return [
       'user.role.anonymous',

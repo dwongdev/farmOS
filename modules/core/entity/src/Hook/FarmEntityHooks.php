@@ -28,6 +28,7 @@ class FarmEntityHooks {
    */
   #[Hook('modules_installed')]
   public function modulesInstalled($modules, $is_syncing) {
+
     // Rebuild bundle field map when modules are installed.
     \Drupal::service('entity_field.manager')->rebuildBundleFieldMap();
   }
@@ -37,6 +38,7 @@ class FarmEntityHooks {
    */
   #[Hook('modules_uninstalled')]
   public function modulesUninstalled($modules, $is_syncing) {
+
     // Rebuild bundle field map when modules are uninstalled.
     \Drupal::service('entity_field.manager')->rebuildBundleFieldMap();
   }
@@ -46,37 +48,27 @@ class FarmEntityHooks {
    */
   #[Hook('entity_type_build')]
   public function entityTypeBuild(array &$entity_types) {
+
     // Allow the "view label" operation on the bundle entity type.
-    foreach ([
-      'asset',
-      'log',
-      'organization',
-      'plan',
-      'quantity',
-      'data_stream',
-    ] as $entity_type) {
+    foreach (['asset', 'log', 'organization', 'plan', 'quantity', 'data_stream'] as $entity_type) {
       if (!empty($entity_types[$entity_type])) {
         $bundle_entity_type = $entity_types[$entity_type]->getBundleEntityType();
         $entity_types[$bundle_entity_type]->setHandlerClass('access', EntityAccessControlHandler::class);
         $entity_types[$bundle_entity_type]->setHandlerClass('permission_provider', EntityPermissionProvider::class);
       }
     }
+
     // Enable the use of bundle plugins on specific entity types.
-    foreach ([
-      'asset',
-      'log',
-      'organization',
-      'plan',
-      'plan_record',
-      'quantity',
-    ] as $entity_type) {
+    foreach (['asset', 'log', 'organization', 'plan', 'plan_record', 'quantity'] as $entity_type) {
       if (!empty($entity_types[$entity_type])) {
         $entity_types[$entity_type]->set('bundle_plugin_type', $entity_type . '_type');
         $entity_types[$entity_type]->setHandlerClass('bundle_plugin', FarmEntityBundlePluginHandler::class);
+
         // Override default entity route provider class.
         $route_providers = $entity_types[$entity_type]->getRouteProviderClasses();
         $route_providers['default'] = EntityRouteProvider::class;
         $entity_types[$entity_type]->setHandlerClass('route_provider', $route_providers);
+
         // Deny access to the entity type add form. New entity types of entities
         // with bundle plugins cannot be created in the UI.
         // See https://www.drupal.org/project/farm/issues/3196423
@@ -95,28 +87,26 @@ class FarmEntityHooks {
    */
   #[Hook('entity_field_storage_info_alter')]
   public function entityFieldStorageInfoAlter(&$fields, EntityTypeInterface $entity_type) {
+
     // Bail if not a farm entity type that allows bundle plugins.
-    if (!in_array($entity_type->id(), [
-      'asset',
-      'log',
-      'organization',
-      'plan',
-      'plan_record',
-      'quantity',
-    ])) {
+    if (!in_array($entity_type->id(), ['asset', 'log', 'organization', 'plan', 'plan_record', 'quantity'])) {
       return;
     }
+
     // Get all bundles of the entity type.
     $bundles = \Drupal::service('entity_type.bundle.info')->getBundleInfo($entity_type->id());
+
     // Invoke hook_farm_entity_bundle_field_info() with each bundle.
     $hook = 'farm_entity_bundle_field_info';
     foreach (array_keys($bundles) as $bundle) {
       \Drupal::moduleHandler()->invokeAllWith($hook, function (callable $hook, string $module) use ($fields, $entity_type, $bundle) {
-          // Get bundle field definitions provided by the module.
-          $definitions = $hook($entity_type, $bundle);
-          // Set the provider for each field the module provided.
-          // This is required so that field storage definitions are created in the
-          // database when the module is installed.
+
+        // Get bundle field definitions provided by the module.
+        $definitions = $hook($entity_type, $bundle);
+
+        // Set the provider for each field the module provided.
+        // This is required so that field storage definitions are created in the
+        // database when the module is installed.
         foreach (array_keys($definitions) as $field) {
           if (isset($fields[$field])) {
             $fields[$field]->setProvider($module);
@@ -137,6 +127,7 @@ class FarmEntityHooks {
    */
   #[Hook('entity_presave')]
   public function entityPresave(EntityInterface $entity) {
+
     // Only apply to farm controlled entities.
     $entity_types = [
       'asset',
@@ -148,12 +139,15 @@ class FarmEntityHooks {
     if (!in_array($entity->getEntityTypeId(), $entity_types) || !$entity instanceof RevisionLogInterface || !$entity instanceof FieldableEntityInterface) {
       return;
     }
+
     // Always create new revisions when an entity is saved.
     // This ensures a proper audit trail is available for important records.
     $entity_type = $entity->get($entity->getEntityType()->getKey('bundle'))->entity;
     if ($entity_type instanceof RevisionableEntityBundleInterface && $entity_type->shouldCreateNewRevision() && $entity->getEntityType()->isRevisionable()) {
+
       // Always create a new revision.
       $entity->setNewRevision(TRUE);
+
       // If the new revision log message matches the original, then set a blank
       // revision log message. We don't want the same message repeated across
       // every revision created by the API.
@@ -162,6 +156,7 @@ class FarmEntityHooks {
           $entity->setRevisionLogMessage('');
         }
       }
+
       // Set the user ID and creation time.
       $entity->setRevisionUserId(\Drupal::currentUser()->getAccount()->id());
       $entity->setRevisionCreationTime(\Drupal::time()->getRequestTime());
@@ -175,11 +170,13 @@ class FarmEntityHooks {
    */
   #[Hook('form_alter')]
   public function formAlter(&$form, FormStateInterface $form_state, $form_id) {
+
     // Only alter content entity forms.
     $form_object = $form_state->getFormObject();
     if (!$form_object instanceof ContentEntityFormInterface) {
       return;
     }
+
     // Only apply to farm controlled entities.
     $entity = $form_object->getEntity();
     $entity_types = [
@@ -192,6 +189,7 @@ class FarmEntityHooks {
     if (!in_array($entity->getEntityTypeId(), $entity_types)) {
       return;
     }
+
     // Disable access to the revision checkbox.
     $form['revision']['#access'] = FALSE;
   }
