@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\farm_api\Controller;
 
-use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Extension\ProfileExtensionList;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\jsonapi\CacheableResourceResponse;
@@ -39,17 +38,9 @@ class FarmEntryPoint extends EntryPoint {
    */
   protected $farmProfileInfo;
 
-  /**
-   * The module handler.
-   *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface
-   */
-  protected $moduleHandler;
-
-  public function __construct(ResourceTypeRepositoryInterface $resource_type_repository, AccountInterface $user, ProfileExtensionList $profile_extension_list, ModuleHandlerInterface $module_handler) {
+  public function __construct(ResourceTypeRepositoryInterface $resource_type_repository, AccountInterface $user, ProfileExtensionList $profile_extension_list) {
     parent::__construct($resource_type_repository, $user);
     $this->farmProfileInfo = $profile_extension_list->getExtensionInfo('farm');
-    $this->moduleHandler = $module_handler;
   }
 
   /**
@@ -60,7 +51,6 @@ class FarmEntryPoint extends EntryPoint {
       $container->get('jsonapi.resource_type.repository'),
       $container->get('current_user'),
       $container->get('extension.list.profile'),
-      $container->get('module_handler'),
     );
   }
 
@@ -90,7 +80,7 @@ class FarmEntryPoint extends EntryPoint {
     ];
 
     // Allow modules to add additional meta information.
-    $this->moduleHandler->alter('farm_api_meta', $meta['farm']);
+    $this->moduleHandler()->alter('farm_api_meta', $meta['farm']);
 
     // Build a new response.
     $new_response = new CacheableResourceResponse(new JsonApiDocumentTopLevel(new ResourceObjectData([]), new NullIncludedData(), $urls, $meta));
