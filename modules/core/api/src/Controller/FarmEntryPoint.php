@@ -32,15 +32,15 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class FarmEntryPoint extends EntryPoint {
 
   /**
-   * Farm profile info.
+   * The profile extension list.
    *
-   * @var mixed[]
+   * @var \Drupal\Core\Extension\ExtensionList
    */
-  protected $farmProfileInfo;
+  protected $profileExtensionList;
 
   public function __construct(ResourceTypeRepositoryInterface $resource_type_repository, AccountInterface $user, ProfileExtensionList $profile_extension_list) {
     parent::__construct($resource_type_repository, $user);
-    $this->farmProfileInfo = $profile_extension_list->getExtensionInfo('farm');
+    $this->profileExtensionList = $profile_extension_list;
   }
 
   /**
@@ -72,11 +72,14 @@ class FarmEntryPoint extends EntryPoint {
     $urls = $data->getLinks();
     $meta = $data->getMeta();
 
+    // Get the farmOS profile info.
+    $farm_profile_info = $this->profileExtensionList->getExtensionInfo('farm');
+
     // Add a "farm" object to meta.
     $meta['farm'] = [
       'name' => $this->config('system.site')->get('name'),
       'url' => $base_url,
-      'version' => $this->farmProfileInfo['version'],
+      'version' => $farm_profile_info['version'],
     ];
 
     // Allow modules to add additional meta information.
