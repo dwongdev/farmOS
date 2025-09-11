@@ -166,7 +166,7 @@ class FarmEntityHooks {
   /**
    * Implements hook_form_alter().
    *
-   * Hides the revision control from the user, @see farm_entity_entity_presave()
+   * Hides the revision control from the user, @see ::entityPresave()
    */
   #[Hook('form_alter')]
   public function formAlter(&$form, FormStateInterface $form_state, $form_id) {
