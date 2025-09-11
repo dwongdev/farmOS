@@ -1,5 +1,0 @@
-
-services:
-  Drupal\farm_comment_log\Hook\FarmCommentLogHooks:
-    class: Drupal\farm_comment_log\Hook\FarmCommentLogHooks
-    autowire: true

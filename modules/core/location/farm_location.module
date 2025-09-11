@@ -8,11 +8,8 @@
 declare(strict_types=1);
 
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Hook\Attribute\LegacyHook;
-use Drupal\farm_location\Hook\FarmLocationHooks;
 
 /**
  * Implements hook_form_BASE_FORM_ID_alter().
@@ -26,22 +23,6 @@ function farm_location_form_asset_form_alter(&$form, FormStateInterface $form_st
     // Only display if is_fixed is checked.
     $form['intrinsic_geometry']['#states']['visible'] = [':input[name="is_fixed[value]"]' => ['checked' => TRUE]];
   }
-}
-
-/**
- * Implements hook_entity_base_field_info().
- */
-#[LegacyHook]
-function farm_location_entity_base_field_info(EntityTypeInterface $entity_type) {
-  return \Drupal::service(FarmLocationHooks::class)->entityBaseFieldInfo($entity_type);
-}
-
-/**
- * Implements hook_entity_base_field_info_alter().
- */
-#[LegacyHook]
-function farm_location_entity_base_field_info_alter(&$fields, EntityTypeInterface $entity_type) {
-  \Drupal::service(FarmLocationHooks::class)->entityBaseFieldInfoAlter($fields, $entity_type);
 }
 
 /**

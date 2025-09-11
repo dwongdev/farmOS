@@ -1,5 +1,0 @@
-
-services:
-  Drupal\farm_import_kml\Hook\FarmImportKmlHooks:
-    class: Drupal\farm_import_kml\Hook\FarmImportKmlHooks
-    autowire: true

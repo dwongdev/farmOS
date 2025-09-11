@@ -1,5 +1,0 @@
-
-services:
-  Drupal\farm_comment_asset\Hook\FarmCommentAssetHooks:
-    class: Drupal\farm_comment_asset\Hook\FarmCommentAssetHooks
-    autowire: true

@@ -1,5 +1,0 @@
-
-services:
-  Drupal\farm_timeline\Hook\FarmTimelineHooks:
-    class: Drupal\farm_timeline\Hook\FarmTimelineHooks
-    autowire: true

@@ -1,5 +1,0 @@
-
-services:
-  Drupal\farm_ui_views_test\Hook\FarmUiViewsTestHooks:
-    class: Drupal\farm_ui_views_test\Hook\FarmUiViewsTestHooks
-    autowire: true

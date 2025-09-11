@@ -1,5 +1,0 @@
-
-services:
-  Drupal\asset\Hook\AssetHooks:
-    class: Drupal\asset\Hook\AssetHooks
-    autowire: true

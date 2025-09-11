@@ -1,5 +1,0 @@
-
-services:
-  Drupal\farm_entity_fields\Hook\FarmEntityFieldsHooks:
-    class: Drupal\farm_entity_fields\Hook\FarmEntityFieldsHooks
-    autowire: true

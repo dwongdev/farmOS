@@ -9,11 +9,9 @@ declare(strict_types=1);
 
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
-use Drupal\Core\Hook\Attribute\LegacyHook;
 use Drupal\Core\Render\Element;
 use Drupal\quantity\Entity\QuantityInterface;
 use Drupal\quantity\Event\QuantityEvent;
-use Drupal\quantity\Hook\QuantityHooks;
 
 /**
  * Define information about available quantity measures.
@@ -112,15 +110,6 @@ function quantity_measure_field_allowed_values(FieldStorageDefinitionInterface $
 }
 
 /**
- * Implements hook_farm_api_meta_alter().
- */
-#[LegacyHook]
-function quantity_farm_api_meta_alter(&$data) {
-
-  \Drupal::service(QuantityHooks::class)->farmApiMetaAlter($data);
-}
-
-/**
  * Implements hook_ENTITY_TYPE_presave().
  */
 function quantity_quantity_presave(QuantityInterface $quantity) {
@@ -142,30 +131,6 @@ function quantity_quantity_delete(QuantityInterface $quantity) {
   $event = new QuantityEvent($quantity);
   $event_dispatcher = \Drupal::service('event_dispatcher');
   $event_dispatcher->dispatch($event, QuantityEvent::DELETE);
-}
-
-/**
- * Implements hook_theme().
- */
-#[LegacyHook]
-function quantity_theme() {
-  return \Drupal::service(QuantityHooks::class)->theme();
-}
-
-/**
- * Implements hook_theme_suggestions_HOOK().
- */
-#[LegacyHook]
-function quantity_theme_suggestions_field(array $variables) {
-  return \Drupal::service(QuantityHooks::class)->themeSuggestionsField($variables);
-}
-
-/**
- * Implements hook_theme_suggestions_HOOK().
- */
-#[LegacyHook]
-function quantity_theme_suggestions_quantity(array $variables) {
-  return \Drupal::service(QuantityHooks::class)->themeSuggestionsQuantity($variables);
 }
 
 /**

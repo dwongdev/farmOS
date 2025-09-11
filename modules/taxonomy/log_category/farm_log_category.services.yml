@@ -1,5 +1,0 @@
-
-services:
-  Drupal\farm_log_category\Hook\FarmLogCategoryHooks:
-    class: Drupal\farm_log_category\Hook\FarmLogCategoryHooks
-    autowire: true

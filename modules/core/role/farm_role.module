@@ -8,17 +8,6 @@
 declare(strict_types=1);
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Hook\Attribute\LegacyHook;
-use Drupal\farm_role\Hook\FarmRoleHooks;
-
-/**
- * Implements hook_entity_type_alter().
- */
-#[LegacyHook]
-function farm_role_entity_type_alter(array &$entity_types) {
-
-  \Drupal::service(FarmRoleHooks::class)->entityTypeAlter($entity_types);
-}
 
 /**
  * Implements hook_form_BASE_FORM_ID_alter().

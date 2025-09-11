@@ -11,7 +11,3 @@ services:
     class: Drupal\farm_api\Routing\RouteSubscriber
     tags:
       - { name: event_subscriber }
-
-  Drupal\farm_api\Hook\FarmApiHooks:
-    class: Drupal\farm_api\Hook\FarmApiHooks
-    autowire: true

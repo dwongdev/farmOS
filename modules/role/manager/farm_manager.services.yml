@@ -1,5 +1,0 @@
-
-services:
-  Drupal\farm_manager\Hook\FarmManagerHooks:
-    class: Drupal\farm_manager\Hook\FarmManagerHooks
-    autowire: true

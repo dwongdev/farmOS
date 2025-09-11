@@ -7,36 +7,8 @@
 
 declare(strict_types=1);
 
-use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Hook\Attribute\LegacyHook;
-use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\farm_ui_views\Hook\FarmUiViewsHooks;
 use Drupal\views\ViewExecutable;
-
-/**
- * Implements hook_help().
- */
-#[LegacyHook]
-function farm_ui_views_help($route_name, RouteMatchInterface $route_match) {
-  return \Drupal::service(FarmUiViewsHooks::class)->help($route_name, $route_match);
-}
-
-/**
- * Implements hook_entity_type_build().
- */
-#[LegacyHook]
-function farm_ui_views_entity_type_build(array &$entity_types) {
-  \Drupal::service(FarmUiViewsHooks::class)->entityTypeBuild($entity_types);
-}
-
-/**
- * Implements hook_local_tasks_alter().
- */
-#[LegacyHook]
-function farm_ui_views_local_tasks_alter(&$local_tasks) {
-  \Drupal::service(FarmUiViewsHooks::class)->localTasksAlter($local_tasks);
-}
 
 /**
  * Implements hook_form_BASE_FORM_ID_alter().
@@ -114,30 +86,6 @@ function farm_ui_views_form_views_exposed_form_alter(&$form, FormStateInterface 
   $bundles = !empty($bundle) ? [$bundle] : [];
   $allowed_options = farm_flag_options($entity_type, $bundles, TRUE);
   $form['flag_value']['#options'] = $allowed_options;
-}
-
-/**
- * Implements hook_farm_dashboard_groups().
- */
-#[LegacyHook]
-function farm_ui_views_farm_dashboard_groups() {
-  return \Drupal::service(FarmUiViewsHooks::class)->farmDashboardGroups();
-}
-
-/**
- * Implements hook_farm_dashboard_panes().
- */
-#[LegacyHook]
-function farm_ui_views_farm_dashboard_panes() {
-  return \Drupal::service(FarmUiViewsHooks::class)->farmDashboardPanes();
-}
-
-/**
- * Implements hook_entity_base_field_info_alter().
- */
-#[LegacyHook]
-function farm_ui_views_entity_base_field_info_alter(&$fields, EntityTypeInterface $entity_type) {
-  \Drupal::service(FarmUiViewsHooks::class)->entityBaseFieldInfoAlter($fields, $entity_type);
 }
 
 /**

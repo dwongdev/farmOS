@@ -1,5 +1,0 @@
-
-services:
-  Drupal\farm_update_test\Hook\FarmUpdateTestHooks:
-    class: Drupal\farm_update_test\Hook\FarmUpdateTestHooks
-    autowire: true

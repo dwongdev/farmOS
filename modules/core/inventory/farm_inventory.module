@@ -7,26 +7,7 @@
 
 declare(strict_types=1);
 
-use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Hook\Attribute\LegacyHook;
-use Drupal\farm_inventory\Hook\FarmInventoryHooks;
-
-/**
- * Implements hook_entity_base_field_info().
- */
-#[LegacyHook]
-function farm_inventory_entity_base_field_info(EntityTypeInterface $entity_type) {
-  return \Drupal::service(FarmInventoryHooks::class)->entityBaseFieldInfo($entity_type);
-}
-
-/**
- * Implements hook_inline_entity_form_entity_form_alter().
- */
-#[LegacyHook]
-function farm_inventory_inline_entity_form_entity_form_alter(array &$entity_form, FormStateInterface &$form_state) {
-  return \Drupal::service(FarmInventoryHooks::class)->inlineEntityFormEntityFormAlter($entity_form, $form_state);
-}
 
 /**
  * Custom validation callback for the quantity inline form.

@@ -5,7 +5,3 @@ services:
     class: Drupal\quantity\EventSubscriber\MapRenderEventSubscriber
     tags:
       - { name: 'event_subscriber' }
-
-  Drupal\quantity\Hook\QuantityHooks:
-    class: Drupal\quantity\Hook\QuantityHooks
-    autowire: true

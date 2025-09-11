@@ -1,9 +1,0 @@
-
-services:
-  Drupal\farm_entity_views\Hook\FarmEntityViewsHooks:
-    class: Drupal\farm_entity_views\Hook\FarmEntityViewsHooks
-    autowire: true
-
-  Drupal\farm_entity_views\Hook\FarmEntityViewsViewsHooks:
-    class: Drupal\farm_entity_views\Hook\FarmEntityViewsViewsHooks
-    autowire: true

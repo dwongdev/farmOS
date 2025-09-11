@@ -8,11 +8,3 @@ services:
     class: Drupal\farm_inventory\EventSubscriber\LogEventSubscriber
     tags:
       - { name: 'event_subscriber' }
-
-  Drupal\farm_inventory\Hook\FarmInventoryViewsHooks:
-    class: Drupal\farm_inventory\Hook\FarmInventoryViewsHooks
-    autowire: true
-
-  Drupal\farm_inventory\Hook\FarmInventoryHooks:
-    class: Drupal\farm_inventory\Hook\FarmInventoryHooks
-    autowire: true

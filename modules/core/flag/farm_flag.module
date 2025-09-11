@@ -8,18 +8,7 @@
 declare(strict_types=1);
 
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
-use Drupal\Core\Hook\Attribute\LegacyHook;
-use Drupal\farm_flag\Hook\FarmFlagHooks;
-
-/**
- * Implements hook_entity_base_field_info().
- */
-#[LegacyHook]
-function farm_flag_entity_base_field_info(EntityTypeInterface $entity_type) {
-  return \Drupal::service(FarmFlagHooks::class)->entityBaseFieldInfo($entity_type);
-}
 
 /**
  * Flag options helper.
@@ -111,23 +100,6 @@ function farm_flag_field_allowed_values(FieldStorageDefinitionInterface $definit
 }
 
 /**
- * Implements hook_farm_ui_theme_region_items().
- */
-#[LegacyHook]
-function farm_flag_farm_ui_theme_region_items(string $entity_type) {
-
-  return \Drupal::service(FarmFlagHooks::class)->farmUiThemeRegionItems($entity_type);
-}
-
-/**
- * Implements hook_theme().
- */
-#[LegacyHook]
-function farm_flag_theme() {
-  return \Drupal::service(FarmFlagHooks::class)->theme();
-}
-
-/**
  * Prepares variables for field--flag templates.
  *
  * Adds classes to each flag wrapper.
@@ -153,21 +125,4 @@ function template_preprocess_field__flag(array &$variables) {
       $variables['items'][$key]['attributes']->addClass($classes);
     }
   }
-}
-
-/**
- * Implements hook_entity_type_build().
- */
-#[LegacyHook]
-function farm_flag_entity_type_build(array &$entity_types) {
-
-  \Drupal::service(FarmFlagHooks::class)->entityTypeBuild($entity_types);
-}
-
-/**
- * Implements hook_farm_api_allow_resource_types().
- */
-#[LegacyHook]
-function farm_flag_farm_api_allow_resource_types() {
-  return \Drupal::service(FarmFlagHooks::class)->farmApiAllowResourceTypes();
 }

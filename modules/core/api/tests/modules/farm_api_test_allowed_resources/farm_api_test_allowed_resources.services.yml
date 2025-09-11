@@ -1,5 +1,0 @@
-
-services:
-  Drupal\farm_api_test_allowed_resources\Hook\FarmApiTestAllowedResourcesHooks:
-    class: Drupal\farm_api_test_allowed_resources\Hook\FarmApiTestAllowedResourcesHooks
-    autowire: true

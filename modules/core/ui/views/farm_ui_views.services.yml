@@ -41,15 +41,3 @@ services:
     class: Drupal\farm_ui_views\Access\FarmOrganizationLogViewsAccessCheck
     tags:
       - { name: access_check, applies_to: _organization_logs_access }
-
-  Drupal\farm_ui_views\Hook\FarmUiViewsViewsHooks:
-    class: Drupal\farm_ui_views\Hook\FarmUiViewsViewsHooks
-    autowire: true
-
-  Drupal\farm_ui_views\Hook\FarmUiViewsHooks:
-    class: Drupal\farm_ui_views\Hook\FarmUiViewsHooks
-    autowire: true
-
-  Drupal\farm_ui_views\Hook\FarmUiViewsViewsExecutionHooks:
-    class: Drupal\farm_ui_views\Hook\FarmUiViewsViewsExecutionHooks
-    autowire: true

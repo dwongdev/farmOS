@@ -9,16 +9,6 @@ declare(strict_types=1);
 
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Hook\Attribute\LegacyHook;
-use Drupal\farm_ui_map\Hook\FarmUiMapHooks;
-
-/**
- * Implements hook_farm_dashboard_panes().
- */
-#[LegacyHook]
-function farm_ui_map_farm_dashboard_panes() {
-  return \Drupal::service(FarmUiMapHooks::class)->farmDashboardPanes();
-}
 
 /**
  * Implements hook_module_implements_alter().
@@ -32,14 +22,6 @@ function farm_ui_map_module_implements_alter(&$implementations, $hook) {
     unset($implementations[$module]);
     $implementations = array_merge([$module => $group], $implementations);
   }
-}
-
-/**
- * Implements hook_menu_local_actions_alter().
- */
-#[LegacyHook]
-function farm_ui_map_menu_local_actions_alter(&$local_actions) {
-  \Drupal::service(FarmUiMapHooks::class)->menuLocalActionsAlter($local_actions);
 }
 
 /**

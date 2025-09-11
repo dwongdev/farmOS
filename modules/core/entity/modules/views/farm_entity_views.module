@@ -7,9 +7,6 @@
 
 declare(strict_types=1);
 
-use Drupal\Core\Hook\Attribute\LegacyHook;
-use Drupal\farm_entity_views\Hook\FarmEntityViewsHooks;
-
 /**
  * Implements hook_module_implements_alter().
  */
@@ -24,22 +21,4 @@ function farm_entity_views_module_implements_alter(&$implementations, $hook) {
     unset($implementations[$module]);
     $implementations = array_merge($implementations, $implementation);
   }
-}
-
-/**
- * Implements hook_modules_installed().
- */
-#[LegacyHook]
-function farm_entity_views_modules_installed($modules, $is_syncing) {
-
-  \Drupal::service(FarmEntityViewsHooks::class)->modulesInstalled($modules, $is_syncing);
-}
-
-/**
- * Implements hook_entity_type_build().
- */
-#[LegacyHook]
-function farm_entity_views_entity_type_build(array &$entity_types) {
-
-  \Drupal::service(FarmEntityViewsHooks::class)->entityTypeBuild($entity_types);
 }

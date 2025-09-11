@@ -1,5 +1,0 @@
-
-services:
-  Drupal\farm_log_asset\Hook\FarmLogAssetHooks:
-    class: Drupal\farm_log_asset\Hook\FarmLogAssetHooks
-    autowire: true

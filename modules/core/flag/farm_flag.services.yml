@@ -1,9 +1,0 @@
-
-services:
-  Drupal\farm_flag\Hook\FarmFlagHooks:
-    class: Drupal\farm_flag\Hook\FarmFlagHooks
-    autowire: true
-
-  Drupal\farm_flag\Hook\FarmFlagViewsHooks:
-    class: Drupal\farm_flag\Hook\FarmFlagViewsHooks
-    autowire: true

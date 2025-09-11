@@ -22,7 +22,3 @@ services:
   plugin.manager.quantity_type:
     class: Drupal\farm_entity\QuantityTypeManager
     parent: default_plugin_manager
-
-  Drupal\farm_entity\Hook\FarmEntityHooks:
-    class: Drupal\farm_entity\Hook\FarmEntityHooks
-    autowire: true

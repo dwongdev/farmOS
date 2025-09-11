@@ -1,5 +1,0 @@
-
-services:
-  Drupal\farm_viewer\Hook\FarmViewerHooks:
-    class: Drupal\farm_viewer\Hook\FarmViewerHooks
-    autowire: true

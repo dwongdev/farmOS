@@ -11,11 +11,3 @@ services:
     class: Drupal\farm_location\EventSubscriber\LogEventSubscriber
     tags:
       - { name: 'event_subscriber' }
-
-  Drupal\farm_location\Hook\FarmLocationHooks:
-    class: Drupal\farm_location\Hook\FarmLocationHooks
-    autowire: true
-
-  Drupal\farm_location\Hook\FarmLocationViewsHooks:
-    class: Drupal\farm_location\Hook\FarmLocationViewsHooks
-    autowire: true

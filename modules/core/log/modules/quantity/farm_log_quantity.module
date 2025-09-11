@@ -8,18 +8,7 @@
 declare(strict_types=1);
 
 use Drupal\Core\Entity\EntityFormInterface;
-use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Hook\Attribute\LegacyHook;
-use Drupal\farm_log_quantity\Hook\FarmLogQuantityHooks;
-
-/**
- * Implements hook_entity_base_field_info().
- */
-#[LegacyHook]
-function farm_log_quantity_entity_base_field_info(EntityTypeInterface $entity_type) {
-  return \Drupal::service(FarmLogQuantityHooks::class)->entityBaseFieldInfo($entity_type);
-}
 
 /**
  * Implements hook_form_FORM_ID_alter().

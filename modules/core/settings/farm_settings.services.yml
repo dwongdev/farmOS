@@ -1,5 +1,0 @@
-
-services:
-  Drupal\farm_settings\Hook\FarmSettingsHooks:
-    class: Drupal\farm_settings\Hook\FarmSettingsHooks
-    autowire: true

@@ -1,5 +1,0 @@
-
-services:
-  Drupal\farm_image\Hook\FarmImageHooks:
-    class: Drupal\farm_image\Hook\FarmImageHooks
-    autowire: true

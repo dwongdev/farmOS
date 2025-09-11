@@ -1,5 +1,0 @@
-
-services:
-  Drupal\farm_worker\Hook\FarmWorkerHooks:
-    class: Drupal\farm_worker\Hook\FarmWorkerHooks
-    autowire: true

@@ -8,18 +8,7 @@
 declare(strict_types=1);
 
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Hook\Attribute\LegacyHook;
 use Drupal\Core\Render\Element;
-use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\plan\Hook\PlanHooks;
-
-/**
- * Implements hook_help().
- */
-#[LegacyHook]
-function plan_help($route_name, RouteMatchInterface $route_match) {
-  return \Drupal::service(PlanHooks::class)->help($route_name, $route_match);
-}
 
 /**
  * Implements hook_ENTITY_TYPE_delete().
@@ -39,22 +28,6 @@ function plan_plan_delete(EntityInterface $entity) {
     $plan_records = $plan_record_storage->loadMultiple($chunk);
     $plan_record_storage->delete($plan_records);
   }
-}
-
-/**
- * Implements hook_theme().
- */
-#[LegacyHook]
-function plan_theme() {
-  return \Drupal::service(PlanHooks::class)->theme();
-}
-
-/**
- * Implements hook_theme_suggestions_HOOK().
- */
-#[LegacyHook]
-function plan_theme_suggestions_plan(array $variables) {
-  return \Drupal::service(PlanHooks::class)->themeSuggestionsPlan($variables);
 }
 
 /**

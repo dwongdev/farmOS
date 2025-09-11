@@ -1,5 +1,0 @@
-
-services:
-  Drupal\farm_sensor_listener\Hook\FarmSensorListenerHooks:
-    class: Drupal\farm_sensor_listener\Hook\FarmSensorListenerHooks
-    autowire: true
