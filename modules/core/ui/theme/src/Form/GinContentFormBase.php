@@ -29,17 +29,10 @@ class GinContentFormBase extends ContentEntityForm implements RenderCallbackInte
    */
   protected $dateFormatter;
 
-  /**
-   * The module handler.
-   *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface
-   */
-  protected $moduleHandler;
-
   public function __construct(EntityRepositoryInterface $entity_repository, EntityTypeBundleInfoInterface $entity_type_bundle_info, TimeInterface $time, DateFormatterInterface $date_formatter, ModuleHandlerInterface $module_handler) {
     parent::__construct($entity_repository, $entity_type_bundle_info, $time);
     $this->dateFormatter = $date_formatter;
-    $this->moduleHandler = $module_handler;
+    $this->setModuleHandler($module_handler);
   }
 
   /**
