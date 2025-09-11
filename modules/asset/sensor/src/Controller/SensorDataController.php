@@ -24,14 +24,14 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class SensorDataController extends ControllerBase {
 
   /**
-   * The basic data stream plugin.
+   * Data stream type manager.
    *
-   * @var \Drupal\data_stream\Plugin\DataStream\DataStreamType\Basic
+   * @var \Drupal\data_stream\DataStreamTypeManager
    */
-  protected $basicDataStream;
+  protected $dataStreamTypeManager;
 
   public function __construct(DataStreamTypeManager $data_stream_type_manager) {
-    $this->basicDataStream = $data_stream_type_manager->createInstance('basic');
+    $this->dataStreamTypeManager = $data_stream_type_manager;
   }
 
   /**
@@ -93,6 +93,9 @@ class SensorDataController extends ControllerBase {
       return $data_stream->bundle() === 'basic';
     });
 
+    // Create an instance of the basic data stream plugin.
+    $basic_data_stream = $this->dataStreamTypeManager->createInstance('basic');
+
     // Get request method.
     $method = $request->getMethod();
     switch ($method) {
@@ -118,7 +121,7 @@ class SensorDataController extends ControllerBase {
         }
         $params['limit'] = $limit;
 
-        $data = $this->basicDataStream->storageGetMultiple($basic_data_streams, $params);
+        $data = $basic_data_stream->storageGetMultiple($basic_data_streams, $params);
         return new JsonResponse($data);
 
       case Request::METHOD_POST:
@@ -146,13 +149,13 @@ class SensorDataController extends ControllerBase {
 
         // Allow each data stream to process the data.
         foreach ($basic_data_streams as $data_stream) {
-          $this->basicDataStream->storageSave($data_stream, $data);
+          $basic_data_stream->storageSave($data_stream, $data);
         }
         return new Response('', Response::HTTP_CREATED);
     }
 
     // Else raise error.
-    throw new MethodNotAllowedHttpException($this->basicDataStream->apiAllowedMethods());
+    throw new MethodNotAllowedHttpException($basic_data_stream->apiAllowedMethods());
   }
 
   /**
