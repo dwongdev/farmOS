@@ -106,7 +106,7 @@ parameters:
 			message: '#^Call to method Drupal\\Core\\Entity\\Query\\QueryInterface\:\:accessCheck\(\) with true will always evaluate to true\.$#'
 			identifier: method.alreadyNarrowedType
 			count: 1
-			path: web/profiles/farm/modules/log/birth/farm_birth.module
+			path: web/profiles/farm/modules/log/birth/src/Hook/FarmBirthHooks.php
 
 		-
 			message: '#^Call to method Drupal\\Core\\Entity\\Query\\QueryInterface\:\:accessCheck\(\) with false will always evaluate to true\.$#'

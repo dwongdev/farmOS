@@ -4,12 +4,39 @@ declare(strict_types=1);
 
 namespace Drupal\farm_ui_map\Hook;
 
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 
 /**
  * Hook implementations for farm_ui_map.
  */
 class FarmUiMapHooks {
+
+  /**
+   * Implements hook_ENTITY_TYPE_view().
+   */
+  #[Hook('asset_view')]
+  public function assetView(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+    /** @var \Drupal\asset\Entity\AssetInterface $entity */
+
+    // Bail if not the map_popup view mode.
+    if ($view_mode !== 'map_popup') {
+      return $build;
+    }
+
+    // The default view mode is used if a map_popup view mode is not provided.
+    // Alter the default view mode to only include common fields.
+    $view_mode_options = \Drupal::service('entity_display.repository')->getViewModeOptionsByBundle('asset', $entity->bundle());
+    if (!array_key_exists($view_mode, $view_mode_options)) {
+      $common_fields = ['name', 'type', 'flag', 'notes', 'location'];
+      $build = array_filter($build, function ($key) use ($common_fields) {
+        return strpos($key, '#') === 0 || in_array($key, $common_fields);
+      }, ARRAY_FILTER_USE_KEY);
+    }
+
+    return $build;
+  }
 
   /**
    * Implements hook_farm_dashboard_panes().
