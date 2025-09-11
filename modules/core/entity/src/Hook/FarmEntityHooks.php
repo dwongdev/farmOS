@@ -12,6 +12,7 @@ use Drupal\Core\Entity\RevisionLogInterface;
 use Drupal\Core\Entity\RevisionableEntityBundleInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\Hook\Order\OrderBefore;
 use Drupal\entity\EntityAccessControlHandler;
 use Drupal\entity\EntityPermissionProvider;
 use Drupal\farm_entity\BundlePlugin\FarmEntityBundlePluginHandler;
@@ -45,8 +46,12 @@ class FarmEntityHooks {
 
   /**
    * Implements hook_entity_type_build().
+   *
+   * Make sure this module's implementation runs before that of the entity
+   * module, so that we can override the bundle plugin handler, and so that we
+   * can set the Log entity type's bundle_plugin_type.
    */
-  #[Hook('entity_type_build')]
+  #[Hook('entity_type_build', order: new OrderBefore(['entity']))]
   public function entityTypeBuild(array &$entity_types) {
 
     // Allow the "view label" operation on the bundle entity type.

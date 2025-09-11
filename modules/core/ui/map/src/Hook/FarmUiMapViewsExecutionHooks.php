@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\farm_ui_map\Hook;
 
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\Hook\Order\Order;
 use Drupal\asset\Entity\AssetType;
 use Drupal\views\Entity\View;
 use Drupal\views\ViewExecutable;
@@ -65,9 +66,9 @@ class FarmUiMapViewsExecutionHooks {
   /**
    * Implements hook_views_pre_render().
    *
-   * @see farm_ui_map_module_implements_alter()
+   * Ensure this module's implementation runs first.
    */
-  #[Hook('views_pre_render')]
+  #[Hook('views_pre_render', order: Order::First)]
   public function viewsPreRender(ViewExecutable $view) {
 
     // Render a map attachment above views of assets.

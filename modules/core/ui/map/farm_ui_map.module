@@ -11,20 +11,6 @@ use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 
 /**
- * Implements hook_module_implements_alter().
- */
-function farm_ui_map_module_implements_alter(&$implementations, $hook) {
-
-  // Ensure that this module's hook_views_pre_render() runs first.
-  if ($hook == 'views_pre_render') {
-    $module = 'farm_ui_map';
-    $group = $implementations[$module];
-    unset($implementations[$module]);
-    $implementations = array_merge([$module => $group], $implementations);
-  }
-}
-
-/**
  * Implements hook_preprocess_HOOK().
  */
 function farm_ui_map_preprocess_block__farm_local_actions_block(&$variables, $block) {
