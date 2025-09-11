@@ -7,15 +7,14 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\LegacyHook;
 use Drupal\farm_log_asset\Hook\FarmLogAssetHooks;
-use Drupal\Core\Entity\EntityTypeInterface;
 
 /**
  * Implements hook_entity_base_field_info().
  */
 #[LegacyHook]
-function farm_log_asset_entity_base_field_info(EntityTypeInterface $entity_type)
-{
-    return \Drupal::service(FarmLogAssetHooks::class)->entityBaseFieldInfo($entity_type);
+function farm_log_asset_entity_base_field_info(EntityTypeInterface $entity_type) {
+  return \Drupal::service(FarmLogAssetHooks::class)->entityBaseFieldInfo($entity_type);
 }

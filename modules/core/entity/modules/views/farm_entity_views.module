@@ -9,9 +9,6 @@ declare(strict_types=1);
 
 use Drupal\Core\Hook\Attribute\LegacyHook;
 use Drupal\farm_entity_views\Hook\FarmEntityViewsHooks;
-use Drupal\farm_entity_views\FarmEntityViewsData;
-use Drupal\farm_entity_views\FarmLogViewsData;
-use Drupal\farm_entity_views\FarmQuantityViewsData;
 
 /**
  * Implements hook_module_implements_alter().

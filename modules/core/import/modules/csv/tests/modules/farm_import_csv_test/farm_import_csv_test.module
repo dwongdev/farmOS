@@ -7,33 +7,30 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\LegacyHook;
 use Drupal\farm_import_csv_test\Hook\FarmImportCsvTestHooks;
-use Drupal\Core\Entity\EntityTypeInterface;
 
 /**
  * Implements hook_entity_base_field_info().
  */
 #[LegacyHook]
-function farm_import_csv_test_entity_base_field_info(EntityTypeInterface $entity_type)
-{
-    return \Drupal::service(FarmImportCsvTestHooks::class)->entityBaseFieldInfo($entity_type);
+function farm_import_csv_test_entity_base_field_info(EntityTypeInterface $entity_type) {
+  return \Drupal::service(FarmImportCsvTestHooks::class)->entityBaseFieldInfo($entity_type);
 }
 
 /**
  * Implements hook_farm_import_csv_base_fields().
  */
 #[LegacyHook]
-function farm_import_csv_test_farm_import_csv_base_fields(string $entity_type)
-{
-    return \Drupal::service(FarmImportCsvTestHooks::class)->farmImportCsvBaseFields($entity_type);
+function farm_import_csv_test_farm_import_csv_base_fields(string $entity_type) {
+  return \Drupal::service(FarmImportCsvTestHooks::class)->farmImportCsvBaseFields($entity_type);
 }
 
 /**
  * Implements hook_farm_import_csv_exclude_fields().
  */
 #[LegacyHook]
-function farm_import_csv_test_farm_import_csv_exclude_fields(string $entity_type)
-{
-    return \Drupal::service(FarmImportCsvTestHooks::class)->farmImportCsvExcludeFields($entity_type);
+function farm_import_csv_test_farm_import_csv_exclude_fields(string $entity_type) {
+  return \Drupal::service(FarmImportCsvTestHooks::class)->farmImportCsvExcludeFields($entity_type);
 }

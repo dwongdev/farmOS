@@ -7,29 +7,27 @@
 
 declare(strict_types=1);
 
-use Drupal\Core\Hook\Attribute\LegacyHook;
-use Drupal\farm_l10n\Hook\FarmL10nHooks;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Hook\Attribute\LegacyHook;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
+use Drupal\farm_l10n\Hook\FarmL10nHooks;
 
 /**
  * Implements hook_help().
  */
 #[LegacyHook]
-function farm_l10n_help($route_name, RouteMatchInterface $route_match)
-{
-    return \Drupal::service(FarmL10nHooks::class)->help($route_name, $route_match);
+function farm_l10n_help($route_name, RouteMatchInterface $route_match) {
+  return \Drupal::service(FarmL10nHooks::class)->help($route_name, $route_match);
 }
 
 /**
  * Implements hook_entity_bundle_info_alter().
  */
 #[LegacyHook]
-function farm_l10n_entity_bundle_info_alter(&$bundles)
-{
-    return \Drupal::service(FarmL10nHooks::class)->entityBundleInfoAlter($bundles);
+function farm_l10n_entity_bundle_info_alter(&$bundles) {
+  return \Drupal::service(FarmL10nHooks::class)->entityBundleInfoAlter($bundles);
 }
 
 /**

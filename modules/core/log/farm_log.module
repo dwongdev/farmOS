@@ -7,17 +7,15 @@
 
 declare(strict_types=1);
 
-use Drupal\Core\Hook\Attribute\LegacyHook;
-use Drupal\farm_log\Hook\FarmLogHooks;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\log\Entity\LogInterface;
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\farm_log\Hook\FarmLogHooks;
 
 /**
  * Implements hook_entity_prepare_form().
  */
 #[LegacyHook]
-function farm_log_entity_prepare_form(EntityInterface $entity, $operation, FormStateInterface $form_state)
-{
-    return \Drupal::service(FarmLogHooks::class)->entityPrepareForm($entity, $operation, $form_state);
+function farm_log_entity_prepare_form(EntityInterface $entity, $operation, FormStateInterface $form_state) {
+  return \Drupal::service(FarmLogHooks::class)->entityPrepareForm($entity, $operation, $form_state);
 }

@@ -7,13 +7,13 @@
 
 declare(strict_types=1);
 
-use Drupal\Core\Hook\Attribute\LegacyHook;
-use Drupal\quantity\Hook\QuantityHooks;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\Core\Hook\Attribute\LegacyHook;
 use Drupal\Core\Render\Element;
 use Drupal\quantity\Entity\QuantityInterface;
 use Drupal\quantity\Event\QuantityEvent;
+use Drupal\quantity\Hook\QuantityHooks;
 
 /**
  * Define information about available quantity measures.
@@ -156,18 +156,16 @@ function quantity_theme() {
  * Implements hook_theme_suggestions_HOOK().
  */
 #[LegacyHook]
-function quantity_theme_suggestions_field(array $variables)
-{
-    return \Drupal::service(QuantityHooks::class)->themeSuggestionsField($variables);
+function quantity_theme_suggestions_field(array $variables) {
+  return \Drupal::service(QuantityHooks::class)->themeSuggestionsField($variables);
 }
 
 /**
  * Implements hook_theme_suggestions_HOOK().
  */
 #[LegacyHook]
-function quantity_theme_suggestions_quantity(array $variables)
-{
-    return \Drupal::service(QuantityHooks::class)->themeSuggestionsQuantity($variables);
+function quantity_theme_suggestions_quantity(array $variables) {
+  return \Drupal::service(QuantityHooks::class)->themeSuggestionsQuantity($variables);
 }
 
 /**

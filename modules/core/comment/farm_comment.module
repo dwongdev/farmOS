@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-use Drupal\Core\Hook\Attribute\LegacyHook;
-use Drupal\farm_comment\Hook\FarmCommentHooks;
 use Drupal\Core\Entity\Display\EntityFormDisplayInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Hook\Attribute\LegacyHook;
 use Drupal\comment\Plugin\Field\FieldType\CommentItemInterface;
 use Drupal\entity\BundleFieldDefinition;
+use Drupal\farm_comment\Hook\FarmCommentHooks;
 
 /**
  * Helper function for generating a standard comment base field definition.
@@ -79,18 +79,16 @@ function farm_comment_base_field_definition(string $entity_type) {
  * Implements hook_entity_form_display_alter().
  */
 #[LegacyHook]
-function farm_comment_entity_form_display_alter(EntityFormDisplayInterface $form_display, array $context)
-{
-    \Drupal::service(FarmCommentHooks::class)->entityFormDisplayAlter($form_display, $context);
+function farm_comment_entity_form_display_alter(EntityFormDisplayInterface $form_display, array $context) {
+  \Drupal::service(FarmCommentHooks::class)->entityFormDisplayAlter($form_display, $context);
 }
 
 /**
  * Implements hook_entity_view_display_alter().
  */
 #[LegacyHook]
-function farm_comment_entity_view_display_alter(EntityViewDisplayInterface $display, array $context)
-{
-    \Drupal::service(FarmCommentHooks::class)->entityViewDisplayAlter($display, $context);
+function farm_comment_entity_view_display_alter(EntityViewDisplayInterface $display, array $context) {
+  \Drupal::service(FarmCommentHooks::class)->entityViewDisplayAlter($display, $context);
 }
 
 /**

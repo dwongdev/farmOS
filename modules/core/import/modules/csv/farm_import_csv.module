@@ -7,17 +7,16 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Hook\Attribute\LegacyHook;
 use Drupal\farm_import_csv\Hook\FarmImportCsvHooks;
-use Drupal\Core\Entity\EntityInterface;
 
 /**
  * Implements hook_file_download().
  */
 #[LegacyHook]
-function farm_import_csv_file_download($uri)
-{
-    return \Drupal::service(FarmImportCsvHooks::class)->fileDownload($uri);
+function farm_import_csv_file_download($uri) {
+  return \Drupal::service(FarmImportCsvHooks::class)->fileDownload($uri);
 }
 
 /**

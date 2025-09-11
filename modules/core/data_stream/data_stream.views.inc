@@ -14,7 +14,6 @@ use Drupal\data_stream\Hook\DataStreamViewsHooks;
  * Implements hook_views_data().
  */
 #[LegacyHook]
-function data_stream_views_data()
-{
-    return \Drupal::service(DataStreamViewsHooks::class)->viewsData();
+function data_stream_views_data() {
+  return \Drupal::service(DataStreamViewsHooks::class)->viewsData();
 }

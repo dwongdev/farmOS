@@ -8,19 +8,18 @@
 declare(strict_types=1);
 
 use Drupal\Core\Hook\Attribute\LegacyHook;
-use Drupal\asset\Hook\AssetHooks;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\asset\Entity\AssetInterface;
 use Drupal\asset\Event\AssetEvent;
+use Drupal\asset\Hook\AssetHooks;
 
 /**
  * Implements hook_help().
  */
 #[LegacyHook]
-function asset_help($route_name, RouteMatchInterface $route_match)
-{
-    return \Drupal::service(AssetHooks::class)->help($route_name, $route_match);
+function asset_help($route_name, RouteMatchInterface $route_match) {
+  return \Drupal::service(AssetHooks::class)->help($route_name, $route_match);
 }
 
 /**
@@ -83,9 +82,8 @@ function asset_theme() {
  * Implements hook_theme_suggestions_HOOK().
  */
 #[LegacyHook]
-function asset_theme_suggestions_asset(array $variables)
-{
-    return \Drupal::service(AssetHooks::class)->themeSuggestionsAsset($variables);
+function asset_theme_suggestions_asset(array $variables) {
+  return \Drupal::service(AssetHooks::class)->themeSuggestionsAsset($variables);
 }
 
 /**

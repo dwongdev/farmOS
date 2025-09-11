@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 use Drupal\Core\Hook\Attribute\LegacyHook;
 use Drupal\farm_ui_map\Hook\FarmUiMapViewsExecutionHooks;
-use Drupal\asset\Entity\AssetType;
-use Drupal\views\Entity\View;
 use Drupal\views\ViewExecutable;
 
 /**

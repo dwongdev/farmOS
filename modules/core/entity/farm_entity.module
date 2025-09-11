@@ -7,20 +7,11 @@
 
 declare(strict_types=1);
 
-use Drupal\Core\Hook\Attribute\LegacyHook;
-use Drupal\farm_entity\Hook\FarmEntityHooks;
-use Drupal\Core\Entity\ContentEntityFormInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
-use Drupal\Core\Entity\FieldableEntityInterface;
-use Drupal\Core\Entity\RevisionLogInterface;
-use Drupal\Core\Entity\RevisionableEntityBundleInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\entity\EntityAccessControlHandler;
-use Drupal\entity\EntityPermissionProvider;
-use Drupal\farm_entity\BundlePlugin\FarmEntityBundlePluginHandler;
-use Drupal\farm_entity\Routing\BundleEntityTypeRouteProvider;
-use Drupal\farm_entity\Routing\EntityRouteProvider;
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\farm_entity\Hook\FarmEntityHooks;
 
 /**
  * Implements hook_modules_installed().
@@ -60,9 +51,8 @@ function farm_entity_module_implements_alter(&$implementations, $hook) {
  * Implements hook_entity_type_build().
  */
 #[LegacyHook]
-function farm_entity_entity_type_build(array &$entity_types)
-{
-    \Drupal::service(FarmEntityHooks::class)->entityTypeBuild($entity_types);
+function farm_entity_entity_type_build(array &$entity_types) {
+  \Drupal::service(FarmEntityHooks::class)->entityTypeBuild($entity_types);
 }
 
 /**
@@ -92,9 +82,8 @@ function farm_entity_entity_type_alter(array &$entity_types) {
  * @todo https://www.drupal.org/project/farm/issues/3194206
  */
 #[LegacyHook]
-function farm_entity_entity_field_storage_info_alter(&$fields, EntityTypeInterface $entity_type)
-{
-    return \Drupal::service(FarmEntityHooks::class)->entityFieldStorageInfoAlter($fields, $entity_type);
+function farm_entity_entity_field_storage_info_alter(&$fields, EntityTypeInterface $entity_type) {
+  return \Drupal::service(FarmEntityHooks::class)->entityFieldStorageInfoAlter($fields, $entity_type);
 }
 
 /**
@@ -107,9 +96,8 @@ function farm_entity_entity_field_storage_info_alter(&$fields, EntityTypeInterfa
  * the API.
  */
 #[LegacyHook]
-function farm_entity_entity_presave(EntityInterface $entity)
-{
-    return \Drupal::service(FarmEntityHooks::class)->entityPresave($entity);
+function farm_entity_entity_presave(EntityInterface $entity) {
+  return \Drupal::service(FarmEntityHooks::class)->entityPresave($entity);
 }
 
 /**
@@ -118,7 +106,6 @@ function farm_entity_entity_presave(EntityInterface $entity)
  * Hides the revision control from the user, @see farm_entity_entity_presave()
  */
 #[LegacyHook]
-function farm_entity_form_alter(&$form, FormStateInterface $form_state, $form_id)
-{
-    return \Drupal::service(FarmEntityHooks::class)->formAlter($form, $form_state, $form_id);
+function farm_entity_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  return \Drupal::service(FarmEntityHooks::class)->formAlter($form, $form_state, $form_id);
 }

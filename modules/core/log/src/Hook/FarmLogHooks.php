@@ -1,49 +1,52 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\farm_log\Hook;
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\log\Entity\LogInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\log\Entity\LogInterface;
+
 /**
  * Hook implementations for farm_log.
  */
-class FarmLogHooks
-{
-    /**
-     * Implements hook_entity_prepare_form().
-     */
-    #[Hook('entity_prepare_form')]
-    public function entityPrepareForm(\Drupal\Core\Entity\EntityInterface $entity, $operation, \Drupal\Core\Form\FormStateInterface $form_state)
-    {
-        // If not adding a new entity, bail.
-        if ($operation !== 'add' || !$entity->isNew()) {
-            return;
-        }
-        // If the entity is not a log, bail.
-        if ($entity->getEntityTypeId() !== 'log' || !$entity instanceof \Drupal\log\Entity\LogInterface) {
-            return;
-        }
-        // Save the current user.
-        $user = \Drupal::currentUser();
-        // Save the request query params.
-        $query = \Drupal::request()->query;
-        // Prepopulate the log asset field.
-        if ($query->has('asset')) {
-            // Get asset IDs. We can't use $query->get('asset') or $query->all('asset')
-            // because those throw a client error if the parameter is not the expected
-            // cardinality (single value vs array of values).
-            $asset_ids = (array) $query->all()['asset'];
-            $asset_field = $entity->get('asset');
-            // Add each asset the user has view access to.
-            $assets = \Drupal::entityTypeManager()->getStorage('asset')->loadMultiple($asset_ids);
-            foreach ($assets as $asset) {
-                if ($asset->access('view', $user)) {
-                    $asset_field->appendItem($asset);
-                }
-            }
-            $entity->set('asset', $asset_ids);
-        }
+class FarmLogHooks {
+
+  /**
+   * Implements hook_entity_prepare_form().
+   */
+  #[Hook('entity_prepare_form')]
+  public function entityPrepareForm(EntityInterface $entity, $operation, FormStateInterface $form_state) {
+    // If not adding a new entity, bail.
+    if ($operation !== 'add' || !$entity->isNew()) {
+      return;
     }
+    // If the entity is not a log, bail.
+    if ($entity->getEntityTypeId() !== 'log' || !$entity instanceof LogInterface) {
+      return;
+    }
+    // Save the current user.
+    $user = \Drupal::currentUser();
+    // Save the request query params.
+    $query = \Drupal::request()->query;
+    // Prepopulate the log asset field.
+    if ($query->has('asset')) {
+      // Get asset IDs. We can't use $query->get('asset') or $query->all('asset')
+      // because those throw a client error if the parameter is not the expected
+      // cardinality (single value vs array of values).
+      $asset_ids = (array) $query->all()['asset'];
+      $asset_field = $entity->get('asset');
+      // Add each asset the user has view access to.
+      $assets = \Drupal::entityTypeManager()->getStorage('asset')->loadMultiple($asset_ids);
+      foreach ($assets as $asset) {
+        if ($asset->access('view', $user)) {
+          $asset_field->appendItem($asset);
+        }
+      }
+      $entity->set('asset', $asset_ids);
+    }
+  }
+
 }

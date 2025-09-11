@@ -14,7 +14,6 @@ use Drupal\farm_entity_views\Hook\FarmEntityViewsViewsHooks;
  * Implements hook_views_data_alter().
  */
 #[LegacyHook]
-function farm_entity_views_views_data_alter(array &$data)
-{
-    \Drupal::service(FarmEntityViewsViewsHooks::class)->viewsDataAlter($data);
+function farm_entity_views_views_data_alter(array &$data) {
+  \Drupal::service(FarmEntityViewsViewsHooks::class)->viewsDataAlter($data);
 }

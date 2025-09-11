@@ -7,18 +7,17 @@
 
 declare(strict_types=1);
 
-use Drupal\Core\Hook\Attribute\LegacyHook;
-use Drupal\farm_group\Hook\FarmGroupHooks;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\farm_group\Hook\FarmGroupHooks;
 
 /**
  * Implements hook_entity_base_field_info().
  */
 #[LegacyHook]
-function farm_group_entity_base_field_info(EntityTypeInterface $entity_type)
-{
-    return \Drupal::service(FarmGroupHooks::class)->entityBaseFieldInfo($entity_type);
+function farm_group_entity_base_field_info(EntityTypeInterface $entity_type) {
+  return \Drupal::service(FarmGroupHooks::class)->entityBaseFieldInfo($entity_type);
 }
 
 /**
@@ -33,18 +32,16 @@ function farm_group_entity_base_field_info_alter(&$fields, EntityTypeInterface $
  * Implements hook_farm_import_csv_base_fields().
  */
 #[LegacyHook]
-function farm_group_farm_import_csv_base_fields(string $entity_type)
-{
-    return \Drupal::service(FarmGroupHooks::class)->farmImportCsvBaseFields($entity_type);
+function farm_group_farm_import_csv_base_fields(string $entity_type) {
+  return \Drupal::service(FarmGroupHooks::class)->farmImportCsvBaseFields($entity_type);
 }
 
 /**
  * Implements hook_farm_ui_views_base_fields().
  */
 #[LegacyHook]
-function farm_group_farm_ui_views_base_fields(string $entity_type)
-{
-    return \Drupal::service(FarmGroupHooks::class)->farmUiViewsBaseFields($entity_type);
+function farm_group_farm_ui_views_base_fields(string $entity_type) {
+  return \Drupal::service(FarmGroupHooks::class)->farmUiViewsBaseFields($entity_type);
 }
 
 /**
@@ -65,25 +62,22 @@ function farm_group_form_log_form_alter(&$form, FormStateInterface $form_state, 
  * Implements hook_farm_ui_theme_region_items().
  */
 #[LegacyHook]
-function farm_group_farm_ui_theme_region_items(string $entity_type)
-{
-    return \Drupal::service(FarmGroupHooks::class)->farmUiThemeRegionItems($entity_type);
+function farm_group_farm_ui_theme_region_items(string $entity_type) {
+  return \Drupal::service(FarmGroupHooks::class)->farmUiThemeRegionItems($entity_type);
 }
 
 /**
  * Implements hook_farm_ui_theme_field_groups().
  */
 #[LegacyHook]
-function farm_group_farm_ui_theme_field_groups(string $entity_type, string $bundle)
-{
-    return \Drupal::service(FarmGroupHooks::class)->farmUiThemeFieldGroups($entity_type, $bundle);
+function farm_group_farm_ui_theme_field_groups(string $entity_type, string $bundle) {
+  return \Drupal::service(FarmGroupHooks::class)->farmUiThemeFieldGroups($entity_type, $bundle);
 }
 
 /**
  * Implements hook_farm_ui_theme_field_group_items().
  */
 #[LegacyHook]
-function farm_group_farm_ui_theme_field_group_items(string $entity_type, string $bundle)
-{
-    return \Drupal::service(FarmGroupHooks::class)->farmUiThemeFieldGroupItems($entity_type, $bundle);
+function farm_group_farm_ui_theme_field_group_items(string $entity_type, string $bundle) {
+  return \Drupal::service(FarmGroupHooks::class)->farmUiThemeFieldGroupItems($entity_type, $bundle);
 }

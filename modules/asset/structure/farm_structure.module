@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-use Drupal\Core\Hook\Attribute\LegacyHook;
-use Drupal\farm_structure\Hook\FarmStructureHooks;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\farm_structure\Hook\FarmStructureHooks;
 
 /**
  * Structure type options helper.

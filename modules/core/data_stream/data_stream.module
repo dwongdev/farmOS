@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-use Drupal\Core\Hook\Attribute\LegacyHook;
-use Drupal\data_stream\Hook\DataStreamHooks;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Hook\Attribute\LegacyHook;
 use Drupal\Core\Url;
 use Drupal\data_stream\Entity\DataStreamInterface;
+use Drupal\data_stream\Hook\DataStreamHooks;
 
 /**
  * Implements hook_entity_type_build().

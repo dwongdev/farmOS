@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 use Drupal\Core\Hook\Attribute\LegacyHook;
 use Drupal\farm_land\Hook\FarmLandViewsExecutionHooks;
-use Drupal\farm_land\Entity\FarmLandType;
 use Drupal\views\ViewExecutable;
 
 /**

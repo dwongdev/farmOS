@@ -7,60 +7,54 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\LegacyHook;
 use Drupal\farm_farm\Hook\FarmFarmHooks;
-use Drupal\Core\Entity\EntityTypeInterface;
 
 /**
  * Implements hook_entity_base_field_info().
  */
 #[LegacyHook]
-function farm_farm_entity_base_field_info(EntityTypeInterface $entity_type)
-{
-    return \Drupal::service(FarmFarmHooks::class)->entityBaseFieldInfo($entity_type);
+function farm_farm_entity_base_field_info(EntityTypeInterface $entity_type) {
+  return \Drupal::service(FarmFarmHooks::class)->entityBaseFieldInfo($entity_type);
 }
 
 /**
  * Implements hook_entity_base_field_info_alter().
  */
 #[LegacyHook]
-function farm_farm_entity_base_field_info_alter(&$fields, EntityTypeInterface $entity_type)
-{
-    return \Drupal::service(FarmFarmHooks::class)->entityBaseFieldInfoAlter($fields, $entity_type);
+function farm_farm_entity_base_field_info_alter(&$fields, EntityTypeInterface $entity_type) {
+  return \Drupal::service(FarmFarmHooks::class)->entityBaseFieldInfoAlter($fields, $entity_type);
 }
 
 /**
  * Implements hook_farm_import_csv_base_fields().
  */
 #[LegacyHook]
-function farm_farm_farm_import_csv_base_fields(string $entity_type)
-{
-    return \Drupal::service(FarmFarmHooks::class)->farmImportCsvBaseFields($entity_type);
+function farm_farm_farm_import_csv_base_fields(string $entity_type) {
+  return \Drupal::service(FarmFarmHooks::class)->farmImportCsvBaseFields($entity_type);
 }
 
 /**
  * Implements hook_farm_ui_views_base_fields().
  */
 #[LegacyHook]
-function farm_farm_farm_ui_views_base_fields(string $entity_type)
-{
-    return \Drupal::service(FarmFarmHooks::class)->farmUiViewsBaseFields($entity_type);
+function farm_farm_farm_ui_views_base_fields(string $entity_type) {
+  return \Drupal::service(FarmFarmHooks::class)->farmUiViewsBaseFields($entity_type);
 }
 
 /**
  * Implements hook_farm_ui_theme_field_group_items().
  */
 #[LegacyHook]
-function farm_farm_farm_ui_theme_field_group_items(string $entity_type, string $bundle)
-{
-    return \Drupal::service(FarmFarmHooks::class)->farmUiThemeFieldGroupItems($entity_type, $bundle);
+function farm_farm_farm_ui_theme_field_group_items(string $entity_type, string $bundle) {
+  return \Drupal::service(FarmFarmHooks::class)->farmUiThemeFieldGroupItems($entity_type, $bundle);
 }
 
 /**
  * Implements hook_farm_ui_theme_region_items().
  */
 #[LegacyHook]
-function farm_farm_farm_ui_theme_region_items(string $entity_type)
-{
-    return \Drupal::service(FarmFarmHooks::class)->farmUiThemeRegionItems($entity_type);
+function farm_farm_farm_ui_theme_region_items(string $entity_type) {
+  return \Drupal::service(FarmFarmHooks::class)->farmUiThemeRegionItems($entity_type);
 }

@@ -14,7 +14,6 @@ use Drupal\farm_import_csv\Hook\FarmImportCsvViewsHooks;
  * Implements hook_views_data().
  */
 #[LegacyHook]
-function farm_import_csv_views_data()
-{
-    return \Drupal::service(FarmImportCsvViewsHooks::class)->viewsData();
+function farm_import_csv_views_data() {
+  return \Drupal::service(FarmImportCsvViewsHooks::class)->viewsData();
 }

@@ -14,7 +14,6 @@ use Drupal\farm_input\Hook\FarmInputViewsHooks;
  * Implements hook_views_data().
  */
 #[LegacyHook]
-function farm_input_views_data()
-{
-    return \Drupal::service(FarmInputViewsHooks::class)->viewsData();
+function farm_input_views_data() {
+  return \Drupal::service(FarmInputViewsHooks::class)->viewsData();
 }

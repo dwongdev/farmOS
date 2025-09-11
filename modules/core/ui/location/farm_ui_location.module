@@ -8,14 +8,13 @@
 declare(strict_types=1);
 
 use Drupal\Core\Hook\Attribute\LegacyHook;
-use Drupal\farm_ui_location\Hook\FarmUiLocationHooks;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\farm_ui_location\Hook\FarmUiLocationHooks;
 
 /**
  * Implements hook_help().
  */
 #[LegacyHook]
-function farm_ui_location_help($route_name, RouteMatchInterface $route_match)
-{
-    return \Drupal::service(FarmUiLocationHooks::class)->help($route_name, $route_match);
+function farm_ui_location_help($route_name, RouteMatchInterface $route_match) {
+  return \Drupal::service(FarmUiLocationHooks::class)->help($route_name, $route_match);
 }

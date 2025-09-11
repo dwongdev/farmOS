@@ -8,14 +8,13 @@
 declare(strict_types=1);
 
 use Drupal\Core\Hook\Attribute\LegacyHook;
-use Drupal\farm_import_kml\Hook\FarmImportKmlHooks;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\farm_import_kml\Hook\FarmImportKmlHooks;
 
 /**
  * Implements hook_help().
  */
 #[LegacyHook]
-function farm_import_kml_help($route_name, RouteMatchInterface $route_match)
-{
-    return \Drupal::service(FarmImportKmlHooks::class)->help($route_name, $route_match);
+function farm_import_kml_help($route_name, RouteMatchInterface $route_match) {
+  return \Drupal::service(FarmImportKmlHooks::class)->help($route_name, $route_match);
 }

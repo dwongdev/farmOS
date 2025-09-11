@@ -14,7 +14,6 @@ use Drupal\data_stream_notification\Hook\DataStreamNotificationHooks;
  * Implements hook_mail().
  */
 #[LegacyHook]
-function data_stream_notification_mail($key, &$message, $params)
-{
-    return \Drupal::service(DataStreamNotificationHooks::class)->mail($key, $message, $params);
+function data_stream_notification_mail($key, &$message, $params) {
+  return \Drupal::service(DataStreamNotificationHooks::class)->mail($key, $message, $params);
 }

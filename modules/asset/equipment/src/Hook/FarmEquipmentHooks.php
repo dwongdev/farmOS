@@ -1,80 +1,79 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\farm_equipment\Hook;
 
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+
 /**
  * Hook implementations for farm_equipment.
  */
-class FarmEquipmentHooks
-{
-    /**
-     * Implements hook_entity_base_field_info().
-     */
-    #[Hook('entity_base_field_info')]
-    public function entityBaseFieldInfo(\Drupal\Core\Entity\EntityTypeInterface $entity_type)
-    {
-        $fields = [
-        ];
-        // Add an Equipment reference field to logs.
-        if ($entity_type->id() == 'log') {
-            $options = [
-                'type' => 'entity_reference',
-                'label' => t('Equipment used'),
-                'description' => t('What equipment was used?'),
-                'target_type' => 'asset',
-                'target_bundle' => 'equipment',
-                'multiple' => TRUE,
-                'weight' => [
-                    'form' => 40,
-                    'view' => 40,
-                ],
-            ];
-            $fields['equipment'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
-        }
-        return $fields;
+class FarmEquipmentHooks {
+
+  /**
+   * Implements hook_entity_base_field_info().
+   */
+  #[Hook('entity_base_field_info')]
+  public function entityBaseFieldInfo(EntityTypeInterface $entity_type) {
+    $fields = [];
+    // Add an Equipment reference field to logs.
+    if ($entity_type->id() == 'log') {
+      $options = [
+        'type' => 'entity_reference',
+        'label' => t('Equipment used'),
+        'description' => t('What equipment was used?'),
+        'target_type' => 'asset',
+        'target_bundle' => 'equipment',
+        'multiple' => TRUE,
+        'weight' => [
+          'form' => 40,
+          'view' => 40,
+        ],
+      ];
+      $fields['equipment'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
     }
-    /**
-     * Implements hook_farm_import_csv_base_fields().
-     */
-    #[Hook('farm_import_csv_base_fields')]
-    public function farmImportCsvBaseFields(string $entity_type)
-    {
-        $base_fields = [
-        ];
-        // Add equipment base field to log CSV importers.
-        if ($entity_type == 'log') {
-            $base_fields[] = 'equipment';
-        }
-        return $base_fields;
+    return $fields;
+  }
+
+  /**
+   * Implements hook_farm_import_csv_base_fields().
+   */
+  #[Hook('farm_import_csv_base_fields')]
+  public function farmImportCsvBaseFields(string $entity_type) {
+    $base_fields = [];
+    // Add equipment base field to log CSV importers.
+    if ($entity_type == 'log') {
+      $base_fields[] = 'equipment';
     }
-    /**
-     * Implements hook_farm_ui_views_base_fields().
-     */
-    #[Hook('farm_ui_views_base_fields')]
-    public function farmUiViewsBaseFields(string $entity_type)
-    {
-        $base_fields = [
-        ];
-        // Add equipment base field to farmOS log Views.
-        if ($entity_type == 'log') {
-            $base_fields[] = 'equipment';
-        }
-        return $base_fields;
+    return $base_fields;
+  }
+
+  /**
+   * Implements hook_farm_ui_views_base_fields().
+   */
+  #[Hook('farm_ui_views_base_fields')]
+  public function farmUiViewsBaseFields(string $entity_type) {
+    $base_fields = [];
+    // Add equipment base field to farmOS log Views.
+    if ($entity_type == 'log') {
+      $base_fields[] = 'equipment';
     }
-    /**
-     * Implements hook_farm_ui_theme_field_group_items().
-     */
-    #[Hook('farm_ui_theme_field_group_items')]
-    public function farmUiThemeFieldGroupItems(string $entity_type, string $bundle)
-    {
-        if ($entity_type == 'log') {
-            return [
-                'equipment' => 'asset',
-            ];
-        }
-        return [
-        ];
+    return $base_fields;
+  }
+
+  /**
+   * Implements hook_farm_ui_theme_field_group_items().
+   */
+  #[Hook('farm_ui_theme_field_group_items')]
+  public function farmUiThemeFieldGroupItems(string $entity_type, string $bundle) {
+    if ($entity_type == 'log') {
+      return [
+        'equipment' => 'asset',
+      ];
     }
+    return [];
+  }
+
 }

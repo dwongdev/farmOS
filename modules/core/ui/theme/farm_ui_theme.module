@@ -7,18 +7,13 @@
 
 declare(strict_types=1);
 
-use Drupal\Core\Hook\Attribute\LegacyHook;
-use Drupal\farm_ui_theme\Hook\FarmUiThemeHooks;
 use Drupal\Core\Block\BlockPluginInterface;
 use Drupal\Core\Entity\Display\EntityFormDisplayInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Hook\Attribute\LegacyHook;
 use Drupal\asset\Entity\AssetInterface;
-use Drupal\farm_ui_theme\Form\AssetForm;
-use Drupal\farm_ui_theme\Form\LogForm;
-use Drupal\farm_ui_theme\Form\OrganizationForm;
-use Drupal\farm_ui_theme\Form\PlanForm;
-use Drupal\farm_ui_theme\Form\TaxonomyTermForm;
+use Drupal\farm_ui_theme\Hook\FarmUiThemeHooks;
 use Drupal\organization\Entity\OrganizationInterface;
 use Drupal\plan\Entity\PlanInterface;
 
@@ -42,9 +37,8 @@ function farm_ui_theme_theme_registry_alter(&$theme_registry) {
  * Implements hook_theme_suggestions_HOOK().
  */
 #[LegacyHook]
-function farm_ui_theme_theme_suggestions_menu_local_task(array $variables)
-{
-    return \Drupal::service(FarmUiThemeHooks::class)->themeSuggestionsMenuLocalTask($variables);
+function farm_ui_theme_theme_suggestions_menu_local_task(array $variables) {
+  return \Drupal::service(FarmUiThemeHooks::class)->themeSuggestionsMenuLocalTask($variables);
 }
 
 /**
@@ -59,36 +53,32 @@ function farm_ui_theme_theme_suggestions_menu_local_tasks(array $variables) {
  * Implements hook_entity_form_display_alter().
  */
 #[LegacyHook]
-function farm_ui_theme_entity_form_display_alter(EntityFormDisplayInterface $form_display, array $context)
-{
-    return \Drupal::service(FarmUiThemeHooks::class)->entityFormDisplayAlter($form_display, $context);
+function farm_ui_theme_entity_form_display_alter(EntityFormDisplayInterface $form_display, array $context) {
+  return \Drupal::service(FarmUiThemeHooks::class)->entityFormDisplayAlter($form_display, $context);
 }
 
 /**
  * Implements hook_farm_ui_theme_field_group_items().
  */
 #[LegacyHook]
-function farm_ui_theme_farm_ui_theme_field_group_items(string $entity_type, string $bundle)
-{
-    return \Drupal::service(FarmUiThemeHooks::class)->farmUiThemeFieldGroupItems($entity_type, $bundle);
+function farm_ui_theme_farm_ui_theme_field_group_items(string $entity_type, string $bundle) {
+  return \Drupal::service(FarmUiThemeHooks::class)->farmUiThemeFieldGroupItems($entity_type, $bundle);
 }
 
 /**
  * Implements hook_gin_content_form_routes().
  */
 #[LegacyHook]
-function farm_ui_theme_gin_content_form_routes()
-{
-    return \Drupal::service(FarmUiThemeHooks::class)->ginContentFormRoutes();
+function farm_ui_theme_gin_content_form_routes() {
+  return \Drupal::service(FarmUiThemeHooks::class)->ginContentFormRoutes();
 }
 
 /**
  * Implements hook_entity_type_build().
  */
 #[LegacyHook]
-function farm_ui_theme_entity_type_build(array &$entity_types)
-{
-    \Drupal::service(FarmUiThemeHooks::class)->entityTypeBuild($entity_types);
+function farm_ui_theme_entity_type_build(array &$entity_types) {
+  \Drupal::service(FarmUiThemeHooks::class)->entityTypeBuild($entity_types);
 }
 
 /**

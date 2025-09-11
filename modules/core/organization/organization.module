@@ -8,19 +8,18 @@
 declare(strict_types=1);
 
 use Drupal\Core\Hook\Attribute\LegacyHook;
-use Drupal\organization\Hook\OrganizationHooks;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\organization\Entity\OrganizationInterface;
 use Drupal\organization\Event\OrganizationEvent;
+use Drupal\organization\Hook\OrganizationHooks;
 
 /**
  * Implements hook_help().
  */
 #[LegacyHook]
-function organization_help($route_name, RouteMatchInterface $route_match)
-{
-    return \Drupal::service(OrganizationHooks::class)->help($route_name, $route_match);
+function organization_help($route_name, RouteMatchInterface $route_match) {
+  return \Drupal::service(OrganizationHooks::class)->help($route_name, $route_match);
 }
 
 /**
@@ -83,9 +82,8 @@ function organization_theme() {
  * Implements hook_theme_suggestions_HOOK().
  */
 #[LegacyHook]
-function organization_theme_suggestions_organization(array $variables)
-{
-    return \Drupal::service(OrganizationHooks::class)->themeSuggestionsOrganization($variables);
+function organization_theme_suggestions_organization(array $variables) {
+  return \Drupal::service(OrganizationHooks::class)->themeSuggestionsOrganization($variables);
 }
 
 /**

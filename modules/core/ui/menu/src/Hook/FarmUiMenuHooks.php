@@ -1,114 +1,117 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\farm_ui_menu\Hook;
 
+use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\farm_ui_menu\Menu\DefaultSecondaryLocalTaskProvider;
 use Drupal\farm_ui_menu\Render\Element\FarmAdminToolbar;
-use Drupal\Core\Hook\Attribute\Hook;
+
 /**
  * Hook implementations for farm_ui_menu.
  */
-class FarmUiMenuHooks
-{
-    /**
-     * Implements hook_menu_links_discovered_alter().
-     */
-    #[Hook('menu_links_discovered_alter')]
-    public function menuLinksDiscoveredAlter(&$links)
-    {
-        // Move the root system.admin menu link to the farm.base parent.
-        if (!empty($links['system.admin'])) {
-            $links['system.admin']['parent'] = 'farm.base';
-            $links['system.admin']['weight'] = 100;
-        }
-        // Move the farm.report menu link to the farm.base parent.
-        if (!empty($links['farm.report'])) {
-            $links['farm.report']['parent'] = 'farm.base';
-            $links['farm.report']['weight'] = 90;
-        }
-        // Move the farm.quick:farm.quick menu link to the farm.base parent.
-        if (!empty($links['farm.quick:farm.quick'])) {
-            $links['farm.quick:farm.quick']['parent'] = 'farm.base';
-        }
-        // Move the farm.setup menu link to the farm.base parent.
-        if (!empty($links['farm.setup'])) {
-            $links['farm.setup']['parent'] = 'farm.base';
-            $links['farm.setup']['weight'] = 95;
-            // Add a setup menu item for taxonomy.
-            if (\Drupal::service('module_handler')->moduleExists('taxonomy')) {
-                $links['farm.setup.taxonomy'] = [
-                    'title' => t('Taxonomy'),
-                    'description' => t('Manage the taxonomy terms used for flagging, categorization and organization of farmOS records.'),
-                    'parent' => 'farm.setup',
-                    'route_name' => 'entity.taxonomy_vocabulary.collection',
-                    'weight' => 50,
-                ];
-            }
-        }
+class FarmUiMenuHooks {
+
+  /**
+   * Implements hook_menu_links_discovered_alter().
+   */
+  #[Hook('menu_links_discovered_alter')]
+  public function menuLinksDiscoveredAlter(&$links) {
+    // Move the root system.admin menu link to the farm.base parent.
+    if (!empty($links['system.admin'])) {
+      $links['system.admin']['parent'] = 'farm.base';
+      $links['system.admin']['weight'] = 100;
     }
-    /**
-     * Implements hook_toolbar_alter().
-     */
-    #[Hook('toolbar_alter')]
-    public function toolbarAlter(&$items)
-    {
-        // Override the toolbar tray prerender method to use farm.base root.
-        $items['administration']['tray']['toolbar_administration']['#pre_render'] = [
-            [
-                \Drupal\farm_ui_menu\Render\Element\FarmAdminToolbar::class,
-                'preRenderTray',
-            ],
-        ];
+    // Move the farm.report menu link to the farm.base parent.
+    if (!empty($links['farm.report'])) {
+      $links['farm.report']['parent'] = 'farm.base';
+      $links['farm.report']['weight'] = 90;
     }
-    /**
-     * Implements hook_entity_type_build().
-     */
-    #[Hook('entity_type_build')]
-    public function entityTypeBuild(array &$entity_types)
-    {
-        // Override the default local task provider to use secondary tasks.
-        $target_entity_types = [
-            'asset',
-            'data_stream',
-            'log',
-            'organization',
-            'plan',
-            'taxonomy_term',
-        ];
-        foreach ($target_entity_types as $entity_type) {
-            if (isset($entity_types[$entity_type])) {
-                $handlers = $entity_types[$entity_type]->getHandlerClasses();
-                $handlers['local_task_provider']['default'] = \Drupal\farm_ui_menu\Menu\DefaultSecondaryLocalTaskProvider::class;
-                $entity_types[$entity_type]->setHandlerClass('local_task_provider', $handlers['local_task_provider']);
-            }
-        }
+    // Move the farm.quick:farm.quick menu link to the farm.base parent.
+    if (!empty($links['farm.quick:farm.quick'])) {
+      $links['farm.quick:farm.quick']['parent'] = 'farm.base';
     }
-    /**
-     * Implements hook_local_tasks_alter().
-     */
-    #[Hook('local_tasks_alter')]
-    public function localTasksAlter(&$local_tasks)
-    {
-        // Disable Drupal core revisions local tasks.
-        $target_entity_types = [
-            'asset',
-            'data_stream',
-            'log',
-            'organization',
-            'plan',
-            'taxonomy_term',
+    // Move the farm.setup menu link to the farm.base parent.
+    if (!empty($links['farm.setup'])) {
+      $links['farm.setup']['parent'] = 'farm.base';
+      $links['farm.setup']['weight'] = 95;
+      // Add a setup menu item for taxonomy.
+      if (\Drupal::service('module_handler')->moduleExists('taxonomy')) {
+        $links['farm.setup.taxonomy'] = [
+          'title' => t('Taxonomy'),
+          'description' => t('Manage the taxonomy terms used for flagging, categorization and organization of farmOS records.'),
+          'parent' => 'farm.setup',
+          'route_name' => 'entity.taxonomy_vocabulary.collection',
+          'weight' => 50,
         ];
-        foreach ($target_entity_types as $entity_type) {
-            unset($local_tasks['entity.version_history:' . $entity_type . '.version_history']);
-        }
-        // Remove local tasks provided by core taxonomy module.
-        $taxonomy_term_tasks = [
-            'entity.taxonomy_term.canonical',
-            'entity.taxonomy_term.edit_form',
-            'entity.taxonomy_term.delete_form',
-        ];
-        foreach ($taxonomy_term_tasks as $task_id) {
-            unset($local_tasks[$task_id]);
-        }
+      }
     }
+  }
+
+  /**
+   * Implements hook_toolbar_alter().
+   */
+  #[Hook('toolbar_alter')]
+  public function toolbarAlter(&$items) {
+    // Override the toolbar tray prerender method to use farm.base root.
+    $items['administration']['tray']['toolbar_administration']['#pre_render'] = [
+          [
+            FarmAdminToolbar::class,
+            'preRenderTray',
+          ],
+    ];
+  }
+
+  /**
+   * Implements hook_entity_type_build().
+   */
+  #[Hook('entity_type_build')]
+  public function entityTypeBuild(array &$entity_types) {
+    // Override the default local task provider to use secondary tasks.
+    $target_entity_types = [
+      'asset',
+      'data_stream',
+      'log',
+      'organization',
+      'plan',
+      'taxonomy_term',
+    ];
+    foreach ($target_entity_types as $entity_type) {
+      if (isset($entity_types[$entity_type])) {
+        $handlers = $entity_types[$entity_type]->getHandlerClasses();
+        $handlers['local_task_provider']['default'] = DefaultSecondaryLocalTaskProvider::class;
+        $entity_types[$entity_type]->setHandlerClass('local_task_provider', $handlers['local_task_provider']);
+      }
+    }
+  }
+
+  /**
+   * Implements hook_local_tasks_alter().
+   */
+  #[Hook('local_tasks_alter')]
+  public function localTasksAlter(&$local_tasks) {
+    // Disable Drupal core revisions local tasks.
+    $target_entity_types = [
+      'asset',
+      'data_stream',
+      'log',
+      'organization',
+      'plan',
+      'taxonomy_term',
+    ];
+    foreach ($target_entity_types as $entity_type) {
+      unset($local_tasks['entity.version_history:' . $entity_type . '.version_history']);
+    }
+    // Remove local tasks provided by core taxonomy module.
+    $taxonomy_term_tasks = [
+      'entity.taxonomy_term.canonical',
+      'entity.taxonomy_term.edit_form',
+      'entity.taxonomy_term.delete_form',
+    ];
+    foreach ($taxonomy_term_tasks as $task_id) {
+      unset($local_tasks[$task_id]);
+    }
+  }
+
 }
