@@ -169,7 +169,7 @@ class CsvImportForm extends FormBase {
 
     // Save the uploaded file.
     $validators = ['FileExtension' => ['extensions' => 'csv']];
-    $file = file_save_upload('source_file', $validators, $directory, 0, FileExists::Replace);
+    $file = file_save_upload('source_file', $validators, $directory, 0, FileExists::Rename);
 
     if (isset($file)) {
       // File upload was attempted.
