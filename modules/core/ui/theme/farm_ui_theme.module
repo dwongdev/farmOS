@@ -17,6 +17,7 @@ use Drupal\farm_ui_theme\Form\LogForm;
 use Drupal\farm_ui_theme\Form\OrganizationForm;
 use Drupal\farm_ui_theme\Form\PlanForm;
 use Drupal\farm_ui_theme\Form\TaxonomyTermForm;
+use Drupal\organization\Entity\OrganizationInterface;
 use Drupal\plan\Entity\PlanInterface;
 
 /**
@@ -299,6 +300,17 @@ function farm_ui_theme_preprocess_page(&$variables) {
  */
 function farm_ui_theme_preprocess_page__dashboard(&$variables) {
   $variables['#attached']['library'][] = 'farm_ui_theme/dashboard';
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function farm_ui_theme_preprocess_organization__full(&$variables) {
+  if (!empty($variables['organization']) && $variables['organization'] instanceof OrganizationInterface) {
+    farm_ui_theme_set_archived_message($variables['organization']);
+  }
+  farm_ui_theme_build_stacked_twocol_layout($variables, 'organization');
+  $variables['#attached']['library'][] = 'farm_ui_theme/layout';
 }
 
 /**
