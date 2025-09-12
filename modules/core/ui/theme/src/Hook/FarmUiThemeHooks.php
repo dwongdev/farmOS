@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\farm_ui_theme\Hook;
 
+use Drupal\Core\Block\BlockPluginInterface;
 use Drupal\Core\Entity\Display\EntityFormDisplayInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
@@ -48,6 +49,14 @@ class FarmUiThemeHooks {
   #[Hook('form_quick_form_alter')]
   public function formQuickFormAlter(&$form, FormStateInterface $form_state, $form_id) {
     $form['#attached']['library'][] = 'farm_ui_theme/quick';
+  }
+
+  /**
+   * Implements hook_block_view_BASE_BLOCK_ID_alter().
+   */
+  #[Hook('block_view_farm_powered_by_block_alter')]
+  public function blockViewFarmPoweredByBlockAlter(array &$build, BlockPluginInterface $block) {
+    $build['#attached']['library'][] = 'farm_ui_theme/footer';
   }
 
   /**
