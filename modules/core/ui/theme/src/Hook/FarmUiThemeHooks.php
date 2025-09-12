@@ -8,11 +8,14 @@ use Drupal\Core\Block\BlockPluginInterface;
 use Drupal\Core\Entity\Display\EntityFormDisplayInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\asset\Entity\AssetInterface;
 use Drupal\farm_ui_theme\Form\AssetForm;
 use Drupal\farm_ui_theme\Form\LogForm;
 use Drupal\farm_ui_theme\Form\OrganizationForm;
 use Drupal\farm_ui_theme\Form\PlanForm;
 use Drupal\farm_ui_theme\Form\TaxonomyTermForm;
+use Drupal\organization\Entity\OrganizationInterface;
+use Drupal\plan\Entity\PlanInterface;
 
 /**
  * Hook implementations for farm_ui_theme.
@@ -116,6 +119,119 @@ class FarmUiThemeHooks {
     return [
       'menu_local_tasks__farm',
     ];
+  }
+
+  /**
+   * Implements hook_preprocess_HOOK().
+   */
+  #[Hook('preprocess_block')]
+  public function preprocessBlock(&$variables) {
+    if ($variables['plugin_id'] == 'help_block') {
+      $variables['#attached']['library'][] = 'farm_ui_theme/help';
+    }
+  }
+
+  /**
+   * Implements hook_preprocess_HOOK().
+   */
+  #[Hook('preprocess_field')]
+  public function preprocessField(&$variables) {
+    if ($variables['field_type'] == 'comment') {
+      $variables['attributes']['class'][] = 'gin-layer-wrapper';
+    }
+  }
+
+  /**
+   * Implements hook_preprocess_HOOK().
+   */
+  #[Hook('preprocess_toolbar')]
+  public function preprocessToolbar(&$variables) {
+    $variables['#attached']['library'][] = 'farm_ui_theme/toolbar';
+  }
+
+  /**
+   * Implements hook_preprocess_HOOK().
+   */
+  #[Hook('preprocess_field__flag')]
+  public function preprocessFieldFlag(array &$variables) {
+    $variables['#attached']['library'][] = 'farm_ui_theme/flag';
+  }
+
+  /**
+   * Implements hook_preprocess_HOOK().
+   */
+  #[Hook('preprocess_field__image')]
+  public function preprocessFieldImage(array &$variables) {
+    $variables['#attached']['library'][] = 'farm_ui_theme/image';
+  }
+
+  /**
+   * Implements hook_preprocess_HOOK().
+   */
+  #[Hook('preprocess_asset__full')]
+  public function preprocessAssetFull(&$variables) {
+    if (!empty($variables['asset']) && $variables['asset'] instanceof AssetInterface) {
+      farm_ui_theme_set_archived_message($variables['asset']);
+    }
+    farm_ui_theme_build_stacked_twocol_layout($variables, 'asset');
+    $variables['#attached']['library'][] = 'farm_ui_theme/layout';
+  }
+
+  /**
+   * Implements hook_preprocess_HOOK().
+   */
+  #[Hook('preprocess_log__full')]
+  public function preprocessLogFull(&$variables) {
+    farm_ui_theme_build_stacked_twocol_layout($variables, 'log');
+    $variables['#attached']['library'][] = 'farm_ui_theme/layout';
+  }
+
+  /**
+   * Implements hook_preprocess_HOOK().
+   */
+  #[Hook('preprocess_organization__full')]
+  public function preprocessOrganizationFull(&$variables) {
+    if (!empty($variables['organization']) && $variables['organization'] instanceof OrganizationInterface) {
+      farm_ui_theme_set_archived_message($variables['organization']);
+    }
+    farm_ui_theme_build_stacked_twocol_layout($variables, 'organization');
+    $variables['#attached']['library'][] = 'farm_ui_theme/layout';
+  }
+
+  /**
+   * Implements hook_preprocess_HOOK().
+   */
+  #[Hook('preprocess_plan__full')]
+  public function preprocessPlanFull(&$variables) {
+    if (!empty($variables['plan']) && $variables['plan'] instanceof PlanInterface) {
+      farm_ui_theme_set_archived_message($variables['plan']);
+    }
+    farm_ui_theme_build_stacked_twocol_layout($variables, 'plan');
+    $variables['#attached']['library'][] = 'farm_ui_theme/layout';
+  }
+
+  /**
+   * Implements hook_preprocess_HOOK().
+   */
+  #[Hook('preprocess_page')]
+  public function preprocessPage(&$variables) {
+    $variables['#attached']['library'][] = 'farm_ui_theme/regions';
+  }
+
+  /**
+   * Implements hook_preprocess_HOOK().
+   */
+  #[Hook('preprocess_page__dashboard')]
+  public function preprocessPageDashboard(&$variables) {
+    $variables['#attached']['library'][] = 'farm_ui_theme/dashboard';
+  }
+
+  /**
+   * Implements hook_preprocess_HOOK().
+   */
+  #[Hook('preprocess_views_view')]
+  public function preprocessViewsView(&$variables) {
+    $variables['#attached']['library'][] = 'farm_ui_theme/views';
   }
 
   /**

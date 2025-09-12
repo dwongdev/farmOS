@@ -39,6 +39,16 @@ class FarmUiMapHooks {
   }
 
   /**
+   * Implements hook_preprocess_HOOK().
+   */
+  #[Hook('preprocess_block__farm_local_actions_block')]
+  public function preprocessBlockFarmLocalActionsBlock(&$variables, $block) {
+    if (\Drupal::routeMatch()->getRouteName() === 'farm_ui_map.asset.map_popup') {
+      $variables['content']['#dropbutton_type'] = 'small';
+    }
+  }
+
+  /**
    * Implements hook_farm_dashboard_panes().
    */
   #[Hook('farm_dashboard_panes')]
