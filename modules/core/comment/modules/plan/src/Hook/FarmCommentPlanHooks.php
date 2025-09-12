@@ -6,6 +6,7 @@ namespace Drupal\farm_comment_plan\Hook;
 
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\farm_comment\FarmCommentHelper;
 
 /**
  * Hook implementations for farm_comment_plan.
@@ -21,7 +22,7 @@ class FarmCommentPlanHooks {
 
     // Add comment base field to plans.
     if ($entity_type->id() == 'plan') {
-      $fields['comment'] = farm_comment_base_field_definition('plan');
+      $fields['comment'] = FarmCommentHelper::commentBaseFieldDefinition('plan');
     }
 
     return $fields;
