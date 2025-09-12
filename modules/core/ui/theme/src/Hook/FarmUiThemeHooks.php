@@ -9,6 +9,7 @@ use Drupal\Core\Entity\Display\EntityFormDisplayInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\asset\Entity\AssetInterface;
+use Drupal\farm_ui_theme\FarmUiThemeHelper;
 use Drupal\farm_ui_theme\Form\AssetForm;
 use Drupal\farm_ui_theme\Form\LogForm;
 use Drupal\farm_ui_theme\Form\OrganizationForm;
@@ -31,7 +32,7 @@ class FarmUiThemeHooks {
     $form_object = $form_state->getFormObject();
     /** @var \Drupal\asset\Entity\AssetInterface $entity */
     $entity = $form_object->getEntity();
-    farm_ui_theme_set_archived_message($entity);
+    FarmUiThemeHelper::setArchivedMessage($entity);
   }
 
   /**
@@ -43,7 +44,7 @@ class FarmUiThemeHooks {
     $form_object = $form_state->getFormObject();
     /** @var \Drupal\asset\Entity\AssetInterface $entity */
     $entity = $form_object->getEntity();
-    farm_ui_theme_set_archived_message($entity);
+    FarmUiThemeHelper::setArchivedMessage($entity);
   }
 
   /**
@@ -171,7 +172,7 @@ class FarmUiThemeHooks {
   #[Hook('preprocess_asset__full')]
   public function preprocessAssetFull(&$variables) {
     if (!empty($variables['asset']) && $variables['asset'] instanceof AssetInterface) {
-      farm_ui_theme_set_archived_message($variables['asset']);
+      FarmUiThemeHelper::setArchivedMessage($variables['asset']);
     }
     farm_ui_theme_build_stacked_twocol_layout($variables, 'asset');
     $variables['#attached']['library'][] = 'farm_ui_theme/layout';
@@ -192,7 +193,7 @@ class FarmUiThemeHooks {
   #[Hook('preprocess_organization__full')]
   public function preprocessOrganizationFull(&$variables) {
     if (!empty($variables['organization']) && $variables['organization'] instanceof OrganizationInterface) {
-      farm_ui_theme_set_archived_message($variables['organization']);
+      FarmUiThemeHelper::setArchivedMessage($variables['organization']);
     }
     farm_ui_theme_build_stacked_twocol_layout($variables, 'organization');
     $variables['#attached']['library'][] = 'farm_ui_theme/layout';
@@ -204,7 +205,7 @@ class FarmUiThemeHooks {
   #[Hook('preprocess_plan__full')]
   public function preprocessPlanFull(&$variables) {
     if (!empty($variables['plan']) && $variables['plan'] instanceof PlanInterface) {
-      farm_ui_theme_set_archived_message($variables['plan']);
+      FarmUiThemeHelper::setArchivedMessage($variables['plan']);
     }
     farm_ui_theme_build_stacked_twocol_layout($variables, 'plan');
     $variables['#attached']['library'][] = 'farm_ui_theme/layout';
