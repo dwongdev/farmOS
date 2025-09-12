@@ -93,4 +93,18 @@ class DataStreamHooks {
     $build['views']['data'] = views_embed_view('data_stream_basic_data', 'block', $data_stream->id());
   }
 
+  /**
+   * Implements hook_ENTITY_TYPE_delete().
+   */
+  #[Hook('data_stream_delete')]
+  public function dataStreamDelete(DataStreamInterface $data_stream) {
+
+    // If this is a "basic" data stream, delete data associated with it.
+    if ($data_stream->bundle() == 'basic' && !empty($data_stream->id())) {
+      \Drupal::database()->delete('data_stream_basic')
+        ->condition('id', $data_stream->id())
+        ->execute();
+    }
+  }
+
 }

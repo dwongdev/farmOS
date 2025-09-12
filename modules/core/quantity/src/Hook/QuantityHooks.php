@@ -5,11 +5,39 @@ declare(strict_types=1);
 namespace Drupal\quantity\Hook;
 
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\quantity\Entity\QuantityInterface;
+use Drupal\quantity\Event\QuantityEvent;
 
 /**
  * Hook implementations for quantity.
  */
 class QuantityHooks {
+
+  /**
+   * Implements hook_ENTITY_TYPE_presave().
+   */
+  #[Hook('quantity_presave')]
+  public function quantityPresave(QuantityInterface $quantity) {
+
+    // Dispatch an event on quantity presave.
+    // @todo Replace this with core event via https://www.drupal.org/node/2551893.
+    $event = new QuantityEvent($quantity);
+    $event_dispatcher = \Drupal::service('event_dispatcher');
+    $event_dispatcher->dispatch($event, QuantityEvent::PRESAVE);
+  }
+
+  /**
+   * Implements hook_ENTITY_TYPE_delete().
+   */
+  #[Hook('quantity_delete')]
+  public function quantityDelete(QuantityInterface $quantity) {
+
+    // Dispatch an event on quantity delete.
+    // @todo Replace this with core event via https://www.drupal.org/node/2551893.
+    $event = new QuantityEvent($quantity);
+    $event_dispatcher = \Drupal::service('event_dispatcher');
+    $event_dispatcher->dispatch($event, QuantityEvent::DELETE);
+  }
 
   /**
    * Implements hook_farm_api_meta_alter().

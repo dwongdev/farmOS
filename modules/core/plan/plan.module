@@ -7,28 +7,7 @@
 
 declare(strict_types=1);
 
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Render\Element;
-
-/**
- * Implements hook_ENTITY_TYPE_delete().
- */
-function plan_plan_delete(EntityInterface $entity) {
-
-  // Delete all plan_record entities associated with the plan.
-  $plan_record_storage = \Drupal::entityTypeManager()->getStorage('plan_record');
-  $plan_ids = $plan_record_storage->getQuery()
-    ->condition('plan', $entity->id())
-    ->accessCheck(FALSE)
-    ->execute();
-  if (count($plan_ids) < 1) {
-    return;
-  }
-  foreach (array_chunk($plan_ids, 100) as $chunk) {
-    $plan_records = $plan_record_storage->loadMultiple($chunk);
-    $plan_record_storage->delete($plan_records);
-  }
-}
 
 /**
  * Prepares variables for plan templates.

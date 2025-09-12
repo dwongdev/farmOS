@@ -6,6 +6,7 @@ namespace Drupal\plan\Hook;
 
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\plan\Entity\PlanInterface;
 
 /**
  * Hook implementations for plan.
@@ -25,6 +26,27 @@ class PlanHooks {
       $output .= '<p>' . t('Provides plan entity') . '</p>';
     }
     return $output;
+  }
+
+  /**
+   * Implements hook_ENTITY_TYPE_delete().
+   */
+  #[Hook('plan_delete')]
+  public function planDelete(PlanInterface $plan) {
+
+    // Delete all plan_record entities associated with the plan.
+    $plan_record_storage = \Drupal::entityTypeManager()->getStorage('plan_record');
+    $plan_ids = $plan_record_storage->getQuery()
+      ->condition('plan', $plan->id())
+      ->accessCheck(FALSE)
+      ->execute();
+    if (count($plan_ids) < 1) {
+      return;
+    }
+    foreach (array_chunk($plan_ids, 100) as $chunk) {
+      $plan_records = $plan_record_storage->loadMultiple($chunk);
+      $plan_record_storage->delete($plan_records);
+    }
   }
 
   /**
