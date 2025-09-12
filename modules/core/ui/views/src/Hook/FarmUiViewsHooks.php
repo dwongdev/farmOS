@@ -9,6 +9,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
+use Drupal\farm_ui_views\FarmUiViewsHelper;
 
 /**
  * Hook implementations for farm_ui_views.
@@ -168,7 +169,7 @@ class FarmUiViewsHooks {
 
     // Get the entity type and (maybe) bundle.
     $entity_type = $storage['view']->getBaseEntityType()->id();
-    $bundle = farm_ui_views_get_bundle_argument($storage['view'], $storage['display']['id'], $storage['view']->args);
+    $bundle = FarmUiViewsHelper::getBundleArgument($storage['view'], $storage['display']['id'], $storage['view']->args);
     $bundles = !empty($bundle) ? [$bundle] : [];
     $allowed_options = farm_flag_options($entity_type, $bundles, TRUE);
     $form['flag_value']['#options'] = $allowed_options;

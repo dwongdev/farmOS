@@ -41,7 +41,7 @@ class FarmUiViewsViewsExecutionHooks {
     }
 
     // If this is a "By type" display, alter the fields and filters.
-    $bundle = farm_ui_views_get_bundle_argument($view, $display_id, $args);
+    $bundle = FarmUiViewsHelper::getBundleArgument($view, $display_id, $args);
     if (!empty($bundle)) {
 
       // Remove the type field and filter handlers.
@@ -135,7 +135,7 @@ class FarmUiViewsViewsExecutionHooks {
 
     // If this is a "By type" display and a bundle argument is specified, load
     // the bundle label and add it to the title.
-    $bundle = farm_ui_views_get_bundle_argument($view, $view->current_display, $view->args);
+    $bundle = FarmUiViewsHelper::getBundleArgument($view, $view->current_display, $view->args);
     if (!empty($bundle)) {
       $bundles = \Drupal::service('entity_type.bundle.info')->getBundleInfo($view->getBaseEntityType()->id());
       if (!empty($bundles[$bundle])) {

@@ -15,6 +15,36 @@ use Drupal\views\Views;
 class FarmUiViewsHelper {
 
   /**
+   * Get the bundle from a "By Type" display's arguments.
+   *
+   * @param \Drupal\views\ViewExecutable $view
+   *   The View object.
+   * @param string $display_id
+   *   The display ID.
+   * @param array $args
+   *   Arguments for the View.
+   *
+   * @return string
+   *   Returns the bundle, or empty string if no bundle argument is found.
+   */
+  public static function getBundleArgument(ViewExecutable $view, string $display_id, array $args) {
+    $bundle = '';
+    if ($view->id() == 'farm_log' && $display_id == 'page_asset' && !empty($args[1]) && $args[1] != 'all') {
+      $bundle = $args[1];
+    }
+    elseif (in_array($view->id(), ['farm_asset', 'farm_log']) && $display_id == 'page_term' && !empty($args[1]) && $args[1] != 'all') {
+      $bundle = $args[1];
+    }
+    elseif (in_array($view->id(), ['farm_organization_asset', 'farm_organization_log']) && $display_id == 'page_type' && isset($args[1]) && $args[1] != 'all') {
+      $bundle = $args[1];
+    }
+    elseif ($display_id == 'page_type' && !empty($args[0])) {
+      $bundle = $args[0];
+    }
+    return $bundle;
+  }
+
+  /**
    * Add field/filter handlers to a View.
    *
    * @param \Drupal\views\ViewExecutable $view
