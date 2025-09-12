@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\farm_ui_views\Hook;
 
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\farm_ui_views\FarmUiViewsHelper;
 use Drupal\views\ViewExecutable;
 
 /**
@@ -35,8 +36,8 @@ class FarmUiViewsViewsExecutionHooks {
       if (!in_array($field_definition->getName(), $base_fields)) {
         continue;
       }
-      farm_ui_views_add_handlers($view, $display_id, 'field', $field_definition);
-      farm_ui_views_add_handlers($view, $display_id, 'filter', $field_definition);
+      FarmUiViewsHelper::addHandlers($view, $display_id, 'field', $field_definition);
+      FarmUiViewsHelper::addHandlers($view, $display_id, 'filter', $field_definition);
     }
 
     // If this is a "By type" display, alter the fields and filters.
@@ -53,8 +54,8 @@ class FarmUiViewsViewsExecutionHooks {
         /** @var \Drupal\entity\BundleFieldDefinition[] $bundle_fields */
         $bundle_fields = \Drupal::entityTypeManager()->getHandler($view->getBaseEntityType()->id(), 'bundle_plugin')->getFieldDefinitions($bundle);
         foreach (array_reverse($bundle_fields) as $field_definition) {
-          farm_ui_views_add_handlers($view, $display_id, 'field', $field_definition);
-          farm_ui_views_add_handlers($view, $display_id, 'filter', $field_definition);
+          FarmUiViewsHelper::addHandlers($view, $display_id, 'field', $field_definition);
+          FarmUiViewsHelper::addHandlers($view, $display_id, 'filter', $field_definition);
         }
       }
     }

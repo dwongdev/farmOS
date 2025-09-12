@@ -7,6 +7,7 @@ namespace Drupal\farm_ui_map\Hook;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Hook\Order\Order;
 use Drupal\asset\Entity\AssetType;
+use Drupal\farm_ui_views\FarmUiViewsHelper;
 use Drupal\views\Entity\View;
 use Drupal\views\ViewExecutable;
 
@@ -35,7 +36,7 @@ class FarmUiMapViewsExecutionHooks {
         if (!in_array($field_definition->getName(), $base_fields)) {
           continue;
         }
-        farm_ui_views_add_handlers($view, $display_id, 'filter', $field_definition);
+        FarmUiViewsHelper::addHandlers($view, $display_id, 'filter', $field_definition);
       }
 
       // Load the farm_asset View. Bail if unavailable.
@@ -57,7 +58,7 @@ class FarmUiMapViewsExecutionHooks {
         /** @var \Drupal\entity\BundleFieldDefinition[] $bundle_fields */
         $bundle_fields = \Drupal::entityTypeManager()->getHandler($view->getBaseEntityType()->id(), 'bundle_plugin')->getFieldDefinitions($args[0]);
         foreach (array_reverse($bundle_fields) as $field_definition) {
-          farm_ui_views_add_handlers($view, $display_id, 'filter', $field_definition);
+          FarmUiViewsHelper::addHandlers($view, $display_id, 'filter', $field_definition);
         }
       }
     }
