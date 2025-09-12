@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\organization\Hook;
 
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\Render\Element;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\organization\Entity\OrganizationInterface;
 use Drupal\organization\Event\OrganizationEvent;
@@ -91,8 +92,30 @@ class OrganizationHooks {
     return [
       'organization' => [
         'render element' => 'elements',
+        'initial preprocess' => static::class . '::preprocessOrganization',
       ],
     ];
+  }
+
+  /**
+   * Prepares variables for organization templates.
+   *
+   * Default template: organization.html.twig.
+   *
+   * @param array $variables
+   *   An associative array containing:
+   *   - elements: An associative array containing the organization information
+   *     and any fields attached to the organization. Properties used:
+   *     - #organization: A \Drupal\organization\Entity\Organization object. The
+   *       organization entity.
+   *   - attributes: HTML attributes for the containing element.
+   */
+  public function preprocessOrganization(array &$variables) {
+    $variables['organization'] = $variables['elements']['#organization'];
+    // Helpful $content variable for templates.
+    foreach (Element::children($variables['elements']) as $key) {
+      $variables['content'][$key] = $variables['elements'][$key];
+    }
   }
 
   /**

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\asset\Hook;
 
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\Render\Element;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\asset\Entity\AssetInterface;
 use Drupal\asset\Event\AssetEvent;
@@ -91,8 +92,29 @@ class AssetHooks {
     return [
       'asset' => [
         'render element' => 'elements',
+        'initial preprocess' => static::class . '::preprocessAsset',
       ],
     ];
+  }
+
+  /**
+   * Prepares variables for asset templates.
+   *
+   * Default template: asset.html.twig.
+   *
+   * @param array $variables
+   *   An associative array containing:
+   *   - elements: An associative array containing the asset information and any
+   *     fields attached to the asset. Properties used:
+   *     - #asset: A \Drupal\asset\Entity\Asset object. The asset entity.
+   *   - attributes: HTML attributes for the containing element.
+   */
+  public function preprocessAsset(array &$variables) {
+    $variables['asset'] = $variables['elements']['#asset'];
+    // Helpful $content variable for templates.
+    foreach (Element::children($variables['elements']) as $key) {
+      $variables['content'][$key] = $variables['elements'][$key];
+    }
   }
 
   /**

@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
-use Drupal\Core\Render\Element;
 
 /**
  * Define information about available quantity measures.
@@ -105,27 +104,4 @@ function quantity_measure_options() {
  */
 function quantity_measure_field_allowed_values(FieldStorageDefinitionInterface $definition, ?ContentEntityInterface $entity = NULL, bool &$cacheable = TRUE) {
   return quantity_measure_options();
-}
-
-/**
- * Prepares variables for quantity templates.
- *
- * Default template: quantity.html.twig.
- *
- * @param array $variables
- *   An associative array containing:
- *   - elements: An associative array containing the quantity information and
- *     any fields attached to the quantity. Properties used:
- *     - #quantity: A \Drupal\quantity\Entity\Quantity object. Quantity entity.
- *   - attributes: HTML attributes for the containing element.
- */
-function template_preprocess_quantity(array &$variables) {
-  $variables['quantity'] = $variables['elements']['#quantity'];
-  // Helpful $content variable for templates.
-  $variables['content'] = [];
-  foreach (Element::children($variables['elements']) as $key) {
-    if (!empty($variables['elements'][$key]['#items'])) {
-      $variables['content'][$key] = $variables['elements'][$key];
-    }
-  }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\quantity\Hook;
 
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\Render\Element;
 use Drupal\quantity\Entity\QuantityInterface;
 use Drupal\quantity\Event\QuantityEvent;
 
@@ -57,12 +58,38 @@ class QuantityHooks {
     return [
       'quantity' => [
         'render element' => 'elements',
+        'initial preprocess' => static::class . '::preprocessQuantity',
       ],
       'field__quantity__field' => [
         'template' => 'field--quantity--field',
         'base hook' => 'field',
       ],
     ];
+  }
+
+  /**
+   * Prepares variables for quantity templates.
+   *
+   * Default template: quantity.html.twig.
+   *
+   * @param array $variables
+   *   An associative array containing:
+   *   - elements: An associative array containing the quantity information and
+   *     any fields attached to the quantity. Properties used:
+   *     - #quantity: A \Drupal\quantity\Entity\Quantity object. Quantity
+   *       entity.
+   *   - attributes: HTML attributes for the containing element.
+   */
+  public function preprocessQuantity(array &$variables) {
+    $variables['quantity'] = $variables['elements']['#quantity'];
+
+    // Helpful $content variable for templates.
+    $variables['content'] = [];
+    foreach (Element::children($variables['elements']) as $key) {
+      if (!empty($variables['elements'][$key]['#items'])) {
+        $variables['content'][$key] = $variables['elements'][$key];
+      }
+    }
   }
 
   /**
