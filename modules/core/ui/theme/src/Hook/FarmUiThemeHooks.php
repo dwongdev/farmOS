@@ -174,7 +174,7 @@ class FarmUiThemeHooks {
     if (!empty($variables['asset']) && $variables['asset'] instanceof AssetInterface) {
       FarmUiThemeHelper::setArchivedMessage($variables['asset']);
     }
-    farm_ui_theme_build_stacked_twocol_layout($variables, 'asset');
+    FarmUiThemeHelper::buildStackedTwocolLayout($variables, 'asset');
     $variables['#attached']['library'][] = 'farm_ui_theme/layout';
   }
 
@@ -183,7 +183,7 @@ class FarmUiThemeHooks {
    */
   #[Hook('preprocess_log__full')]
   public function preprocessLogFull(&$variables) {
-    farm_ui_theme_build_stacked_twocol_layout($variables, 'log');
+    FarmUiThemeHelper::buildStackedTwocolLayout($variables, 'log');
     $variables['#attached']['library'][] = 'farm_ui_theme/layout';
   }
 
@@ -195,7 +195,7 @@ class FarmUiThemeHooks {
     if (!empty($variables['organization']) && $variables['organization'] instanceof OrganizationInterface) {
       FarmUiThemeHelper::setArchivedMessage($variables['organization']);
     }
-    farm_ui_theme_build_stacked_twocol_layout($variables, 'organization');
+    FarmUiThemeHelper::buildStackedTwocolLayout($variables, 'organization');
     $variables['#attached']['library'][] = 'farm_ui_theme/layout';
   }
 
@@ -207,7 +207,7 @@ class FarmUiThemeHooks {
     if (!empty($variables['plan']) && $variables['plan'] instanceof PlanInterface) {
       FarmUiThemeHelper::setArchivedMessage($variables['plan']);
     }
-    farm_ui_theme_build_stacked_twocol_layout($variables, 'plan');
+    FarmUiThemeHelper::buildStackedTwocolLayout($variables, 'plan');
     $variables['#attached']['library'][] = 'farm_ui_theme/layout';
   }
 
