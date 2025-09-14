@@ -4,13 +4,21 @@ declare(strict_types=1);
 
 namespace Drupal\farm_log_quantity\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
  * Hook implementations for farm_log_quantity.
  */
 class FarmLogQuantityHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected FarmFieldFactoryInterface $farmFieldFactory,
+  ) {}
 
   /**
    * Implements hook_entity_base_field_info().
@@ -39,7 +47,7 @@ class FarmLogQuantityHooks {
     ];
     $fields = [];
     foreach ($field_info as $name => $info) {
-      $fields[$name] = \Drupal::service('farm_field.factory')->baseFieldDefinition($info);
+      $fields[$name] = $this->farmFieldFactory->baseFieldDefinition($info);
     }
 
     return $fields;

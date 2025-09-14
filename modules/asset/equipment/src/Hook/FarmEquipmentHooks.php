@@ -4,13 +4,21 @@ declare(strict_types=1);
 
 namespace Drupal\farm_equipment\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
  * Hook implementations for farm_equipment.
  */
 class FarmEquipmentHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected FarmFieldFactoryInterface $farmFieldFactory,
+  ) {}
 
   /**
    * Implements hook_entity_base_field_info().
@@ -33,7 +41,7 @@ class FarmEquipmentHooks {
           'view' => 40,
         ],
       ];
-      $fields['equipment'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
+      $fields['equipment'] = $this->farmFieldFactory->baseFieldDefinition($options);
     }
 
     return $fields;

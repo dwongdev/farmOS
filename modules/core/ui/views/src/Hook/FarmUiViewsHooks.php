@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Drupal\farm_ui_views\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Routing\RouteMatchInterface;
@@ -15,6 +17,12 @@ use Drupal\farm_ui_views\FarmUiViewsHelper;
  * Hook implementations for farm_ui_views.
  */
 class FarmUiViewsHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected ModuleHandlerInterface $moduleHandler,
+  ) {}
 
   /**
    * Implements hook_help().
@@ -203,7 +211,7 @@ class FarmUiViewsHooks {
     $groups = [];
 
     // If the plan module is enabled, add a plans group.
-    if (\Drupal::service('module_handler')->moduleExists('plan')) {
+    if ($this->moduleHandler->moduleExists('plan')) {
       $groups['second']['plans'] = [
         '#weight' => 10,
       ];
@@ -224,7 +232,7 @@ class FarmUiViewsHooks {
     $panes = [];
 
     // If the plan module is enabled, add active plans pane.
-    if (\Drupal::service('module_handler')->moduleExists('plan')) {
+    if ($this->moduleHandler->moduleExists('plan')) {
       $panes['active_plans'] = [
         'view' => 'farm_plan',
         'view_display_id' => 'block_active',

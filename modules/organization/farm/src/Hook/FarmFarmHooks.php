@@ -4,13 +4,23 @@ declare(strict_types=1);
 
 namespace Drupal\farm_farm\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
  * Hook implementations for farm_farm.
  */
 class FarmFarmHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected FarmFieldFactoryInterface $farmFieldFactory,
+    protected ModuleHandlerInterface $moduleHandler,
+  ) {}
 
   /**
    * Implements hook_entity_base_field_info().
@@ -33,7 +43,7 @@ class FarmFarmHooks {
           'view' => -5,
         ],
       ];
-      $fields['farm'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
+      $fields['farm'] = $this->farmFieldFactory->baseFieldDefinition($options);
 
       // Add a constraint to ensure that assets are in the same farm as their
       // parents and children.
@@ -47,7 +57,7 @@ class FarmFarmHooks {
       // If the farm_group module is installed, add a constraint to ensure that
       // the farm does not change if there are any group assignment logs that
       // reference it (in either asset or group field).
-      if (\Drupal::moduleHandler()->moduleExists('farm_group')) {
+      if ($this->moduleHandler->moduleExists('farm_group')) {
         $fields['farm']->addConstraint('AssetGroupAssignmentFarm');
       }
     }

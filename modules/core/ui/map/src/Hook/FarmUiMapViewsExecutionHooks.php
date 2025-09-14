@@ -4,9 +4,15 @@ declare(strict_types=1);
 
 namespace Drupal\farm_ui_map\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
+use Drupal\Core\Entity\EntityFieldManagerInterface;
+use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Hook\Order\Order;
 use Drupal\asset\Entity\AssetType;
+use Drupal\farm_map\LayerStyleLoaderInterface;
 use Drupal\farm_ui_views\FarmUiViewsHelper;
 use Drupal\views\Entity\View;
 use Drupal\views\ViewExecutable;
@@ -15,6 +21,16 @@ use Drupal\views\ViewExecutable;
  * Hook implementations for farm_ui_map.
  */
 class FarmUiMapViewsExecutionHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected EntityFieldManagerInterface $entityFieldManager,
+    protected EntityTypeBundleInfoInterface $entityTypeBundleInfo,
+    protected ModuleHandlerInterface $moduleHandler,
+    protected LayerStyleLoaderInterface $layerStyleLoader,
+  ) {}
 
   /**
    * Implements hook_views_pre_view().
@@ -26,13 +42,9 @@ class FarmUiMapViewsExecutionHooks {
     // exposed filters that are present in the farm_asset View.
     if ($view->id() == 'farm_asset_geojson' && in_array($display_id, ['full', 'centroid'])) {
 
-      // Get the entity field manager service.
-      /** @var \Drupal\Core\Entity\EntityFieldManagerInterface $entity_field_manager */
-      $entity_field_manager = \Drupal::service('entity_field.manager');
-
       // Add filter handlers for base fields provided by other modules.
-      $base_fields = \Drupal::moduleHandler()->invokeAll('farm_ui_views_base_fields', [$view->getBaseEntityType()->id()]);
-      foreach ($entity_field_manager->getBaseFieldDefinitions($view->getBaseEntityType()->id()) as $field_definition) {
+      $base_fields = $this->moduleHandler->invokeAll('farm_ui_views_base_fields', [$view->getBaseEntityType()->id()]);
+      foreach ($this->entityFieldManager->getBaseFieldDefinitions($view->getBaseEntityType()->id()) as $field_definition) {
         if (!in_array($field_definition->getName(), $base_fields)) {
           continue;
         }
@@ -56,7 +68,7 @@ class FarmUiMapViewsExecutionHooks {
       // If a type argument is present, add bundle-specific exposed filters.
       if (!empty($args[0]) && $args[0] != 'all') {
         /** @var \Drupal\entity\BundleFieldDefinition[] $bundle_fields */
-        $bundle_fields = \Drupal::entityTypeManager()->getHandler($view->getBaseEntityType()->id(), 'bundle_plugin')->getFieldDefinitions($args[0]);
+        $bundle_fields = $this->entityTypeManager->getHandler($view->getBaseEntityType()->id(), 'bundle_plugin')->getFieldDefinitions($args[0]);
         foreach (array_reverse($bundle_fields) as $field_definition) {
           FarmUiViewsHelper::addHandlers($view, $display_id, 'filter', $field_definition);
         }
@@ -76,7 +88,7 @@ class FarmUiMapViewsExecutionHooks {
     if ($view->id() == 'farm_asset' && in_array($view->current_display, ['page', 'page_type'])) {
 
       // Get all asset bundles.
-      $asset_bundles = \Drupal::service('entity_type.bundle.info')->getBundleInfo($view->getBaseEntityType()->id());
+      $asset_bundles = $this->entityTypeBundleInfo->getBundleInfo($view->getBaseEntityType()->id());
 
       // Start array of filtered bundles.
       $filtered_bundles = $asset_bundles;
@@ -140,8 +152,7 @@ class FarmUiMapViewsExecutionHooks {
         $type = AssetType::load($bundle);
 
         // Load the map layer style.
-        /** @var \Drupal\farm_map\Entity\LayerStyleInterface|null $layer_style */
-        if ($layer_style = \Drupal::service('farm_map.layer_style_loader')->load(['asset_type' => $bundle])) {
+        if ($layer_style = $this->layerStyleLoader->load(['asset_type' => $bundle])) {
           $color = $layer_style->get('color');
         }
 

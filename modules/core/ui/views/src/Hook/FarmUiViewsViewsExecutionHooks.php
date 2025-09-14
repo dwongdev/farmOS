@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 namespace Drupal\farm_ui_views\Hook;
 
+use Drupal\Component\Datetime\TimeInterface;
+use Drupal\Core\DependencyInjection\AutowireTrait;
+use Drupal\Core\Entity\EntityFieldManagerInterface;
+use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\farm_ui_views\FarmUiViewsHelper;
 use Drupal\views\ViewExecutable;
@@ -12,6 +18,16 @@ use Drupal\views\ViewExecutable;
  * Hook implementations for farm_ui_views.
  */
 class FarmUiViewsViewsExecutionHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected EntityFieldManagerInterface $entityFieldManager,
+    protected EntityTypeBundleInfoInterface $entityTypeBundleInfo,
+    protected ModuleHandlerInterface $moduleHandler,
+    protected TimeInterface $time,
+  ) {}
 
   /**
    * Implements hook_views_pre_view().
@@ -24,15 +40,11 @@ class FarmUiViewsViewsExecutionHooks {
       return;
     }
 
-    // Get the entity field manager service.
-    /** @var \Drupal\Core\Entity\EntityFieldManagerInterface $entity_field_manager */
-    $entity_field_manager = \Drupal::service('entity_field.manager');
-
     // Add field and filter handlers for base fields provided by other modules.
-    $base_fields = \Drupal::moduleHandler()->invokeAll('farm_ui_views_base_fields', [
+    $base_fields = $this->moduleHandler->invokeAll('farm_ui_views_base_fields', [
       $view->getBaseEntityType()->id(),
     ]);
-    foreach ($entity_field_manager->getBaseFieldDefinitions($view->getBaseEntityType()->id()) as $field_definition) {
+    foreach ($this->entityFieldManager->getBaseFieldDefinitions($view->getBaseEntityType()->id()) as $field_definition) {
       if (!in_array($field_definition->getName(), $base_fields)) {
         continue;
       }
@@ -50,9 +62,9 @@ class FarmUiViewsViewsExecutionHooks {
 
       // If the entity type has a bundle_plugin manager, add all of its
       // bundle fields and filters to the page_type view.
-      if (\Drupal::entityTypeManager()->hasHandler($view->getBaseEntityType()->id(), 'bundle_plugin')) {
+      if ($this->entityTypeManager->hasHandler($view->getBaseEntityType()->id(), 'bundle_plugin')) {
         /** @var \Drupal\entity\BundleFieldDefinition[] $bundle_fields */
-        $bundle_fields = \Drupal::entityTypeManager()->getHandler($view->getBaseEntityType()->id(), 'bundle_plugin')->getFieldDefinitions($bundle);
+        $bundle_fields = $this->entityTypeManager->getHandler($view->getBaseEntityType()->id(), 'bundle_plugin')->getFieldDefinitions($bundle);
         foreach (array_reverse($bundle_fields) as $field_definition) {
           FarmUiViewsHelper::addHandlers($view, $display_id, 'field', $field_definition);
           FarmUiViewsHelper::addHandlers($view, $display_id, 'filter', $field_definition);
@@ -73,7 +85,7 @@ class FarmUiViewsViewsExecutionHooks {
       $view->display_handler->setOption('use_more', TRUE);
       $view->display_handler->setOption('use_more_always', TRUE);
       $view->display_handler->setOption('link_display', 'custom_url');
-      $today = date('Y-m-d', \Drupal::time()->getRequestTime());
+      $today = date('Y-m-d', $this->time->getRequestTime());
       if ($display_id == 'block_upcoming') {
         $view->display_handler->setOption('use_more_text', t('View all upcoming logs'));
         $view->display_handler->setOption('link_url', 'logs?status[]=pending&start=' . $today . '&order=timestamp&sort=asc');
@@ -103,7 +115,7 @@ class FarmUiViewsViewsExecutionHooks {
     // asset's name.
     if ($view->id() == 'farm_asset' && $view->current_display == 'page_children') {
       $asset_id = $view->args[0];
-      $asset = \Drupal::entityTypeManager()->getStorage('asset')->load($asset_id);
+      $asset = $this->entityTypeManager->getStorage('asset')->load($asset_id);
       if (!empty($asset)) {
         $title = t('Children of %asset', [
           '%asset' => $asset->label(),
@@ -115,7 +127,7 @@ class FarmUiViewsViewsExecutionHooks {
     // asset's name.
     if ($view->id() == 'farm_asset' && $view->current_display == 'page_location') {
       $asset_id = $view->args[0];
-      $asset = \Drupal::entityTypeManager()->getStorage('asset')->load($asset_id);
+      $asset = $this->entityTypeManager->getStorage('asset')->load($asset_id);
       if (!empty($asset)) {
         $title = t('Assets in %location', [
           '%location' => $asset->label(),
@@ -127,7 +139,7 @@ class FarmUiViewsViewsExecutionHooks {
     // name.
     if ($view->id() == 'farm_log' && $view->current_display == 'page_asset') {
       $asset_id = $view->args[0];
-      $asset = \Drupal::entityTypeManager()->getStorage('asset')->load($asset_id);
+      $asset = $this->entityTypeManager->getStorage('asset')->load($asset_id);
       if (!empty($asset)) {
         $title = $asset->label() . ' ' . $view->getBaseEntityType()->getPluralLabel();
       }
@@ -137,7 +149,7 @@ class FarmUiViewsViewsExecutionHooks {
     // the bundle label and add it to the title.
     $bundle = FarmUiViewsHelper::getBundleArgument($view, $view->current_display, $view->args);
     if (!empty($bundle)) {
-      $bundles = \Drupal::service('entity_type.bundle.info')->getBundleInfo($view->getBaseEntityType()->id());
+      $bundles = $this->entityTypeBundleInfo->getBundleInfo($view->getBaseEntityType()->id());
       if (!empty($bundles[$bundle])) {
         $title = $view->getTitle() . ': ' . $bundles[$bundle]['label'];
       }
@@ -148,12 +160,12 @@ class FarmUiViewsViewsExecutionHooks {
     if (in_array($view->id(), ['farm_asset', 'farm_log']) && $view->current_display == 'page_term') {
       $term_id = $view->args[0];
       $entity_bundle = $view->args[1];
-      $term = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($term_id);
+      $term = $this->entityTypeManager->getStorage('taxonomy_term')->load($term_id);
       if (!empty($term)) {
-        $vocabulary = \Drupal::entityTypeManager()->getStorage('taxonomy_vocabulary')->load($term->bundle());
+        $vocabulary = $this->entityTypeManager->getStorage('taxonomy_vocabulary')->load($term->bundle());
         $entity_bundle_label = '';
         if ($entity_bundle != 'all') {
-          $bundles = \Drupal::service('entity_type.bundle.info')->getBundleInfo($view->getBaseEntityType()->id());
+          $bundles = $this->entityTypeBundleInfo->getBundleInfo($view->getBaseEntityType()->id());
           if (!empty($bundles[$entity_bundle])) {
             $entity_bundle_label = $bundles[$entity_bundle]['label'] . ' ' . $view->getBaseEntityType()->getPluralLabel();
           }

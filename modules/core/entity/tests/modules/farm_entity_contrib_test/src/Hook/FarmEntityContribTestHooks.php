@@ -4,13 +4,21 @@ declare(strict_types=1);
 
 namespace Drupal\farm_entity_contrib_test\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
  * Hook implementations for farm_entity_contrib_test.
  */
 class FarmEntityContribTestHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected FarmFieldFactoryInterface $farmFieldFactory,
+  ) {}
 
   /**
    * Implements hook_farm_entity_bundle_field_info().
@@ -25,7 +33,7 @@ class FarmEntityContribTestHooks {
         'type' => 'string',
         'label' => t('Test hook bundle field'),
       ];
-      $fields['test_contrib_hook_bundle_field'] = \Drupal::service('farm_field.factory')->bundleFieldDefinition($options);
+      $fields['test_contrib_hook_bundle_field'] = $this->farmFieldFactory->bundleFieldDefinition($options);
     }
 
     return $fields;

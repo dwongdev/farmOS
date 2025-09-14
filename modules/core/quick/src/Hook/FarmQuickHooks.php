@@ -5,15 +5,27 @@ declare(strict_types=1);
 namespace Drupal\farm_quick\Hook;
 
 use Drupal\Component\Utility\Html;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\farm_field\FarmFieldFactoryInterface;
+use Drupal\farm_quick\QuickFormInstanceManagerInterface;
 
 /**
  * Hook implementations for farm_quick.
  */
 class FarmQuickHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected QuickFormInstanceManagerInterface $quickFormInstanceManager,
+    protected FarmFieldFactoryInterface $farmFieldFactory,
+  ) {}
 
   /**
    * Implements hook_help().
@@ -29,8 +41,7 @@ class FarmQuickHooks {
     if (strpos($route_name, 'farm.quick.') === 0) {
       $quick_form_id = $route_match->getParameter('id');
       if ($route_name == 'farm.quick.' . $quick_form_id) {
-        /** @var \Drupal\farm_quick\Entity\QuickFormInstanceInterface $quick_form */
-        $quick_form = \Drupal::service('quick_form.instance_manager')->getInstance($quick_form_id);
+        $quick_form = $this->quickFormInstanceManager->getInstance($quick_form_id);
         $output = [
           '#type' => 'html_tag',
           '#tag' => 'p',
@@ -65,7 +76,7 @@ class FarmQuickHooks {
       'multiple' => TRUE,
       'hidden' => TRUE,
     ];
-    $fields['quick'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
+    $fields['quick'] = $this->farmFieldFactory->baseFieldDefinition($options);
     return $fields;
   }
 
@@ -88,7 +99,7 @@ class FarmQuickHooks {
     // Alter action options for the target entity type bulk form.
     if ($target) {
       // Check for disabled quick forms.
-      $disabled_quick_forms = \Drupal::entityTypeManager()->getStorage('quick_form')->getQuery()->accessCheck(TRUE)->condition('status', FALSE)->execute();
+      $disabled_quick_forms = $this->entityTypeManager->getStorage('quick_form')->getQuery()->accessCheck(TRUE)->condition('status', FALSE)->execute();
       if (empty($disabled_quick_forms)) {
         return;
       }

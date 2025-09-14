@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Drupal\farm_location\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\farm_field\FarmFieldFactoryInterface;
 use Drupal\farm_location\Field\AssetGeometryItemList;
 use Drupal\farm_location\Field\AssetLocationItemList;
 
@@ -14,6 +16,12 @@ use Drupal\farm_location\Field\AssetLocationItemList;
  * Hook implementations for farm_location.
  */
 class FarmLocationHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected FarmFieldFactoryInterface $farmFieldFactory,
+  ) {}
 
   /**
    * Implements hook_entity_base_field_info().
@@ -87,7 +95,7 @@ class FarmLocationHooks {
         'weight' => 50,
       ],
     ];
-    $fields['location'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
+    $fields['location'] = $this->farmFieldFactory->baseFieldDefinition($options);
 
     // Current geometry field.
     // This is computed based on an asset's movements or its intrinsic geometry.
@@ -100,7 +108,7 @@ class FarmLocationHooks {
         'view' => 40,
       ],
     ];
-    $fields['geometry'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
+    $fields['geometry'] = $this->farmFieldFactory->baseFieldDefinition($options);
 
     // Intrinsic geometry field.
     // This is added as a bundle field definition to all asset types rather than
@@ -116,7 +124,7 @@ class FarmLocationHooks {
       'hidden' => 'view',
       'populate_file_field' => 'file',
     ];
-    $fields['intrinsic_geometry'] = \Drupal::service('farm_field.factory')->bundleFieldDefinition($options);
+    $fields['intrinsic_geometry'] = $this->farmFieldFactory->bundleFieldDefinition($options);
 
     // Location boolean field.
     $options = [
@@ -139,7 +147,7 @@ class FarmLocationHooks {
         'weight' => 0,
       ],
     ];
-    $fields['is_location'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
+    $fields['is_location'] = $this->farmFieldFactory->baseFieldDefinition($options);
 
     // Fixed boolean field.
     $options = [
@@ -162,7 +170,7 @@ class FarmLocationHooks {
         'weight' => 10,
       ],
     ];
-    $fields['is_fixed'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
+    $fields['is_fixed'] = $this->farmFieldFactory->baseFieldDefinition($options);
 
     return $fields;
   }
@@ -188,7 +196,7 @@ class FarmLocationHooks {
         'view' => 20,
       ],
     ];
-    $field = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
+    $field = $this->farmFieldFactory->baseFieldDefinition($options);
     $field->setSetting('handler', 'views');
     $field->setSetting('handler_settings', [
       'view' => [
@@ -212,7 +220,7 @@ class FarmLocationHooks {
       ],
       'populate_file_field' => 'file',
     ];
-    $fields['geometry'] = \Drupal::service('farm_field.factory')->bundleFieldDefinition($options);
+    $fields['geometry'] = $this->farmFieldFactory->bundleFieldDefinition($options);
 
     // Movement boolean field.
     $options = [
@@ -235,7 +243,7 @@ class FarmLocationHooks {
         'weight' => 20,
       ],
     ];
-    $fields['is_movement'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
+    $fields['is_movement'] = $this->farmFieldFactory->baseFieldDefinition($options);
 
     return $fields;
   }

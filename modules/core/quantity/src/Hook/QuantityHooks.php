@@ -4,15 +4,27 @@ declare(strict_types=1);
 
 namespace Drupal\quantity\Hook;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Render\Element;
 use Drupal\quantity\Entity\QuantityInterface;
 use Drupal\quantity\Event\QuantityEvent;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Hook implementations for quantity.
  */
 class QuantityHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    #[Autowire(service: 'event_dispatcher')]
+    protected EventDispatcherInterface $eventDispatcher,
+    protected ConfigFactoryInterface $configFactory,
+  ) {}
 
   /**
    * Implements hook_ENTITY_TYPE_presave().
@@ -23,8 +35,7 @@ class QuantityHooks {
     // Dispatch an event on quantity presave.
     // @todo Replace this with core event via https://www.drupal.org/node/2551893.
     $event = new QuantityEvent($quantity);
-    $event_dispatcher = \Drupal::service('event_dispatcher');
-    $event_dispatcher->dispatch($event, QuantityEvent::PRESAVE);
+    $this->eventDispatcher->dispatch($event, QuantityEvent::PRESAVE);
   }
 
   /**
@@ -36,8 +47,7 @@ class QuantityHooks {
     // Dispatch an event on quantity delete.
     // @todo Replace this with core event via https://www.drupal.org/node/2551893.
     $event = new QuantityEvent($quantity);
-    $event_dispatcher = \Drupal::service('event_dispatcher');
-    $event_dispatcher->dispatch($event, QuantityEvent::DELETE);
+    $this->eventDispatcher->dispatch($event, QuantityEvent::DELETE);
   }
 
   /**
@@ -47,7 +57,7 @@ class QuantityHooks {
   public function farmApiMetaAlter(&$data) {
 
     // Add the quantity system of measurement.
-    $data['system_of_measurement'] = \Drupal::config('quantity.settings')->get('system_of_measurement');
+    $data['system_of_measurement'] = $this->configFactory->get('quantity.settings')->get('system_of_measurement');
   }
 
   /**

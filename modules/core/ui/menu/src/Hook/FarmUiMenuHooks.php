@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Drupal\farm_ui_menu\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\farm_ui_menu\Menu\DefaultSecondaryLocalTaskProvider;
 use Drupal\farm_ui_menu\Render\Element\FarmAdminToolbar;
@@ -12,6 +14,12 @@ use Drupal\farm_ui_menu\Render\Element\FarmAdminToolbar;
  * Hook implementations for farm_ui_menu.
  */
 class FarmUiMenuHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected ModuleHandlerInterface $moduleHandler,
+  ) {}
 
   /**
    * Implements hook_menu_links_discovered_alter().
@@ -37,7 +45,7 @@ class FarmUiMenuHooks {
       $links['farm.setup']['parent'] = 'farm.base';
       $links['farm.setup']['weight'] = 95;
       // Add a setup menu item for taxonomy.
-      if (\Drupal::service('module_handler')->moduleExists('taxonomy')) {
+      if ($this->moduleHandler->moduleExists('taxonomy')) {
         $links['farm.setup.taxonomy'] = [
           'title' => t('Taxonomy'),
           'description' => t('Manage the taxonomy terms used for flagging, categorization and organization of farmOS records.'),

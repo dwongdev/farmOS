@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\farm_flag\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\farm_field\FarmFieldFactoryInterface;
 use Drupal\farm_flag\Form\EntityFlagActionForm;
 use Drupal\farm_flag\Routing\EntityFlagActionRouteProvider;
 
@@ -13,6 +15,12 @@ use Drupal\farm_flag\Routing\EntityFlagActionRouteProvider;
  * Hook implementations for farm_flag.
  */
 class FarmFlagHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected FarmFieldFactoryInterface $farmFieldFactory,
+  ) {}
 
   /**
    * Implements hook_entity_base_field_info().
@@ -34,7 +42,7 @@ class FarmFlagHooks {
           'view' => -75,
         ],
       ];
-      $fields['flag'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($field_info);
+      $fields['flag'] = $this->farmFieldFactory->baseFieldDefinition($field_info);
     }
 
     return $fields;

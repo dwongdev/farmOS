@@ -4,19 +4,27 @@ declare(strict_types=1);
 
 namespace Drupal\farm_update\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\farm_update\FarmUpdateInterface;
 
 /**
  * Hook implementations for farm_update.
  */
 class FarmUpdateHooks {
 
+  use AutowireTrait;
+
+  public function __construct(
+    protected FarmUpdateInterface $farmUpdate,
+  ) {}
+
   /**
    * Implements hook_rebuild().
    */
   #[Hook('rebuild')]
   public function rebuild() {
-    \Drupal::service('farm.update')->rebuild();
+    $this->farmUpdate->rebuild();
   }
 
   /**

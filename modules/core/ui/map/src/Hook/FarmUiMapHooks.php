@@ -4,14 +4,24 @@ declare(strict_types=1);
 
 namespace Drupal\farm_ui_map\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityDisplayRepositoryInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\Routing\RouteMatchInterface;
 
 /**
  * Hook implementations for farm_ui_map.
  */
 class FarmUiMapHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected EntityDisplayRepositoryInterface $entityDisplayRepository,
+    protected RouteMatchInterface $routeMatch,
+  ) {}
 
   /**
    * Implements hook_ENTITY_TYPE_view().
@@ -27,7 +37,7 @@ class FarmUiMapHooks {
 
     // The default view mode is used if a map_popup view mode is not provided.
     // Alter the default view mode to only include common fields.
-    $view_mode_options = \Drupal::service('entity_display.repository')->getViewModeOptionsByBundle('asset', $entity->bundle());
+    $view_mode_options = $this->entityDisplayRepository->getViewModeOptionsByBundle('asset', $entity->bundle());
     if (!array_key_exists($view_mode, $view_mode_options)) {
       $common_fields = ['name', 'type', 'flag', 'notes', 'location'];
       $build = array_filter($build, function ($key) use ($common_fields) {
@@ -43,7 +53,7 @@ class FarmUiMapHooks {
    */
   #[Hook('preprocess_block__farm_local_actions_block')]
   public function preprocessBlockFarmLocalActionsBlock(&$variables, $block) {
-    if (\Drupal::routeMatch()->getRouteName() === 'farm_ui_map.asset.map_popup') {
+    if ($this->routeMatch->getRouteName() === 'farm_ui_map.asset.map_popup') {
       $variables['content']['#dropbutton_type'] = 'small';
     }
   }

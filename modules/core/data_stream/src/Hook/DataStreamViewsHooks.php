@@ -4,12 +4,22 @@ declare(strict_types=1);
 
 namespace Drupal\data_stream\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\data_stream\DataStreamTypeManager;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Hook implementations for data_stream.
  */
 class DataStreamViewsHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    #[Autowire(service: 'plugin.manager.data_stream_type')]
+    protected DataStreamTypeManager $dataStreamTypeManager,
+  ) {}
 
   /**
    * Implements hook_views_data().
@@ -18,14 +28,11 @@ class DataStreamViewsHooks {
   public function viewsData() {
     $data = [];
 
-    /** @var \Drupal\data_stream\DataStreamTypeManager $manager */
-    $manager = \Drupal::service('plugin.manager.data_stream_type');
-
     // Collect views data from all data stream type plugins.
-    $data_stream_types = $manager->getDefinitions();
+    $data_stream_types = $this->dataStreamTypeManager->getDefinitions();
     foreach (array_keys($data_stream_types) as $plugin_id) {
       /** @var \Drupal\data_stream\Plugin\DataStream\DataStreamType\DataStreamTypeInterface $plugin */
-      $plugin = $manager->createInstance($plugin_id);
+      $plugin = $this->dataStreamTypeManager->createInstance($plugin_id);
       $data = array_replace_recursive($data, $plugin->getViewsData());
     }
 

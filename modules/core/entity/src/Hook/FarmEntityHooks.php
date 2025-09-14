@@ -4,15 +4,21 @@ declare(strict_types=1);
 
 namespace Drupal\farm_entity\Hook;
 
+use Drupal\Component\Datetime\TimeInterface;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\ContentEntityFormInterface;
+use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Entity\RevisionLogInterface;
 use Drupal\Core\Entity\RevisionableEntityBundleInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Hook\Order\OrderBefore;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\entity\EntityAccessControlHandler;
 use Drupal\entity\EntityPermissionProvider;
 use Drupal\farm_entity\BundlePlugin\FarmEntityBundlePluginHandler;
@@ -24,6 +30,16 @@ use Drupal\farm_entity\Routing\EntityRouteProvider;
  */
 class FarmEntityHooks {
 
+  use AutowireTrait;
+
+  public function __construct(
+    protected EntityFieldManagerInterface $entityFieldManager,
+    protected EntityTypeBundleInfoInterface $entityTypeBundleInfo,
+    protected ModuleHandlerInterface $moduleHandler,
+    protected AccountInterface $currentUser,
+    protected TimeInterface $time,
+  ) {}
+
   /**
    * Implements hook_modules_installed().
    */
@@ -31,7 +47,7 @@ class FarmEntityHooks {
   public function modulesInstalled($modules, $is_syncing) {
 
     // Rebuild bundle field map when modules are installed.
-    \Drupal::service('entity_field.manager')->rebuildBundleFieldMap();
+    $this->entityFieldManager->rebuildBundleFieldMap();
   }
 
   /**
@@ -41,7 +57,7 @@ class FarmEntityHooks {
   public function modulesUninstalled($modules, $is_syncing) {
 
     // Rebuild bundle field map when modules are uninstalled.
-    \Drupal::service('entity_field.manager')->rebuildBundleFieldMap();
+    $this->entityFieldManager->rebuildBundleFieldMap();
   }
 
   /**
@@ -99,12 +115,12 @@ class FarmEntityHooks {
     }
 
     // Get all bundles of the entity type.
-    $bundles = \Drupal::service('entity_type.bundle.info')->getBundleInfo($entity_type->id());
+    $bundles = $this->entityTypeBundleInfo->getBundleInfo($entity_type->id());
 
     // Invoke hook_farm_entity_bundle_field_info() with each bundle.
     $hook = 'farm_entity_bundle_field_info';
     foreach (array_keys($bundles) as $bundle) {
-      \Drupal::moduleHandler()->invokeAllWith($hook, function (callable $hook, string $module) use ($fields, $entity_type, $bundle) {
+      $this->moduleHandler->invokeAllWith($hook, function (callable $hook, string $module) use ($fields, $entity_type, $bundle) {
 
         // Get bundle field definitions provided by the module.
         $definitions = $hook($entity_type, $bundle);
@@ -163,8 +179,8 @@ class FarmEntityHooks {
       }
 
       // Set the user ID and creation time.
-      $entity->setRevisionUserId(\Drupal::currentUser()->getAccount()->id());
-      $entity->setRevisionCreationTime(\Drupal::time()->getRequestTime());
+      $entity->setRevisionUserId($this->currentUser->id());
+      $entity->setRevisionCreationTime($this->time->getRequestTime());
     }
   }
 

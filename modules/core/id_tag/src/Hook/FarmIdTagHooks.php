@@ -4,13 +4,21 @@ declare(strict_types=1);
 
 namespace Drupal\farm_id_tag\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
  * Hook implementations for farm_id_tag.
  */
 class FarmIdTagHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected FarmFieldFactoryInterface $farmFieldFactory,
+  ) {}
 
   /**
    * Implements hook_entity_base_field_info().
@@ -31,7 +39,7 @@ class FarmIdTagHooks {
           'view' => 20,
         ],
       ];
-      $fields['id_tag'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($field_info);
+      $fields['id_tag'] = $this->farmFieldFactory->baseFieldDefinition($field_info);
 
       // Add an ID tag type constraint to ID tag fields to ensure valid type.
       $fields['id_tag']->addConstraint('IdTagType');

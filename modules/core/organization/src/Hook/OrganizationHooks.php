@@ -4,16 +4,26 @@ declare(strict_types=1);
 
 namespace Drupal\organization\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\organization\Entity\OrganizationInterface;
 use Drupal\organization\Event\OrganizationEvent;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Hook implementations for organization.
  */
 class OrganizationHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    #[Autowire(service: 'event_dispatcher')]
+    protected EventDispatcherInterface $eventDispatcher,
+  ) {}
 
   /**
    * Implements hook_help().
@@ -41,8 +51,7 @@ class OrganizationHooks {
     // Dispatch an event on organization presave.
     // @todo Replace this with core event via https://www.drupal.org/node/2551893.
     $event = new OrganizationEvent($organization);
-    $event_dispatcher = \Drupal::service('event_dispatcher');
-    $event_dispatcher->dispatch($event, OrganizationEvent::PRESAVE);
+    $this->eventDispatcher->dispatch($event, OrganizationEvent::PRESAVE);
   }
 
   /**
@@ -54,8 +63,7 @@ class OrganizationHooks {
     // Dispatch an event on organization insert.
     // @todo Replace this with core event via https://www.drupal.org/node/2551893.
     $event = new OrganizationEvent($organization);
-    $event_dispatcher = \Drupal::service('event_dispatcher');
-    $event_dispatcher->dispatch($event, OrganizationEvent::INSERT);
+    $this->eventDispatcher->dispatch($event, OrganizationEvent::INSERT);
   }
 
   /**
@@ -67,8 +75,7 @@ class OrganizationHooks {
     // Dispatch an event on organization update.
     // @todo Replace this with core event via https://www.drupal.org/node/2551893.
     $event = new OrganizationEvent($organization);
-    $event_dispatcher = \Drupal::service('event_dispatcher');
-    $event_dispatcher->dispatch($event, OrganizationEvent::UPDATE);
+    $this->eventDispatcher->dispatch($event, OrganizationEvent::UPDATE);
   }
 
   /**
@@ -80,8 +87,7 @@ class OrganizationHooks {
     // Dispatch an event on organization delete.
     // @todo Replace this with core event via https://www.drupal.org/node/2551893.
     $event = new OrganizationEvent($organization);
-    $event_dispatcher = \Drupal::service('event_dispatcher');
-    $event_dispatcher->dispatch($event, OrganizationEvent::DELETE);
+    $this->eventDispatcher->dispatch($event, OrganizationEvent::DELETE);
   }
 
   /**

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Drupal\farm_structure\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\farm_map\LayerStyleLoaderInterface;
 use Drupal\farm_structure\Entity\FarmStructureType;
 use Drupal\views\ViewExecutable;
 
@@ -12,6 +14,12 @@ use Drupal\views\ViewExecutable;
  * Hook implementations for farm_structure.
  */
 class FarmStructureViewsExecutionHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected LayerStyleLoaderInterface $layerStyleLoader,
+  ) {}
 
   /**
    * Implements hook_views_pre_render().
@@ -44,8 +52,7 @@ class FarmStructureViewsExecutionHooks {
       // Create a layer for each structure type.
       $asset_layers = [];
       foreach ($structure_types as $structure_type) {
-        /** @var \Drupal\farm_map\Entity\LayerStyleInterface|null $layer_style */
-        if ($layer_style = \Drupal::service('farm_map.layer_style_loader')->load(['asset_type' => 'structure', 'structure_type' => $structure_type->id()])) {
+        if ($layer_style = $this->layerStyleLoader->load(['asset_type' => 'structure', 'structure_type' => $structure_type->id()])) {
           $color = $layer_style->get('color');
         }
         $asset_layers['structure_' . $structure_type->id()] = [

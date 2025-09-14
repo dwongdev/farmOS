@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Drupal\farm_l10n\Hook;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\DependencyInjection\AutowireTrait;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
@@ -14,6 +18,14 @@ use Drupal\Core\Url;
  * Hook implementations for farm_l10n.
  */
 class FarmL10nHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected ModuleHandlerInterface $moduleHandler,
+    protected ConfigFactoryInterface $configFactory,
+    protected MessengerInterface $messenger,
+  ) {}
 
   /**
    * Implements hook_help().
@@ -41,7 +53,7 @@ class FarmL10nHooks {
     // JSON:API PATCH requests when authenticated as a user with a non-default
     // language.
     // @see https://www.drupal.org/project/farm/issues/3335267
-    if (\Drupal::moduleHandler()->moduleExists('content_translation')) {
+    if ($this->moduleHandler->moduleExists('content_translation')) {
       return;
     }
     foreach ($bundles as $entity_type => $entity_type_bundles) {
@@ -63,7 +75,7 @@ class FarmL10nHooks {
     // users to /farm/settings/language instead.
     // @see https://www.drupal.org/project/farm/issues/3257430
     $message = t('To change the default language of farmOS, please go to <a href=":url">farmOS language settings</a>.', [':url' => Url::fromRoute('farm_l10n.settings')->toString()]);
-    \Drupal::messenger()->addWarning($message);
+    $this->messenger->addWarning($message);
     foreach (Element::children($form['languages']) as $langcode) {
       $form['languages'][$langcode]['default']['#access'] = FALSE;
     }
@@ -77,7 +89,7 @@ class FarmL10nHooks {
 
     // Use the "Selected language" as the default for new users (unless it is
     // still set to "site_default").
-    $selected_language = \Drupal::config('language.negotiation')->get('selected_langcode');
+    $selected_language = $this->configFactory->get('language.negotiation')->get('selected_langcode');
     if ($selected_language == 'site_default') {
       return;
     }

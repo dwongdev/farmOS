@@ -4,16 +4,26 @@ declare(strict_types=1);
 
 namespace Drupal\asset\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\asset\Entity\AssetInterface;
 use Drupal\asset\Event\AssetEvent;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Hook implementations for asset.
  */
 class AssetHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    #[Autowire(service: 'event_dispatcher')]
+    protected EventDispatcherInterface $eventDispatcher,
+  ) {}
 
   /**
    * Implements hook_help().
@@ -41,8 +51,7 @@ class AssetHooks {
     // Dispatch an event on asset presave.
     // @todo Replace this with core event via https://www.drupal.org/node/2551893.
     $event = new AssetEvent($asset);
-    $event_dispatcher = \Drupal::service('event_dispatcher');
-    $event_dispatcher->dispatch($event, AssetEvent::PRESAVE);
+    $this->eventDispatcher->dispatch($event, AssetEvent::PRESAVE);
   }
 
   /**
@@ -54,8 +63,7 @@ class AssetHooks {
     // Dispatch an event on asset insert.
     // @todo Replace this with core event via https://www.drupal.org/node/2551893.
     $event = new AssetEvent($asset);
-    $event_dispatcher = \Drupal::service('event_dispatcher');
-    $event_dispatcher->dispatch($event, AssetEvent::INSERT);
+    $this->eventDispatcher->dispatch($event, AssetEvent::INSERT);
   }
 
   /**
@@ -67,8 +75,7 @@ class AssetHooks {
     // Dispatch an event on asset update.
     // @todo Replace this with core event via https://www.drupal.org/node/2551893.
     $event = new AssetEvent($asset);
-    $event_dispatcher = \Drupal::service('event_dispatcher');
-    $event_dispatcher->dispatch($event, AssetEvent::UPDATE);
+    $this->eventDispatcher->dispatch($event, AssetEvent::UPDATE);
   }
 
   /**
@@ -80,8 +87,7 @@ class AssetHooks {
     // Dispatch an event on asset delete.
     // @todo Replace this with core event via https://www.drupal.org/node/2551893.
     $event = new AssetEvent($asset);
-    $event_dispatcher = \Drupal::service('event_dispatcher');
-    $event_dispatcher->dispatch($event, AssetEvent::DELETE);
+    $this->eventDispatcher->dispatch($event, AssetEvent::DELETE);
   }
 
   /**

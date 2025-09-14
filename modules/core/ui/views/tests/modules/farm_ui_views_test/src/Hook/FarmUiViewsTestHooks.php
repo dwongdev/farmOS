@@ -4,13 +4,21 @@ declare(strict_types=1);
 
 namespace Drupal\farm_ui_views_test\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
  * Hook implementations for farm_ui_views_test.
  */
 class FarmUiViewsTestHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected FarmFieldFactoryInterface $farmFieldFactory,
+  ) {}
 
   /**
    * Implements hook_entity_base_field_info().
@@ -24,7 +32,7 @@ class FarmUiViewsTestHooks {
         'type' => 'string',
         'label' => t('Test string'),
       ];
-      $fields['test_string'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
+      $fields['test_string'] = $this->farmFieldFactory->baseFieldDefinition($options);
     }
     return $fields;
   }

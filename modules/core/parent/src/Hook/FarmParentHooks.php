@@ -4,13 +4,21 @@ declare(strict_types=1);
 
 namespace Drupal\farm_parent\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
  * Hook implementations for farm_parent.
  */
 class FarmParentHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected FarmFieldFactoryInterface $farmFieldFactory,
+  ) {}
 
   /**
    * Implements hook_entity_base_field_info().
@@ -32,7 +40,7 @@ class FarmParentHooks {
           'view' => 0,
         ],
       ];
-      $fields['parent'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($parent_info);
+      $fields['parent'] = $this->farmFieldFactory->baseFieldDefinition($parent_info);
 
       // Add entity_reference_validators constraints to parent field.
       // See entity_reference_validators_entity_base_field_info_alter.

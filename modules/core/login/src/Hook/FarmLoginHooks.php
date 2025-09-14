@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Drupal\farm_login\Hook;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Render\Element\Email;
@@ -13,12 +15,18 @@ use Drupal\Core\Render\Element\Email;
  */
 class FarmLoginHooks {
 
+  use AutowireTrait;
+
+  public function __construct(
+    protected ConfigFactoryInterface $configFactory,
+  ) {}
+
   /**
    * Implements hook_form_FORM_ID_alter().
    */
   #[Hook('form_user_login_form_alter')]
   public function formUserLoginFormAlter(&$form, FormStateInterface $form_state) {
-    $config = \Drupal::config('system.site');
+    $config = $this->configFactory->get('system.site');
 
     // Update title and description to include email as an option.
     $form['name']['#title'] = t('Email or username');

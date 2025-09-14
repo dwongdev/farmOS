@@ -4,13 +4,21 @@ declare(strict_types=1);
 
 namespace Drupal\farm_log_category\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
  * Hook implementations for farm_log_category.
  */
 class FarmLogCategoryHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected FarmFieldFactoryInterface $farmFieldFactory,
+  ) {}
 
   /**
    * Implements hook_entity_base_field_info().
@@ -35,7 +43,7 @@ class FarmLogCategoryHooks {
           'weight' => 10,
         ],
       ];
-      $fields['category'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($category_info);
+      $fields['category'] = $this->farmFieldFactory->baseFieldDefinition($category_info);
     }
     return $fields;
   }

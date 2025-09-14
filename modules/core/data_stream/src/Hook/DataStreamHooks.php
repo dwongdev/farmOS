@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\data_stream\Hook;
 
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Database\Connection;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Url;
@@ -14,6 +17,13 @@ use Drupal\data_stream\Entity\DataStreamInterface;
  * Hook implementations for data_stream.
  */
 class DataStreamHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected TimeInterface $time,
+    protected Connection $connection,
+  ) {}
 
   /**
    * Implements hook_entity_type_build().
@@ -73,7 +83,7 @@ class DataStreamHooks {
       ];
 
       // Render JSON examples.
-      $request_time = \Drupal::time()->getRequestTime();
+      $request_time = $this->time->getRequestTime();
       $stream_name = Html::escape($data_stream->label());
       $json_example = '{ "timestamp": ' . $request_time . ', "' . $stream_name . '": 76.5 }';
       $json_example_label = t('JSON Example');
@@ -101,7 +111,7 @@ class DataStreamHooks {
 
     // If this is a "basic" data stream, delete data associated with it.
     if ($data_stream->bundle() == 'basic' && !empty($data_stream->id())) {
-      \Drupal::database()->delete('data_stream_basic')
+      $this->connection->delete('data_stream_basic')
         ->condition('id', $data_stream->id())
         ->execute();
     }

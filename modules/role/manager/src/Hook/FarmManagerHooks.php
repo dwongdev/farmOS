@@ -4,12 +4,20 @@ declare(strict_types=1);
 
 namespace Drupal\farm_manager\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 
 /**
  * Hook implementations for farm_manager.
  */
 class FarmManagerHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected ModuleHandlerInterface $moduleHandler,
+  ) {}
 
   /**
    * Implements hook_oauth2_scope_info_alter().
@@ -18,7 +26,7 @@ class FarmManagerHooks {
   public function oauth2ScopeInfoAlter(array &$scopes) {
 
     // Enable the password grant for static role scopes.
-    if (\Drupal::moduleHandler()->moduleExists('simple_oauth_password_grant')) {
+    if ($this->moduleHandler->moduleExists('simple_oauth_password_grant')) {
       $target_scopes = [
         'farm_manager',
       ];

@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Drupal\farm_ui_theme\Hook;
 
 use Drupal\Core\Block\BlockPluginInterface;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\Display\EntityFormDisplayInterface;
+use Drupal\Core\Extension\ModuleExtensionList;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\asset\Entity\AssetInterface;
@@ -22,6 +25,13 @@ use Drupal\plan\Entity\PlanInterface;
  * Hook implementations for farm_ui_theme.
  */
 class FarmUiThemeHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected ModuleExtensionList $moduleExtensionList,
+    protected ModuleHandlerInterface $moduleHandler,
+  ) {}
 
   /**
    * Implements hook_form_BASE_FORM_ID_alter().
@@ -95,7 +105,7 @@ class FarmUiThemeHooks {
    */
   #[Hook('theme_registry_alter')]
   public function themeRegistryAlter(&$theme_registry) {
-    $theme_registry['comment']['path'] = \Drupal::service('extension.list.module')->getPath('farm_ui_theme') . '/templates';
+    $theme_registry['comment']['path'] = $this->moduleExtensionList->getPath('farm_ui_theme') . '/templates';
   }
 
   /**
@@ -254,7 +264,7 @@ class FarmUiThemeHooks {
     }
 
     // Ask modules for a list of field group items.
-    $field_map = \Drupal::moduleHandler()->invokeAll('farm_ui_theme_field_group_items', [
+    $field_map = $this->moduleHandler->invokeAll('farm_ui_theme_field_group_items', [
       $context['entity_type'],
       $context['bundle'],
     ]);

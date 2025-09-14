@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Drupal\plan\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Routing\RouteMatchInterface;
@@ -13,6 +15,12 @@ use Drupal\plan\Entity\PlanInterface;
  * Hook implementations for plan.
  */
 class PlanHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected EntityTypeManagerInterface $entityTypeManager,
+  ) {}
 
   /**
    * Implements hook_help().
@@ -36,7 +44,7 @@ class PlanHooks {
   public function planDelete(PlanInterface $plan) {
 
     // Delete all plan_record entities associated with the plan.
-    $plan_record_storage = \Drupal::entityTypeManager()->getStorage('plan_record');
+    $plan_record_storage = $this->entityTypeManager->getStorage('plan_record');
     $plan_ids = $plan_record_storage->getQuery()
       ->condition('plan', $plan->id())
       ->accessCheck(FALSE)

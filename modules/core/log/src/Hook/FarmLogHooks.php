@@ -4,16 +4,28 @@ declare(strict_types=1);
 
 namespace Drupal\farm_log\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityFormInterface;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\log\Entity\LogInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Hook implementations for farm_log.
  */
 class FarmLogHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected AccountInterface $currentUser,
+    protected RequestStack $requestStack,
+  ) {}
 
   /**
    * Implements hook_entity_prepare_form().
@@ -31,11 +43,8 @@ class FarmLogHooks {
       return;
     }
 
-    // Save the current user.
-    $user = \Drupal::currentUser();
-
     // Save the request query params.
-    $query = \Drupal::request()->query;
+    $query = $this->requestStack->getCurrentRequest()->query;
 
     // Prepopulate the log asset field.
     if ($query->has('asset')) {
@@ -48,9 +57,9 @@ class FarmLogHooks {
       $asset_field = $entity->get('asset');
 
       // Add each asset the user has view access to.
-      $assets = \Drupal::entityTypeManager()->getStorage('asset')->loadMultiple($asset_ids);
+      $assets = $this->entityTypeManager->getStorage('asset')->loadMultiple($asset_ids);
       foreach ($assets as $asset) {
-        if ($asset->access('view', $user)) {
+        if ($asset->access('view', $this->currentUser)) {
           $asset_field->appendItem($asset);
         }
       }

@@ -4,15 +4,23 @@ declare(strict_types=1);
 
 namespace Drupal\farm_inventory\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\farm_field\FarmFieldFactoryInterface;
 use Drupal\farm_inventory\Field\AssetInventoryItemList;
 
 /**
  * Hook implementations for farm_inventory.
  */
 class FarmInventoryHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected FarmFieldFactoryInterface $farmFieldFactory,
+  ) {}
 
   /**
    * Implements hook_entity_base_field_info().
@@ -88,7 +96,7 @@ class FarmInventoryHooks {
     ];
     $fields = [];
     foreach ($field_info as $name => $info) {
-      $fields[$name] = \Drupal::service('farm_field.factory')->baseFieldDefinition($info);
+      $fields[$name] = $this->farmFieldFactory->baseFieldDefinition($info);
     }
     return $fields;
   }
@@ -130,7 +138,7 @@ class FarmInventoryHooks {
     ];
     $fields = [];
     foreach ($field_info as $name => $info) {
-      $fields[$name] = \Drupal::service('farm_field.factory')->baseFieldDefinition($info);
+      $fields[$name] = $this->farmFieldFactory->baseFieldDefinition($info);
     }
     return $fields;
   }

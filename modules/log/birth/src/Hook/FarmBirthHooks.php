@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\farm_birth\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\Entity\BaseFieldOverride;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Url;
@@ -15,6 +17,12 @@ use Drupal\asset\Entity\AssetInterface;
  * Hook implementations for farm_birth.
  */
 class FarmBirthHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected EntityTypeManagerInterface $entityTypeManager,
+  ) {}
 
   /**
    * Implements hook_entity_bundle_field_info().
@@ -48,8 +56,7 @@ class FarmBirthHooks {
 
     // Add a link to the asset's birth log.
     if (!empty($build['birthdate'][0])) {
-      /** @var \Drupal\Core\Entity\EntityStorageInterface $log_storage */
-      $log_storage = \Drupal::service('entity_type.manager')->getStorage('log');
+      $log_storage = $this->entityTypeManager->getStorage('log');
       $log_ids = $log_storage->getQuery()
         ->accessCheck(TRUE)
         ->condition('type', 'birth')

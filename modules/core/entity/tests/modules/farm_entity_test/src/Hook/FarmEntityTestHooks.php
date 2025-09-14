@@ -4,13 +4,21 @@ declare(strict_types=1);
 
 namespace Drupal\farm_entity_test\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
  * Hook implementations for farm_entity_test.
  */
 class FarmEntityTestHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected FarmFieldFactoryInterface $farmFieldFactory,
+  ) {}
 
   /**
    * Implements hook_entity_base_field_info().
@@ -25,7 +33,7 @@ class FarmEntityTestHooks {
         'type' => 'string',
         'label' => t('Test hook base field'),
       ];
-      $fields['test_hook_base_field'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
+      $fields['test_hook_base_field'] = $this->farmFieldFactory->baseFieldDefinition($options);
     }
 
     return $fields;
@@ -44,7 +52,7 @@ class FarmEntityTestHooks {
         'type' => 'string',
         'label' => t('Test hook bundle field'),
       ];
-      $fields['test_hook_bundle_field'] = \Drupal::service('farm_field.factory')->bundleFieldDefinition($options);
+      $fields['test_hook_bundle_field'] = $this->farmFieldFactory->bundleFieldDefinition($options);
     }
 
     // Add bundle specific fields to all log types.
@@ -56,7 +64,7 @@ class FarmEntityTestHooks {
         ]),
       ];
       $field_name = 'test_hook_bundle_' . $bundle . '_specific_field';
-      $fields[$field_name] = \Drupal::service('farm_field.factory')->bundleFieldDefinition($options);
+      $fields[$field_name] = $this->farmFieldFactory->bundleFieldDefinition($options);
     }
 
     return $fields;

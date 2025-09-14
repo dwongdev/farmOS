@@ -4,15 +4,23 @@ declare(strict_types=1);
 
 namespace Drupal\farm_group\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\farm_field\FarmFieldFactoryInterface;
 use Drupal\farm_group\Field\AssetGroupItemList;
 
 /**
  * Hook implementations for farm_group.
  */
 class FarmGroupHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected FarmFieldFactoryInterface $farmFieldFactory,
+  ) {}
 
   /**
    * Implements hook_entity_base_field_info().
@@ -179,7 +187,7 @@ class FarmGroupHooks {
         'view' => 94,
       ],
     ];
-    $fields['group'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
+    $fields['group'] = $this->farmFieldFactory->baseFieldDefinition($options);
 
     return $fields;
   }
@@ -213,7 +221,7 @@ class FarmGroupHooks {
         'weight' => 30,
       ],
     ];
-    $fields['is_group_assignment'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
+    $fields['is_group_assignment'] = $this->farmFieldFactory->baseFieldDefinition($options);
 
     // Group reference field.
     $options = [
@@ -228,7 +236,7 @@ class FarmGroupHooks {
         'view' => 30,
       ],
     ];
-    $fields['group'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
+    $fields['group'] = $this->farmFieldFactory->baseFieldDefinition($options);
 
     return $fields;
   }

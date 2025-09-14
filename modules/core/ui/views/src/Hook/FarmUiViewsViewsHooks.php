@@ -4,12 +4,20 @@ declare(strict_types=1);
 
 namespace Drupal\farm_ui_views\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
+use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 
 /**
  * Hook implementations for farm_ui_views.
  */
 class FarmUiViewsViewsHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected EntityFieldManagerInterface $entityFieldManager,
+  ) {}
 
   /**
    * Implements hook_views_data_alter().
@@ -21,9 +29,7 @@ class FarmUiViewsViewsHooks {
     // @todo Refactor/remove this when the following core issues are resolved.
     // @see https://www.drupal.org/project/drupal/issues/3458099
     // @see https://www.drupal.org/project/drupal/issues/3438054
-    /** @var \Drupal\Core\Entity\EntityFieldManagerInterface $entity_field_manager */
-    $entity_field_manager = \Drupal::service('entity_field.manager');
-    $entity_reference_field_map = $entity_field_manager->getFieldMapByFieldType('entity_reference');
+    $entity_reference_field_map = $this->entityFieldManager->getFieldMapByFieldType('entity_reference');
     foreach ($entity_reference_field_map as $entity_type_id => $fields) {
       foreach ($fields as $field_name => $map) {
         if (!empty($data[$entity_type_id . '__' . $field_name][$field_name . '_target_id']['filter'])) {

@@ -4,14 +4,22 @@ declare(strict_types=1);
 
 namespace Drupal\farm_land\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\farm_land\Entity\FarmLandType;
+use Drupal\farm_map\LayerStyleLoaderInterface;
 use Drupal\views\ViewExecutable;
 
 /**
  * Hook implementations for farm_land.
  */
 class FarmLandViewsExecutionHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected LayerStyleLoaderInterface $layerStyleLoader,
+  ) {}
 
   /**
    * Implements hook_views_pre_render().
@@ -44,8 +52,7 @@ class FarmLandViewsExecutionHooks {
       // Create a layer for each land type.
       $asset_layers = [];
       foreach ($land_types as $land_type) {
-        /** @var \Drupal\farm_map\Entity\LayerStyleInterface|null $layer_style */
-        if ($layer_style = \Drupal::service('farm_map.layer_style_loader')->load(['asset_type' => 'land', 'land_type' => $land_type->id()])) {
+        if ($layer_style = $this->layerStyleLoader->load(['asset_type' => 'land', 'land_type' => $land_type->id()])) {
           $color = $layer_style->get('color');
         }
         $asset_layers['land_' . $land_type->id()] = [

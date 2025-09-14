@@ -4,13 +4,21 @@ declare(strict_types=1);
 
 namespace Drupal\farm_log_asset\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
  * Hook implementations for farm_log_asset.
  */
 class FarmLogAssetHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected FarmFieldFactoryInterface $farmFieldFactory,
+  ) {}
 
   /**
    * Implements hook_entity_base_field_info().
@@ -35,7 +43,7 @@ class FarmLogAssetHooks {
         'view' => 0,
       ],
     ];
-    $fields['asset'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($field_info);
+    $fields['asset'] = $this->farmFieldFactory->baseFieldDefinition($field_info);
 
     return $fields;
   }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\farm_sensor_listener\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
@@ -11,11 +12,18 @@ use Drupal\Core\Url;
 use Drupal\asset\Entity\AssetInterface;
 use Drupal\data_stream\Entity\DataStream;
 use Drupal\data_stream\Entity\DataStreamInterface;
+use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
  * Hook implementations for farm_sensor_listener.
  */
 class FarmSensorListenerHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected FarmFieldFactoryInterface $farmFieldFactory,
+  ) {}
 
   /**
    * Implements hook_farm_entity_bundle_field_info().
@@ -35,7 +43,7 @@ class FarmSensorListenerHooks {
           'form' => 3,
         ],
       ];
-      $fields['public_key'] = \Drupal::service('farm_field.factory')->bundleFieldDefinition($options);
+      $fields['public_key'] = $this->farmFieldFactory->bundleFieldDefinition($options);
     }
 
     return $fields;

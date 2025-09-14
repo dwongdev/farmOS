@@ -4,13 +4,23 @@ declare(strict_types=1);
 
 namespace Drupal\farm_role\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\farm_role\ManagedRolePermissionsManagerInterface;
+use Drupal\user\PermissionHandlerInterface;
 
 /**
  * Hook implementations for farm_role.
  */
 class FarmRoleHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected PermissionHandlerInterface $permissionHandler,
+    protected ManagedRolePermissionsManagerInterface $managedRolePermissionsManager,
+  ) {}
 
   /**
    * Implements hook_entity_type_alter().
@@ -32,12 +42,8 @@ class FarmRoleHooks {
     // Attach managed role CSS.
     $form['#attached']['library'][] = 'farm_role/managed_role';
 
-    // Get the managed role permissions service.
-    /** @var \Drupal\farm_role\ManagedRolePermissionsManagerInterface $managed_role_manager */
-    $managed_role_manager = \Drupal::service('plugin.manager.managed_role_permissions');
-
     // Save a list of managed role IDs keyed by their index in the form.
-    $managed_roles = $managed_role_manager->getMangedRoles();
+    $managed_roles = $this->managedRolePermissionsManager->getMangedRoles();
     $managed_roles_indices = array_intersect(
       array_keys($form['role_names']['#value']),
       array_keys($managed_roles)
@@ -58,7 +64,7 @@ class FarmRoleHooks {
     }
 
     // Get a list of permissions.
-    $permissions = \Drupal::service('user.permissions')->getPermissions();
+    $permissions = $this->permissionHandler->getPermissions();
     $permission_names = array_keys($permissions);
 
     // Iterate over each permission in the form.
@@ -76,7 +82,7 @@ class FarmRoleHooks {
             $form['permissions'][$name][$rid]['#disabled'] = TRUE;
 
             // If the permission is enabled on the role, add CSS class.
-            if ($managed_role_manager->isPermissionInRole($name, $managed_roles[$rid])) {
+            if ($this->managedRolePermissionsManager->isPermissionInRole($name, $managed_roles[$rid])) {
               $form['permissions'][$name][$rid]['#attributes']['class'][] = 'managed';
             }
           }

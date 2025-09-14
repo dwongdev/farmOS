@@ -4,16 +4,24 @@ declare(strict_types=1);
 
 namespace Drupal\farm_entity_views\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Hook\Order\OrderAfter;
 use Drupal\farm_entity_views\FarmEntityViewsData;
 use Drupal\farm_entity_views\FarmLogViewsData;
 use Drupal\farm_entity_views\FarmQuantityViewsData;
+use Drupal\views\ViewsData;
 
 /**
  * Hook implementations for farm_entity_views.
  */
 class FarmEntityViewsHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected ViewsData $viewsData,
+  ) {}
 
   /**
    * Implements hook_modules_installed().
@@ -26,9 +34,7 @@ class FarmEntityViewsHooks {
 
     // Reset the views data after installing modules.
     // See https://www.drupal.org/project/entity/issues/3206703#comment-14073184
-    if (\Drupal::hasService('views.views_data')) {
-      \Drupal::service('views.views_data')->clear();
-    }
+    $this->viewsData->clear();
   }
 
   /**

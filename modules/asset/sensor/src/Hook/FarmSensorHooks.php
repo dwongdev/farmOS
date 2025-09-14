@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Drupal\farm_sensor\Hook;
 
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Component\Utility\Html;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Url;
@@ -15,6 +17,12 @@ use Drupal\data_stream\Entity\DataStreamInterface;
  * Hook implementations for farm_sensor.
  */
 class FarmSensorHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected TimeInterface $time,
+  ) {}
 
   /**
    * Implements hook_ENTITY_TYPE_view_alter().
@@ -83,7 +91,7 @@ class FarmSensorHooks {
       }
 
       // Render JSON examples.
-      $request_time = \Drupal::time()->getRequestTime();
+      $request_time = $this->time->getRequestTime();
       $json_example = '{ "timestamp": ' . $request_time . ', "' . $example_stream_names[0] . '": 76.5 }';
       $json_example_label = t('JSON example');
       $build['api']['json_example'] = [
