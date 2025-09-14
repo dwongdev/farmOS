@@ -10,6 +10,7 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\farm_field\FarmFieldFactoryInterface;
+use Drupal\farm_log_quantity\FarmLogQuantityHelper;
 
 /**
  * Hook implementations for farm_log_quantity.
@@ -71,7 +72,7 @@ class FarmLogQuantityHooks {
       $entity = $form_state->getFormObject()->getEntity();
 
       // Determine the default quantity type.
-      $default_type = farm_log_quantity_default_type($entity->bundle());
+      $default_type = FarmLogQuantityHelper::defaultQuantityType($entity->bundle());
 
       // Set the default value.
       if (array_key_exists($default_type, $bundle_select['#options'])) {

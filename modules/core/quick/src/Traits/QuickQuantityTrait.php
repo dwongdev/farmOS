@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\farm_quick\Traits;
 
 use Drupal\Core\Entity\EntityMalformedException;
+use Drupal\farm_log_quantity\FarmLogQuantityHelper;
 use Drupal\fraction\Fraction;
 use Drupal\quantity\Entity\Quantity;
 
@@ -41,7 +42,7 @@ trait QuickQuantityTrait {
 
     // If a type isn't set, get the default type.
     if (empty($values['type'])) {
-      $values['type'] = farm_log_quantity_default_type($log_type);
+      $values['type'] = FarmLogQuantityHelper::defaultQuantityType($log_type);
     }
 
     // Split value into numerator and denominator, if it isn't already.
