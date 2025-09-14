@@ -8,6 +8,7 @@ use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_field\FarmFieldFactoryInterface;
 use Drupal\farm_location\Field\AssetGeometryItemList;
 use Drupal\farm_location\Field\AssetLocationItemList;
@@ -19,6 +20,7 @@ use Drupal\farm_location\LocationDefaultValues;
 class FarmLocationHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected FarmFieldFactoryInterface $farmFieldFactory,
@@ -81,7 +83,7 @@ class FarmLocationHooks {
     // This is computed based on an asset's movements.
     $options = [
       'type' => 'entity_reference',
-      'label' => t('Current location'),
+      'label' => $this->t('Current location'),
       'target_type' => 'asset',
       'multiple' => TRUE,
       'computed' => AssetLocationItemList::class,
@@ -102,7 +104,7 @@ class FarmLocationHooks {
     // This is computed based on an asset's movements or its intrinsic geometry.
     $options = [
       'type' => 'geofield',
-      'label' => t('Current geometry'),
+      'label' => $this->t('Current geometry'),
       'computed' => AssetGeometryItemList::class,
       'hidden' => 'form',
       'weight' => [
@@ -117,8 +119,8 @@ class FarmLocationHooks {
     // table.
     $options = [
       'type' => 'geofield',
-      'label' => t('Intrinsic geometry'),
-      'description' => t('Add geometry data to this asset to describe its intrinsic location. This will only be used if the asset is fixed.'),
+      'label' => $this->t('Intrinsic geometry'),
+      'description' => $this->t('Add geometry data to this asset to describe its intrinsic location. This will only be used if the asset is fixed.'),
       'weight' => [
         'form' => 50,
       ],
@@ -130,8 +132,8 @@ class FarmLocationHooks {
     // Location boolean field.
     $options = [
       'type' => 'boolean',
-      'label' => t('Is location'),
-      'description' => t('If this asset is a location, then other assets can be moved to it.'),
+      'label' => $this->t('Is location'),
+      'description' => $this->t('If this asset is a location, then other assets can be moved to it.'),
       'default_value_callback' => LocationDefaultValues::class . '::isLocation',
       'weight' => [
         'form' => 0,
@@ -153,8 +155,8 @@ class FarmLocationHooks {
     // Fixed boolean field.
     $options = [
       'type' => 'boolean',
-      'label' => t('Is fixed'),
-      'description' => t('If this asset is fixed, then it can have an intrinsic geometry. If the asset will move around, then it is not fixed and geometry will be determined by movement logs.'),
+      'label' => $this->t('Is fixed'),
+      'description' => $this->t('If this asset is fixed, then it can have an intrinsic geometry. If the asset will move around, then it is not fixed and geometry will be determined by movement logs.'),
       'default_value_callback' => LocationDefaultValues::class . '::isFixed',
       'weight' => [
         'form' => 10,
@@ -188,8 +190,8 @@ class FarmLocationHooks {
     // Location asset reference field.
     $options = [
       'type' => 'entity_reference',
-      'label' => t('Location'),
-      'description' => t('Where does this take place?'),
+      'label' => $this->t('Location'),
+      'description' => $this->t('Where does this take place?'),
       'target_type' => 'asset',
       'multiple' => TRUE,
       'weight' => [
@@ -213,8 +215,8 @@ class FarmLocationHooks {
     // table.
     $options = [
       'type' => 'geofield',
-      'label' => t('Geometry'),
-      'description' => t('Add geometry data to this log to describe where it took place.'),
+      'label' => $this->t('Geometry'),
+      'description' => $this->t('Add geometry data to this log to describe where it took place.'),
       'weight' => [
         'form' => 20,
         'view' => 20,
@@ -226,8 +228,8 @@ class FarmLocationHooks {
     // Movement boolean field.
     $options = [
       'type' => 'boolean',
-      'label' => t('Is movement'),
-      'description' => t('If this log is a movement, then all assets referenced by it will be located in the referenced locations and/or geometry at the time the log takes place. The log must have a status of "done" in order for the movement to take effect.'),
+      'label' => $this->t('Is movement'),
+      'description' => $this->t('If this log is a movement, then all assets referenced by it will be located in the referenced locations and/or geometry at the time the log takes place. The log must have a status of "done" in order for the movement to take effect.'),
       'default_value_callback' => LocationDefaultValues::class . '::isMovement',
       'weight' => [
         'form' => 20,

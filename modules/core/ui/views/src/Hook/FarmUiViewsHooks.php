@@ -10,6 +10,7 @@ use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\farm_flag\FarmFlagHelper;
 use Drupal\farm_ui_views\FarmUiViewsHelper;
@@ -20,6 +21,7 @@ use Drupal\farm_ui_views\FarmUiViewsHelper;
 class FarmUiViewsHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected ModuleHandlerInterface $moduleHandler,
@@ -48,33 +50,33 @@ class FarmUiViewsHooks {
 
     // Assets View.
     if ($route_name == $entity_routes['asset']) {
-      $output .= '<p>' . t('Assets represent things that are being tracked or managed. They store high-level information, but most historical data is stored in the <a href=":logs">logs</a> that reference them.', [
+      $output .= '<p>' . $this->t('Assets represent things that are being tracked or managed. They store high-level information, but most historical data is stored in the <a href=":logs">logs</a> that reference them.', [
         ':logs' => $entity_urls['log'],
       ]) . '</p>';
-      $output .= '<p>' . t('Assets that are no longer actively managed can be archived. Archived assets will be hidden from most lists, but are preserved and searchable for posterity.') . '</p>';
+      $output .= '<p>' . $this->t('Assets that are no longer actively managed can be archived. Archived assets will be hidden from most lists, but are preserved and searchable for posterity.') . '</p>';
     }
 
     // Logs View.
     if ($route_name == $entity_routes['log']) {
-      $output .= '<p>' . t('Logs represent events that take place in relation to <a href=":assets">assets</a> and other records. They have a timestamp to represent when they take place, and a status to designate that they are "Done", "Pending", or "Abandoned".', [
+      $output .= '<p>' . $this->t('Logs represent events that take place in relation to <a href=":assets">assets</a> and other records. They have a timestamp to represent when they take place, and a status to designate that they are "Done", "Pending", or "Abandoned".', [
         ':assets' => $entity_urls['asset'],
       ]) . '</p>';
-      $output .= '<p>' . t('Logs can be assigned to <a href=":people">people</a> for task management purposes.', [
+      $output .= '<p>' . $this->t('Logs can be assigned to <a href=":people">people</a> for task management purposes.', [
         ':people' => $entity_urls['people'],
       ]) . '</p>';
     }
 
     // Quantities View.
     if ($route_name == $entity_routes['quantity']) {
-      $output .= '<p>' . t('Quantities are granular units of quantitative data that represent a single data point within a <a href=":logs">log</a>.', [
+      $output .= '<p>' . $this->t('Quantities are granular units of quantitative data that represent a single data point within a <a href=":logs">log</a>.', [
         ':logs' => $entity_urls['log'],
       ]) . '</p>';
-      $output .= '<p>' . t('All quantities can optionally include a measure, value, units, and label. Specific quantity types may collect additional information.') . '</p>';
+      $output .= '<p>' . $this->t('All quantities can optionally include a measure, value, units, and label. Specific quantity types may collect additional information.') . '</p>';
     }
 
     // Plans View.
     if ($route_name == 'entity.plan.collection') {
-      $output .= '<p>' . t('Plans provide features for planning, managing, and organizing <a href=":assets">assets</a>, <a href=":logs">logs</a>, and <a href=":people">people</a> around a particular goal.', [
+      $output .= '<p>' . $this->t('Plans provide features for planning, managing, and organizing <a href=":assets">assets</a>, <a href=":logs">logs</a>, and <a href=":people">people</a> around a particular goal.', [
         ':assets' => $entity_urls['asset'],
         ':logs' => $entity_urls['log'],
         ':people' => $entity_urls['people'],
@@ -155,7 +157,7 @@ class FarmUiViewsHooks {
         }
       }
       $form['#theme_wrappers']['details'] = [
-        '#title' => t('Filter'),
+        '#title' => $this->t('Filter'),
         '#attributes' => [
 
           // Open if there is exposed input.

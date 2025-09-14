@@ -7,6 +7,7 @@ namespace Drupal\farm_ui_views_test\Hook;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
@@ -15,6 +16,7 @@ use Drupal\farm_field\FarmFieldFactoryInterface;
 class FarmUiViewsTestHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected FarmFieldFactoryInterface $farmFieldFactory,
@@ -30,7 +32,7 @@ class FarmUiViewsTestHooks {
     if ($entity_type->id() == 'log') {
       $options = [
         'type' => 'string',
-        'label' => t('Test string'),
+        'label' => $this->t('Test string'),
       ];
       $fields['test_string'] = $this->farmFieldFactory->baseFieldDefinition($options);
     }

@@ -10,6 +10,7 @@ use Drupal\Core\Database\Connection;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\data_stream\Entity\DataStreamInterface;
 
@@ -19,6 +20,7 @@ use Drupal\data_stream\Entity\DataStreamInterface;
 class DataStreamHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected TimeInterface $time,
@@ -58,8 +60,8 @@ class DataStreamHooks {
       // @todo Include link to updated user guide.
       $build['api'] = [
         '#type' => 'details',
-        '#title' => t('Developer information'),
-        '#description' => t('This data stream type will listen for data posted to it from other web-connected devices. Use the information below to configure your device to begin posting data to this data stream.'),
+        '#title' => $this->t('Developer information'),
+        '#description' => $this->t('This data stream type will listen for data posted to it from other web-connected devices. Use the information below to configure your device to begin posting data to this data stream.'),
         '#open' => FALSE,
       ];
 
@@ -73,7 +75,7 @@ class DataStreamHooks {
 
       // Render the API url.
       $url_string = $url->setAbsolute()->toString();
-      $url_string_label = t('URL');
+      $url_string_label = $this->t('URL');
       $build['api']['url'] = [
         '#type' => 'link',
         '#title' => $url_string,
@@ -86,14 +88,14 @@ class DataStreamHooks {
       $request_time = $this->time->getRequestTime();
       $stream_name = Html::escape($data_stream->label());
       $json_example = '{ "timestamp": ' . $request_time . ', "' . $stream_name . '": 76.5 }';
-      $json_example_label = t('JSON Example');
+      $json_example_label = $this->t('JSON Example');
       $build['api']['json_example'] = [
         '#markup' => '<p><strong>' . $json_example_label . ':</strong> ' . $json_example . '</p>',
       ];
 
       // Render example CURL command.
       $curl_example = 'curl -H "Content-Type: application/json" -X POST -d \'' . $json_example . '\' ' . $url_string;
-      $curl_example_label = t('Example CURL command');
+      $curl_example_label = $this->t('Example CURL command');
       $build['api']['curl_example'] = [
         '#markup' => '<p><strong>' . $curl_example_label . ':</strong> ' . $curl_example . '</p>',
       ];

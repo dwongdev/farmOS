@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace Drupal\farm_ui_metrics\Hook;
 
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * Hook implementations for farm_ui_metrics.
  */
 class FarmUiMetricsHooks {
+
+  use StringTranslationTrait;
 
   /**
    * Implements hook_farm_dashboard_panes().
@@ -19,7 +22,7 @@ class FarmUiMetricsHooks {
     return [
       'metrics' => [
         'block' => 'farm_metrics_block',
-        'title' => t('Metrics'),
+        'title' => $this->t('Metrics'),
         'region' => 'second',
       ],
     ];

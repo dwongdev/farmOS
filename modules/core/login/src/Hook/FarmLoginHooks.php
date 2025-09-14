@@ -9,6 +9,7 @@ use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Render\Element\Email;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * Hook implementations for farm_login.
@@ -16,6 +17,7 @@ use Drupal\Core\Render\Element\Email;
 class FarmLoginHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected ConfigFactoryInterface $configFactory,
@@ -29,8 +31,8 @@ class FarmLoginHooks {
     $config = $this->configFactory->get('system.site');
 
     // Update title and description to include email as an option.
-    $form['name']['#title'] = t('Email or username');
-    $form['name']['#description'] = t('Enter your @s email address or username.', ['@s' => $config->get('name')]);
+    $form['name']['#title'] = $this->t('Email or username');
+    $form['name']['#description'] = $this->t('Enter your @s email address or username.', ['@s' => $config->get('name')]);
 
     // Update the maxlength to account for emails.
     $form['name']['#maxlength'] = Email::EMAIL_MAX_LENGTH;
@@ -39,7 +41,7 @@ class FarmLoginHooks {
     $form['name']['#element_validate'][] = [FarmLoginHooks::class, 'userLoginValidate'];
 
     // Update password description to be more generic.
-    $form['pass']['#description'] = t('Enter the password that accompanies your account.');
+    $form['pass']['#description'] = $this->t('Enter the password that accompanies your account.');
   }
 
   /**

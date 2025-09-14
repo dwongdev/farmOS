@@ -7,6 +7,7 @@ namespace Drupal\farm_entity_fields\Hook;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
@@ -15,6 +16,7 @@ use Drupal\farm_field\FarmFieldFactoryInterface;
 class FarmEntityFieldsHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected FarmFieldFactoryInterface $farmFieldFactory,
@@ -149,12 +151,12 @@ class FarmEntityFieldsHooks {
     $field_info = [
       'data' => [
         'type' => 'string_long',
-        'label' => t('Data'),
+        'label' => $this->t('Data'),
         'hidden' => TRUE,
       ],
       'file' => [
         'type' => 'file',
-        'label' => t('Files'),
+        'label' => $this->t('Files'),
         'file_directory' => 'farm/asset/[date:custom:Y]-[date:custom:m]',
         'multiple' => TRUE,
         'weight' => [
@@ -164,7 +166,7 @@ class FarmEntityFieldsHooks {
       ],
       'image' => [
         'type' => 'image',
-        'label' => t('Images'),
+        'label' => $this->t('Images'),
         'file_directory' => 'farm/asset/[date:custom:Y]-[date:custom:m]',
         'multiple' => TRUE,
         'weight' => [
@@ -174,7 +176,7 @@ class FarmEntityFieldsHooks {
       ],
       'notes' => [
         'type' => 'text_long',
-        'label' => t('Notes'),
+        'label' => $this->t('Notes'),
         'weight' => [
           'form' => 95,
           'view' => 95,
@@ -198,12 +200,12 @@ class FarmEntityFieldsHooks {
     $field_info = [
       'data' => [
         'type' => 'string_long',
-        'label' => t('Data'),
+        'label' => $this->t('Data'),
         'hidden' => TRUE,
       ],
       'file' => [
         'type' => 'file',
-        'label' => t('Files'),
+        'label' => $this->t('Files'),
         'file_directory' => 'farm/log/[date:custom:Y]-[date:custom:m]',
         'multiple' => TRUE,
         'weight' => [
@@ -213,7 +215,7 @@ class FarmEntityFieldsHooks {
       ],
       'image' => [
         'type' => 'image',
-        'label' => t('Images'),
+        'label' => $this->t('Images'),
         'file_directory' => 'farm/log/[date:custom:Y]-[date:custom:m]',
         'multiple' => TRUE,
         'weight' => [
@@ -223,7 +225,7 @@ class FarmEntityFieldsHooks {
       ],
       'notes' => [
         'type' => 'text_long',
-        'label' => t('Notes'),
+        'label' => $this->t('Notes'),
         'weight' => [
           'form' => 95,
           'view' => 95,
@@ -247,12 +249,12 @@ class FarmEntityFieldsHooks {
     $field_info = [
       'data' => [
         'type' => 'string_long',
-        'label' => t('Data'),
+        'label' => $this->t('Data'),
         'hidden' => TRUE,
       ],
       'file' => [
         'type' => 'file',
-        'label' => t('Files'),
+        'label' => $this->t('Files'),
         'file_directory' => 'farm/organization/[date:custom:Y]-[date:custom:m]',
         'multiple' => TRUE,
         'weight' => [
@@ -262,7 +264,7 @@ class FarmEntityFieldsHooks {
       ],
       'image' => [
         'type' => 'image',
-        'label' => t('Images'),
+        'label' => $this->t('Images'),
         'file_directory' => 'farm/organization/[date:custom:Y]-[date:custom:m]',
         'multiple' => TRUE,
         'weight' => [
@@ -272,7 +274,7 @@ class FarmEntityFieldsHooks {
       ],
       'notes' => [
         'type' => 'text_long',
-        'label' => t('Notes'),
+        'label' => $this->t('Notes'),
         'weight' => [
           'form' => 95,
           'view' => 10,
@@ -296,12 +298,12 @@ class FarmEntityFieldsHooks {
     $field_info = [
       'data' => [
         'type' => 'string_long',
-        'label' => t('Data'),
+        'label' => $this->t('Data'),
         'hidden' => TRUE,
       ],
       'file' => [
         'type' => 'file',
-        'label' => t('Files'),
+        'label' => $this->t('Files'),
         'file_directory' => 'farm/plan/[date:custom:Y]-[date:custom:m]',
         'multiple' => TRUE,
         'weight' => [
@@ -311,7 +313,7 @@ class FarmEntityFieldsHooks {
       ],
       'image' => [
         'type' => 'image',
-        'label' => t('Images'),
+        'label' => $this->t('Images'),
         'file_directory' => 'farm/plan/[date:custom:Y]-[date:custom:m]',
         'multiple' => TRUE,
         'weight' => [
@@ -321,7 +323,7 @@ class FarmEntityFieldsHooks {
       ],
       'notes' => [
         'type' => 'text_long',
-        'label' => t('Notes'),
+        'label' => $this->t('Notes'),
         'weight' => [
           'form' => 95,
           'view' => 95,
@@ -345,7 +347,7 @@ class FarmEntityFieldsHooks {
     $field_info = [
       'file' => [
         'type' => 'file',
-        'label' => t('Files'),
+        'label' => $this->t('Files'),
         'file_directory' => 'farm/term/[date:custom:Y]-[date:custom:m]',
         'multiple' => TRUE,
         'weight' => [
@@ -355,7 +357,7 @@ class FarmEntityFieldsHooks {
       ],
       'image' => [
         'type' => 'image',
-        'label' => t('Images'),
+        'label' => $this->t('Images'),
         'file_directory' => 'farm/term/[date:custom:Y]-[date:custom:m]',
         'multiple' => TRUE,
         'weight' => [
@@ -365,8 +367,8 @@ class FarmEntityFieldsHooks {
       ],
       'external_uri' => [
         'type' => 'uri',
-        'label' => t('External URI'),
-        'description' => t('Link this term to one or more external URLs or ontology item URIs.'),
+        'label' => $this->t('External URI'),
+        'description' => $this->t('Link this term to one or more external URLs or ontology item URIs.'),
         'multiple' => TRUE,
         'weight' => [
           'form' => 80,

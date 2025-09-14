@@ -7,6 +7,7 @@ namespace Drupal\farm_equipment\Hook;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
@@ -15,6 +16,7 @@ use Drupal\farm_field\FarmFieldFactoryInterface;
 class FarmEquipmentHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected FarmFieldFactoryInterface $farmFieldFactory,
@@ -31,8 +33,8 @@ class FarmEquipmentHooks {
     if ($entity_type->id() == 'log') {
       $options = [
         'type' => 'entity_reference',
-        'label' => t('Equipment used'),
-        'description' => t('What equipment was used?'),
+        'label' => $this->t('Equipment used'),
+        'description' => $this->t('What equipment was used?'),
         'target_type' => 'asset',
         'target_bundle' => 'equipment',
         'multiple' => TRUE,

@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace Drupal\data_stream_notification\Hook;
 
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * Hook implementations for data_stream_notification.
  */
 class DataStreamNotificationHooks {
+
+  use StringTranslationTrait;
 
   /**
    * Implements hook_mail().
@@ -29,13 +32,13 @@ class DataStreamNotificationHooks {
     $url = $data_stream->toUrl()->setAbsolute()->toString();
 
     // Build the email subject.
-    $message['subject'] = t('@notification notification for data stream: @data_stream', [
+    $message['subject'] = $this->t('@notification notification for data stream: @data_stream', [
       '@notification' => $data_stream_notification->label(),
       '@data_stream' => $data_stream->label(),
     ]);
 
     // Build the email body.
-    $message['body'][] = t('Data stream: <a href="@link">@label</a> Actual value: @value', [
+    $message['body'][] = $this->t('Data stream: <a href="@link">@label</a> Actual value: @value', [
       '@link' => $url,
       '@label' => $data_stream->label(),
       '@value' => $params['value'],

@@ -8,6 +8,7 @@ use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
@@ -16,6 +17,7 @@ use Drupal\farm_field\FarmFieldFactoryInterface;
 class FarmFarmHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected FarmFieldFactoryInterface $farmFieldFactory,
@@ -33,8 +35,8 @@ class FarmFarmHooks {
     if ($entity_type->id() == 'asset') {
       $options = [
         'type' => 'entity_reference',
-        'label' => t('Farm'),
-        'description' => t('What farm is this associated with?'),
+        'label' => $this->t('Farm'),
+        'description' => $this->t('What farm is this associated with?'),
         'target_type' => 'organization',
         'target_bundle' => 'farm',
         'multiple' => FALSE,

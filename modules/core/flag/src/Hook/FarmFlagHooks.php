@@ -7,6 +7,7 @@ namespace Drupal\farm_flag\Hook;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_field\FarmFieldFactoryInterface;
 use Drupal\farm_flag\FarmFlagHelper;
 use Drupal\farm_flag\Form\EntityFlagActionForm;
@@ -18,6 +19,7 @@ use Drupal\farm_flag\Routing\EntityFlagActionRouteProvider;
 class FarmFlagHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected FarmFieldFactoryInterface $farmFieldFactory,
@@ -34,8 +36,8 @@ class FarmFlagHooks {
     if (in_array($entity_type->id(), ['asset', 'log', 'plan'])) {
       $field_info = [
         'type' => 'list_string',
-        'label' => t('Flags'),
-        'description' => t('Add flags to enable better sorting and filtering of records.'),
+        'label' => $this->t('Flags'),
+        'description' => $this->t('Add flags to enable better sorting and filtering of records.'),
         'allowed_values_function' => [FarmFlagHelper::class, 'flagAllowedValues'],
         'multiple' => TRUE,
         'weight' => [

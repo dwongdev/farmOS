@@ -8,6 +8,7 @@ use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\asset\Entity\AssetInterface;
 use Drupal\data_stream\Entity\DataStream;
@@ -20,6 +21,7 @@ use Drupal\farm_field\FarmFieldFactoryInterface;
 class FarmSensorListenerHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected FarmFieldFactoryInterface $farmFieldFactory,
@@ -36,8 +38,8 @@ class FarmSensorListenerHooks {
     if ($entity_type->id() === 'asset' && $bundle === 'sensor') {
       $options = [
         'type' => 'string',
-        'label' => t('Public key (legacy)'),
-        'description' => t('Public key (legacy) for the sensor.'),
+        'label' => $this->t('Public key (legacy)'),
+        'description' => $this->t('Public key (legacy) for the sensor.'),
         'default_value_callback' => DataStream::class . '::createUniqueKey',
         'weight' => [
           'form' => 3,
@@ -84,7 +86,7 @@ class FarmSensorListenerHooks {
 
       // Render the legacy API URL.
       $url_string = $url->setAbsolute()->toString();
-      $url_string_label = t('Legacy URL');
+      $url_string_label = $this->t('Legacy URL');
       $build['api']['url_legacy'] = [
         '#type' => 'link',
         '#title' => $url_string,

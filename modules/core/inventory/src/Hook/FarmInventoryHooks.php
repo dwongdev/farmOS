@@ -8,6 +8,7 @@ use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_field\FarmFieldFactoryInterface;
 use Drupal\farm_inventory\Field\AssetInventoryItemList;
 
@@ -17,6 +18,7 @@ use Drupal\farm_inventory\Field\AssetInventoryItemList;
 class FarmInventoryHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected FarmFieldFactoryInterface $farmFieldFactory,
@@ -118,7 +120,7 @@ class FarmInventoryHooks {
     $field_info = [
       'inventory' => [
         'type' => 'inventory',
-        'label' => t('Current inventory'),
+        'label' => $this->t('Current inventory'),
         'multiple' => TRUE,
         'computed' => AssetInventoryItemList::class,
         'hidden' => 'form',
@@ -144,12 +146,12 @@ class FarmInventoryHooks {
     $field_info = [
       'inventory_adjustment' => [
         'type' => 'list_string',
-        'label' => t('Inventory adjustment'),
-        'description' => t('What type of inventory adjustment is this?'),
+        'label' => $this->t('Inventory adjustment'),
+        'description' => $this->t('What type of inventory adjustment is this?'),
         'allowed_values' => [
-          'increment' => t('Increment'),
-          'decrement' => t('Decrement'),
-          'reset' => t('Reset'),
+          'increment' => $this->t('Increment'),
+          'decrement' => $this->t('Decrement'),
+          'reset' => $this->t('Reset'),
         ],
         'multiple' => FALSE,
         'weight' => [
@@ -159,8 +161,8 @@ class FarmInventoryHooks {
       ],
       'inventory_asset' => [
         'type' => 'entity_reference',
-        'label' => t('Inventory asset'),
-        'description' => t('Which asset will this adjust the inventory of?'),
+        'label' => $this->t('Inventory asset'),
+        'description' => $this->t('Which asset will this adjust the inventory of?'),
         'target_type' => 'asset',
         'multiple' => FALSE,
         'weight' => [
@@ -203,7 +205,7 @@ class FarmInventoryHooks {
       $inventory = [
         '#prefix' => '<span class="inventory">',
         '#suffix' => '</span>',
-        '#markup' => '(' . t('@adjustment <a href=":url">@asset</a> inventory', ['@adjustment' => $adjustment, ':url' => $asset->toUrl()->toString(), '@asset' => $asset->label()]) . ')',
+        '#markup' => '(' . $this->t('@adjustment <a href=":url">@asset</a> inventory', ['@adjustment' => $adjustment, ':url' => $asset->toUrl()->toString(), '@asset' => $asset->label()]) . ')',
         '#weight' => 5,
       ];
       $variables['content']['inventory'] = $inventory;

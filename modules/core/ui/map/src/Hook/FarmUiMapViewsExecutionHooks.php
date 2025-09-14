@@ -11,6 +11,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Hook\Order\Order;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\asset\Entity\AssetType;
 use Drupal\farm_map\LayerStyleLoaderInterface;
 use Drupal\farm_ui_views\FarmUiViewsHelper;
@@ -23,6 +24,7 @@ use Drupal\views\ViewExecutable;
 class FarmUiMapViewsExecutionHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected EntityTypeManagerInterface $entityTypeManager,
@@ -137,7 +139,7 @@ class FarmUiMapViewsExecutionHooks {
 
       // Add a cluster layer for summarizing asset counts.
       $asset_layers['cluster']['all'] = [
-        'label' => t('Asset counts'),
+        'label' => $this->t('Asset counts'),
         'cluster' => TRUE,
         'filters' => $exposed_filters,
       ];
@@ -158,7 +160,7 @@ class FarmUiMapViewsExecutionHooks {
 
         // Add layer for the asset type.
         $asset_layers['full']['full_' . $bundle] = [
-          'group' => $type->getThirdPartySetting('farm_location', 'is_location', FALSE) ? t('Location assets') : $layer_group,
+          'group' => $type->getThirdPartySetting('farm_location', 'is_location', FALSE) ? $this->t('Location assets') : $layer_group,
           'label' => $bundle_info['label'],
           'asset_type' => $bundle,
           'filters' => $exposed_filters,

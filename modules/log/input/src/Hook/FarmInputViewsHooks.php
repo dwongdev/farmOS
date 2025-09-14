@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace Drupal\farm_input\Hook;
 
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * Hook implementations for farm_input.
  */
 class FarmInputViewsHooks {
+
+  use StringTranslationTrait;
 
   /**
    * Implements hook_views_data().
@@ -21,12 +24,12 @@ class FarmInputViewsHooks {
     // This pseudo field only has a filter configured to support filtering logs
     // by the quantity material type.
     $data['log_field_data']['quantity_material_type'] = [
-      'description' => t('Filter by the material type of quantities referenced by this log.'),
+      'description' => $this->t('Filter by the material type of quantities referenced by this log.'),
       'entity_type' => 'quantity',
       'entity_field' => 'material_type',
       'filter' => [
-        'title' => t('Quantity material type'),
-        'description' => t('Filter by the material type of quantities referenced by this log.'),
+        'title' => $this->t('Quantity material type'),
+        'description' => $this->t('Filter by the material type of quantities referenced by this log.'),
         'id' => 'log_quantity_material_type',
         'field_name' => 'material_type',
       ],

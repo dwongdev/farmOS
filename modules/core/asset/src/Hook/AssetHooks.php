@@ -8,6 +8,7 @@ use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\asset\Entity\AssetInterface;
 use Drupal\asset\Event\AssetEvent;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -19,6 +20,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class AssetHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     #[Autowire(service: 'event_dispatcher')]
@@ -35,8 +37,8 @@ class AssetHooks {
     // Main module help for the asset module.
     if ($route_name == 'help.page.asset') {
       $output = '';
-      $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('Provides asset entity') . '</p>';
+      $output .= '<h3>' . $this->t('About') . '</h3>';
+      $output .= '<p>' . $this->t('Provides asset entity') . '</p>';
     }
 
     return $output;

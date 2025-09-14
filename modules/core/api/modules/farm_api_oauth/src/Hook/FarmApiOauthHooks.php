@@ -7,12 +7,15 @@ namespace Drupal\farm_api_oauth\Hook;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\entity\BundleFieldDefinition;
 
 /**
  * Hook implementations for farm_api_oauth.
  */
 class FarmApiOauthHooks {
+
+  use StringTranslationTrait;
 
   /**
    * Implements hook_entity_base_field_info().
@@ -23,7 +26,7 @@ class FarmApiOauthHooks {
 
     // Add allowed_origins field to the consumer entity.
     if ($entity_type->id() == 'consumer') {
-      $fields['allowed_origins'] = BundleFieldDefinition::create('string')->setLabel(t('Allowed origins'))->setDescription(t('Configure CORS origins for this consumer.'))->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)->setDisplayOptions('form', [
+      $fields['allowed_origins'] = BundleFieldDefinition::create('string')->setLabel($this->t('Allowed origins'))->setDescription($this->t('Configure CORS origins for this consumer.'))->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)->setDisplayOptions('form', [
         'type' => 'string_textfield',
         'settings' => [
           'size' => 255,
@@ -43,7 +46,7 @@ class FarmApiOauthHooks {
   #[Hook('consumers_list_alter')]
   public function consumersListAlter(&$data, $context) {
     if ($context['type'] === 'header') {
-      $data['client_id'] = t('Client ID');
+      $data['client_id'] = $this->t('Client ID');
     }
     elseif ($context['type'] === 'row') {
       $entity = $context['entity'];

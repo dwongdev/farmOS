@@ -7,6 +7,7 @@ namespace Drupal\farm_role\Hook;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_role\ManagedRolePermissionsManagerInterface;
 use Drupal\user\PermissionHandlerInterface;
 
@@ -16,6 +17,7 @@ use Drupal\user\PermissionHandlerInterface;
 class FarmRoleHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected PermissionHandlerInterface $permissionHandler,
@@ -57,7 +59,7 @@ class FarmRoleHooks {
 
       // Build new label.
       $label = $form['permissions']['#header'][$offset]['data'];
-      $new = $label . ' (' . t('managed') . ')';
+      $new = $label . ' (' . $this->t('managed') . ')';
 
       // Set new label.
       $form['permissions']['#header'][$offset]['data'] = $new;

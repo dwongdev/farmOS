@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace Drupal\farm_import_csv\Hook;
 
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * Hook implementations for farm_import_csv.
  */
 class FarmImportCsvViewsHooks {
+
+  use StringTranslationTrait;
 
   /**
    * Implements hook_views_data().
@@ -19,14 +22,14 @@ class FarmImportCsvViewsHooks {
     $data = [];
 
     // Describe the farm_import_csv_entity table.
-    $data['farm_import_csv_entity']['table']['group'] = t('CSV');
+    $data['farm_import_csv_entity']['table']['group'] = $this->t('CSV');
 
     // Provide a relationship to the file entity.
     $data['farm_import_csv_entity']['file_id'] = [
-      'title' => t('CSV file'),
-      'help' => t('Relate entities to the CSV file they were imported from.'),
+      'title' => $this->t('CSV file'),
+      'help' => $this->t('Relate entities to the CSV file they were imported from.'),
       'relationship' => [
-        'label' => t('CSV file'),
+        'label' => $this->t('CSV file'),
         'base' => 'file_managed',
         'base field' => 'fid',
         'id' => 'standard',
@@ -35,8 +38,8 @@ class FarmImportCsvViewsHooks {
 
     // Provide a field and sort for the row number.
     $data['farm_import_csv_entity']['rownum'] = [
-      'title' => t('Row number'),
-      'help' => t('The CSV row number that this entity was imported from.'),
+      'title' => $this->t('Row number'),
+      'help' => $this->t('The CSV row number that this entity was imported from.'),
       'field' => [
         'id' => 'numeric',
       ],
@@ -47,8 +50,8 @@ class FarmImportCsvViewsHooks {
 
     // Provide a contextual filter argument for the migration ID.
     $data['farm_import_csv_entity']['migration'] = [
-      'title' => t('Migration ID'),
-      'help' => t('The migration that imported this entity.'),
+      'title' => $this->t('Migration ID'),
+      'help' => $this->t('The migration that imported this entity.'),
       'argument' => [
         'id' => 'string',
       ],

@@ -32,6 +32,7 @@ namespace Drupal\mymodule\Hook;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
@@ -40,6 +41,7 @@ use Drupal\farm_field\FarmFieldFactoryInterface;
 class FieldHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected FarmFieldFactoryInterface $farmFieldFactory,
@@ -58,8 +60,8 @@ class FieldHooks {
       // Options for the new field. See Field options below.
       $options = [
         'type' => 'string',
-        'label' => t('My new field'),
-        'description' => t('My field description.'),
+        'label' => $this->t('My new field'),
+        'description' => $this->t('My field description.'),
         'weight' => [
           'form' => 10,
           'view' => 10,
@@ -105,6 +107,7 @@ namespace Drupal\mymodule\Hook;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
@@ -113,6 +116,7 @@ use Drupal\farm_field\FarmFieldFactoryInterface;
 class FieldHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected FarmFieldFactoryInterface $farmFieldFactory,
@@ -131,8 +135,8 @@ class FieldHooks {
       // Options for the new field. See Field options below.
       $options = [
         'type' => 'string',
-        'label' => t('My new field'),
-        'description' => t('My field description.'),
+        'label' => $this->t('My new field'),
+        'description' => $this->t('My field description.'),
         'weight' => [
           'form' => 10,
           'view' => 10,

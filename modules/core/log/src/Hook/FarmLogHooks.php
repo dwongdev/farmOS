@@ -10,6 +10,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\log\Entity\LogInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -19,6 +20,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class FarmLogHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected EntityTypeManagerInterface $entityTypeManager,
@@ -74,7 +76,7 @@ class FarmLogHooks {
 
     // Add a warning to bulk quantity delete confirmation form, to emphasize
     // that the quantity will be deleted from all log revisions.
-    $message = t('Warning: Deleting quantities will remove them from all revisions of records that reference them.');
+    $message = $this->t('Warning: Deleting quantities will remove them from all revisions of records that reference them.');
     $form['warning'] = [
       '#type' => 'html_tag',
       '#tag' => 'strong',

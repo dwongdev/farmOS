@@ -7,6 +7,7 @@ namespace Drupal\farm_log_asset\Hook;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
@@ -15,6 +16,7 @@ use Drupal\farm_field\FarmFieldFactoryInterface;
 class FarmLogAssetHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected FarmFieldFactoryInterface $farmFieldFactory,
@@ -34,8 +36,8 @@ class FarmLogAssetHooks {
     // Add an asset reference field to logs.
     $field_info = [
       'type' => 'entity_reference',
-      'label' => t('Assets'),
-      'description' => t('What assets do this log pertain to?'),
+      'label' => $this->t('Assets'),
+      'description' => $this->t('What assets do this log pertain to?'),
       'target_type' => 'asset',
       'multiple' => TRUE,
       'weight' => [

@@ -7,6 +7,7 @@ namespace Drupal\farm_import_csv_test\Hook;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
@@ -15,6 +16,7 @@ use Drupal\farm_field\FarmFieldFactoryInterface;
 class FarmImportCsvTestHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected FarmFieldFactoryInterface $farmFieldFactory,
@@ -33,14 +35,14 @@ class FarmImportCsvTestHooks {
       // Add a test string base field.
       $options = [
         'type' => 'string',
-        'label' => t('Test string'),
+        'label' => $this->t('Test string'),
       ];
       $fields['test_string'] = $this->farmFieldFactory->baseFieldDefinition($options);
 
       // Add an excluded test string base field.
       $options = [
         'type' => 'string',
-        'label' => t('Excluded test string'),
+        'label' => $this->t('Excluded test string'),
       ];
       $fields['excluded_test_string'] = $this->farmFieldFactory->baseFieldDefinition($options);
     }

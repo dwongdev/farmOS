@@ -11,6 +11,7 @@ use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_ui_views\FarmUiViewsHelper;
 use Drupal\views\ViewExecutable;
 
@@ -20,6 +21,7 @@ use Drupal\views\ViewExecutable;
 class FarmUiViewsViewsExecutionHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected EntityTypeManagerInterface $entityTypeManager,
@@ -87,11 +89,11 @@ class FarmUiViewsViewsExecutionHooks {
       $view->display_handler->setOption('link_display', 'custom_url');
       $today = date('Y-m-d', $this->time->getRequestTime());
       if ($display_id == 'block_upcoming') {
-        $view->display_handler->setOption('use_more_text', t('View all upcoming logs'));
+        $view->display_handler->setOption('use_more_text', $this->t('View all upcoming logs'));
         $view->display_handler->setOption('link_url', 'logs?status[]=pending&start=' . $today . '&order=timestamp&sort=asc');
       }
       elseif ($display_id == 'block_late') {
-        $view->display_handler->setOption('use_more_text', t('View all late logs'));
+        $view->display_handler->setOption('use_more_text', $this->t('View all late logs'));
         $view->display_handler->setOption('link_url', 'logs?status[]=pending&end=' . $today);
       }
     }
@@ -117,7 +119,7 @@ class FarmUiViewsViewsExecutionHooks {
       $asset_id = $view->args[0];
       $asset = $this->entityTypeManager->getStorage('asset')->load($asset_id);
       if (!empty($asset)) {
-        $title = t('Children of %asset', [
+        $title = $this->t('Children of %asset', [
           '%asset' => $asset->label(),
         ]);
       }
@@ -129,7 +131,7 @@ class FarmUiViewsViewsExecutionHooks {
       $asset_id = $view->args[0];
       $asset = $this->entityTypeManager->getStorage('asset')->load($asset_id);
       if (!empty($asset)) {
-        $title = t('Assets in %location', [
+        $title = $this->t('Assets in %location', [
           '%location' => $asset->label(),
         ]);
       }
@@ -171,14 +173,14 @@ class FarmUiViewsViewsExecutionHooks {
           }
         }
         if (!empty($entity_bundle_label)) {
-          $title = t('%bundle with %vocab term %term', [
+          $title = $this->t('%bundle with %vocab term %term', [
             '%bundle' => $entity_bundle_label,
             '%vocab' => $vocabulary->label(),
             '%term' => $term->label(),
           ]);
         }
         else {
-          $title = t('%base_type with %vocab term %term', [
+          $title = $this->t('%base_type with %vocab term %term', [
             '%base_type' => $view->getBaseEntityType()->getCollectionLabel(),
             '%vocab' => $vocabulary->label(),
             '%term' => $term->label(),

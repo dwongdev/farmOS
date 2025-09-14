@@ -9,6 +9,7 @@ use Drupal\Core\Entity\EntityFormInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_field\FarmFieldFactoryInterface;
 use Drupal\farm_log_quantity\FarmLogQuantityHelper;
 
@@ -18,6 +19,7 @@ use Drupal\farm_log_quantity\FarmLogQuantityHelper;
 class FarmLogQuantityHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected FarmFieldFactoryInterface $farmFieldFactory,
@@ -38,8 +40,8 @@ class FarmLogQuantityHooks {
     $field_info = [
       'quantity' => [
         'type' => 'entity_reference_revisions',
-        'label' => t('Quantity'),
-        'description' => t('Add quantity measurements to this log.'),
+        'label' => $this->t('Quantity'),
+        'description' => $this->t('Add quantity measurements to this log.'),
         'target_type' => 'quantity',
         'multiple' => TRUE,
         'weight' => [

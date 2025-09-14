@@ -6,6 +6,7 @@ namespace Drupal\farm_structure\Hook;
 
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_map\LayerStyleLoaderInterface;
 use Drupal\farm_structure\Entity\FarmStructureType;
 use Drupal\views\ViewExecutable;
@@ -16,6 +17,7 @@ use Drupal\views\ViewExecutable;
 class FarmStructureViewsExecutionHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected LayerStyleLoaderInterface $layerStyleLoader,
@@ -56,7 +58,7 @@ class FarmStructureViewsExecutionHooks {
           $color = $layer_style->get('color');
         }
         $asset_layers['structure_' . $structure_type->id()] = [
-          'group' => t('Structure types'),
+          'group' => $this->t('Structure types'),
           'label' => $structure_type->label(),
           'asset_type' => 'structure',
           'filters' => $exposed_filters + [

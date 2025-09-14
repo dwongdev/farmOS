@@ -8,6 +8,7 @@ use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_field\FarmFieldFactoryInterface;
 use Drupal\farm_group\Field\AssetGroupItemList;
 
@@ -17,6 +18,7 @@ use Drupal\farm_group\Field\AssetGroupItemList;
 class FarmGroupHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected FarmFieldFactoryInterface $farmFieldFactory,
@@ -142,7 +144,7 @@ class FarmGroupHooks {
       return [
         'group' => [
           'location' => 'main',
-          'title' => t('Group'),
+          'title' => $this->t('Group'),
           'weight' => 60,
         ],
       ];
@@ -177,7 +179,7 @@ class FarmGroupHooks {
     // This is computed based on an asset's group assignment logs.
     $options = [
       'type' => 'entity_reference',
-      'label' => t('Group membership'),
+      'label' => $this->t('Group membership'),
       'target_type' => 'asset',
       'target_bundle' => 'group',
       'multiple' => TRUE,
@@ -204,8 +206,8 @@ class FarmGroupHooks {
     // "Is group assignment" boolean field.
     $options = [
       'type' => 'boolean',
-      'label' => t('Is group assignment'),
-      'description' => t('If this log is a group assignment, any referenced assets will become members of the groups referenced below.'),
+      'label' => $this->t('Is group assignment'),
+      'description' => $this->t('If this log is a group assignment, any referenced assets will become members of the groups referenced below.'),
       'weight' => [
         'form' => 30,
       ],
@@ -226,8 +228,8 @@ class FarmGroupHooks {
     // Group reference field.
     $options = [
       'type' => 'entity_reference',
-      'label' => t('Groups'),
-      'description' => t('If this is a group assignment log, which groups should the referenced assets be assigned to?'),
+      'label' => $this->t('Groups'),
+      'description' => $this->t('If this is a group assignment log, which groups should the referenced assets be assigned to?'),
       'target_type' => 'asset',
       'target_bundle' => 'group',
       'multiple' => TRUE,

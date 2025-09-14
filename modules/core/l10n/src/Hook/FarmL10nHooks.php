@@ -12,6 +12,7 @@ use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 
 /**
@@ -20,6 +21,7 @@ use Drupal\Core\Url;
 class FarmL10nHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected ModuleHandlerInterface $moduleHandler,
@@ -36,7 +38,7 @@ class FarmL10nHooks {
 
     // Help text for the farm/settings/language form.
     if ($route_name == 'farm_l10n.settings') {
-      $output .= '<p>' . t('Select the default language for the user interface. Individual users can override this by editing their profile.') . '</p>';
+      $output .= '<p>' . $this->t('Select the default language for the user interface. Individual users can override this by editing their profile.') . '</p>';
     }
 
     return $output;
@@ -74,7 +76,7 @@ class FarmL10nHooks {
     // Disable the ability to change the site's default language and direct
     // users to /farm/settings/language instead.
     // @see https://www.drupal.org/project/farm/issues/3257430
-    $message = t('To change the default language of farmOS, please go to <a href=":url">farmOS language settings</a>.', [':url' => Url::fromRoute('farm_l10n.settings')->toString()]);
+    $message = $this->t('To change the default language of farmOS, please go to <a href=":url">farmOS language settings</a>.', [':url' => Url::fromRoute('farm_l10n.settings')->toString()]);
     $this->messenger->addWarning($message);
     foreach (Element::children($form['languages']) as $langcode) {
       $form['languages'][$langcode]['default']['#access'] = FALSE;

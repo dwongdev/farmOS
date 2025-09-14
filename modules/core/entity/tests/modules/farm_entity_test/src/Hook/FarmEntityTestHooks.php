@@ -7,6 +7,7 @@ namespace Drupal\farm_entity_test\Hook;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
@@ -15,6 +16,7 @@ use Drupal\farm_field\FarmFieldFactoryInterface;
 class FarmEntityTestHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected FarmFieldFactoryInterface $farmFieldFactory,
@@ -31,7 +33,7 @@ class FarmEntityTestHooks {
     if ($entity_type->id() == 'log') {
       $options = [
         'type' => 'string',
-        'label' => t('Test hook base field'),
+        'label' => $this->t('Test hook base field'),
       ];
       $fields['test_hook_base_field'] = $this->farmFieldFactory->baseFieldDefinition($options);
     }
@@ -50,7 +52,7 @@ class FarmEntityTestHooks {
     if ($entity_type->id() == 'log' && in_array($bundle, ['test', 'test_override'])) {
       $options = [
         'type' => 'string',
-        'label' => t('Test hook bundle field'),
+        'label' => $this->t('Test hook bundle field'),
       ];
       $fields['test_hook_bundle_field'] = $this->farmFieldFactory->bundleFieldDefinition($options);
     }
@@ -59,7 +61,7 @@ class FarmEntityTestHooks {
     if ($entity_type->id() == 'log') {
       $options = [
         'type' => 'string',
-        'label' => t('Test bundle specific field for: @bundle', [
+        'label' => $this->t('Test bundle specific field for: @bundle', [
           '@bundle' => $bundle,
         ]),
       ];

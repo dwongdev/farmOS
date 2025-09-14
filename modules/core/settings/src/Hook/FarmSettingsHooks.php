@@ -6,11 +6,14 @@ namespace Drupal\farm_settings\Hook;
 
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * Hook implementations for farm_settings.
  */
 class FarmSettingsHooks {
+
+  use StringTranslationTrait;
 
   /**
    * Implements hook_help().
@@ -20,7 +23,7 @@ class FarmSettingsHooks {
     $output = '';
     // Modules form.
     if ($route_name == 'farm_settings.modules_form') {
-      $output .= '<p>' . t('Select the core and community farmOS modules that you would like to be installed.') . '</p>';
+      $output .= '<p>' . $this->t('Select the core and community farmOS modules that you would like to be installed.') . '</p>';
     }
     return $output;
   }

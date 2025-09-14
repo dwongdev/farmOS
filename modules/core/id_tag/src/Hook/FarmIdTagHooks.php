@@ -7,6 +7,7 @@ namespace Drupal\farm_id_tag\Hook;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
@@ -15,6 +16,7 @@ use Drupal\farm_field\FarmFieldFactoryInterface;
 class FarmIdTagHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected FarmFieldFactoryInterface $farmFieldFactory,
@@ -31,8 +33,8 @@ class FarmIdTagHooks {
     if ($entity_type->id() == 'asset') {
       $field_info = [
         'type' => 'id_tag',
-        'label' => t('ID tags'),
-        'description' => t('List any identification tags that this asset has. Use the fields below to describe the type, location, and ID of each.'),
+        'label' => $this->t('ID tags'),
+        'description' => $this->t('List any identification tags that this asset has. Use the fields below to describe the type, location, and ID of each.'),
         'multiple' => TRUE,
         'weight' => [
           'form' => 20,

@@ -11,6 +11,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_field\FarmFieldFactoryInterface;
 use Drupal\farm_quick\QuickFormInstanceManagerInterface;
 
@@ -20,6 +21,7 @@ use Drupal\farm_quick\QuickFormInstanceManagerInterface;
 class FarmQuickHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected EntityTypeManagerInterface $entityTypeManager,
@@ -35,7 +37,7 @@ class FarmQuickHooks {
     $output = '';
     // Quick forms index help text.
     if ($route_name == 'farm.quick') {
-      $output .= '<p>' . t('Quick forms make it easy to record common activities.') . '</p>';
+      $output .= '<p>' . $this->t('Quick forms make it easy to record common activities.') . '</p>';
     }
     // Load help text for individual quick forms.
     if (strpos($route_name, 'farm.quick.') === 0) {
@@ -71,8 +73,8 @@ class FarmQuickHooks {
     // Add a hidden quick form field.
     $options = [
       'type' => 'string',
-      'label' => t('Quick form'),
-      'description' => t('References the quick form that was used to create this record.'),
+      'label' => $this->t('Quick form'),
+      'description' => $this->t('References the quick form that was used to create this record.'),
       'multiple' => TRUE,
       'hidden' => TRUE,
     ];

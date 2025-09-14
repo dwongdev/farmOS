@@ -7,6 +7,7 @@ namespace Drupal\farm_log_category\Hook;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
@@ -15,6 +16,7 @@ use Drupal\farm_field\FarmFieldFactoryInterface;
 class FarmLogCategoryHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected FarmFieldFactoryInterface $farmFieldFactory,
@@ -30,8 +32,8 @@ class FarmLogCategoryHooks {
     if ($entity_type->id() == 'log') {
       $category_info = [
         'type' => 'entity_reference',
-        'label' => t('Log category'),
-        'description' => t('Use this to organize your logs into categories for easier searching and filtering later.'),
+        'label' => $this->t('Log category'),
+        'description' => $this->t('Use this to organize your logs into categories for easier searching and filtering later.'),
         'target_type' => 'taxonomy_term',
         'target_bundle' => 'log_category',
         'multiple' => TRUE,

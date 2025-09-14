@@ -7,6 +7,7 @@ namespace Drupal\farm_owner\Hook;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
@@ -15,6 +16,7 @@ use Drupal\farm_field\FarmFieldFactoryInterface;
 class FarmOwnerHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected FarmFieldFactoryInterface $farmFieldFactory,
@@ -34,8 +36,8 @@ class FarmOwnerHooks {
     ])) {
       $field_info = [
         'type' => 'entity_reference',
-        'label' => t('Owners'),
-        'description' => t('Assign ownership to one or more users.'),
+        'label' => $this->t('Owners'),
+        'description' => $this->t('Assign ownership to one or more users.'),
         'target_type' => 'user',
         'multiple' => TRUE,
         'weight' => [

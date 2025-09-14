@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace Drupal\farm_input\Hook;
 
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\views\ViewExecutable;
 
 /**
  * Hook implementations for farm_input.
  */
 class FarmInputViewsExecutionHooks {
+
+  use StringTranslationTrait;
 
   /**
    * Implements hook_views_pre_view().
@@ -39,7 +42,7 @@ class FarmInputViewsExecutionHooks {
         'field' => $field,
         'exposed' => TRUE,
         'expose' => [
-          'label' => t('Material type'),
+          'label' => $this->t('Material type'),
           'identifier' => $field,
           'multiple' => TRUE,
         ],

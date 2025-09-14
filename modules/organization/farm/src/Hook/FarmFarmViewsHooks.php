@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace Drupal\farm_farm\Hook;
 
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * Hook implementations for farm_farm.
  */
 class FarmFarmViewsHooks {
+
+  use StringTranslationTrait;
 
   /**
    * Implements hook_views_data_alter().
@@ -20,8 +23,8 @@ class FarmFarmViewsHooks {
     // Provide a farm_organization_asset argument for views of logs.
     if (isset($data['log_field_data'])) {
       $data['log_field_data']['farm_organization_asset'] = [
-        'title' => t('Farm organization asset'),
-        'help' => t('Assets that are associated with the farm organization.'),
+        'title' => $this->t('Farm organization asset'),
+        'help' => $this->t('Assets that are associated with the farm organization.'),
         'argument' => [
           'id' => 'farm_organization_asset',
         ],

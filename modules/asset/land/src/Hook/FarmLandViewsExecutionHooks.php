@@ -6,6 +6,7 @@ namespace Drupal\farm_land\Hook;
 
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_land\Entity\FarmLandType;
 use Drupal\farm_map\LayerStyleLoaderInterface;
 use Drupal\views\ViewExecutable;
@@ -16,6 +17,7 @@ use Drupal\views\ViewExecutable;
 class FarmLandViewsExecutionHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected LayerStyleLoaderInterface $layerStyleLoader,
@@ -56,7 +58,7 @@ class FarmLandViewsExecutionHooks {
           $color = $layer_style->get('color');
         }
         $asset_layers['land_' . $land_type->id()] = [
-          'group' => t('Land types'),
+          'group' => $this->t('Land types'),
           'label' => $land_type->label(),
           'asset_type' => 'land',
           'filters' => $exposed_filters + [

@@ -9,6 +9,7 @@ use Drupal\Component\Utility\Html;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\asset\Entity\AssetInterface;
 use Drupal\data_stream\Entity\DataStreamInterface;
@@ -19,6 +20,7 @@ use Drupal\data_stream\Entity\DataStreamInterface;
 class FarmSensorHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected TimeInterface $time,
@@ -46,8 +48,8 @@ class FarmSensorHooks {
       // Add a Developer information details element with brief description.
       $build['api'] = [
         '#type' => 'details',
-        '#title' => t('Developer information'),
-        '#description' => t('This sensor asset will listen for data posted to it from other web-connected devices and save it to data streams based on the name of the value used in the request. If a data stream by that name does not exist, a new one will be created automatically. Data for multiple streams may be included in each request. Use the information below to configure your device to begin posting data to this sensor.'),
+        '#title' => $this->t('Developer information'),
+        '#description' => $this->t('This sensor asset will listen for data posted to it from other web-connected devices and save it to data streams based on the name of the value used in the request. If a data stream by that name does not exist, a new one will be created automatically. Data for multiple streams may be included in each request. Use the information below to configure your device to begin posting data to this sensor.'),
         '#open' => FALSE,
       ];
 
@@ -61,7 +63,7 @@ class FarmSensorHooks {
 
       // Render the API url.
       $url_string = $url->setAbsolute()->toString();
-      $url_string_label = t('URL');
+      $url_string_label = $this->t('URL');
       $build['api']['url'] = [
         '#type' => 'link',
         '#title' => $url_string,
@@ -93,19 +95,19 @@ class FarmSensorHooks {
       // Render JSON examples.
       $request_time = $this->time->getRequestTime();
       $json_example = '{ "timestamp": ' . $request_time . ', "' . $example_stream_names[0] . '": 76.5 }';
-      $json_example_label = t('JSON example');
+      $json_example_label = $this->t('JSON example');
       $build['api']['json_example'] = [
         '#markup' => '<p><strong>' . $json_example_label . ':</strong> ' . $json_example . '</p>',
       ];
       $json_example_multiple = '{ "timestamp": ' . $request_time . ', "' . $example_stream_names[0] . '": 76.5, "' . $example_stream_names[1] . '": 60 }';
-      $json_example_multiple_label = t('JSON example (multiple values)');
+      $json_example_multiple_label = $this->t('JSON example (multiple values)');
       $build['api']['json_example_multiple'] = [
         '#markup' => '<p><strong>' . $json_example_multiple_label . ':</strong> ' . $json_example_multiple . '</p>',
       ];
 
       // Render example CURL command.
       $curl_example = 'curl -H "Content-Type: application/json" -X POST -d \'' . $json_example . '\' ' . $url_string;
-      $curl_example_label = t('Example CURL command');
+      $curl_example_label = $this->t('Example CURL command');
       $build['api']['curl_example'] = [
         '#markup' => '<p><strong>' . $curl_example_label . ':</strong> ' . $curl_example . '</p>',
       ];

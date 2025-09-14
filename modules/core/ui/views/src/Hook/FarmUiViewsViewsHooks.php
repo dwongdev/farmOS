@@ -7,6 +7,7 @@ namespace Drupal\farm_ui_views\Hook;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * Hook implementations for farm_ui_views.
@@ -14,6 +15,7 @@ use Drupal\Core\Hook\Attribute\Hook;
 class FarmUiViewsViewsHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected EntityFieldManagerInterface $entityFieldManager,
@@ -41,8 +43,8 @@ class FarmUiViewsViewsHooks {
     // Provide an asset_or_location argument for views of logs.
     if (isset($data['log_field_data'])) {
       $data['log_field_data']['asset_or_location'] = [
-        'title' => t('Asset or location'),
-        'help' => t('Assets that are referenced by the asset or location field on the log.'),
+        'title' => $this->t('Asset or location'),
+        'help' => $this->t('Assets that are referenced by the asset or location field on the log.'),
         'argument' => [
           'id' => 'asset_or_location',
         ],
@@ -52,8 +54,8 @@ class FarmUiViewsViewsHooks {
     // Provide an asset_taxonomy_term_reference argument for views of assets.
     if (isset($data['asset_field_data'])) {
       $data['asset_field_data']['asset_taxonomy_term_reference'] = [
-        'title' => t('Asset Taxonomy Term Reference'),
-        'help' => t('Taxonomy Terms that are referenced by the asset.'),
+        'title' => $this->t('Asset Taxonomy Term Reference'),
+        'help' => $this->t('Taxonomy Terms that are referenced by the asset.'),
         'argument' => [
           'id' => 'entity_taxonomy_term_reference',
         ],
@@ -63,8 +65,8 @@ class FarmUiViewsViewsHooks {
     // Provide a log_taxonomy_term_reference argument for views of logs.
     if (isset($data['log_field_data'])) {
       $data['log_field_data']['log_taxonomy_term_reference'] = [
-        'title' => t('Log Taxonomy Term Reference'),
-        'help' => t('Taxonomy Terms that are referenced by the log.'),
+        'title' => $this->t('Log Taxonomy Term Reference'),
+        'help' => $this->t('Taxonomy Terms that are referenced by the log.'),
         'argument' => [
           'id' => 'entity_taxonomy_term_reference',
         ],

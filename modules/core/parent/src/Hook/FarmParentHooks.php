@@ -7,6 +7,7 @@ namespace Drupal\farm_parent\Hook;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
@@ -15,6 +16,7 @@ use Drupal\farm_field\FarmFieldFactoryInterface;
 class FarmParentHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected FarmFieldFactoryInterface $farmFieldFactory,
@@ -31,8 +33,8 @@ class FarmParentHooks {
     if ($entity_type->id() == 'asset') {
       $parent_info = [
         'type' => 'entity_reference',
-        'label' => t('Parents'),
-        'description' => t('Reference parent assets to create a lineal/hierarchical relationship.'),
+        'label' => $this->t('Parents'),
+        'description' => $this->t('Reference parent assets to create a lineal/hierarchical relationship.'),
         'target_type' => 'asset',
         'multiple' => TRUE,
         'weight' => [

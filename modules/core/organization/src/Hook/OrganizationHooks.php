@@ -8,6 +8,7 @@ use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\organization\Entity\OrganizationInterface;
 use Drupal\organization\Event\OrganizationEvent;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -19,6 +20,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class OrganizationHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     #[Autowire(service: 'event_dispatcher')]
@@ -35,8 +37,8 @@ class OrganizationHooks {
     // Main module help for the organization module.
     if ($route_name == 'help.page.organization') {
       $output = '';
-      $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('Provides organization entity') . '</p>';
+      $output .= '<h3>' . $this->t('About') . '</h3>';
+      $output .= '<p>' . $this->t('Provides organization entity') . '</p>';
     }
 
     return $output;

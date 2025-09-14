@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace Drupal\farm_location\Hook;
 
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * Hook implementations for farm_location.
  */
 class FarmLocationViewsHooks {
+
+  use StringTranslationTrait;
 
   /**
    * Implements hook_views_data_alter().
@@ -22,7 +25,7 @@ class FarmLocationViewsHooks {
 
       // Computed geometry.
       $data['asset']['geometry'] = [
-        'title' => t('Geometry'),
+        'title' => $this->t('Geometry'),
         'field' => [
           'id' => 'asset_geometry',
           'field_name' => 'geometry',
@@ -31,7 +34,7 @@ class FarmLocationViewsHooks {
 
       // Computed location.
       $data['asset']['location'] = [
-        'title' => t('Current location'),
+        'title' => $this->t('Current location'),
         'field' => [
           'id' => 'asset_location',
           'field_name' => 'location',

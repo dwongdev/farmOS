@@ -7,6 +7,7 @@ namespace Drupal\farm_ui_menu\Hook;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_ui_menu\Menu\DefaultSecondaryLocalTaskProvider;
 use Drupal\farm_ui_menu\Render\Element\FarmAdminToolbar;
 
@@ -16,6 +17,7 @@ use Drupal\farm_ui_menu\Render\Element\FarmAdminToolbar;
 class FarmUiMenuHooks {
 
   use AutowireTrait;
+  use StringTranslationTrait;
 
   public function __construct(
     protected ModuleHandlerInterface $moduleHandler,
@@ -47,8 +49,8 @@ class FarmUiMenuHooks {
       // Add a setup menu item for taxonomy.
       if ($this->moduleHandler->moduleExists('taxonomy')) {
         $links['farm.setup.taxonomy'] = [
-          'title' => t('Taxonomy'),
-          'description' => t('Manage the taxonomy terms used for flagging, categorization and organization of farmOS records.'),
+          'title' => $this->t('Taxonomy'),
+          'description' => $this->t('Manage the taxonomy terms used for flagging, categorization and organization of farmOS records.'),
           'parent' => 'farm.setup',
           'route_name' => 'entity.taxonomy_vocabulary.collection',
           'weight' => 50,

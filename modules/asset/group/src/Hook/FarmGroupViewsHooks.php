@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace Drupal\farm_group\Hook;
 
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * Hook implementations for farm_group.
  */
 class FarmGroupViewsHooks {
+
+  use StringTranslationTrait;
 
   /**
    * Implements hook_views_data_alter().
@@ -18,7 +21,7 @@ class FarmGroupViewsHooks {
   public function viewsDataAlter(array &$data) {
     // Add the computed group membership field to assets.
     $data['asset']['group'] = [
-      'title' => t('Current group'),
+      'title' => $this->t('Current group'),
       'field' => [
         'id' => 'asset_group',
         'field_name' => 'group',
