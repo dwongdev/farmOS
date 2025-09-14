@@ -9,6 +9,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\farm_id_tag\FarmIdTagHelper;
 
 /**
  * Plugin implementation of the 'id tag' widget.
@@ -40,7 +41,7 @@ class IdTagWidget extends WidgetBase {
     $bundle = $items->getEntity()->bundle();
 
     // Load allowed tag types.
-    $tag_types = farm_id_tag_type_options($bundle);
+    $tag_types = FarmIdTagHelper::idTagTypeOptions($bundle);
 
     $element['type'] = [
       '#type' => 'select',

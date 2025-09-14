@@ -7,6 +7,7 @@ namespace Drupal\farm_land\Plugin\Asset\AssetType;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\farm_entity\Attribute\AssetType;
 use Drupal\farm_entity\Plugin\Asset\AssetType\FarmAssetType;
+use Drupal\farm_land\FarmLandHelper;
 
 /**
  * Provides the land asset type.
@@ -27,7 +28,7 @@ class Land extends FarmAssetType {
     $options = [
       'type' => 'list_string',
       'label' => $this->t('Land type'),
-      'allowed_values_function' => 'farm_land_type_field_allowed_values',
+      'allowed_values_function' => [FarmLandHelper::class, 'landTypeAllowedValues'],
       'required' => TRUE,
       'weight' => [
         'form' => -80,

@@ -13,6 +13,7 @@ use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\farm_group\GroupMembershipInterface;
+use Drupal\farm_id_tag\FarmIdTagHelper;
 use Drupal\farm_location\AssetLocationInterface;
 use Drupal\farm_quick\Attribute\QuickForm;
 use Drupal\farm_quick\Plugin\QuickForm\QuickFormBase;
@@ -137,7 +138,7 @@ class Birth extends QuickFormBase {
       $form['children'][$i]['tag']['type'] = [
         '#type' => 'select',
         '#title' => $this->t('Tag type'),
-        '#options' => [NULL => ''] + farm_id_tag_type_options('animal'),
+        '#options' => [NULL => ''] + FarmIdTagHelper::idTagTypeOptions('animal'),
       ];
       $form['children'][$i]['tag']['id'] = [
         '#type' => 'textfield',

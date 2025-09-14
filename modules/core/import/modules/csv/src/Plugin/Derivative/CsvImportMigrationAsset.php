@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Drupal\farm_import_csv\Plugin\Derivative;
 
+use Drupal\farm_id_tag\FarmIdTagHelper;
+
 /**
  * Asset CSV import migration derivatives.
  *
@@ -62,7 +64,7 @@ class CsvImportMigrationAsset extends CsvImportMigrationBase {
       'description' => $this->t('ID tag.'),
     ];
     $tag_type_description = $this->t('The type of ID tag.');
-    $tag_type_allowed_values = $this->t('Allowed values: @values.', ['@values' => implode(', ', array_keys(farm_id_tag_type_options($bundle)))]);
+    $tag_type_allowed_values = $this->t('Allowed values: @values.', ['@values' => implode(', ', array_keys(FarmIdTagHelper::idTagTypeOptions($bundle)))]);
     $columns[] = [
       'name' => 'id tag type',
       'description' => $tag_type_description . ' ' . $tag_type_allowed_values,

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\farm_id_tag\Plugin\Validation\Constraint;
 
+use Drupal\farm_id_tag\FarmIdTagHelper;
 use Drupal\farm_id_tag\Plugin\Field\FieldType\IdTagItem;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -27,7 +28,7 @@ class IdTagTypeConstraintValidator extends ConstraintValidator {
 
     // Get valid tag types for the asset bundle.
     $bundle = $value->getEntity()->bundle();
-    $valid_types = array_keys(farm_id_tag_type_options($bundle));
+    $valid_types = array_keys(FarmIdTagHelper::idTagTypeOptions($bundle));
 
     // Check for a valid ID tag type on each field delta.
     foreach ($value as $id_tag) {

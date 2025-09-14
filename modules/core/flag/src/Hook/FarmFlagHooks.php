@@ -8,6 +8,7 @@ use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\farm_field\FarmFieldFactoryInterface;
+use Drupal\farm_flag\FarmFlagHelper;
 use Drupal\farm_flag\Form\EntityFlagActionForm;
 use Drupal\farm_flag\Routing\EntityFlagActionRouteProvider;
 
@@ -35,7 +36,7 @@ class FarmFlagHooks {
         'type' => 'list_string',
         'label' => t('Flags'),
         'description' => t('Add flags to enable better sorting and filtering of records.'),
-        'allowed_values_function' => 'farm_flag_field_allowed_values',
+        'allowed_values_function' => [FarmFlagHelper::class, 'flagAllowedValues'],
         'multiple' => TRUE,
         'weight' => [
           'form' => -75,
