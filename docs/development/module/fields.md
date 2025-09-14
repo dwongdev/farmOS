@@ -29,13 +29,21 @@ declare(strict_types=1);
 
 namespace Drupal\mymodule\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
  * Field hook implementations for mymodule.
  */
 class FieldHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected FarmFieldFactoryInterface $farmFieldFactory,
+  ) {}
 
   /**
    * Implements hook_entity_base_field_info().
@@ -94,13 +102,21 @@ declare(strict_types=1);
 
 namespace Drupal\mymodule\Hook;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
  * Field hook implementations for mymodule.
  */
 class FieldHooks {
+
+  use AutowireTrait;
+
+  public function __construct(
+    protected FarmFieldFactoryInterface $farmFieldFactory,
+  ) {}
 
   /**
    * Implements hook_farm_entity_bundle_field_info().
