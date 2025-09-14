@@ -11,6 +11,7 @@ use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\farm_field\FarmFieldFactoryInterface;
 use Drupal\farm_location\Field\AssetGeometryItemList;
 use Drupal\farm_location\Field\AssetLocationItemList;
+use Drupal\farm_location\LocationDefaultValues;
 
 /**
  * Hook implementations for farm_location.
@@ -131,7 +132,7 @@ class FarmLocationHooks {
       'type' => 'boolean',
       'label' => t('Is location'),
       'description' => t('If this asset is a location, then other assets can be moved to it.'),
-      'default_value_callback' => 'farm_location_is_location_default_value',
+      'default_value_callback' => LocationDefaultValues::class . '::isLocation',
       'weight' => [
         'form' => 0,
       ],
@@ -154,7 +155,7 @@ class FarmLocationHooks {
       'type' => 'boolean',
       'label' => t('Is fixed'),
       'description' => t('If this asset is fixed, then it can have an intrinsic geometry. If the asset will move around, then it is not fixed and geometry will be determined by movement logs.'),
-      'default_value_callback' => 'farm_location_is_fixed_default_value',
+      'default_value_callback' => LocationDefaultValues::class . '::isFixed',
       'weight' => [
         'form' => 10,
       ],
@@ -227,7 +228,7 @@ class FarmLocationHooks {
       'type' => 'boolean',
       'label' => t('Is movement'),
       'description' => t('If this log is a movement, then all assets referenced by it will be located in the referenced locations and/or geometry at the time the log takes place. The log must have a status of "done" in order for the movement to take effect.'),
-      'default_value_callback' => 'farm_location_is_movement_default_value',
+      'default_value_callback' => LocationDefaultValues::class . '::isMovement',
       'weight' => [
         'form' => 20,
       ],
