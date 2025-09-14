@@ -18,24 +18,21 @@ class FarmEntityFieldsHooks {
   #[Hook('entity_base_field_info')]
   public function entityBaseFieldInfo(EntityTypeInterface $entity_type) {
 
-    // Include helper functions.
-    \Drupal::moduleHandler()->loadInclude('farm_entity_fields', 'inc', 'farm_entity_fields.base_fields');
-
-    // Add common base fields to all asset types.
+    // Add common base fields to entity types.
     if ($entity_type->id() == 'asset') {
-      return farm_entity_fields_asset_base_fields();
+      return $this->assetFields();
     }
     elseif ($entity_type->id() == 'log') {
-      return farm_entity_fields_log_base_fields();
+      return $this->logFields();
     }
     elseif ($entity_type->id() == 'organization') {
-      return farm_entity_fields_organization_base_fields();
+      return $this->organizationFields();
     }
     elseif ($entity_type->id() == 'plan') {
-      return farm_entity_fields_plan_base_fields();
+      return $this->planFields();
     }
     elseif ($entity_type->id() == 'taxonomy_term') {
-      return farm_entity_fields_taxonomy_term_base_fields();
+      return $this->termFields();
     }
     return [];
   }
@@ -132,6 +129,248 @@ class FarmEntityFieldsHooks {
     if (!empty($fields['type'])) {
       $fields['type']->setDisplayConfigurable('view', TRUE);
     }
+  }
+
+  /**
+   * Define common asset base fields.
+   *
+   * @return \Drupal\Core\Field\BaseFieldDefinition[]
+   *   Returns an array of base field definitions.
+   */
+  private function assetFields(): array {
+    $field_info = [
+      'data' => [
+        'type' => 'string_long',
+        'label' => t('Data'),
+        'hidden' => TRUE,
+      ],
+      'file' => [
+        'type' => 'file',
+        'label' => t('Files'),
+        'file_directory' => 'farm/asset/[date:custom:Y]-[date:custom:m]',
+        'multiple' => TRUE,
+        'weight' => [
+          'form' => 90,
+          'view' => 90,
+        ],
+      ],
+      'image' => [
+        'type' => 'image',
+        'label' => t('Images'),
+        'file_directory' => 'farm/asset/[date:custom:Y]-[date:custom:m]',
+        'multiple' => TRUE,
+        'weight' => [
+          'form' => 89,
+          'view' => 89,
+        ],
+      ],
+      'notes' => [
+        'type' => 'text_long',
+        'label' => t('Notes'),
+        'weight' => [
+          'form' => 95,
+          'view' => 95,
+        ],
+      ],
+    ];
+    $fields = [];
+    foreach ($field_info as $name => $info) {
+      $fields[$name] = \Drupal::service('farm_field.factory')->baseFieldDefinition($info);
+    }
+    return $fields;
+  }
+
+  /**
+   * Define common log base fields.
+   *
+   * @return \Drupal\Core\Field\BaseFieldDefinition[]
+   *   Returns an array of base field definitions.
+   */
+  private function logFields(): array {
+    $field_info = [
+      'data' => [
+        'type' => 'string_long',
+        'label' => t('Data'),
+        'hidden' => TRUE,
+      ],
+      'file' => [
+        'type' => 'file',
+        'label' => t('Files'),
+        'file_directory' => 'farm/log/[date:custom:Y]-[date:custom:m]',
+        'multiple' => TRUE,
+        'weight' => [
+          'form' => 90,
+          'view' => 90,
+        ],
+      ],
+      'image' => [
+        'type' => 'image',
+        'label' => t('Images'),
+        'file_directory' => 'farm/log/[date:custom:Y]-[date:custom:m]',
+        'multiple' => TRUE,
+        'weight' => [
+          'form' => 89,
+          'view' => 89,
+        ],
+      ],
+      'notes' => [
+        'type' => 'text_long',
+        'label' => t('Notes'),
+        'weight' => [
+          'form' => 95,
+          'view' => 95,
+        ],
+      ],
+    ];
+    $fields = [];
+    foreach ($field_info as $name => $info) {
+      $fields[$name] = \Drupal::service('farm_field.factory')->baseFieldDefinition($info);
+    }
+    return $fields;
+  }
+
+  /**
+   * Define common organization base fields.
+   *
+   * @return \Drupal\Core\Field\BaseFieldDefinition[]
+   *   Returns an array of base field definitions.
+   */
+  private function organizationFields(): array {
+    $field_info = [
+      'data' => [
+        'type' => 'string_long',
+        'label' => t('Data'),
+        'hidden' => TRUE,
+      ],
+      'file' => [
+        'type' => 'file',
+        'label' => t('Files'),
+        'file_directory' => 'farm/organization/[date:custom:Y]-[date:custom:m]',
+        'multiple' => TRUE,
+        'weight' => [
+          'form' => 90,
+          'view' => 90,
+        ],
+      ],
+      'image' => [
+        'type' => 'image',
+        'label' => t('Images'),
+        'file_directory' => 'farm/organization/[date:custom:Y]-[date:custom:m]',
+        'multiple' => TRUE,
+        'weight' => [
+          'form' => 89,
+          'view' => 89,
+        ],
+      ],
+      'notes' => [
+        'type' => 'text_long',
+        'label' => t('Notes'),
+        'weight' => [
+          'form' => 95,
+          'view' => 10,
+        ],
+      ],
+    ];
+    $fields = [];
+    foreach ($field_info as $name => $info) {
+      $fields[$name] = \Drupal::service('farm_field.factory')->baseFieldDefinition($info);
+    }
+    return $fields;
+  }
+
+  /**
+   * Define common plan base fields.
+   *
+   * @return \Drupal\Core\Field\BaseFieldDefinition[]
+   *   Returns an array of base field definitions.
+   */
+  private function planFields(): array {
+    $field_info = [
+      'data' => [
+        'type' => 'string_long',
+        'label' => t('Data'),
+        'hidden' => TRUE,
+      ],
+      'file' => [
+        'type' => 'file',
+        'label' => t('Files'),
+        'file_directory' => 'farm/plan/[date:custom:Y]-[date:custom:m]',
+        'multiple' => TRUE,
+        'weight' => [
+          'form' => 90,
+          'view' => 90,
+        ],
+      ],
+      'image' => [
+        'type' => 'image',
+        'label' => t('Images'),
+        'file_directory' => 'farm/plan/[date:custom:Y]-[date:custom:m]',
+        'multiple' => TRUE,
+        'weight' => [
+          'form' => 89,
+          'view' => 89,
+        ],
+      ],
+      'notes' => [
+        'type' => 'text_long',
+        'label' => t('Notes'),
+        'weight' => [
+          'form' => 95,
+          'view' => 95,
+        ],
+      ],
+    ];
+    $fields = [];
+    foreach ($field_info as $name => $info) {
+      $fields[$name] = \Drupal::service('farm_field.factory')->baseFieldDefinition($info);
+    }
+    return $fields;
+  }
+
+  /**
+   * Define common taxonomy term base fields.
+   *
+   * @return \Drupal\Core\Field\BaseFieldDefinition[]
+   *   Returns an array of base field definitions.
+   */
+  private function termFields(): array {
+    $field_info = [
+      'file' => [
+        'type' => 'file',
+        'label' => t('Files'),
+        'file_directory' => 'farm/term/[date:custom:Y]-[date:custom:m]',
+        'multiple' => TRUE,
+        'weight' => [
+          'form' => 90,
+          'view' => 90,
+        ],
+      ],
+      'image' => [
+        'type' => 'image',
+        'label' => t('Images'),
+        'file_directory' => 'farm/term/[date:custom:Y]-[date:custom:m]',
+        'multiple' => TRUE,
+        'weight' => [
+          'form' => 89,
+          'view' => 89,
+        ],
+      ],
+      'external_uri' => [
+        'type' => 'uri',
+        'label' => t('External URI'),
+        'description' => t('Link this term to one or more external URLs or ontology item URIs.'),
+        'multiple' => TRUE,
+        'weight' => [
+          'form' => 80,
+          'view' => 80,
+        ],
+      ],
+    ];
+    $fields = [];
+    foreach ($field_info as $name => $info) {
+      $fields[$name] = \Drupal::service('farm_field.factory')->baseFieldDefinition($info);
+    }
+    return $fields;
   }
 
 }

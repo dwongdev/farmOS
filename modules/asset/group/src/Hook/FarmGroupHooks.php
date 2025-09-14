@@ -6,6 +6,7 @@ namespace Drupal\farm_group\Hook;
 
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\farm_group\Field\AssetGroupItemList;
 
 /**
  * Hook implementations for farm_group.
@@ -17,20 +18,15 @@ class FarmGroupHooks {
    */
   #[Hook('entity_base_field_info')]
   public function entityBaseFieldInfo(EntityTypeInterface $entity_type) {
-    \Drupal::moduleHandler()->loadInclude('farm_group', 'inc', 'farm_group.base_fields');
-    switch ($entity_type->id()) {
 
-      // Build asset base fields.
-      case 'asset':
-        return farm_group_asset_base_fields();
-
-      // Build log base fields.
-      case 'log':
-        return farm_group_log_base_fields();
-
-      default:
-        return [];
+    // Add group base fields to entity types.
+    if ($entity_type->id() == 'asset') {
+      return $this->assetFields();
     }
+    elseif ($entity_type->id() == 'log') {
+      return $this->logFields();
+    }
+    return [];
   }
 
   /**
@@ -142,6 +138,83 @@ class FarmGroupHooks {
       ];
     }
     return [];
+  }
+
+  /**
+   * Define asset location base fields.
+   *
+   * @return array
+   *   Returns an array of field information for use with farm_field.factory.
+   */
+  private function assetFields(): array {
+    $fields = [];
+
+    // Group membership field.
+    // This is computed based on an asset's group assignment logs.
+    $options = [
+      'type' => 'entity_reference',
+      'label' => t('Group membership'),
+      'target_type' => 'asset',
+      'target_bundle' => 'group',
+      'multiple' => TRUE,
+      'computed' => AssetGroupItemList::class,
+      'hidden' => 'form',
+      'weight' => [
+        'view' => 94,
+      ],
+    ];
+    $fields['group'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
+
+    return $fields;
+  }
+
+  /**
+   * Define log location base fields.
+   *
+   * @return array
+   *   Returns an array of field information for use with farm_field.factory.
+   */
+  private function logFields(): array {
+    $fields = [];
+
+    // "Is group assignment" boolean field.
+    $options = [
+      'type' => 'boolean',
+      'label' => t('Is group assignment'),
+      'description' => t('If this log is a group assignment, any referenced assets will become members of the groups referenced below.'),
+      'weight' => [
+        'form' => 30,
+      ],
+      'view_display_options' => [
+        'label' => 'inline',
+        'type' => 'hideable_boolean',
+        'settings' => [
+          'format' => 'default',
+          'format_custom_false' => '',
+          'format_custom_true' => '',
+          'hide_if_false' => TRUE,
+        ],
+        'weight' => 30,
+      ],
+    ];
+    $fields['is_group_assignment'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
+
+    // Group reference field.
+    $options = [
+      'type' => 'entity_reference',
+      'label' => t('Groups'),
+      'description' => t('If this is a group assignment log, which groups should the referenced assets be assigned to?'),
+      'target_type' => 'asset',
+      'target_bundle' => 'group',
+      'multiple' => TRUE,
+      'weight' => [
+        'form' => 30,
+        'view' => 30,
+      ],
+    ];
+    $fields['group'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
+
+    return $fields;
   }
 
 }
