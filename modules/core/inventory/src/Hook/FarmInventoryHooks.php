@@ -52,7 +52,7 @@ class FarmInventoryHooks {
     // Specify special validation for the inventory values.
     // Validation is needed because we cannot solely rely on FAPI #states,
     // partially because it is hard to target the entity browser form widget.
-    $entity_form['#element_validate'][] = 'farm_inventory_quantity_entity_inline_form_validate';
+    $entity_form['#element_validate'][] = [FarmInventoryHooks::class, 'quantityEntityInlineFormValidate'];
 
     // Set the inventory_adjustment default value to N/A unless already
     // provided.
@@ -73,6 +73,39 @@ class FarmInventoryHooks {
         'value' => '_none',
       ],
     ];
+  }
+
+  /**
+   * Custom validation callback for the quantity inline form.
+   *
+   * @param array $form
+   *   The entity form array.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The entity form state.
+   */
+  public static function quantityEntityInlineFormValidate(array &$form, FormStateInterface $form_state): void {
+
+    // Get the inline entity form values out of the entire entity form state.
+    $quantity_form_values = $form_state->getValue($form['#parents']);
+
+    // If a quantity was provided, validate correct inventory values are
+    // provided.
+    if (!empty($quantity_form_values)) {
+      $adjustment = $quantity_form_values['inventory_adjustment'];
+      $asset = $quantity_form_values['inventory_asset']['target_id'];
+
+      // Set error if an adjustment is provided without an asset.
+      if (!empty($adjustment) && empty($asset)) {
+        // Error is set on the inventory_adjustment field because form errors
+        // are not highlighted when set on the entity browser widget.
+        $form_state->setError($form['inventory_adjustment']['widget'], t('Inventory asset is required if an inventory adjustment is selected.'));
+      }
+
+      // Set error if an asset is provided without an adjustment.
+      if (empty($adjustment) && !empty($asset)) {
+        $form_state->setError($form['inventory_adjustment']['widget'], t('Inventory adjustment is required if an inventory asset is selected.'));
+      }
+    }
   }
 
   /**
