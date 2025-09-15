@@ -9,9 +9,9 @@ use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\farm_update\FarmUpdateInterface;
 
 /**
- * Hook implementations for farm_update.
+ * Update hook implementations for farm_update.
  */
-class Hooks {
+class UpdateHooks {
 
   use AutowireTrait;
 

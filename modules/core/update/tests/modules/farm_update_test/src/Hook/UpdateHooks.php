@@ -7,9 +7,9 @@ namespace Drupal\farm_update_test\Hook;
 use Drupal\Core\Hook\Attribute\Hook;
 
 /**
- * Hook implementations for farm_update_test.
+ * Update hook implementations for farm_update_test.
  */
-class Hooks {
+class UpdateHooks {
 
   /**
    * Implements hook_farm_update_exclude_config().

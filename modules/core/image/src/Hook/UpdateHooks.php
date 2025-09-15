@@ -7,9 +7,9 @@ namespace Drupal\farm_image\Hook;
 use Drupal\Core\Hook\Attribute\Hook;
 
 /**
- * Hook implementations for farm_image.
+ * Update hook implementations for farm_image.
  */
-class Hooks {
+class UpdateHooks {
 
   /**
    * Implements hook_farm_update_exclude_config().

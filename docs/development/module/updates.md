@@ -62,7 +62,7 @@ If a module overrides certain configuration items, either in
 module can list these configuration items in an array returned by an
 implementation of `hook_farm_update_exclude_config()`.
 
-For example, in `src/Hook/Hooks.module`:
+For example, in `src/Hook/UpdateHooks.module`:
 
 ```php
 <?php
@@ -74,9 +74,9 @@ namespace Drupal\mymodule\Hook;
 use Drupal\Core\Hook\Attribute\Hook;
 
 /**
- * Hook implementations for mymodule.
+ * Update hook implementations for mymodule.
  */
-class Hooks {
+class UpdateHooks {
 
   /**
    * Implements hook_farm_update_exclude_config().

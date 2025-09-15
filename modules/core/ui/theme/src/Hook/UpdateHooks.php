@@ -7,9 +7,9 @@ namespace Drupal\farm_ui_theme\Hook;
 use Drupal\Core\Hook\Attribute\Hook;
 
 /**
- * Hook implementations for farm_ui_theme.
+ * Update hook implementations for farm_ui_theme.
  */
-class Hooks {
+class UpdateHooks {
 
   /**
    * Implements hook_farm_update_exclude_config().
