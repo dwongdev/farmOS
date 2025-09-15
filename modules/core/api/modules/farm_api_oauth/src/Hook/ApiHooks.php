@@ -8,9 +8,9 @@ use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
- * Hook implementations for farm_api_oauth.
+ * API hook implementations for farm_api_oauth.
  */
-class Hooks {
+class ApiHooks {
 
   use StringTranslationTrait;
 

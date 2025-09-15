@@ -7,9 +7,9 @@ namespace Drupal\farm_api\Hook;
 use Drupal\Core\Hook\Attribute\Hook;
 
 /**
- * Hook implementations for farm_api.
+ * Api hook implementations for farm_api.
  */
-class Hooks {
+class ApiHooks {
 
   /**
    * Implements hook_farm_api_allow_resource_types().

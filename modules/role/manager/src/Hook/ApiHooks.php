@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Drupal\farm_worker\Hook;
+namespace Drupal\farm_manager\Hook;
 
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 
 /**
- * Hook implementations for farm_worker.
+ * API hook implementations for farm_manager.
  */
-class Hooks {
+class ApiHooks {
 
   use AutowireTrait;
 
@@ -28,7 +28,7 @@ class Hooks {
     // Enable the password grant for static role scopes.
     if ($this->moduleHandler->moduleExists('simple_oauth_password_grant')) {
       $target_scopes = [
-        'farm_worker',
+        'farm_manager',
       ];
       foreach ($target_scopes as $scope_id) {
         if (isset($scopes[$scope_id])) {

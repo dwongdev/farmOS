@@ -7,9 +7,9 @@ namespace Drupal\farm_api_test_allowed_resources\Hook;
 use Drupal\Core\Hook\Attribute\Hook;
 
 /**
- * Hook implementations for farm_api_test_allowed_resources.
+ * API hook implementations for farm_api_test_allowed_resources.
  */
-class Hooks {
+class ApiHooks {
 
   /**
    * Implements hook_farm_api_allow_resource_types().

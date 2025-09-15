@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Drupal\farm_id_tag\Hook;
+namespace Drupal\farm_land\Hook;
 
 use Drupal\Core\Hook\Attribute\Hook;
 
 /**
- * Hook implementations for farm_id_tag.
+ * API hook implementations for farm_land.
  */
-class Hooks {
+class ApiHooks {
 
   /**
    * Implements hook_farm_api_allow_resource_types().
@@ -17,7 +17,7 @@ class Hooks {
   #[Hook('farm_api_allow_resource_types')]
   public function farmApiAllowResourceTypes() {
     return [
-      'tag_type',
+      'land_type',
     ];
   }
 

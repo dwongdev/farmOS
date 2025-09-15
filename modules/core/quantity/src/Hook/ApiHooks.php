@@ -9,9 +9,9 @@ use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Hook\Attribute\Hook;
 
 /**
- * Hook implementations for quantity.
+ * API hook implementations for quantity.
  */
-class Hooks {
+class ApiHooks {
 
   use AutowireTrait;
 

@@ -12,9 +12,9 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_quick\QuickFormInstanceManagerInterface;
 
 /**
- * Hook implementations for farm_quick.
+ * API hook implementations for farm_quick.
  */
-class Hooks {
+class ApiHooks {
 
   use AutowireTrait;
   use StringTranslationTrait;

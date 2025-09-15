@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Drupal\farm_flag\Hook;
+namespace Drupal\farm_structure\Hook;
 
 use Drupal\Core\Hook\Attribute\Hook;
 
 /**
- * Hook implementations for farm_flag.
+ * API hook implementations for farm_structure.
  */
-class Hooks {
+class ApiHooks {
 
   /**
    * Implements hook_farm_api_allow_resource_types().
@@ -17,7 +17,7 @@ class Hooks {
   #[Hook('farm_api_allow_resource_types')]
   public function farmApiAllowResourceTypes() {
     return [
-      'flag',
+      'structure_type',
     ];
   }
 
