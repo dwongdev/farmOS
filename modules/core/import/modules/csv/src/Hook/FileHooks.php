@@ -13,9 +13,9 @@ use Drupal\file\FileUsage\FileUsageInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
- * Hook implementations for farm_import_csv.
+ * File hook implementations for farm_import_csv.
  */
-class Hooks {
+class FileHooks {
 
   use AutowireTrait;
 
