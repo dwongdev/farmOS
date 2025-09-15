@@ -34,23 +34,14 @@ class ThemeHooks {
     return [
       'field__flag' => [
         'base hook' => 'field',
-        'initial preprocess' => static::class . '::preprocessFieldFlag',
       ],
     ];
   }
 
   /**
-   * Prepares variables for field--flag templates.
-   *
-   * Adds classes to each flag wrapper.
-   *
-   * Default template: field--flag.html.twig.
-   *
-   * @param array $variables
-   *   An associative array containing:
-   *   - element: An associative array containing render arrays for the list of
-   *     flags.
+   * Implements hook_preproces_HOOK().
    */
+  #[Hook('preprocess_field__flag')]
   public function preprocessFieldFlag(array &$variables) {
 
     // Preprocess list_string flag fields.
