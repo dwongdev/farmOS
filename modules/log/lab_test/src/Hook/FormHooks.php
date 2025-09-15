@@ -8,9 +8,9 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 
 /**
- * Hook implementations for farm_lab_test.
+ * Form hook implementations for farm_lab_test.
  */
-class Hooks {
+class FormHooks {
 
   /**
    * Implements hook_form_BASE_FORM_ID_alter().

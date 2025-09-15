@@ -15,9 +15,9 @@ use Drupal\log\Entity\LogInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
- * Hook implementations for farm_log.
+ * Form hook implementations for farm_log.
  */
-class Hooks {
+class FormHooks {
 
   use AutowireTrait;
   use StringTranslationTrait;

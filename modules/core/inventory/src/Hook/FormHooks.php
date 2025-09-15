@@ -6,14 +6,11 @@ namespace Drupal\farm_inventory\Hook;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
-use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
- * Hook implementations for farm_inventory.
+ * Form hook implementations for farm_inventory.
  */
-class Hooks {
-
-  use StringTranslationTrait;
+class FormHooks {
 
   /**
    * Implements hook_inline_entity_form_entity_form_alter().

@@ -9,9 +9,9 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 
 /**
- * Hook implementations for farm_entity.
+ * Form hook implementations for farm_entity.
  */
-class Hooks {
+class FormHooks {
 
   /**
    * Implements hook_form_alter().

@@ -12,9 +12,9 @@ use Drupal\Core\Render\Element\Email;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
- * Hook implementations for farm_login.
+ * Form hook implementations for farm_login.
  */
-class Hooks {
+class FormHooks {
 
   use AutowireTrait;
   use StringTranslationTrait;

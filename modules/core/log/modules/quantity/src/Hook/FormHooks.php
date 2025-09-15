@@ -10,9 +10,9 @@ use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\farm_log_quantity\FarmLogQuantityHelper;
 
 /**
- * Hook implementations for farm_log_quantity.
+ * Form hook implementations for farm_log_quantity.
  */
-class Hooks {
+class FormHooks {
 
   /**
    * Implements hook_form_BASE_FORM_ID_alter().

@@ -12,9 +12,9 @@ use Drupal\farm_role\ManagedRolePermissionsManagerInterface;
 use Drupal\user\PermissionHandlerInterface;
 
 /**
- * Hook implementations for farm_role.
+ * Form hook implementations for farm_role.
  */
-class Hooks {
+class FormHooks {
 
   use AutowireTrait;
   use StringTranslationTrait;
