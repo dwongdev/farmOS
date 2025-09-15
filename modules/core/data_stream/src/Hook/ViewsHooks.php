@@ -10,7 +10,7 @@ use Drupal\data_stream\DataStreamTypeManager;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
- * Hook implementations for data_stream.
+ * Views hook implementations for data_stream.
  */
 class ViewsHooks {
 

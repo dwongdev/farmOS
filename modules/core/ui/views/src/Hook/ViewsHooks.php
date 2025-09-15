@@ -10,7 +10,7 @@ use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
- * Hook implementations for farm_ui_views.
+ * Views hook implementations for farm_ui_views.
  */
 class ViewsHooks {
 

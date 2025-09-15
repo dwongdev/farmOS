@@ -12,7 +12,7 @@ use Drupal\farm_structure\Entity\FarmStructureType;
 use Drupal\views\ViewExecutable;
 
 /**
- * Hook implementations for farm_structure.
+ * Views execution hook implementations for farm_structure.
  */
 class ViewsExecutionHooks {
 

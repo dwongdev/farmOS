@@ -7,7 +7,7 @@ namespace Drupal\farm_flag\Hook;
 use Drupal\Core\Hook\Attribute\Hook;
 
 /**
- * Hook implementations for farm_flag.
+ * Views hook implementations for farm_flag.
  */
 class ViewsHooks {
 

@@ -9,7 +9,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\views\ViewExecutable;
 
 /**
- * Hook implementations for farm_input.
+ * Views execution hook implementations for farm_input.
  */
 class ViewsExecutionHooks {
 

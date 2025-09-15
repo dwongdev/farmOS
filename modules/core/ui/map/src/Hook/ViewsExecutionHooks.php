@@ -19,7 +19,7 @@ use Drupal\views\Entity\View;
 use Drupal\views\ViewExecutable;
 
 /**
- * Hook implementations for farm_ui_map.
+ * Views execution hook implementations for farm_ui_map.
  */
 class ViewsExecutionHooks {
 

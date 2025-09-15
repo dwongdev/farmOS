@@ -8,7 +8,7 @@ use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
- * Hook implementations for farm_location.
+ * Views hook implementations for farm_location.
  */
 class ViewsHooks {
 

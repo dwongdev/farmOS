@@ -16,7 +16,7 @@ use Drupal\farm_ui_views\FarmUiViewsHelper;
 use Drupal\views\ViewExecutable;
 
 /**
- * Hook implementations for farm_ui_views.
+ * Views execution hook implementations for farm_ui_views.
  */
 class ViewsExecutionHooks {
 

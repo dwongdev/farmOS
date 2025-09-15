@@ -8,7 +8,7 @@ use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
- * Hook implementations for farm_import_csv.
+ * Views hook implementations for farm_import_csv.
  */
 class ViewsHooks {
 

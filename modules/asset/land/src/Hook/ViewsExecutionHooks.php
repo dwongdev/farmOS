@@ -12,7 +12,7 @@ use Drupal\farm_map\LayerStyleLoaderInterface;
 use Drupal\views\ViewExecutable;
 
 /**
- * Hook implementations for farm_land.
+ * Views execution hook implementations for farm_land.
  */
 class ViewsExecutionHooks {
 
