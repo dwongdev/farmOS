@@ -55,18 +55,14 @@ class FarmLogCategoryHooks {
    */
   #[Hook('farm_ui_theme_region_items')]
   public function farmUiThemeRegionItems(string $entity_type) {
-    // Define common asset, log, and plan region items on behalf of core modules.
-    switch ($entity_type) {
-      case 'log':
-        return [
-          'second' => [
-            'category',
-          ],
-        ];
-
-      default:
-        return [];
+    if ($entity_type == 'log') {
+      return [
+        'second' => [
+          'category',
+        ],
+      ];
     }
+    return [];
   }
 
 }
