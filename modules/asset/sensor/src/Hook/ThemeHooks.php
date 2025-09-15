@@ -15,9 +15,9 @@ use Drupal\asset\Entity\AssetInterface;
 use Drupal\data_stream\Entity\DataStreamInterface;
 
 /**
- * Hook implementations for farm_sensor.
+ * Theme hook implementations for farm_sensor.
  */
-class Hooks {
+class ThemeHooks {
 
   use AutowireTrait;
   use StringTranslationTrait;

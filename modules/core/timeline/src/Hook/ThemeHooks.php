@@ -7,9 +7,9 @@ namespace Drupal\farm_timeline\Hook;
 use Drupal\Core\Hook\Attribute\Hook;
 
 /**
- * Hook implementations for farm_timeline.
+ * Theme hook implementations for farm_timeline.
  */
-class Hooks {
+class ThemeHooks {
 
   /**
    * Implements hook_theme().

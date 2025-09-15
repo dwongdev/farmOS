@@ -12,9 +12,9 @@ use Drupal\asset\Entity\AssetInterface;
 use Drupal\data_stream\Entity\DataStreamInterface;
 
 /**
- * Hook implementations for farm_sensor_listener.
+ * Theme hook implementations for farm_sensor_listener.
  */
-class Hooks {
+class ThemeHooks {
 
   use StringTranslationTrait;
 

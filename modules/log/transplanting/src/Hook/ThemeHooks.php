@@ -9,9 +9,9 @@ use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 
 /**
- * Hook implementations for farm_transplanting.
+ * Theme hook implementations for farm_transplanting.
  */
-class Hooks {
+class ThemeHooks {
 
   /**
    * Implements hook_entity_form_display_alter().

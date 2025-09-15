@@ -7,9 +7,9 @@ namespace Drupal\farm_log_category\Hook;
 use Drupal\Core\Hook\Attribute\Hook;
 
 /**
- * Hook implementations for farm_log_category.
+ * Theme hook implementations for farm_log_category.
  */
-class Hooks {
+class ThemeHooks {
 
   /**
    * Implements hook_farm_ui_theme_region_items().

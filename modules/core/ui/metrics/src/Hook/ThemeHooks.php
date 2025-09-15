@@ -8,9 +8,9 @@ use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
- * Hook implementations for farm_ui_metrics.
+ * Theme hook implementations for farm_ui_metrics.
  */
-class Hooks {
+class ThemeHooks {
 
   use StringTranslationTrait;
 

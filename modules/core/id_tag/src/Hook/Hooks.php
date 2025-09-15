@@ -12,19 +12,6 @@ use Drupal\Core\Hook\Attribute\Hook;
 class Hooks {
 
   /**
-   * Implements hook_theme().
-   */
-  #[Hook('theme')]
-  public function theme() {
-    return [
-      'field__id_tag' => [
-        'template' => 'field--id-tag',
-        'base hook' => 'field',
-      ],
-    ];
-  }
-
-  /**
    * Implements hook_farm_api_allow_resource_types().
    */
   #[Hook('farm_api_allow_resource_types')]

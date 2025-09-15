@@ -14,9 +14,9 @@ use Drupal\Core\Url;
 use Drupal\data_stream\Entity\DataStreamInterface;
 
 /**
- * Hook implementations for data_stream.
+ * Theme hook implementations for data_stream.
  */
-class Hooks {
+class ThemeHooks {
 
   use AutowireTrait;
   use StringTranslationTrait;

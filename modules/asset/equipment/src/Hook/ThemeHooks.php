@@ -7,9 +7,9 @@ namespace Drupal\farm_equipment\Hook;
 use Drupal\Core\Hook\Attribute\Hook;
 
 /**
- * Hook implementations for farm_equipment.
+ * Theme hook implementations for farm_equipment.
  */
-class Hooks {
+class ThemeHooks {
 
   /**
    * Implements hook_farm_ui_theme_field_group_items().

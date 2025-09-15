@@ -12,9 +12,9 @@ use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Routing\RouteMatchInterface;
 
 /**
- * Hook implementations for farm_ui_map.
+ * Theme hook implementations for farm_ui_map.
  */
-class Hooks {
+class ThemeHooks {
 
   use AutowireTrait;
 

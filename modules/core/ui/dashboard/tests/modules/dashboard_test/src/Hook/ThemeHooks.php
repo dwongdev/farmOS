@@ -7,9 +7,9 @@ namespace Drupal\farm_ui_dashboard_test\Hook;
 use Drupal\Core\Hook\Attribute\Hook;
 
 /**
- * Hook implementations for farm_ui_dashboard_test.
+ * Theme hook implementations for farm_ui_dashboard_test.
  */
-class Hooks {
+class ThemeHooks {
 
   /**
    * Implements hook_farm_dashboard_panes().

@@ -11,9 +11,9 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_ui_menu\Render\Element\FarmAdminToolbar;
 
 /**
- * Hook implementations for farm_ui_menu.
+ * Theme hook implementations for farm_ui_menu.
  */
-class Hooks {
+class ThemeHooks {
 
   use AutowireTrait;
   use StringTranslationTrait;
@@ -27,20 +27,24 @@ class Hooks {
    */
   #[Hook('menu_links_discovered_alter')]
   public function menuLinksDiscoveredAlter(&$links) {
+
     // Move the root system.admin menu link to the farm.base parent.
     if (!empty($links['system.admin'])) {
       $links['system.admin']['parent'] = 'farm.base';
       $links['system.admin']['weight'] = 100;
     }
+
     // Move the farm.report menu link to the farm.base parent.
     if (!empty($links['farm.report'])) {
       $links['farm.report']['parent'] = 'farm.base';
       $links['farm.report']['weight'] = 90;
     }
+
     // Move the farm.quick:farm.quick menu link to the farm.base parent.
     if (!empty($links['farm.quick:farm.quick'])) {
       $links['farm.quick:farm.quick']['parent'] = 'farm.base';
     }
+
     // Move the farm.setup menu link to the farm.base parent.
     if (!empty($links['farm.setup'])) {
       $links['farm.setup']['parent'] = 'farm.base';
@@ -63,12 +67,13 @@ class Hooks {
    */
   #[Hook('toolbar_alter')]
   public function toolbarAlter(&$items) {
+
     // Override the toolbar tray prerender method to use farm.base root.
     $items['administration']['tray']['toolbar_administration']['#pre_render'] = [
-          [
-            FarmAdminToolbar::class,
-            'preRenderTray',
-          ],
+      [
+        FarmAdminToolbar::class,
+        'preRenderTray',
+      ],
     ];
   }
 
@@ -77,6 +82,7 @@ class Hooks {
    */
   #[Hook('local_tasks_alter')]
   public function localTasksAlter(&$local_tasks) {
+
     // Disable Drupal core revisions local tasks.
     $target_entity_types = [
       'asset',

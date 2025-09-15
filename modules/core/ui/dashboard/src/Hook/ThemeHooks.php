@@ -8,9 +8,9 @@ use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
- * Hook implementations for farm_ui_dashboard.
+ * Theme hook implementations for farm_ui_dashboard.
  */
-class Hooks {
+class ThemeHooks {
 
   use StringTranslationTrait;
 
@@ -19,6 +19,7 @@ class Hooks {
    */
   #[Hook('toolbar_alter')]
   public function toolbarAlter(&$items) {
+
     // Rename home item to "Dashboard".
     if (!empty($items['home'])) {
       $items['home']['tab']['#title'] = $this->t('Dashboard');

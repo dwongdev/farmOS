@@ -12,21 +12,6 @@ use Drupal\Core\Hook\Attribute\Hook;
 class Hooks {
 
   /**
-   * Implements hook_farm_ui_theme_region_items().
-   */
-  #[Hook('farm_ui_theme_region_items')]
-  public function farmUiThemeRegionItems(string $entity_type) {
-    if ($entity_type == 'asset') {
-      return [
-        'second' => [
-          'structure_type',
-        ],
-      ];
-    }
-    return [];
-  }
-
-  /**
    * Implements hook_farm_api_allow_resource_types().
    */
   #[Hook('farm_api_allow_resource_types')]

@@ -7,9 +7,9 @@ namespace Drupal\farm_map\Hook;
 use Drupal\Core\Hook\Attribute\Hook;
 
 /**
- * Hook implementations for farm_map.
+ * Theme hook implementations for farm_map.
  */
-class Hooks {
+class ThemeHooks {
 
   /**
    * Implements hook_theme().

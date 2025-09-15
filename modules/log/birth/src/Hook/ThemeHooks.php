@@ -12,9 +12,9 @@ use Drupal\Core\Url;
 use Drupal\asset\Entity\AssetInterface;
 
 /**
- * Hook implementations for farm_birth.
+ * Theme hook implementations for farm_birth.
  */
-class Hooks {
+class ThemeHooks {
 
   use AutowireTrait;
 
