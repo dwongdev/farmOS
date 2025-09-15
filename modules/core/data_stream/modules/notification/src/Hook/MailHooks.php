@@ -8,9 +8,9 @@ use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
- * Hook implementations for data_stream_notification.
+ * Mail hook implementations for data_stream_notification.
  */
-class Hooks {
+class MailHooks {
 
   use StringTranslationTrait;
 
