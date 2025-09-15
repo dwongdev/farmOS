@@ -86,27 +86,6 @@ class Hooks {
   }
 
   /**
-   * Implements hook_entity_type_build().
-   */
-  #[Hook('entity_type_build')]
-  public function entityTypeBuild(array &$entity_types) {
-    /** @var \Drupal\Core\Entity\EntityTypeInterface[] $entity_types */
-
-    // Override the "collection" link path for assets, logs, and plans to use
-    // the Views provided by this module.
-    $collection_paths = [
-      'asset' => '/assets',
-      'log' => '/logs',
-      'plan' => '/plans',
-    ];
-    foreach ($collection_paths as $entity_type => $path) {
-      if (!empty($entity_types[$entity_type])) {
-        $entity_types[$entity_type]->setLinkTemplate('collection', $path);
-      }
-    }
-  }
-
-  /**
    * Implements hook_form_BASE_FORM_ID_alter().
    */
   #[Hook('form_views_exposed_form_alter')]

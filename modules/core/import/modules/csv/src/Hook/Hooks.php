@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\farm_import_csv\Hook;
 
-use Drupal\Core\Database\Connection;
 use Drupal\Core\DependencyInjection\AutowireTrait;
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Session\AccountInterface;
@@ -22,7 +20,6 @@ class Hooks {
   use AutowireTrait;
 
   public function __construct(
-    protected Connection $database,
     protected EntityTypeManagerInterface $entityTypeManager,
     protected FileUsageInterface $fileUsage,
     protected AccountInterface $currentUser,
@@ -70,19 +67,6 @@ class Hooks {
 
     // Otherwise, deny access.
     return -1;
-  }
-
-  /**
-   * Implements hook_entity_delete().
-   */
-  #[Hook('entity_delete')]
-  public function entityDelete(EntityInterface $entity) {
-
-    // If an asset, log, or taxonomy term is deleted, delete associated record
-    // from the farm_import_csv_entity table.
-    if (in_array($entity->getEntityType()->id(), ['asset', 'log', 'taxonomy_term'])) {
-      $this->database->delete('farm_import_csv_entity')->condition('entity_type', $entity->getEntityType()->id())->condition('entity_id', $entity->id())->execute();
-    }
   }
 
 }

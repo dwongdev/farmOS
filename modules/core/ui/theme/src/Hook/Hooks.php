@@ -13,11 +13,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\asset\Entity\AssetInterface;
 use Drupal\farm_ui_theme\FarmUiThemeHelper;
-use Drupal\farm_ui_theme\Form\AssetForm;
-use Drupal\farm_ui_theme\Form\LogForm;
-use Drupal\farm_ui_theme\Form\OrganizationForm;
-use Drupal\farm_ui_theme\Form\PlanForm;
-use Drupal\farm_ui_theme\Form\TaxonomyTermForm;
 use Drupal\organization\Entity\OrganizationInterface;
 use Drupal\plan\Entity\PlanInterface;
 
@@ -352,29 +347,6 @@ class Hooks {
       $routes[] = "entity.{$entity_type}.edit_form";
     }
     return $routes;
-  }
-
-  /**
-   * Implements hook_entity_type_build().
-   */
-  #[Hook('entity_type_build')]
-  public function entityTypeBuild(array &$entity_types) {
-
-    // Override the default add and edit form class.
-    $target_entity_types = [
-      'asset' => AssetForm::class,
-      'log' => LogForm::class,
-      'organization' => OrganizationForm::class,
-      'plan' => PlanForm::class,
-      'taxonomy_term' => TaxonomyTermForm::class,
-    ];
-    foreach ($target_entity_types as $entity_type => $form_class) {
-      if (isset($entity_types[$entity_type])) {
-        $entity_types[$entity_type]->setFormClass('default', $form_class);
-        $entity_types[$entity_type]->setFormClass('add', $form_class);
-        $entity_types[$entity_type]->setFormClass('edit', $form_class);
-      }
-    }
   }
 
   /**

@@ -6,7 +6,6 @@ namespace Drupal\data_stream\Hook;
 
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Component\Utility\Html;
-use Drupal\Core\Database\Connection;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Hook\Attribute\Hook;
@@ -24,18 +23,7 @@ class Hooks {
 
   public function __construct(
     protected TimeInterface $time,
-    protected Connection $connection,
   ) {}
-
-  /**
-   * Implements hook_entity_type_build().
-   */
-  #[Hook('entity_type_build')]
-  public function entityTypeBuild(array &$entity_types) {
-    if (!empty($entity_types['data_stream'])) {
-      $entity_types['data_stream']->set('bundle_plugin_type', 'data_stream_type');
-    }
-  }
 
   /**
    * Implements hook_ENTITY_TYPE_view_alter().
@@ -103,20 +91,6 @@ class Hooks {
 
     // Add the basic data block view.
     $build['views']['data'] = views_embed_view('data_stream_basic_data', 'block', $data_stream->id());
-  }
-
-  /**
-   * Implements hook_ENTITY_TYPE_delete().
-   */
-  #[Hook('data_stream_delete')]
-  public function dataStreamDelete(DataStreamInterface $data_stream) {
-
-    // If this is a "basic" data stream, delete data associated with it.
-    if ($data_stream->bundle() == 'basic' && !empty($data_stream->id())) {
-      $this->connection->delete('data_stream_basic')
-        ->condition('id', $data_stream->id())
-        ->execute();
-    }
   }
 
 }

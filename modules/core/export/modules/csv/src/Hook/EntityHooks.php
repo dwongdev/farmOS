@@ -9,9 +9,9 @@ use Drupal\farm_export_csv\Form\EntityCsvActionForm;
 use Drupal\farm_export_csv\Routing\EntityCsvActionRouteProvider;
 
 /**
- * Hook implementations for farm_export_csv.
+ * Entity hook implementations for farm_export_csv.
  */
-class Hooks {
+class EntityHooks {
 
   /**
    * Implements hook_entity_type_build().
