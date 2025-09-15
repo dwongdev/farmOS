@@ -94,8 +94,8 @@ class FarmUiMapViewsExecutionHooks {
         }
       }
       // Determine if we are filtering by bundle.
-      // This may happen via contextual filter on the "page_type" display, or via
-      // the exposed "type" filter.
+      // This may happen via contextual filter on the "page_type" display, or
+      // via the exposed "type" filter.
       $bundle_filters = [];
       if ($view->current_display == 'page_type' && !empty($view->args[0])) {
         $bundle_filters[] = $view->args[0];

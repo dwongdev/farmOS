@@ -33,9 +33,10 @@ class FarmLogHooks {
     $query = \Drupal::request()->query;
     // Prepopulate the log asset field.
     if ($query->has('asset')) {
-      // Get asset IDs. We can't use $query->get('asset') or $query->all('asset')
-      // because those throw a client error if the parameter is not the expected
-      // cardinality (single value vs array of values).
+      // Get asset IDs. We can't use $query->get('asset') or
+      // $query->all('asset') because those throw a client error if the
+      // parameter is not the expected cardinality (single value vs array of
+      // values).
       $asset_ids = (array) $query->all()['asset'];
       $asset_field = $entity->get('asset');
       // Add each asset the user has view access to.

@@ -131,9 +131,9 @@ class FarmEntityHooks {
    *
    * Forces revisions on all farm entities if the entity type supports them and
    * the bundle has them enabled. This removes the option for users to disable a
-   * revision per-entity but as JSON:API doesn't support revisions yet, this is a
-   * trade-off that allows us to create revisions consistently on both the UI and
-   * the API.
+   * revision per-entity but as JSON:API doesn't support revisions yet, this is
+   * a trade-off that allows us to create revisions consistently on both the UI
+   * and the API.
    */
   #[Hook('entity_presave')]
   public function entityPresave(EntityInterface $entity) {

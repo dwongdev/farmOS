@@ -95,7 +95,8 @@ class FarmUiThemeHooks {
       $context['entity_type'],
       $context['bundle'],
     ]);
-    // Apply the field group mapping if not already specified on the form display.
+    // Apply the field group mapping if not already specified on the form
+    // display.
     foreach ($field_map as $field_id => $field_group) {
       if (($renderer = $form_display->getRenderer($field_id)) && !$renderer->getThirdPartySetting('farm_ui_theme', 'field_group', FALSE)) {
         $renderer->setThirdPartySetting('farm_ui_theme', 'field_group', $field_group);
@@ -215,7 +216,8 @@ class FarmUiThemeHooks {
    */
   #[Hook('farm_ui_theme_region_items')]
   public function farmUiThemeRegionItems(string $entity_type) {
-    // Define common asset, log, and plan region items on behalf of core modules.
+    // Define common asset, log, and plan region items on behalf of core
+    // modules.
     switch ($entity_type) {
       case 'asset':
         return [

@@ -37,7 +37,8 @@ class FarmFarmHooks {
       // parents and children.
       $fields['farm']->addConstraint('AssetParentFarm');
       // Add a constraint to ensure that the farm does not change if there are
-      // any movement logs that reference it (in either asset or location field).
+      // any movement logs that reference it (in either asset or location
+      // field).
       $fields['farm']->addConstraint('AssetMovementFarm');
       // If the farm_group module is installed, add a constraint to ensure that
       // the farm does not change if there are any group assignment logs that

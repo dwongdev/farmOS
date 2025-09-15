@@ -16,8 +16,9 @@ class FarmFlagViewsHooks {
    */
   #[Hook('views_data_alter')]
   public function viewsDataAlter(array &$data) {
-    // Because Drupal core does not provide full Views integration for base fields
-    // we must manually specify the list_field views filter for the flag field.
+    // Because Drupal core does not provide full Views integration for base
+    // fields we must manually specify the list_field views filter for the flag
+    // field.
     // Define the views filter settings.
     $flag_filter = [
       'id' => 'list_field',

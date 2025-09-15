@@ -46,7 +46,8 @@ class FarmInventoryHooks {
     // Validation is needed because we cannot solely rely on FAPI #states,
     // partially because it is hard to target the entity browser form widget.
     $entity_form['#element_validate'][] = 'farm_inventory_quantity_entity_inline_form_validate';
-    // Set the inventory_adjustment default value to N/A unless already provided.
+    // Set the inventory_adjustment default value to N/A unless already
+    // provided.
     if (empty($entity_form['inventory_adjustment']['widget']['#default_value'])) {
       $entity_form['inventory_adjustment']['widget']['#default_value'] = '_none';
     }
