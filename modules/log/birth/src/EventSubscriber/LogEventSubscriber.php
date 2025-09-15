@@ -74,8 +74,9 @@ class LogEventSubscriber implements EventSubscriberInterface {
         $args = [
           ':child_url' => $child->toUrl()->toString(),
           '%child_name' => $child->label(),
+          ':birth_url' => $log->toUrl()->toString(),
         ];
-        $message = $this->t('<a href=":child_url">%child_name</a> date of birth was updated to match their birth log.', $args);
+        $message = $this->t('<a href=":child_url">%child_name</a> date of birth was updated to match their <a href=":birth_url">birth log</a>.', $args);
         $this->messenger->addMessage($message);
         $revision_log[] = $message;
         $child->set('birthdate', $log->get('timestamp')->value);
@@ -103,7 +104,6 @@ class LogEventSubscriber implements EventSubscriberInterface {
 
       // Save the child, if necessary.
       if ($save) {
-        $revision_log[] = $this->t('Birth log saved: <a href=":birth_url">%birth_label</a>', [':birth_url' => $log->toUrl()->toString(), '%birth_label' => $log->label()]);
         $child->setRevisionLogMessage(implode(" ", $revision_log));
         $child->save();
       }
