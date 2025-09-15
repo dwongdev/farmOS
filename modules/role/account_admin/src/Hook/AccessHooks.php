@@ -10,9 +10,9 @@ use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Session\AccountInterface;
 
 /**
- * Hook implementations for farm_account_admin.
+ * Access hook implementations for farm_account_admin.
  */
-class Hooks {
+class AccessHooks {
 
   /**
    * Implements hook_ENTITY_TYPE_access().
