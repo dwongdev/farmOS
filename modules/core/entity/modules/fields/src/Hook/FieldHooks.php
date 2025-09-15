@@ -11,9 +11,9 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
- * Hook implementations for farm_entity_fields.
+ * Field hook implementations for farm_entity_fields.
  */
-class Hooks {
+class FieldHooks {
 
   use AutowireTrait;
   use StringTranslationTrait;

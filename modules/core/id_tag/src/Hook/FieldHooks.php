@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\farm_owner\Hook;
+namespace Drupal\farm_id_tag\Hook;
 
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
@@ -11,9 +11,9 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
- * Hook implementations for farm_owner.
+ * Field hook implementations for farm_id_tag.
  */
-class Hooks {
+class FieldHooks {
 
   use AutowireTrait;
   use StringTranslationTrait;
@@ -29,23 +29,22 @@ class Hooks {
   public function entityBaseFieldInfo(EntityTypeInterface $entity_type) {
     $fields = [];
 
-    // Add owner field to logs and assets.
-    if (in_array($entity_type->id(), [
-      'asset',
-      'log',
-    ])) {
+    // Add ID tag field to assets.
+    if ($entity_type->id() == 'asset') {
       $field_info = [
-        'type' => 'entity_reference',
-        'label' => $this->t('Owners'),
-        'description' => $this->t('Assign ownership to one or more users.'),
-        'target_type' => 'user',
+        'type' => 'id_tag',
+        'label' => $this->t('ID tags'),
+        'description' => $this->t('List any identification tags that this asset has. Use the fields below to describe the type, location, and ID of each.'),
         'multiple' => TRUE,
         'weight' => [
-          'form' => -70,
-          'view' => -70,
+          'form' => 20,
+          'view' => 20,
         ],
       ];
-      $fields['owner'] = $this->farmFieldFactory->baseFieldDefinition($field_info);
+      $fields['id_tag'] = $this->farmFieldFactory->baseFieldDefinition($field_info);
+
+      // Add an ID tag type constraint to ID tag fields to ensure valid type.
+      $fields['id_tag']->addConstraint('IdTagType');
     }
 
     return $fields;

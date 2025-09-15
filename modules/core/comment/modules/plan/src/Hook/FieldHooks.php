@@ -9,9 +9,9 @@ use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\farm_comment\FarmCommentHelper;
 
 /**
- * Hook implementations for farm_comment_plan.
+ * Field hook implementations for farm_comment_plan.
  */
-class Hooks {
+class FieldHooks {
 
   /**
    * Implements hook_entity_base_field_info().

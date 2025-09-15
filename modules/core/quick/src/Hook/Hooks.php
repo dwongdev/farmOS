@@ -6,13 +6,11 @@ namespace Drupal\farm_quick\Hook;
 
 use Drupal\Component\Utility\Html;
 use Drupal\Core\DependencyInjection\AutowireTrait;
-use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\farm_field\FarmFieldFactoryInterface;
 use Drupal\farm_quick\QuickFormInstanceManagerInterface;
 
 /**
@@ -26,7 +24,6 @@ class Hooks {
   public function __construct(
     protected EntityTypeManagerInterface $entityTypeManager,
     protected QuickFormInstanceManagerInterface $quickFormInstanceManager,
-    protected FarmFieldFactoryInterface $farmFieldFactory,
   ) {}
 
   /**
@@ -55,31 +52,6 @@ class Hooks {
       }
     }
     return $output;
-  }
-
-  /**
-   * Implements hook_entity_base_field_info().
-   */
-  #[Hook('entity_base_field_info')]
-  public function entityBaseFieldInfo(EntityTypeInterface $entity_type) {
-    $fields = [];
-    // We only act on asset and log entities.
-    if (!in_array($entity_type->id(), [
-      'asset',
-      'log',
-    ])) {
-      return $fields;
-    }
-    // Add a hidden quick form field.
-    $options = [
-      'type' => 'string',
-      'label' => $this->t('Quick form'),
-      'description' => $this->t('References the quick form that was used to create this record.'),
-      'multiple' => TRUE,
-      'hidden' => TRUE,
-    ];
-    $fields['quick'] = $this->farmFieldFactory->baseFieldDefinition($options);
-    return $fields;
   }
 
   /**

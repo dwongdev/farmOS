@@ -11,9 +11,9 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
- * Hook implementations for farm_ui_views_test.
+ * Field hook implementations for farm_ui_views_test.
  */
-class Hooks {
+class FieldHooks {
 
   use AutowireTrait;
   use StringTranslationTrait;
@@ -28,6 +28,7 @@ class Hooks {
   #[Hook('entity_base_field_info')]
   public function entityBaseFieldInfo(EntityTypeInterface $entity_type) {
     $fields = [];
+
     // Add a test string base field to logs.
     if ($entity_type->id() == 'log') {
       $options = [
@@ -45,6 +46,7 @@ class Hooks {
   #[Hook('farm_ui_views_base_fields')]
   public function farmUiViewsBaseFields(string $entity_type) {
     $base_fields = [];
+
     // Add test string base field to farmOS log Views.
     if ($entity_type == 'log') {
       $base_fields[] = 'test_string';

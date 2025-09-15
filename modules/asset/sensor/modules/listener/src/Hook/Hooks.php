@@ -4,52 +4,19 @@ declare(strict_types=1);
 
 namespace Drupal\farm_sensor_listener\Hook;
 
-use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
-use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\asset\Entity\AssetInterface;
-use Drupal\data_stream\Entity\DataStream;
 use Drupal\data_stream\Entity\DataStreamInterface;
-use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
  * Hook implementations for farm_sensor_listener.
  */
 class Hooks {
 
-  use AutowireTrait;
   use StringTranslationTrait;
-
-  public function __construct(
-    protected FarmFieldFactoryInterface $farmFieldFactory,
-  ) {}
-
-  /**
-   * Implements hook_farm_entity_bundle_field_info().
-   */
-  #[Hook('farm_entity_bundle_field_info')]
-  public function farmEntityBundleFieldInfo(EntityTypeInterface $entity_type, string $bundle) {
-    $fields = [];
-
-    // Add a public_key reference field to sensor assets.
-    if ($entity_type->id() === 'asset' && $bundle === 'sensor') {
-      $options = [
-        'type' => 'string',
-        'label' => $this->t('Public key (legacy)'),
-        'description' => $this->t('Public key (legacy) for the sensor.'),
-        'default_value_callback' => DataStream::class . '::createUniqueKey',
-        'weight' => [
-          'form' => 3,
-        ],
-      ];
-      $fields['public_key'] = $this->farmFieldFactory->bundleFieldDefinition($options);
-    }
-
-    return $fields;
-  }
 
   /**
    * Implements hook_ENTITY_TYPE_view_alter().
