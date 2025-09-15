@@ -10,9 +10,9 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 
 /**
- * Hook implementations for farm_ui_views.
+ * Help hook implementations for farm_ui_views.
  */
-class Hooks {
+class HelpHooks {
 
   use StringTranslationTrait;
 

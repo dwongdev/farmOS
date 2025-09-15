@@ -9,9 +9,9 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
- * Hook implementations for farm_ui_location.
+ * Help hook implementations for farm_ui_location.
  */
-class Hooks {
+class HelpHooks {
 
   use StringTranslationTrait;
 

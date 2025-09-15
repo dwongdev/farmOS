@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Drupal\plan\Hook;
+namespace Drupal\farm_l10n\Hook;
 
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
- * Hook implementations for plan.
+ * Help hook implementations for farm_l10n.
  */
-class Hooks {
+class HelpHooks {
 
   use StringTranslationTrait;
 
@@ -21,12 +21,12 @@ class Hooks {
   #[Hook('help')]
   public function help($route_name, RouteMatchInterface $route_match) {
     $output = '';
-    // Main module help for the plan module.
-    if ($route_name == 'help.page.plan') {
-      $output = '';
-      $output .= '<h3>' . $this->t('About') . '</h3>';
-      $output .= '<p>' . $this->t('Provides plan entity') . '</p>';
+
+    // Help text for the farm/settings/language form.
+    if ($route_name == 'farm_l10n.settings') {
+      $output .= '<p>' . $this->t('Select the default language for the user interface. Individual users can override this by editing their profile.') . '</p>';
     }
+
     return $output;
   }
 

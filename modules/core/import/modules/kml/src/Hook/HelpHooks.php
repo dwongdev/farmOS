@@ -9,9 +9,9 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
- * Hook implementations for farm_import_kml.
+ * Help hook implementations for farm_import_kml.
  */
-class Hooks {
+class HelpHooks {
 
   use StringTranslationTrait;
 

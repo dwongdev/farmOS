@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Drupal\organization\Hook;
+namespace Drupal\asset\Hook;
 
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
- * Hook implementations for organization.
+ * Help hook implementations for asset.
  */
-class Hooks {
+class HelpHooks {
 
   use StringTranslationTrait;
 
@@ -22,11 +22,11 @@ class Hooks {
   public function help($route_name, RouteMatchInterface $route_match) {
     $output = '';
 
-    // Main module help for the organization module.
-    if ($route_name == 'help.page.organization') {
+    // Main module help for the asset module.
+    if ($route_name == 'help.page.asset') {
       $output = '';
       $output .= '<h3>' . $this->t('About') . '</h3>';
-      $output .= '<p>' . $this->t('Provides organization entity') . '</p>';
+      $output .= '<p>' . $this->t('Provides asset entity') . '</p>';
     }
 
     return $output;
