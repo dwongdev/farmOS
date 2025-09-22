@@ -34,9 +34,30 @@ function farm_farm_entity_base_field_info(EntityTypeInterface $entity_type) {
     // Add a constraint to ensure that location assets are in the same farm as
     // their parents and children.
     $fields['farm']->addConstraint('LocationAssetParentFarm');
+
+    // Add a constraint to ensure that the farm does not change if there are
+    // any movement logs that reference it (in either asset or location field).
+    $fields['farm']->addConstraint('AssetMovementFarm');
   }
 
   return $fields;
+}
+
+/**
+ * Implements hook_entity_base_field_info_alter().
+ */
+function farm_farm_entity_base_field_info_alter(&$fields, EntityTypeInterface $entity_type) {
+
+  // Only modify log fields.
+  if ($entity_type->id() != 'log') {
+    return;
+  }
+
+  // If the is_movement field exists, add a constraint to ensure that assets
+  // can't be moved between farms.
+  if (!empty($fields['is_movement'])) {
+    $fields['is_movement']->addConstraint('LogMovementFarm');
+  }
 }
 
 /**
