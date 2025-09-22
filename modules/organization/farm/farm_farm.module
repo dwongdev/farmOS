@@ -38,6 +38,13 @@ function farm_farm_entity_base_field_info(EntityTypeInterface $entity_type) {
     // Add a constraint to ensure that the farm does not change if there are
     // any movement logs that reference it (in either asset or location field).
     $fields['farm']->addConstraint('AssetMovementFarm');
+
+    // If the farm_group module is installed, add a constraint to ensure that
+    // the farm does not change if there are any group assignment logs that
+    // reference it (in either asset or group field).
+    if (\Drupal::moduleHandler()->moduleExists('farm_group')) {
+      $fields['farm']->addConstraint('AssetGroupAssignmentFarm');
+    }
   }
 
   return $fields;
@@ -57,6 +64,12 @@ function farm_farm_entity_base_field_info_alter(&$fields, EntityTypeInterface $e
   // can't be moved between farms.
   if (!empty($fields['is_movement'])) {
     $fields['is_movement']->addConstraint('LogMovementFarm');
+  }
+
+  // If the is_group_membership field exists, add a constraint to ensure that
+  // assets can't be assigned to groups in a different farm.
+  if (!empty($fields['is_group_assignment'])) {
+    $fields['is_group_assignment']->addConstraint('LogGroupAssignmentFarm');
   }
 }
 

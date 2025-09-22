@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Drupal\Tests\farm_farm\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
+use Drupal\farm_farm\Plugin\Validation\Constraint\AssetGroupAssignmentFarm;
 use Drupal\farm_farm\Plugin\Validation\Constraint\AssetMovementFarm;
 use Drupal\farm_farm\Plugin\Validation\Constraint\LocationAssetParentFarm;
+use Drupal\farm_farm\Plugin\Validation\Constraint\LogGroupAssignmentFarm;
 use Drupal\farm_farm\Plugin\Validation\Constraint\LogMovementFarm;
 
 /**
@@ -27,6 +29,7 @@ class FieldConstraintsTest extends KernelTestBase {
     'farm_farm',
     'farm_farm_test',
     'farm_field',
+    'farm_group',
     'farm_location',
     'farm_log',
     'farm_log_asset',
@@ -51,6 +54,7 @@ class FieldConstraintsTest extends KernelTestBase {
     $this->installConfig([
       'farm_farm',
       'farm_farm_test',
+      'farm_group',
       'farm_location',
       'farm_log_asset',
     ]);
@@ -219,6 +223,104 @@ class FieldConstraintsTest extends KernelTestBase {
     $violations = $asset->validate();
     $this->assertEquals(0, $violations->count());
     $violations = $location1->validate();
+    $this->assertEquals(0, $violations->count());
+  }
+
+  /**
+   * Test group assignment constraints.
+   */
+  public function testGroupAssignmentConstraints() {
+    $entity_type_manager = $this->container->get('entity_type.manager');
+    $asset_storage = $entity_type_manager->getStorage('asset');
+    $log_storage = $entity_type_manager->getStorage('log');
+    $organization_storage = $entity_type_manager->getStorage('organization');
+
+    // Create two farm organizations.
+    $farm1 = $organization_storage->create([
+      'type' => 'farm',
+      'name' => $this->randomMachineName(),
+    ]);
+    $farm1->save();
+    $farm2 = $organization_storage->create([
+      'type' => 'farm',
+      'name' => $this->randomMachineName(),
+    ]);
+    $farm2->save();
+
+    // Create two group assets, one in each farm.
+    $group1 = $asset_storage->create([
+      'type' => 'group',
+      'name' => $this->randomMachineName(),
+      'farm' => [$farm1],
+    ]);
+    $group1->save();
+    $group2 = $asset_storage->create([
+      'type' => 'group',
+      'name' => $this->randomMachineName(),
+      'farm' => [$farm2],
+    ]);
+    $group2->save();
+
+    // Create an asset in the first farm.
+    $asset = $asset_storage->create([
+      'type' => 'test',
+      'name' => $this->randomMachineName(),
+      'farm' => [$farm1],
+    ]);
+
+    // Confirm that the asset validates.
+    $violations = $asset->validate();
+    $this->assertEquals(0, $violations->count());
+
+    // Save the asset.
+    $asset->save();
+
+    // Create a log that assigns the asset to group 2.
+    $log = $log_storage->create([
+      'type' => 'test',
+      'asset' => [$asset],
+      'group' => [$group2],
+      'is_group_assignment' => TRUE,
+    ]);
+
+    // Confirm that a LogGroupAssignmentFarm constraint violation was added
+    // because the asset is not in the same farm as group 2.
+    $violations = $log->validate();
+    $this->assertEquals(1, $violations->count());
+    $this->assertInstanceOf(LogGroupAssignmentFarm::class, $violations->get(0)->getConstraint());
+
+    // Change the log group to group 1.
+    $log->set('group', [$group1]);
+
+    // Confirm that the log validates.
+    $violations = $log->validate();
+    $this->assertEquals(0, $violations->count());
+
+    // Save the log.
+    $log->save();
+
+    // Attempt to change the asset to the second farm and confirm that an
+    // AssetGroupAssignmentFarm constraint violation was added because the asset
+    // has a group assignment log associated with it.
+    $asset->set('farm', [$farm2]);
+    $violations = $asset->validate();
+    $this->assertEquals(1, $violations->count());
+    $this->assertInstanceOf(AssetGroupAssignmentFarm::class, $violations->get(0)->getConstraint());
+
+    // Attempt to change group 1 to the second farm and confirm that an
+    // AssetGroupAssignmentFarm constraint violation was added because the
+    // group asset has a group assignment log associated with it.
+    $group1->set('farm', [$farm2]);
+    $violations = $group1->validate();
+    $this->assertEquals(1, $violations->count());
+    $this->assertInstanceOf(AssetGroupAssignmentFarm::class, $violations->get(0)->getConstraint());
+
+    // Delete the group assignment log and confirm that both assets now
+    // validate.
+    $log->delete();
+    $violations = $asset->validate();
+    $this->assertEquals(0, $violations->count());
+    $violations = $group1->validate();
     $this->assertEquals(0, $violations->count());
   }
 
