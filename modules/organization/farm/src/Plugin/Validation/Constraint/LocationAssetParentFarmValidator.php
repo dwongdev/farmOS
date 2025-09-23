@@ -38,10 +38,11 @@ class LocationAssetParentFarmValidator extends ConstraintValidator implements Co
       return;
     }
 
-    // Load the asset's farm IDs.
+    // Load the asset's farm ID.
     $farm_ids = array_map(function ($farm) {
       return $farm->id();
     }, $asset->get('farm')->referencedEntities());
+    $farm_id = reset($farm_ids);
 
     // Load all related parent and child assets.
     $relations = array_filter($asset->get('parent')->referencedEntities(), function ($parent) {
@@ -61,13 +62,14 @@ class LocationAssetParentFarmValidator extends ConstraintValidator implements Co
     /** @var \Drupal\asset\Entity\AssetInterface[] $relations */
     foreach ($relations as $relation) {
 
-      // If the relation is in one or more farms, load the farm IDs and compare
-      // them to the asset. If there is no overlap, add a violation.
+      // If the relation is in one or more farms, load the farm ID and compare
+      // it to the asset. If they don't match, add a violation.
       if (!$relation->get('farm')->isEmpty()) {
         $relation_farm_ids = array_map(function ($farm) {
           return $farm->id();
         }, $relation->get('farm')->referencedEntities());
-        if (empty(array_intersect($farm_ids, $relation_farm_ids))) {
+        $relation_farm_id = reset($relation_farm_ids);
+        if ($farm_id != $relation_farm_id) {
           $violation = TRUE;
           break;
         }

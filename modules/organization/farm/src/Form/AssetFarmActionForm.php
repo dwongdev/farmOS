@@ -104,7 +104,7 @@ class AssetFarmActionForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function getQuestion() {
-    return $this->formatPlural(count($this->entities), 'Are you sure you want to assign farm for this @item?', 'Are you sure you want to assign farms for these @items?', [
+    return $this->formatPlural(count($this->entities), 'Are you sure you want to assign this @item to a farm?', 'Are you sure you want to assign these @items to a farm?', [
       '@item' => $this->entityType->getSingularLabel(),
       '@items' => $this->entityType->getPluralLabel(),
     ]);
@@ -162,7 +162,7 @@ class AssetFarmActionForm extends ConfirmFormBase {
     $form['farm'] = [
       '#type' => 'entity_autocomplete',
       '#title' => $this->t('Farm'),
-      '#description' => $this->t('What farm is this associated with?'),
+      '#description' => $this->t('Select the farm to associate the asset(s) with.'),
       '#target_type' => 'organization',
       '#selection_handler' => 'default:organization',
       '#selection_settings' => [
@@ -171,21 +171,8 @@ class AssetFarmActionForm extends ConfirmFormBase {
           'direction' => 'asc',
         ],
       ],
-      '#tags' => TRUE,
       '#validate_reference' => FALSE,
       '#maxlength' => 1024,
-      '#required' => TRUE,
-    ];
-
-    $form['operation'] = [
-      '#type' => 'radios',
-      '#title' => $this->t('Append or replace'),
-      '#description' => $this->t('Select "Append" if you want to add a farm, but keep the existing asset farms. Select "Replace" if you want to replace the existing asset farm with the ones specified above.'),
-      '#options' => [
-        'append' => $this->t('Append'),
-        'replace' => $this->t('Replace'),
-      ],
-      '#default_value' => 'append',
       '#required' => TRUE,
     ];
 
@@ -214,8 +201,8 @@ class AssetFarmActionForm extends ConfirmFormBase {
       $accessible_entities[] = $entity;
     }
 
-    // Get submitted farm ids.
-    $submitted_farm_ids = array_column($form_state->getValue('farm', []), 'target_id');
+    // Get submitted farm ID.
+    $submitted_farm_id = $form_state->getValue('farm');
 
     // Update farm on accessible entities.
     $total_count = 0;
@@ -223,19 +210,9 @@ class AssetFarmActionForm extends ConfirmFormBase {
       /** @var \Drupal\Core\Field\EntityReferenceFieldItemListInterface $farm_field */
       $farm_field = $entity->get('farm');
 
-      // Save existing values if appending.
-      $existing_values = [];
-      if ($form_state->getValue('operation') === 'append') {
-        $existing_values = array_column($farm_field->getValue(), 'target_id');
-      }
-
       // Empty the field.
       $farm_field->setValue([]);
-
-      $new_values = array_unique(array_merge($existing_values, $submitted_farm_ids));
-      foreach ($new_values as $farm_id) {
-        $farm_field->appendItem($farm_id);
-      }
+      $farm_field->appendItem($submitted_farm_id);
 
       // Validate the entity before saving.
       $violations = $entity->validate();

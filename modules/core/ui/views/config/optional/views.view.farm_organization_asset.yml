@@ -725,16 +725,16 @@ display:
           tokenize: false
       sorts: {  }
       arguments:
-        farm_target_id:
-          id: farm_target_id
-          table: asset__farm
-          field: farm_target_id
+        farm:
+          id: farm
+          table: asset_field_data
+          field: farm
           relationship: none
           group_type: group
           admin_label: ''
           entity_type: asset
           entity_field: farm
-          plugin_id: numeric
+          plugin_id: entity_target_id
           default_action: 'not found'
           exception:
             value: all
@@ -1234,10 +1234,10 @@ display:
     position: 1
     display_options:
       arguments:
-        farm_target_id:
-          id: farm_target_id
-          table: asset__farm
-          field: farm_target_id
+        farm:
+          id: farm
+          table: asset_field_data
+          field: farm
           relationship: none
           group_type: group
           admin_label: ''
@@ -1275,7 +1275,6 @@ display:
             multiple: 0
           break_phrase: false
           not: false
-          target_entity_type_id: organization
         type:
           id: type
           table: asset_field_data

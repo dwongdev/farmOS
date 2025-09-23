@@ -23,7 +23,7 @@ function farm_farm_entity_base_field_info(EntityTypeInterface $entity_type) {
       'description' => t('What farm is this associated with?'),
       'target_type' => 'organization',
       'target_bundle' => 'farm',
-      'multiple' => TRUE,
+      'multiple' => FALSE,
       'weight' => [
         'form' => 55,
         'view' => -5,

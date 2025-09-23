@@ -36,8 +36,8 @@ class FarmOrganizationAssetArgument extends ArgumentPluginBase {
     $subquery->addField('l', 'id');
     $subquery->leftJoin('log__asset', 'la', 'l.id = la.entity_id');
     $subquery->leftJoin('log__location', 'll', 'l.id = ll.entity_id');
-    $subquery->innerJoin('asset__farm', 'af', 'la.asset_target_id = af.entity_id OR ll.location_target_id = af.entity_id');
-    $subquery->condition('af.farm_target_id', $this->argument);
+    $subquery->innerJoin('asset_field_data', 'afd', 'la.asset_target_id = afd.id OR ll.location_target_id = afd.id');
+    $subquery->condition('afd.farm', $this->argument);
 
     // Use the subquery in a condition on the views query to prevent duplicates.
     // PHPStan throws the following errors on the next line:
