@@ -38,10 +38,7 @@ class LocationAssetParentFarmValidator extends ConstraintValidator implements Co
       return;
     }
 
-    // Only continue if the farm field is populated.
-    if ($asset->get('farm')->isEmpty()) {
-      return;
-    }
+    // Load the asset's farm IDs.
     $farm_ids = array_map(function ($farm) {
       return $farm->id();
     }, $asset->get('farm')->referencedEntities());
