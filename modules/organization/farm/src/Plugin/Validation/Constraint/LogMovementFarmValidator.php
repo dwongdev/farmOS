@@ -38,7 +38,9 @@ class LogMovementFarmValidator extends ConstraintValidator {
     $location_farm_ids = [];
     foreach ($log->get('location')->referencedEntities() as $location) {
       foreach ($location->get('farm')->referencedEntities() as $farm) {
-        $location_farm_ids[] = $farm->id();
+        if (!in_array($farm->id(), $location_farm_ids)) {
+          $location_farm_ids[] = $farm->id();
+        }
       }
     }
     sort($location_farm_ids);
@@ -49,7 +51,9 @@ class LogMovementFarmValidator extends ConstraintValidator {
       // Load the farm IDs of the asset, if any.
       $asset_farm_ids = [];
       foreach ($asset->get('farm')->referencedEntities() as $farm) {
-        $asset_farm_ids[] = $farm->id();
+        if (!in_array($farm->id(), $asset_farm_ids)) {
+          $asset_farm_ids[] = $farm->id();
+        }
       }
       sort($asset_farm_ids);
 

@@ -38,7 +38,9 @@ class LogGroupAssignmentFarmValidator extends ConstraintValidator {
     $group_farm_ids = [];
     foreach ($log->get('group')->referencedEntities() as $group) {
       foreach ($group->get('farm')->referencedEntities() as $farm) {
-        $group_farm_ids[] = $farm->id();
+        if (!in_array($farm->id(), $group_farm_ids)) {
+          $group_farm_ids[] = $farm->id();
+        }
       }
     }
     sort($group_farm_ids);
@@ -49,7 +51,9 @@ class LogGroupAssignmentFarmValidator extends ConstraintValidator {
       // Load the farm IDs of the asset, if any.
       $asset_farm_ids = [];
       foreach ($asset->get('farm')->referencedEntities() as $farm) {
-        $asset_farm_ids[] = $farm->id();
+        if (!in_array($farm->id(), $asset_farm_ids)) {
+          $asset_farm_ids[] = $farm->id();
+        }
       }
       sort($asset_farm_ids);
 
