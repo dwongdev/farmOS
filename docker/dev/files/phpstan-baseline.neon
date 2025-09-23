@@ -25,12 +25,6 @@ parameters:
 			path: web/profiles/farm/modules/core/log/modules/quantity/src/EventSubscriber/LogQuantityEventSubscriber.php
 
 		-
-			message: '#^Call to method Drupal\\Core\\Entity\\Query\\QueryInterface\:\:accessCheck\(\) with false will always evaluate to true\.$#'
-			identifier: method.alreadyNarrowedType
-			count: 1
-			path: web/profiles/farm/modules/core/organization/src/Plugin/Validation/Constraint/UniqueOrganizationNameValidator.php
-
-		-
 			message: '#^Call to method Drupal\\Core\\Entity\\Query\\QueryInterface\:\:accessCheck\(\) with true will always evaluate to true\.$#'
 			identifier: method.alreadyNarrowedType
 			count: 1

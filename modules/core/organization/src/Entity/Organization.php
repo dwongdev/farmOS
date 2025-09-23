@@ -191,7 +191,7 @@ class Organization extends RevisionableContentEntityBase implements Organization
         'weight' => -5,
       ])
       ->setDisplayConfigurable('form', TRUE)
-      ->addConstraint('UniqueOrganizationName');
+      ->addConstraint('UniqueField');
 
     $fields['uid'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Authored by'))

@@ -63,7 +63,7 @@ class OrganizationCRUDTest extends OrganizationTestBase {
     ];
     $this->submitForm($edit, 'Save');
     $assert_session->pageTextNotContains("Saved organization: $name");
-    $assert_session->pageTextContains('An organization by this name already exists. Organization names must be unique.');
+    $assert_session->pageTextContains("A organization with Name $name already exists.");
   }
 
   /**
