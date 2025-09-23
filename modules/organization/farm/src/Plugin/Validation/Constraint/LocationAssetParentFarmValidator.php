@@ -47,10 +47,9 @@ class LocationAssetParentFarmValidator extends ConstraintValidator implements Co
     }, $asset->get('farm')->referencedEntities());
 
     // Load all related parent and child assets.
-    $relations = [];
-    /** @var \Drupal\Core\Field\EntityReferenceFieldItemList $parent_field */
-    $parent_field = $asset->get('parent');
-    $relations += $parent_field->referencedEntities();
+    $relations = array_filter($asset->get('parent')->referencedEntities(), function ($parent) {
+      return $parent->get('is_location')->value;
+    });
     $asset_storage = $this->entityTypeManager->getStorage('asset');
     $children_ids = $asset_storage
       ->getQuery()
