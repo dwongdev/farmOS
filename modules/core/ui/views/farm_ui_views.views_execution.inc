@@ -22,6 +22,7 @@ function farm_ui_views_views_pre_view(ViewExecutable $view, $display_id, array &
     'farm_asset',
     'farm_log',
     'farm_log_quantity',
+    'farm_organization',
     'farm_organization_asset',
     'farm_organization_log',
     'farm_plan',
@@ -94,7 +95,7 @@ function farm_ui_views_views_pre_view(ViewExecutable $view, $display_id, array &
 function farm_ui_views_views_pre_render(ViewExecutable $view) {
 
   // We only want to alter the Views we provide.
-  if (!in_array($view->id(), ['farm_asset', 'farm_log', 'farm_log_quantity', 'farm_plan'])) {
+  if (!in_array($view->id(), ['farm_asset', 'farm_log', 'farm_log_quantity', 'farm_organization', 'farm_plan'])) {
     return;
   }
 
