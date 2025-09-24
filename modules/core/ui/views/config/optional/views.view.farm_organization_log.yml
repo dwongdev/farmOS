@@ -802,15 +802,15 @@ display:
           tokenize: false
       sorts: {  }
       arguments:
-        organization_asset:
-          id: organization_asset
+        farm_organization_asset:
+          id: farm_organization_asset
           table: log_field_data
-          field: organization_asset
+          field: farm_organization_asset
           relationship: none
           group_type: group
           admin_label: ''
           entity_type: log
-          plugin_id: organization_asset
+          plugin_id: farm_organization_asset
           default_action: 'not found'
           exception:
             value: all
@@ -1566,15 +1566,15 @@ display:
     position: 2
     display_options:
       arguments:
-        organization_asset:
-          id: organization_asset
+        farm_organization_asset:
+          id: farm_organization_asset
           table: log_field_data
-          field: organization_asset
+          field: farm_organization_asset
           relationship: none
           group_type: group
           admin_label: ''
           entity_type: log
-          plugin_id: organization_asset
+          plugin_id: farm_organization_asset
           default_action: 'not found'
           exception:
             value: all

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\farm_ui_views\Plugin\views\argument;
+namespace Drupal\farm_farm\Plugin\views\argument;
 
 use Drupal\Core\Database\Database;
 use Drupal\views\Attribute\ViewsArgument;
@@ -10,10 +10,10 @@ use Drupal\views\Plugin\views\argument\ArgumentPluginBase;
 use Drupal\views\Plugin\views\query\Sql;
 
 /**
- * Argument handler for organization asset references on logs.
+ * Argument handler for farm organization asset references on logs.
  */
-#[ViewsArgument("organization_asset")]
-class OrganizationAssetArgument extends ArgumentPluginBase {
+#[ViewsArgument("farm_organization_asset")]
+class FarmOrganizationAssetArgument extends ArgumentPluginBase {
 
   /**
    * {@inheritdoc}
