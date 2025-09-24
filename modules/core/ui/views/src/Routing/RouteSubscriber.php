@@ -69,10 +69,10 @@ class RouteSubscriber extends RouteSubscriberBase {
       $route->setDefault('asset_type', 'all');
     }
 
-    // Add our _organization_assets_access requirement to
+    // Add our _farm_organization_assets_access requirement to
     // view.farm_organization_asset.page_type.
     if ($route = $collection->get('view.farm_organization_asset.page_type')) {
-      $route->setRequirement('_organization_assets_access', 'Drupal\farm_ui_views\Access\FarmOrganizationAssetViewsAccessCheck::access');
+      $route->setRequirement('_farm_organization_assets_access', 'Drupal\farm_ui_views\Access\FarmOrganizationAssetViewsAccessCheck::access');
     }
 
     // Organization logs view routes.
