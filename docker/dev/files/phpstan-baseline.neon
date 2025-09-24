@@ -100,7 +100,7 @@ parameters:
 			message: '#^Call to method Drupal\\Core\\Entity\\Query\\QueryInterface\:\:accessCheck\(\) with false will always evaluate to true\.$#'
 			identifier: method.alreadyNarrowedType
 			count: 1
-			path: web/profiles/farm/modules/organization/farm/src/Plugin/Validation/Constraint/LocationAssetParentFarmValidator.php
+			path: web/profiles/farm/modules/organization/farm/src/Plugin/Validation/Constraint/AssetParentFarmValidator.php
 
 		-
 			message: '#^Call to method Drupal\\Core\\Entity\\Query\\QueryInterface\:\:accessCheck\(\) with true will always evaluate to true\.$#'

@@ -11,9 +11,9 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 /**
- * Validates the LocationAssetParentFarm constraint.
+ * Validates the AssetParentFarm constraint.
  */
-class LocationAssetParentFarmValidator extends ConstraintValidator implements ContainerInjectionInterface {
+class AssetParentFarmValidator extends ConstraintValidator implements ContainerInjectionInterface {
 
   use AutowireTrait;
 
@@ -26,15 +26,12 @@ class LocationAssetParentFarmValidator extends ConstraintValidator implements Co
    */
   public function validate(mixed $value, Constraint $constraint) {
     /** @var \Drupal\Core\Field\EntityReferenceFieldItemList $value */
-    /** @var \Drupal\farm_farm\Plugin\Validation\Constraint\LocationAssetParentFarm $constraint */
+    /** @var \Drupal\farm_farm\Plugin\Validation\Constraint\AssetParentFarm $constraint */
 
-    // Only continue if this asset is designated as a location.
+    // Load the asset.
     /** @var \Drupal\asset\Entity\AssetInterface|null $asset */
     $asset = $value->getParent()->getValue();
     if (is_null($asset)) {
-      return;
-    }
-    if (!$asset->get('is_location')->value) {
       return;
     }
 
@@ -45,14 +42,11 @@ class LocationAssetParentFarmValidator extends ConstraintValidator implements Co
     $farm_id = reset($farm_ids);
 
     // Load all related parent and child assets.
-    $relations = array_filter($asset->get('parent')->referencedEntities(), function ($parent) {
-      return $parent->get('is_location')->value;
-    });
+    $relations = $asset->get('parent')->referencedEntities();
     $asset_storage = $this->entityTypeManager->getStorage('asset');
     $children_ids = $asset_storage
       ->getQuery()
       ->accessCheck(FALSE)
-      ->condition('is_location', TRUE)
       ->condition('parent', $asset->id())
       ->execute();
     $relations += $asset_storage->loadMultiple($children_ids);

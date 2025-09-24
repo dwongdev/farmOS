@@ -31,9 +31,9 @@ function farm_farm_entity_base_field_info(EntityTypeInterface $entity_type) {
     ];
     $fields['farm'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
 
-    // Add a constraint to ensure that location assets are in the same farm as
-    // their parents and children.
-    $fields['farm']->addConstraint('LocationAssetParentFarm');
+    // Add a constraint to ensure that assets are in the same farm as their
+    // parents and children.
+    $fields['farm']->addConstraint('AssetParentFarm');
 
     // Add a constraint to ensure that the farm does not change if there are
     // any movement logs that reference it (in either asset or location field).

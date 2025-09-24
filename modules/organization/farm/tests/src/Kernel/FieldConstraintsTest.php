@@ -7,7 +7,7 @@ namespace Drupal\Tests\farm_farm\Kernel;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\farm_farm\Plugin\Validation\Constraint\AssetGroupAssignmentFarm;
 use Drupal\farm_farm\Plugin\Validation\Constraint\AssetMovementFarm;
-use Drupal\farm_farm\Plugin\Validation\Constraint\LocationAssetParentFarm;
+use Drupal\farm_farm\Plugin\Validation\Constraint\AssetParentFarm;
 use Drupal\farm_farm\Plugin\Validation\Constraint\LogGroupAssignmentFarm;
 use Drupal\farm_farm\Plugin\Validation\Constraint\LogMovementFarm;
 
@@ -61,9 +61,9 @@ class FieldConstraintsTest extends KernelTestBase {
   }
 
   /**
-   * Test LocationAssetParentFarm constraint.
+   * Test AssetParentFarm constraint.
    */
-  public function testLocationAssetParentFarmConstraint() {
+  public function testAssetParentFarmConstraint() {
     $entity_type_manager = $this->container->get('entity_type.manager');
     $asset_storage = $entity_type_manager->getStorage('asset');
     $organization_storage = $entity_type_manager->getStorage('organization');
@@ -80,18 +80,16 @@ class FieldConstraintsTest extends KernelTestBase {
     ]);
     $farm2->save();
 
-    // Create two location assets, one in each farm.
+    // Create two assets, one in each farm.
     $asset1 = $asset_storage->create([
       'type' => 'test',
       'name' => $this->randomMachineName(),
-      'is_location' => TRUE,
       'farm' => [$farm1],
     ]);
     $asset1->save();
     $asset2 = $asset_storage->create([
       'type' => 'test',
       'name' => $this->randomMachineName(),
-      'is_location' => TRUE,
       'farm' => [$farm2],
     ]);
     $asset2->save();
@@ -100,10 +98,10 @@ class FieldConstraintsTest extends KernelTestBase {
     $asset2->set('parent', [$asset1]);
     $violations = $asset2->validate();
 
-    // Confirm that a LocationAssetParentFarm constraint violation was added
-    // because the asset has a parent in a different farm.
+    // Confirm that a AssetParentFarm constraint violation was added because the
+    // asset has a parent in a different farm.
     $this->assertEquals(1, $violations->count());
-    $this->assertInstanceOf(LocationAssetParentFarm::class, $violations->get(0)->getConstraint());
+    $this->assertInstanceOf(AssetParentFarm::class, $violations->get(0)->getConstraint());
 
     // Move the second asset to the same farm as the first.
     $asset2->set('farm', [$farm1]);
@@ -120,10 +118,10 @@ class FieldConstraintsTest extends KernelTestBase {
     $asset1->set('farm', [$farm2]);
     $violations = $asset1->validate();
 
-    // Confirm that a LocationAssetParentFarm constraint violation was added
-    // because the asset has a child in a different farm.
+    // Confirm that a AssetParentFarm constraint violation was added because the
+    // asset has a child in a different farm.
     $this->assertEquals(1, $violations->count());
-    $this->assertInstanceOf(LocationAssetParentFarm::class, $violations->get(0)->getConstraint());
+    $this->assertInstanceOf(AssetParentFarm::class, $violations->get(0)->getConstraint());
   }
 
   /**
