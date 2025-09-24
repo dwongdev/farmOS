@@ -4,6 +4,7 @@ dependencies:
   config:
     - system.menu.admin
   module:
+    - farm_farm
     - organization
     - user
   enforced:

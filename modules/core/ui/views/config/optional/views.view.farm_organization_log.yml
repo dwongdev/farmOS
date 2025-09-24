@@ -5,6 +5,7 @@ dependencies:
     - organization.type.farm
   module:
     - entity_reference_revisions
+    - farm_farm
     - farm_ui_views
     - log
     - options
