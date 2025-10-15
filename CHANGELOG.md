@@ -75,7 +75,7 @@ requirements (inherited from Drupal 11):
 ### Removed
 
 - [Remove asset status field #986](https://github.com/farmOS/farmOS/pull/986)
-- [Remove 2.x and 3.x update hooks](Remove 2.x and 3.x update hooks #962)
+- [Remove 2.x and 3.x update hooks #962](https://github.com/farmOS/farmOS/pull/962)
 - Remove [deprecated Drupal 7 asset migration source plugin](https://www.drupal.org/node/3410747).
 - Remove [deprecated Drupal 7 plan migration source plugin](https://www.drupal.org/node/3498065).
 - Remove [deprecated data stream migration plugins](https://www.drupal.org/node/3498069).
