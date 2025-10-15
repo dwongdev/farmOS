@@ -235,7 +235,7 @@ class ManagedRolePermissionsManager extends DefaultPluginManager implements Mana
         // Entity types with EntityOwnerTrait and RevisionLogEntityTrait have
         // additional permissions for view, update and delete operations:
         // Owner adds "operation any bundle" or "operation own bundle".
-        // Revision adds "operation all bundle revisions".
+        // Revision adds "view all bundle revisions".
         case 'asset':
         case 'log':
         case 'organization':
@@ -258,7 +258,6 @@ class ManagedRolePermissionsManager extends DefaultPluginManager implements Mana
 
           // Update.
           if (!empty($entity_settings['update all'])) {
-            $perms[] = 'revert all ' . $entity_type . ' revisions';
             $permission_rules[$entity_type]['update any'] = ['all'];
             $permission_rules[$entity_type]['update own'] = ['all'];
           }

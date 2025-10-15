@@ -92,6 +92,7 @@ requirements (inherited from Drupal 11):
 - [Fix logic for forcing entity revision creation #988](https://github.com/farmOS/farmOS/pull/969)
 - [Fix CSV importer compatibility with migrate_source_ui v1.3+ #993](https://github.com/farmOS/farmOS/pull/993)
 - [Check that real path exists before loading exif data #1000](https://github.com/farmOS/farmOS/pull/1000)
+- [Do not allow entity revisions to be reverted #1004](https://github.com/farmOS/farmOS/pull/1004)
 
 ## farmOS 3.x
 
