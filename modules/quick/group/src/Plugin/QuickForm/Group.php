@@ -19,7 +19,6 @@ use Drupal\farm_quick\Traits\QuickFormElementsTrait;
 use Drupal\farm_quick\Traits\QuickLogTrait;
 use Drupal\farm_quick\Traits\QuickPrepopulateTrait;
 use Drupal\farm_quick\Traits\QuickStringTrait;
-use Psr\Container\ContainerInterface;
 
 /**
  * Group quick form.
@@ -49,20 +48,6 @@ class Group extends QuickFormBase implements QuickFormInterface {
     protected GroupMembershipInterface $groupMembership,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager, $current_user);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->get('entity_type.manager'),
-      $container->get('current_user'),
-      $container->get('group.membership'),
-    );
   }
 
   /**

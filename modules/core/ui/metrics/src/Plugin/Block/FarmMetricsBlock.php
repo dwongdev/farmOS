@@ -11,7 +11,6 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a 'Metrics' block.
@@ -30,19 +29,6 @@ class FarmMetricsBlock extends BlockBase implements ContainerFactoryPluginInterf
     protected EntityTypeBundleInfoInterface $bundleInfo,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->get('entity_type.manager'),
-      $container->get('entity_type.bundle.info')
-    );
   }
 
   /**

@@ -9,7 +9,6 @@ use Drupal\farm_group\GroupMembershipInterface;
 use Drupal\views\Attribute\ViewsArgument;
 use Drupal\views\Plugin\views\argument\ArgumentPluginBase;
 use Drupal\views\Plugin\views\query\Sql;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * An argument for filtering assets by their current group.
@@ -27,19 +26,6 @@ class AssetGroup extends ArgumentPluginBase {
     protected GroupMembershipInterface $groupMembership,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->get('entity_type.manager'),
-      $container->get('group.membership'),
-    );
   }
 
   /**

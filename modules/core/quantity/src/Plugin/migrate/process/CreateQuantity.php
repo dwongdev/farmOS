@@ -12,7 +12,6 @@ use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\MigrateSkipRowException;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Create quantity entities.
@@ -36,18 +35,6 @@ class CreateQuantity extends ProcessPluginBase implements ContainerFactoryPlugin
     protected EntityTypeManagerInterface $entityTypeManager,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->get('entity_type.manager'),
-    );
   }
 
   /**

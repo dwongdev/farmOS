@@ -18,7 +18,6 @@ use Drupal\data_stream\Traits\DataStreamPrivateKeyAccess;
 use Drupal\fraction\Fraction;
 use Drupal\jsonapi\Exception\UnprocessableHttpEntityException;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -57,20 +56,6 @@ class Basic extends DataStreamTypeBase implements DataStreamStorageInterface, Da
     protected TimeInterface $time,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->get('database'),
-      $container->get('event_dispatcher'),
-      $container->get('datetime.time'),
-    );
   }
 
   /**

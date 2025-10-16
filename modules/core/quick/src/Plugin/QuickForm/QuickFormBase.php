@@ -12,7 +12,6 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Plugin\PluginBase;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Psr\Container\ContainerInterface;
 
 /**
  * Base class for quick forms.
@@ -37,19 +36,6 @@ class QuickFormBase extends PluginBase implements QuickFormInterface, ContainerF
     protected AccountInterface $currentUser,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->get('entity_type.manager'),
-      $container->get('current_user'),
-    );
   }
 
   /**

@@ -13,7 +13,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\farm_entity_access\Access\EntityCollectionAccessCheck;
 use Drupal\views\Attribute\ViewsAccess;
 use Drupal\views\Plugin\views\access\AccessPluginBase;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Route;
 
 /**
@@ -38,18 +37,6 @@ class EntityCollection extends AccessPluginBase implements CacheableDependencyIn
     protected EntityTypeManagerInterface $entityTypeManager,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->get('entity_type.manager'),
-    );
   }
 
   /**

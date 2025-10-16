@@ -20,7 +20,6 @@ use Drupal\farm_quick\Traits\QuickLogTrait;
 use Drupal\farm_quick\Traits\QuickStringTrait;
 use Drupal\quantity\QuantityHelper;
 use Drupal\taxonomy\TermInterface;
-use Psr\Container\ContainerInterface;
 
 /**
  * Planting quick form.
@@ -53,21 +52,6 @@ class Planting extends QuickFormBase {
     protected StateInterface $state,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager, $current_user);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->get('entity_type.manager'),
-      $container->get('current_user'),
-      $container->get('module_handler'),
-      $container->get('state'),
-    );
   }
 
   /**

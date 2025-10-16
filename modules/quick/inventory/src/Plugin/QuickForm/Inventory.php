@@ -23,7 +23,6 @@ use Drupal\farm_quick\Traits\QuickTermTrait;
 use Drupal\log\Entity\Log;
 use Drupal\quantity\QuantityHelper;
 use Drupal\taxonomy\TermInterface;
-use Psr\Container\ContainerInterface;
 
 /**
  * Inventory quick form.
@@ -51,20 +50,6 @@ class Inventory extends QuickFormBase implements ConfigurableQuickFormInterface 
     protected AssetInventoryInterface $assetInventory,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager, $current_user);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->get('entity_type.manager'),
-      $container->get('current_user'),
-      $container->get('asset.inventory'),
-    );
   }
 
   /**

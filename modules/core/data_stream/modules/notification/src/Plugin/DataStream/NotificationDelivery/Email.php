@@ -12,7 +12,6 @@ use Drupal\Core\Plugin\Context\ContextDefinition;
 use Drupal\Core\Plugin\Context\EntityContextDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\data_stream_notification\Attribute\NotificationDelivery;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Email notification delivery.
@@ -37,19 +36,6 @@ class Email extends NotificationDeliveryBase implements ContainerFactoryPluginIn
     protected MailManagerInterface $mailManager,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->get('email.validator'),
-      $container->get('plugin.manager.mail'),
-    );
   }
 
   /**

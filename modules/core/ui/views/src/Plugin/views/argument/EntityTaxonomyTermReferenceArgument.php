@@ -12,7 +12,6 @@ use Drupal\views\Attribute\ViewsArgument;
 use Drupal\views\Plugin\views\argument\NumericArgument;
 use Drupal\views\Plugin\views\query\Sql;
 use Drupal\views\Views;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Argument handler for taxonomy term references from an arbitrary entity field.
@@ -31,19 +30,6 @@ class EntityTaxonomyTermReferenceArgument extends NumericArgument {
     protected EntityFieldManagerInterface $entityFieldManager,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->get('entity_type.manager'),
-      $container->get('entity_type.bundle.info'),
-      $container->get('entity_field.manager'));
   }
 
   /**

@@ -60,22 +60,6 @@ class Birth extends QuickFormBase {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->get('entity_type.manager'),
-      $container->get('current_user'),
-      $container->get('module_handler'),
-      $container->get('config.factory'),
-      $container->get('asset.location'),
-    );
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function buildForm(array $form, FormStateInterface $form_state) {
 
     // Date of birth.
