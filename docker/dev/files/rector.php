@@ -73,6 +73,7 @@ return static function (RectorConfig $rectorConfig): void {
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'LogType', 'Drupal\farm_entity\Attribute\LogType'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'NotificationCondition', 'Drupal\data_stream_notification\Attribute\NotificationCondition'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'NotificationDelivery', 'Drupal\data_stream_notification\Attribute\NotificationDelivery'),
+    new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'OrganizationType', 'Drupal\farm_entity\Attribute\OrganizationType'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'PlanType', 'Drupal\farm_entity\Attribute\PlanType'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'PlanRecordType', 'Drupal\farm_entity\Attribute\PlanRecordType'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'QuantityType', 'Drupal\farm_entity\Attribute\QuantityType'),

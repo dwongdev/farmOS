@@ -5,3 +5,7 @@ farm.asset.logs.type:
 # Add asset and log view tabs to taxonomy terms.
 farm.taxonomy_term.entities.type:
   deriver: Drupal\farm_ui_views\Plugin\Derivative\FarmTaxonomyTermViewsTaskLink
+
+# Add asset and log view tabs to organizations.
+farm.organization.assets.type:
+  deriver: Drupal\farm_ui_views\Plugin\Derivative\FarmOrganizationViewsTaskLink

@@ -14,8 +14,10 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\asset\Entity\AssetInterface;
 use Drupal\farm_ui_theme\Form\AssetForm;
 use Drupal\farm_ui_theme\Form\LogForm;
+use Drupal\farm_ui_theme\Form\OrganizationForm;
 use Drupal\farm_ui_theme\Form\PlanForm;
 use Drupal\farm_ui_theme\Form\TaxonomyTermForm;
+use Drupal\organization\Entity\OrganizationInterface;
 use Drupal\plan\Entity\PlanInterface;
 
 /**
@@ -75,7 +77,7 @@ function farm_ui_theme_theme_suggestions_menu_local_tasks(array $variables) {
 function farm_ui_theme_entity_form_display_alter(EntityFormDisplayInterface $form_display, array $context) {
 
   // Only alter farm entity types.
-  $entity_types = ['asset', 'log', 'plan', 'taxonomy_term'];
+  $entity_types = ['asset', 'log', 'organization', 'plan', 'taxonomy_term'];
   if (!in_array($context['entity_type'], $entity_types)) {
     return;
   }
@@ -131,6 +133,10 @@ function farm_ui_theme_farm_ui_theme_field_group_items(string $entity_type, stri
       $fields['quantity'] = 'quantity';
       break;
 
+    case 'organization':
+      $fields['archived'] = 'meta';
+      break;
+
     case 'plan':
       $fields['archived'] = 'meta';
       break;
@@ -150,7 +156,7 @@ function farm_ui_theme_farm_ui_theme_field_group_items(string $entity_type, stri
  */
 function farm_ui_theme_gin_content_form_routes() {
   $routes = [];
-  $entity_types = ['asset', 'log', 'plan', 'taxonomy_term'];
+  $entity_types = ['asset', 'log', 'organization', 'plan', 'taxonomy_term'];
   foreach ($entity_types as $entity_type) {
     $routes[] = "entity.$entity_type.add_form";
     $routes[] = "entity.$entity_type.edit_form";
@@ -166,6 +172,7 @@ function farm_ui_theme_entity_type_build(array &$entity_types) {
   $target_entity_types = [
     'asset' => AssetForm::class,
     'log' => LogForm::class,
+    'organization' => OrganizationForm::class,
     'plan' => PlanForm::class,
     'taxonomy_term' => TaxonomyTermForm::class,
   ];
@@ -293,6 +300,17 @@ function farm_ui_theme_preprocess_page(&$variables) {
  */
 function farm_ui_theme_preprocess_page__dashboard(&$variables) {
   $variables['#attached']['library'][] = 'farm_ui_theme/dashboard';
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function farm_ui_theme_preprocess_organization__full(&$variables) {
+  if (!empty($variables['organization']) && $variables['organization'] instanceof OrganizationInterface) {
+    farm_ui_theme_set_archived_message($variables['organization']);
+  }
+  farm_ui_theme_build_stacked_twocol_layout($variables, 'organization');
+  $variables['#attached']['library'][] = 'farm_ui_theme/layout';
 }
 
 /**
