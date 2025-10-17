@@ -17,6 +17,21 @@ use Symfony\Component\HttpFoundation\Response;
 class FarmApiOauthRoleTest extends FarmApiOauthTestBase {
 
   /**
+   * {@inheritdoc}
+   */
+  protected static $modules = [
+    'farm_viewer',
+  ];
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUp(): void {
+    parent::setUp();
+    $this->installConfig(['farm_viewer']);
+  }
+
+  /**
    * Test viewer role permissions for farmOS API requests.
    */
   public function testApiRolePermissions() {
