@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Drupal\Tests\farm_api_oauth\Kernel;
 
 use Drupal\Component\Serialization\Json;
+use Drupal\Core\DependencyInjection\ContainerBuilder;
+use Drupal\Core\Site\Settings;
 use Drupal\Core\Url;
 use Drupal\Tests\farm_api\Kernel\FarmApiTest;
 use Drupal\Tests\simple_oauth\Functional\SimpleOauthTestTrait;
@@ -81,6 +83,12 @@ abstract class FarmApiOauthTestBase extends FarmApiTest {
       'user',
     ]);
 
+    // Set up the private filesystem path.
+    $directory = 'public://private';
+    mkdir($directory, 0775);
+    $this->assertDirectoryIsWritable($directory);
+    $this->setSetting('file_private_path', Settings::get('file_public_path') . '/private');
+
     // Configure simple_oauth keys.
     $this->setUpKeys();
 
@@ -111,6 +119,17 @@ abstract class FarmApiOauthTestBase extends FarmApiTest {
     $this->scope = 'farm_manager';
     $this->user->addRole('farm_manager');
     $this->user->save();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function register(ContainerBuilder $container) {
+    parent::register($container);
+
+    // Register the private:// stream wrapper.
+    $container->register('stream_wrapper.private', 'Drupal\Core\StreamWrapper\PrivateStream')
+      ->addTag('stream_wrapper', ['scheme' => 'private']);
   }
 
   /**
