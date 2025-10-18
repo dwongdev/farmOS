@@ -10,45 +10,17 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Routing\Access\AccessInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Session\AccountInterface;
-use Drupal\Core\Session\AccountProxyInterface;
 
 /**
  * Checks access for the specified entity type collection.
  */
 class EntityCollectionAccessCheck implements AccessInterface {
 
-  /**
-   * The current user.
-   *
-   * @var \Drupal\Core\Session\AccountProxyInterface
-   */
-  protected $currentUser;
-
-  /**
-   * The entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
-   * The entity type ID.
-   *
-   * @var string
-   */
-  protected $entityTypeId;
-
-  /**
-   * FarmAssetLogViewsAccessCheck constructor.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   */
-  public function __construct(AccountProxyInterface $current_user, EntityTypeManagerInterface $entity_type_manager, string $entity_type_id) {
-    $this->currentUser = $current_user;
-    $this->entityTypeManager = $entity_type_manager;
-    $this->entityTypeId = $entity_type_id;
-  }
+  public function __construct(
+    protected AccountInterface $currentUser,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected string $entityTypeId,
+  ) {}
 
   /**
    * A custom access check.

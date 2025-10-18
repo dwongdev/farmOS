@@ -24,26 +24,31 @@ services:
     parent: default_plugin_manager
   farm_entity.asset_collection_access:
     class: Drupal\farm_entity\Access\EntityCollectionAccessCheck
-    arguments: [ '@current_user', '@entity_type.manager', 'asset' ]
+    arguments:
+      $entityTypeId: asset
     tags:
       - { name: access_check, applies_to: _asset_collection_access }
   farm_entity.log_collection_access:
     class: Drupal\farm_entity\Access\EntityCollectionAccessCheck
-    arguments: [ '@current_user', '@entity_type.manager', 'log' ]
+    arguments:
+      $entityTypeId: 'log'
     tags:
       - { name: access_check, applies_to: _log_collection_access }
   farm_entity.organization_collection_access:
     class: Drupal\farm_entity\Access\EntityCollectionAccessCheck
-    arguments: [ '@current_user', '@entity_type.manager', 'organization' ]
+    arguments:
+      $entityTypeId: 'organization'
     tags:
       - { name: access_check, applies_to: _organization_collection_access }
   farm_entity.plan_collection_access:
     class: Drupal\farm_entity\Access\EntityCollectionAccessCheck
-    arguments: [ '@current_user', '@entity_type.manager', 'plan' ]
+    arguments:
+      $entityTypeId: 'plan'
     tags:
       - { name: access_check, applies_to: _plan_collection_access }
   farm_entity.quantity_collection_access:
     class: Drupal\farm_entity\Access\EntityCollectionAccessCheck
-    arguments: [ '@current_user', '@entity_type.manager', 'quantity' ]
+    arguments:
+      $entityTypeId: 'quantity'
     tags:
       - { name: access_check, applies_to: _quantity_collection_access }
