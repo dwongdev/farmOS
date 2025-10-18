@@ -32,6 +32,11 @@ services:
     arguments: [ '@current_user', '@entity_type.manager', 'log' ]
     tags:
       - { name: access_check, applies_to: _log_collection_access }
+  farm_entity.organization_collection_access:
+    class: Drupal\farm_entity\Access\EntityCollectionAccessCheck
+    arguments: [ '@current_user', '@entity_type.manager', 'organization' ]
+    tags:
+      - { name: access_check, applies_to: _organization_collection_access }
   farm_entity.plan_collection_access:
     class: Drupal\farm_entity\Access\EntityCollectionAccessCheck
     arguments: [ '@current_user', '@entity_type.manager', 'plan' ]

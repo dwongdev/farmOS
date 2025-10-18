@@ -117,6 +117,7 @@ class EntityCollection extends AccessPluginBase implements CacheableDependencyIn
     $supported_entity_types = [
       'asset',
       'log',
+      'organization',
       'plan',
       'quantity',
     ];
