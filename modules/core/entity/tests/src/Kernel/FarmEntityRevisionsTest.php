@@ -96,7 +96,7 @@ class FarmEntityRevisionsTest extends KernelTestBase {
       ->allRevisions()
       ->condition($entity_type->getKey('id'), $entity->id())
       ->sort($entity_type->getKey('revision'), 'DESC')
-      ->accessCheck(TRUE)
+      ->accessCheck(FALSE)
       ->execute();
     return array_keys($result);
   }
