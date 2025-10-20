@@ -19,27 +19,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class AssetAddLogActionForm extends ConfirmFormBase {
 
   /**
-   * The private temp store.
-   *
-   * @var \Drupal\Core\TempStore\PrivateTempStore
-   */
-  protected $tempStore;
-
-  /**
-   * The entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
-   * The current user.
-   *
-   * @var \Drupal\Core\Session\AccountInterface
-   */
-  protected $user;
-
-  /**
    * The entity type.
    *
    * @var \Drupal\Core\Entity\EntityTypeInterface|null
@@ -53,21 +32,11 @@ class AssetAddLogActionForm extends ConfirmFormBase {
    */
   protected $entities;
 
-  /**
-   * Constructs an AssetAddLogActionForm form object.
-   *
-   * @param \Drupal\Core\TempStore\PrivateTempStoreFactory $temp_store_factory
-   *   The tempstore factory.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager.
-   * @param \Drupal\Core\Session\AccountInterface $user
-   *   The current user.
-   */
-  public function __construct(PrivateTempStoreFactory $temp_store_factory, EntityTypeManagerInterface $entity_type_manager, AccountInterface $user) {
-    $this->tempStore = $temp_store_factory->get('asset_add_log_confirm');
-    $this->entityTypeManager = $entity_type_manager;
-    $this->user = $user;
-  }
+  public function __construct(
+    protected PrivateTempStoreFactory $tempStoreFactory,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected AccountInterface $user,
+  ) {}
 
   /**
    * {@inheritdoc}
@@ -121,7 +90,7 @@ class AssetAddLogActionForm extends ConfirmFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state): array|RedirectResponse {
     $this->entityType = $this->entityTypeManager->getDefinition('asset', FALSE);
-    $this->entities = $this->tempStore->get((string) $this->user->id());
+    $this->entities = $this->tempStoreFactory->get('asset_add_log_confirm')->get((string) $this->user->id());
     if (!$this->entityType || empty($this->entities)) {
       return new RedirectResponse($this->getCancelUrl()
         ->setAbsolute()
@@ -200,7 +169,7 @@ class AssetAddLogActionForm extends ConfirmFormBase {
       }
     }
 
-    $this->tempStore->delete((string) $this->currentUser()->id());
+    $this->tempStoreFactory->get('asset_add_log_confirm')->delete((string) $this->currentUser()->id());
     $form_state->setRedirectUrl($redirect_url);
   }
 

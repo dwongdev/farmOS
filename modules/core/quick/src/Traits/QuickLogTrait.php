@@ -89,7 +89,7 @@ trait QuickLogTrait {
 
     // Display a message with a link to the log.
     $message = $this->t('Log created: <a href=":url">@name</a>', [':url' => $log->toUrl()->toString(), '@name' => $log->label()]);
-    $this->messenger->addStatus($message);
+    $this->messenger()->addStatus($message);
 
     // Return the log entity.
     return $log;

@@ -7,7 +7,6 @@ namespace Drupal\farm_ui_dashboard\Controller;
 use Drupal\Core\Block\BlockManagerInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Layout\LayoutPluginManagerInterface;
-use Drupal\Core\Session\AccountInterface;
 use Drupal\views\Views;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -18,35 +17,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class DashboardController extends ControllerBase {
 
-  /**
-   * The layout plugin manager.
-   *
-   * @var \Drupal\Core\Layout\LayoutPluginManagerInterface
-   */
-  protected $layoutPluginManager;
-
-  /**
-   * The block manager.
-   *
-   * @var \Drupal\Core\Block\BlockManagerInterface
-   */
-  protected $blockManager;
-
-  /**
-   * The current user.
-   *
-   * @var \Drupal\Core\Session\AccountInterface
-   */
-  protected $currentUser;
-
-  /**
-   * Class constructor.
-   */
-  public function __construct(LayoutPluginManagerInterface $layout_plugin_manager, BlockManagerInterface $block_manager, AccountInterface $current_user) {
-    $this->layoutPluginManager = $layout_plugin_manager;
-    $this->blockManager = $block_manager;
-    $this->currentUser = $current_user;
-  }
+  public function __construct(
+    protected LayoutPluginManagerInterface $layoutPluginManager,
+    protected BlockManagerInterface $blockManager,
+  ) {}
 
   /**
    * {@inheritdoc}
@@ -55,7 +29,6 @@ class DashboardController extends ControllerBase {
     return new static(
       $container->get('plugin.manager.core.layout'),
       $container->get('plugin.manager.block'),
-      $container->get('current_user'),
     );
   }
 
@@ -123,7 +96,7 @@ class DashboardController extends ControllerBase {
         $block = $this->blockManager->createInstance($pane['block'], $args);
 
         // Check block access.
-        $access_result = $block->access($this->currentUser);
+        $access_result = $block->access($this->currentUser());
 
         // Build renderable array of the block.
         if ($access_result == TRUE) {

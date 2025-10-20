@@ -31,28 +31,15 @@ class FarmSettingsModulesForm extends FormBase {
   const FARM_QUICK_PACKAGE = 'farmOS Quick Forms';
 
   /**
-   * The module extension list.
-   *
-   * @var \Drupal\Core\Extension\ModuleExtensionList
-   */
-  protected $moduleExtensionList;
-
-  /**
    * {@inheritdoc}
    */
   public function getFormId() {
     return 'farm_settings_modules_form';
   }
 
-  /**
-   * Constructs a new FarmSettingsModulesForm.
-   *
-   * @param \Drupal\Core\Extension\ModuleExtensionList $module_extension_list
-   *   The module extension list.
-   */
-  public function __construct(ModuleExtensionList $module_extension_list) {
-    $this->moduleExtensionList = $module_extension_list;
-  }
+  public function __construct(
+    protected ModuleExtensionList $moduleExtensionList,
+  ) {}
 
   /**
    * {@inheritdoc}

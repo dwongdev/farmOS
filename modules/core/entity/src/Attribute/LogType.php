@@ -13,14 +13,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 #[\Attribute(\Attribute::TARGET_CLASS)]
 class LogType extends Plugin {
 
-  /**
-   * Constructs a log type attribute.
-   *
-   * @param string $id
-   *   The log type ID.
-   * @param \Drupal\Core\StringTranslation\TranslatableMarkup $label
-   *   The log type label.
-   */
   public function __construct(
     public readonly string $id,
     public readonly TranslatableMarkup $label,

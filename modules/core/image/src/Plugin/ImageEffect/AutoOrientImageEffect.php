@@ -23,30 +23,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 )]
 class AutoOrientImageEffect extends ImageEffectBase implements ContainerFactoryPluginInterface {
 
-  /**
-   * The file system service.
-   *
-   * @var \Drupal\Core\File\FileSystemInterface
-   */
-  protected $fileSystem;
-
-  /**
-   * AutoOrientImageEffect constructor.
-   *
-   * @param array $configuration
-   *   A configuration array containing information about the plugin instance.
-   * @param string $plugin_id
-   *   The plugin_id for the plugin instance.
-   * @param array $plugin_definition
-   *   The plugin implementation definition.
-   * @param \Psr\Log\LoggerInterface $logger
-   *   A logger instance.
-   * @param \Drupal\Core\File\FileSystemInterface $file_system
-   *   The file system service.
-   */
-  public function __construct(array $configuration, string $plugin_id, array $plugin_definition, LoggerInterface $logger, FileSystemInterface $file_system) {
+  public function __construct(
+    array $configuration,
+    string $plugin_id,
+    array $plugin_definition,
+    LoggerInterface $logger,
+    protected FileSystemInterface $fileSystem,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $logger);
-    $this->fileSystem = $file_system;
   }
 
   /**

@@ -6,6 +6,7 @@ namespace Drupal\farm_account_admin\Form;
 
 use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Config\TypedConfigManagerInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -22,24 +23,12 @@ class AccountAdminSettingsForm extends ConfigFormbase {
    */
   const SETTINGS = 'farm_account_admin.settings';
 
-  /**
-   * The cache tags invalidator.
-   *
-   * @var \Drupal\Core\Cache\CacheTagsInvalidatorInterface
-   */
-  protected $cacheTagsInvalidator;
-
-  /**
-   * Constructs a \Drupal\system\ConfigFormBase object.
-   *
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
-   *   The factory for configuration objects.
-   * @param \Drupal\Core\Cache\CacheTagsInvalidatorInterface $cache_tags_invalidator
-   *   The cache tags invalidator.
-   */
-  public function __construct(ConfigFactoryInterface $config_factory, CacheTagsInvalidatorInterface $cache_tags_invalidator) {
-    $this->setConfigFactory($config_factory);
-    $this->cacheTagsInvalidator = $cache_tags_invalidator;
+  public function __construct(
+    ConfigFactoryInterface $config_factory,
+    TypedConfigManagerInterface $typed_config_manager,
+    protected CacheTagsInvalidatorInterface $cacheTagsInvalidator,
+  ) {
+    parent::__construct($config_factory, $typed_config_manager);
   }
 
   /**
@@ -48,6 +37,7 @@ class AccountAdminSettingsForm extends ConfigFormbase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('config.factory'),
+      $container->get('config.typed'),
       $container->get('cache_tags.invalidator'),
     );
   }

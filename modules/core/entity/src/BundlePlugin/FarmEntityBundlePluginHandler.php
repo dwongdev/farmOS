@@ -17,26 +17,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class FarmEntityBundlePluginHandler extends BundlePluginHandler {
 
-  /**
-   * The module handler.
-   *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface
-   */
-  protected $moduleHandler;
-
-  /**
-   * Constructs a new FarmEntityBundlePluginHandler object.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
-   *   The entity type.
-   * @param \Drupal\Component\Plugin\PluginManagerInterface $plugin_manager
-   *   The bundle plugin manager.
-   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
-   *   The module handler.
-   */
-  public function __construct(EntityTypeInterface $entity_type, PluginManagerInterface $plugin_manager, ModuleHandlerInterface $module_handler) {
+  public function __construct(
+    EntityTypeInterface $entity_type,
+    PluginManagerInterface $plugin_manager,
+    protected ModuleHandlerInterface $moduleHandler,
+  ) {
     parent::__construct($entity_type, $plugin_manager);
-    $this->moduleHandler = $module_handler;
   }
 
   /**

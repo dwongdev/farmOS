@@ -18,22 +18,9 @@ class ImportController extends ControllerBase {
 
   use StringTranslationTrait;
 
-  /**
-   * The menu link tree service.
-   *
-   * @var \Drupal\Core\Menu\MenuLinkTreeInterface
-   */
-  protected $menuLinkTree;
-
-  /**
-   * Constructs a new ImportController.
-   *
-   * @param \Drupal\Core\Menu\MenuLinkTreeInterface $menu_link_tree
-   *   The menu link tree service.
-   */
-  public function __construct(MenuLinkTreeInterface $menu_link_tree) {
-    $this->menuLinkTree = $menu_link_tree;
-  }
+  public function __construct(
+    protected MenuLinkTreeInterface $menuLinkTree,
+  ) {}
 
   /**
    * {@inheritdoc}

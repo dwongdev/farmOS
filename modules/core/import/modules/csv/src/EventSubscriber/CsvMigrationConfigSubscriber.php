@@ -14,22 +14,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class CsvMigrationConfigSubscriber implements EventSubscriberInterface {
 
-  /**
-   * The router builder.
-   *
-   * @var \Drupal\Core\Routing\RouteBuilderInterface
-   */
-  protected $routerBuilder;
-
-  /**
-   * Constructs the CsvMigrationConfigSubscriber.
-   *
-   * @param \Drupal\Core\Routing\RouteBuilderInterface $router_builder
-   *   The router builder service.
-   */
-  public function __construct(RouteBuilderInterface $router_builder) {
-    $this->routerBuilder = $router_builder;
-  }
+  public function __construct(
+    protected RouteBuilderInterface $routeBuilder,
+  ) {}
 
   /**
    * {@inheritdoc}
@@ -49,7 +36,7 @@ class CsvMigrationConfigSubscriber implements EventSubscriberInterface {
   public function rebuildRouter(ConfigCrudEvent $event) {
     $config = $event->getConfig();
     if (str_starts_with($config->getName(), 'migrate_plus.migration.')) {
-      $this->routerBuilder->setRebuildNeeded();
+      $this->routeBuilder->setRebuildNeeded();
     }
   }
 

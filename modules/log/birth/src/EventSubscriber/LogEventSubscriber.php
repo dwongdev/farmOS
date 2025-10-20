@@ -16,22 +16,9 @@ class LogEventSubscriber implements EventSubscriberInterface {
 
   use StringTranslationTrait;
 
-  /**
-   * The Messenger service.
-   *
-   * @var \Drupal\Core\Messenger\MessengerInterface
-   */
-  protected $messenger;
-
-  /**
-   * MyModuleService constructor.
-   *
-   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
-   *   The messenger service.
-   */
-  public function __construct(MessengerInterface $messenger) {
-    $this->messenger = $messenger;
-  }
+  public function __construct(
+    protected MessengerInterface $messenger,
+  ) {}
 
   /**
    * {@inheritdoc}

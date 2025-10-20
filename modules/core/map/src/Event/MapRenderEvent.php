@@ -17,42 +17,11 @@ class MapRenderEvent extends Event {
 
   const EVENT_NAME = 'map_render_event';
 
-  /**
-   * The farm_map render element or render array.
-   *
-   * @var \Drupal\farm_map\Element\FarmMap|array
-   */
-  public $element;
-
-  /**
-   * The map type config entity.
-   *
-   * @var \Drupal\farm_map\Entity\MapTypeInterface
-   */
-  private $mapType;
-
-  /**
-   * The entity type manager service.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
-   * MapRenderEvent constructor.
-   *
-   * @param \Drupal\farm_map\Entity\MapTypeInterface $map_type
-   *   The farm_map render element.
-   * @param array $element
-   *   The farm_map render array.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   */
-  public function __construct(MapTypeInterface $map_type, array $element, EntityTypeManagerInterface $entity_type_manager) {
-    $this->element = $element;
-    $this->mapType = $map_type;
-    $this->entityTypeManager = $entity_type_manager;
-  }
+  public function __construct(
+    private MapTypeInterface $mapType,
+    public array $element,
+    protected EntityTypeManagerInterface $entityTypeManager,
+  ) {}
 
   /**
    * Getter method to get the map target ID.

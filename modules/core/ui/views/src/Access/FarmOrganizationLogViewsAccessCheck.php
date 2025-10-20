@@ -14,30 +14,9 @@ use Drupal\Core\Routing\RouteMatchInterface;
  */
 class FarmOrganizationLogViewsAccessCheck implements AccessInterface {
 
-  /**
-   * The log storage.
-   *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
-   */
-  protected $logStorage;
-
-  /**
-   * The organization storage.
-   *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
-   */
-  protected $organizationStorage;
-
-  /**
-   * FarmOrganizationAssetViewsAccessCheck constructor.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager) {
-    $this->logStorage = $entity_type_manager->getStorage('log');
-    $this->organizationStorage = $entity_type_manager->getStorage('organization');
-  }
+  public function __construct(
+    protected EntityTypeManagerInterface $entityTypeManager,
+  ) {}
 
   /**
    * A custom access check.
@@ -52,7 +31,7 @@ class FarmOrganizationLogViewsAccessCheck implements AccessInterface {
     // contextual filter validation returns a 404.
     $organization_id = $route_match->getParameter('organization');
     /** @var \Drupal\organization\Entity\OrganizationInterface|null $organization */
-    $organization = $this->organizationStorage->load($organization_id);
+    $organization = $this->entityTypeManager->getStorage('organization')->load($organization_id);
     if (is_null($organization)) {
       return AccessResult::allowed();
     }
@@ -65,7 +44,7 @@ class FarmOrganizationLogViewsAccessCheck implements AccessInterface {
     }
 
     // Build a count query for logs of this type.
-    $query = $this->logStorage->getAggregateQuery()
+    $query = $this->entityTypeManager->getStorage('log')->getAggregateQuery()
       ->accessCheck(TRUE)
       ->condition('type', $log_type)
       ->count();

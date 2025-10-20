@@ -16,22 +16,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class FarmModulesForm extends FormBase {
 
-  /**
-   * The state keyvalue collection.
-   *
-   * @var \Drupal\Core\State\StateInterface
-   */
-  protected $state;
-
-  /**
-   * Constructs a new FarmModulesForm.
-   *
-   * @param \Drupal\Core\State\StateInterface $state
-   *   The state keyvalue collection to use.
-   */
-  public function __construct(StateInterface $state) {
-    $this->state = $state;
-  }
+  public function __construct(
+    protected StateInterface $state,
+  ) {}
 
   /**
    * {@inheritdoc}

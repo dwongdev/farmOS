@@ -8,7 +8,6 @@ use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Sql\SqlContentEntityStorage;
-use Drupal\taxonomy\TermStorageInterface;
 use Drupal\views\Attribute\ViewsArgument;
 use Drupal\views\Plugin\views\argument\NumericArgument;
 use Drupal\views\Plugin\views\query\Sql;
@@ -23,74 +22,25 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 #[ViewsArgument("entity_taxonomy_term_reference")]
 class EntityTaxonomyTermReferenceArgument extends NumericArgument {
 
-  /**
-   * The taxonomy term storage.
-   *
-   * @var \Drupal\taxonomy\TermStorageInterface
-   */
-  protected $termStorage;
-
-  /**
-   * The entity type manager service.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
-   * The entity type bundle info.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeBundleInfoInterface
-   */
-  protected $entityTypeBundleInfo;
-
-  /**
-   * The entity field manager service.
-   *
-   * @var \Drupal\Core\Entity\EntityFieldManagerInterface
-   */
-  protected $entityFieldManager;
-
-  /**
-   * EntityTaxonomyTermReferenceArgument constructor.
-   *
-   * @param array $configuration
-   *   A configuration array containing information about the plugin instance.
-   * @param string $plugin_id
-   *   The plugin ID for the plugin instance.
-   * @param mixed $plugin_definition
-   *   The plugin implementation definition.
-   * @param \Drupal\taxonomy\TermStorageInterface $term_storage
-   *   The taxonomy term storage service.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $entity_bundle_info
-   *   The entity type bundle info service.
-   * @param \Drupal\Core\Entity\EntityFieldManagerInterface $entity_field_manager
-   *   The entity field manager service.
-   */
   public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    TermStorageInterface $term_storage,
-    EntityTypeManagerInterface $entity_type_manager,
-    EntityTypeBundleInfoInterface $entity_bundle_info,
-    EntityFieldManagerInterface $entity_field_manager,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected EntityTypeBundleInfoInterface $entityTypeBundleInfo,
+    protected EntityFieldManagerInterface $entityFieldManager,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->termStorage = $term_storage;
-    $this->entityTypeManager = $entity_type_manager;
-    $this->entityTypeBundleInfo = $entity_bundle_info;
-    $this->entityFieldManager = $entity_field_manager;
   }
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static($configuration, $plugin_id, $plugin_definition,
-      $container->get('entity_type.manager')->getStorage('taxonomy_term'),
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
       $container->get('entity_type.manager'),
       $container->get('entity_type.bundle.info'),
       $container->get('entity_field.manager'));
@@ -117,7 +67,7 @@ class EntityTaxonomyTermReferenceArgument extends NumericArgument {
       return;
     }
 
-    $term = $this->termStorage->load($term_id);
+    $term = $this->entityTypeManager->getStorage('taxonomy_term')->load($term_id);
 
     // This is a value like 'asset' or 'log'.
     $base_entity_type = $this->view->getBaseEntityType()->id();

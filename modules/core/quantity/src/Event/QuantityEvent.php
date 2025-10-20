@@ -15,21 +15,8 @@ class QuantityEvent extends Event {
   const PRESAVE = 'quantity_presave';
   const DELETE = 'quantity_delete';
 
-  /**
-   * The Quantity entity.
-   *
-   * @var \Drupal\quantity\Entity\QuantityInterface
-   */
-  public QuantityInterface $quantity;
-
-  /**
-   * Constructs the object.
-   *
-   * @param \Drupal\quantity\Entity\QuantityInterface $quantity
-   *   The Quantity entity.
-   */
-  public function __construct(QuantityInterface $quantity) {
-    $this->quantity = $quantity;
-  }
+  public function __construct(
+    public QuantityInterface $quantity,
+  ) {}
 
 }

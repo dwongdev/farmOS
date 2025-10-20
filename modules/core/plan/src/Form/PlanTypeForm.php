@@ -23,22 +23,9 @@ class PlanTypeForm extends EntityForm {
    */
   protected $entity;
 
-  /**
-   * The workflow manager.
-   *
-   * @var \Drupal\state_machine\WorkflowManagerInterface
-   */
-  protected $workflowManager;
-
-  /**
-   * Constructs a new PlanTypeForm object.
-   *
-   * @param \Drupal\state_machine\WorkflowManagerInterface $workflow_manager
-   *   The workflow manager.
-   */
-  public function __construct(WorkflowManagerInterface $workflow_manager) {
-    $this->workflowManager = $workflow_manager;
-  }
+  public function __construct(
+    protected WorkflowManagerInterface $workflowManager,
+  ) {}
 
   /**
    * {@inheritdoc}

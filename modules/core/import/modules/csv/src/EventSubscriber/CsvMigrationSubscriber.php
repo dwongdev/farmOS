@@ -19,54 +19,15 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  * Subscribe to migration events.
  */
 class CsvMigrationSubscriber implements EventSubscriberInterface {
+
   use StringTranslationTrait;
 
-  /**
-   * The database connection.
-   *
-   * @var \Drupal\Core\Database\Connection
-   */
-  protected $database;
-
-  /**
-   * The current user.
-   *
-   * @var \Drupal\Core\Session\AccountInterface
-   */
-  protected $currentUser;
-
-  /**
-   * The private temp store.
-   *
-   * @var \Drupal\Core\TempStore\PrivateTempStore
-   */
-  protected $tempStore;
-
-  /**
-   * The messenger.
-   *
-   * @var \Drupal\Core\Messenger\MessengerInterface
-   */
-  protected $messenger;
-
-  /**
-   * CsvMigrationSubscriber constructor.
-   *
-   * @param \Drupal\Core\Database\Connection $database
-   *   The database connection.
-   * @param \Drupal\Core\Session\AccountInterface $current_user
-   *   The current user.
-   * @param \Drupal\Core\TempStore\PrivateTempStoreFactory $temp_store_factory
-   *   The tempstore service.
-   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
-   *   The messenger.
-   */
-  public function __construct(Connection $database, AccountInterface $current_user, PrivateTempStoreFactory $temp_store_factory, MessengerInterface $messenger) {
-    $this->database = $database;
-    $this->currentUser = $current_user;
-    $this->tempStore = $temp_store_factory->get('farm_import_csv');
-    $this->messenger = $messenger;
-  }
+  public function __construct(
+    protected Connection $database,
+    protected AccountInterface $currentUser,
+    protected PrivateTempStoreFactory $tempStoreFactory,
+    protected MessengerInterface $messenger,
+  ) {}
 
   /**
    * Get subscribed events.
@@ -129,7 +90,7 @@ class CsvMigrationSubscriber implements EventSubscriberInterface {
     // Load the file ID from temporary storage (set during CSV upload form
     // submit), and show any messages associated with it.
     $tempstore_key = $this->currentUser->id() . ':' . $event->getMigration()->id();
-    $file_id = $this->tempStore->get($tempstore_key);
+    $file_id = $this->tempStoreFactory->get('farm_import_csv')->get($tempstore_key);
     if (!is_null($file_id)) {
 
       // Query the migrate_map_* table, if it exists.

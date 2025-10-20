@@ -14,22 +14,9 @@ use Drupal\Core\Routing\RouteMatchInterface;
  */
 class FarmGroupMembersViewsAccessCheck implements AccessInterface {
 
-  /**
-   * The asset storage.
-   *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
-   */
-  protected $assetStorage;
-
-  /**
-   * FarmGroupMembersViewsAccessCheck constructor.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager) {
-    $this->assetStorage = $entity_type_manager->getStorage('asset');
-  }
+  public function __construct(
+    protected EntityTypeManagerInterface $entityTypeManager,
+  ) {}
 
   /**
    * A custom access check.
@@ -45,9 +32,12 @@ class FarmGroupMembersViewsAccessCheck implements AccessInterface {
       return AccessResult::allowed();
     }
 
-    // Allow access if the asset is a group.
+    // Load the asset.
+    $asset_storage = $this->entityTypeManager->getStorage('asset');
     /** @var \Drupal\asset\Entity\AssetInterface $asset */
-    $asset = $this->assetStorage->load($asset_id);
+    $asset = $asset_storage->load($asset_id);
+
+    // Allow access if the asset is a group.
     $access = AccessResult::allowedIf($asset->bundle() == 'group');
 
     // Invalidate the access result when assets are changed.

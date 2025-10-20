@@ -21,32 +21,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 abstract class BaseLocationHierarchyForm extends FormBase {
 
-  /**
-   * The entity type manager service.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
-   * The asset location service.
-   *
-   * @var \Drupal\farm_location\AssetLocationInterface
-   */
-  protected $assetLocation;
-
-  /**
-   * Constructs a new BaseLocationHierarchyForm.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager.
-   * @param \Drupal\farm_location\AssetLocationInterface $asset_location
-   *   The asset location service.
-   */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, AssetLocationInterface $asset_location) {
-    $this->entityTypeManager = $entity_type_manager;
-    $this->assetLocation = $asset_location;
-  }
+  public function __construct(
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected AssetLocationInterface $assetLocation,
+  ) {}
 
   /**
    * {@inheritdoc}

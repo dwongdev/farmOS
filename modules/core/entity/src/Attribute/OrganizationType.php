@@ -13,14 +13,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 #[\Attribute(\Attribute::TARGET_CLASS)]
 class OrganizationType extends Plugin {
 
-  /**
-   * Constructs an organization type attribute.
-   *
-   * @param string $id
-   *   The organization type ID.
-   * @param \Drupal\Core\StringTranslation\TranslatableMarkup $label
-   *   The organization type label.
-   */
   public function __construct(
     public readonly string $id,
     public readonly TranslatableMarkup $label,

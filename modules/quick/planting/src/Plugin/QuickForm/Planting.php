@@ -8,7 +8,6 @@ use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\State\StateInterface;
@@ -45,44 +44,16 @@ class Planting extends QuickFormBase {
   use QuickStringTrait;
   use QuickFormElementsTrait;
 
-  /**
-   * The module handler.
-   *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface
-   */
-  protected $moduleHandler;
-
-  /**
-   * The state service.
-   *
-   * @var \Drupal\Core\State\StateInterface
-   */
-  protected $state;
-
-  /**
-   * Constructs a QuickFormBase object.
-   *
-   * @param array $configuration
-   *   A configuration array containing information about the plugin instance.
-   * @param string $plugin_id
-   *   The plugin_id for the plugin instance.
-   * @param mixed $plugin_definition
-   *   The plugin implementation definition.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   * @param \Drupal\Core\Session\AccountInterface $current_user
-   *   Current user object.
-   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
-   *   The messenger service.
-   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
-   *   The module handler.
-   * @param \Drupal\Core\State\StateInterface $state
-   *   The state service.
-   */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, AccountInterface $current_user, MessengerInterface $messenger, ModuleHandlerInterface $module_handler, StateInterface $state) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager, $current_user, $messenger);
-    $this->moduleHandler = $module_handler;
-    $this->state = $state;
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    EntityTypeManagerInterface $entity_type_manager,
+    AccountInterface $current_user,
+    protected ModuleHandlerInterface $moduleHandler,
+    protected StateInterface $state,
+  ) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager, $current_user);
   }
 
   /**
@@ -95,7 +66,6 @@ class Planting extends QuickFormBase {
       $plugin_definition,
       $container->get('entity_type.manager'),
       $container->get('current_user'),
-      $container->get('messenger'),
       $container->get('module_handler'),
       $container->get('state'),
     );

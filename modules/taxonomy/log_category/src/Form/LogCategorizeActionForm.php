@@ -20,27 +20,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class LogCategorizeActionForm extends ConfirmFormBase {
 
   /**
-   * The private temp store.
-   *
-   * @var \Drupal\Core\TempStore\PrivateTempStore
-   */
-  protected $tempStore;
-
-  /**
-   * The entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
-   * The current user.
-   *
-   * @var \Drupal\Core\Session\AccountInterface
-   */
-  protected $user;
-
-  /**
    * The entity type.
    *
    * @var \Drupal\Core\Entity\EntityTypeInterface|null
@@ -54,21 +33,11 @@ class LogCategorizeActionForm extends ConfirmFormBase {
    */
   protected $entities;
 
-  /**
-   * Constructs a LogCategorizeActionForm form object.
-   *
-   * @param \Drupal\Core\TempStore\PrivateTempStoreFactory $temp_store_factory
-   *   The tempstore factory.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager.
-   * @param \Drupal\Core\Session\AccountInterface $user
-   *   The current user.
-   */
-  public function __construct(PrivateTempStoreFactory $temp_store_factory, EntityTypeManagerInterface $entity_type_manager, AccountInterface $user) {
-    $this->tempStore = $temp_store_factory->get('log_categorize_confirm');
-    $this->entityTypeManager = $entity_type_manager;
-    $this->user = $user;
-  }
+  public function __construct(
+    protected PrivateTempStoreFactory $tempStoreFactory,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected AccountInterface $user,
+  ) {}
 
   /**
    * {@inheritdoc}
@@ -122,7 +91,7 @@ class LogCategorizeActionForm extends ConfirmFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state): array|RedirectResponse {
     $this->entityType = $this->entityTypeManager->getDefinition('log', FALSE);
-    $this->entities = $this->tempStore->get((string) $this->user->id());
+    $this->entities = $this->tempStoreFactory->get('log_categorize_confirm')->get((string) $this->user->id());
     if (!$this->entityType || empty($this->entities)) {
       return new RedirectResponse($this->getCancelUrl()
         ->setAbsolute()
@@ -236,7 +205,7 @@ class LogCategorizeActionForm extends ConfirmFormBase {
       ]));
     }
 
-    $this->tempStore->delete($this->currentUser()->id() . ':' . $this->entityType->id());
+    $this->tempStoreFactory->get('log_categorize_confirm')->delete($this->currentUser()->id() . ':' . $this->entityType->id());
     $form_state->setRedirectUrl($this->getCancelUrl());
   }
 

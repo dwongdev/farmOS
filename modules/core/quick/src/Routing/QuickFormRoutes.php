@@ -16,22 +16,9 @@ use Symfony\Component\Routing\RouteCollection;
  */
 class QuickFormRoutes implements ContainerInjectionInterface {
 
-  /**
-   * The quick form instance manager.
-   *
-   * @var \Drupal\farm_quick\QuickFormInstanceManagerInterface
-   */
-  protected $quickFormInstanceManager;
-
-  /**
-   * Constructs a QuickFormRoutes object.
-   *
-   * @param \Drupal\farm_quick\QuickFormInstanceManagerInterface $quick_form_instance_manager
-   *   The quick form instance manager.
-   */
-  public function __construct(QuickFormInstanceManagerInterface $quick_form_instance_manager) {
-    $this->quickFormInstanceManager = $quick_form_instance_manager;
-  }
+  public function __construct(
+    protected QuickFormInstanceManagerInterface $quickFormInstanceManager,
+  ) {}
 
   /**
    * {@inheritdoc}

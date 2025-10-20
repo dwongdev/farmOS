@@ -27,70 +27,18 @@ use Symfony\Component\Serializer\SerializerInterface;
 )]
 class EntityKml extends EntityActionBase {
 
-  /**
-   * The serializer service.
-   *
-   * @var \Symfony\Component\Serializer\SerializerInterface
-   */
-  protected $serializer;
-
-  /**
-   * The file system service.
-   *
-   * @var \Drupal\Core\File\FileSystemInterface
-   */
-  protected $fileSystem;
-
-  /**
-   * The default file scheme.
-   *
-   * @var string
-   */
-  protected $defaultFileScheme;
-
-  /**
-   * The file repository service.
-   *
-   * @var \Drupal\file\FileRepositoryInterface
-   */
-  protected $fileRepository;
-
-  /**
-   * The file URL generator.
-   *
-   * @var \Drupal\Core\File\FileUrlGeneratorInterface
-   */
-  protected $fileUrlGenerator;
-
-  /**
-   * Constructs a new EntityKml object.
-   *
-   * @param array $configuration
-   *   A configuration array containing information about the plugin instance.
-   * @param string $plugin_id
-   *   The plugin ID for the plugin instance.
-   * @param mixed $plugin_definition
-   *   The plugin implementation definition.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   * @param \Symfony\Component\Serializer\SerializerInterface $serializer
-   *   The serializer service.
-   * @param \Drupal\Core\File\FileSystemInterface $file_system
-   *   The file system service.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
-   *   The config factory service.
-   * @param \Drupal\file\FileRepositoryInterface $file_repository
-   *   The file repository service.
-   * @param \Drupal\Core\File\FileUrlGeneratorInterface $file_url_generator
-   *   The file URL generator.
-   */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, SerializerInterface $serializer, FileSystemInterface $file_system, ConfigFactoryInterface $config_factory, FileRepositoryInterface $file_repository, FileUrlGeneratorInterface $file_url_generator) {
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    EntityTypeManagerInterface $entity_type_manager,
+    protected SerializerInterface $serializer,
+    protected FileSystemInterface $fileSystem,
+    protected ConfigFactoryInterface $configFactory,
+    protected FileRepositoryInterface $fileRepository,
+    protected FileUrlGeneratorInterface $fileUrlGenerator,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager);
-    $this->serializer = $serializer;
-    $this->fileSystem = $file_system;
-    $this->defaultFileScheme = $config_factory->get('system.file')->get('default_scheme') ?? 'public';
-    $this->fileRepository = $file_repository;
-    $this->fileUrlGenerator = $file_url_generator;
   }
 
   /**
@@ -132,7 +80,8 @@ class EntityKml extends EntityActionBase {
     }
 
     // Prepare the file directory.
-    $directory = $this->defaultFileScheme . '://kml';
+    $default_file_scheme = $this->configFactory->get('system.file')->get('default_scheme') ?? 'public';
+    $directory = $default_file_scheme . '://kml';
     $this->fileSystem->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY);
 
     // Create the file.

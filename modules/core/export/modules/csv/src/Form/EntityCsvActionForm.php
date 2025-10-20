@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\farm_export_csv\Form;
 
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystemInterface;
@@ -29,69 +28,6 @@ use Symfony\Component\Serializer\SerializerInterface;
 class EntityCsvActionForm extends ConfirmFormBase implements BaseFormIdInterface {
 
   /**
-   * The private temp store.
-   *
-   * @var \Drupal\Core\TempStore\PrivateTempStore
-   */
-  protected $tempStore;
-
-  /**
-   * The entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
-   * The entity field manager.
-   *
-   * @var \Drupal\Core\Entity\EntityFieldManagerInterface
-   */
-  protected $entityFieldManager;
-
-  /**
-   * The serializer service.
-   *
-   * @var \Symfony\Component\Serializer\SerializerInterface
-   */
-  protected $serializer;
-
-  /**
-   * The file system service.
-   *
-   * @var \Drupal\Core\File\FileSystemInterface
-   */
-  protected $fileSystem;
-
-  /**
-   * The default file scheme.
-   *
-   * @var string
-   */
-  protected $defaultFileScheme;
-
-  /**
-   * The file repository service.
-   *
-   * @var \Drupal\file\FileRepositoryInterface
-   */
-  protected $fileRepository;
-
-  /**
-   * The file URL generator.
-   *
-   * @var \Drupal\Core\File\FileUrlGeneratorInterface
-   */
-  protected $fileUrlGenerator;
-
-  /**
-   * The current user.
-   *
-   * @var \Drupal\Core\Session\AccountInterface
-   */
-  protected $user;
-
-  /**
    * The entity type.
    *
    * @var \Drupal\Core\Entity\EntityTypeInterface
@@ -105,39 +41,16 @@ class EntityCsvActionForm extends ConfirmFormBase implements BaseFormIdInterface
    */
   protected $entities;
 
-  /**
-   * Constructs an EntityCsvActionForm form object.
-   *
-   * @param \Drupal\Core\TempStore\PrivateTempStoreFactory $temp_store_factory
-   *   The tempstore factory.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager.
-   * @param \Drupal\Core\Entity\EntityFieldManagerInterface $entity_field_manager
-   *   The entity field manager.
-   * @param \Symfony\Component\Serializer\SerializerInterface $serializer
-   *   The serializer service.
-   * @param \Drupal\Core\File\FileSystemInterface $file_system
-   *   The file system service.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
-   *   The config factory service.
-   * @param \Drupal\file\FileRepositoryInterface $file_repository
-   *   The file repository service.
-   * @param \Drupal\Core\File\FileUrlGeneratorInterface $file_url_generator
-   *   The file URL generator.
-   * @param \Drupal\Core\Session\AccountInterface $user
-   *   The current user.
-   */
-  public function __construct(PrivateTempStoreFactory $temp_store_factory, EntityTypeManagerInterface $entity_type_manager, EntityFieldManagerInterface $entity_field_manager, SerializerInterface $serializer, FileSystemInterface $file_system, ConfigFactoryInterface $config_factory, FileRepositoryInterface $file_repository, FileUrlGeneratorInterface $file_url_generator, AccountInterface $user) {
-    $this->tempStore = $temp_store_factory->get('entity_csv_confirm');
-    $this->entityTypeManager = $entity_type_manager;
-    $this->entityFieldManager = $entity_field_manager;
-    $this->serializer = $serializer;
-    $this->fileSystem = $file_system;
-    $this->defaultFileScheme = $config_factory->get('system.file')->get('default_scheme') ?? 'public';
-    $this->fileRepository = $file_repository;
-    $this->fileUrlGenerator = $file_url_generator;
-    $this->user = $user;
-  }
+  public function __construct(
+    protected PrivateTempStoreFactory $tempStoreFactory,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected EntityFieldManagerInterface $entityFieldManager,
+    protected SerializerInterface $serializer,
+    protected FileSystemInterface $fileSystem,
+    protected FileRepositoryInterface $fileRepository,
+    protected FileUrlGeneratorInterface $fileUrlGenerator,
+    protected AccountInterface $user,
+  ) {}
 
   /**
    * {@inheritdoc}
@@ -149,7 +62,6 @@ class EntityCsvActionForm extends ConfirmFormBase implements BaseFormIdInterface
       $container->get('entity_field.manager'),
       $container->get('serializer'),
       $container->get('file_system'),
-      $container->get('config.factory'),
       $container->get('file.repository'),
       $container->get('file_url_generator'),
       $container->get('current_user'),
@@ -209,7 +121,7 @@ class EntityCsvActionForm extends ConfirmFormBase implements BaseFormIdInterface
 
     // If we don't have an entity type or list of entities, redirect.
     $this->entityType = $this->entityTypeManager->getDefinition($entity_type_id);
-    $this->entities = $this->tempStore->get($this->user->id() . ':' . $entity_type_id);
+    $this->entities = $this->tempStoreFactory->get('entity_csv_confirm')->get($this->user->id() . ':' . $entity_type_id);
     if (empty($entity_type_id) || empty($this->entities)) {
       return new RedirectResponse($this->getCancelUrl()
         ->setAbsolute()
@@ -330,14 +242,15 @@ class EntityCsvActionForm extends ConfirmFormBase implements BaseFormIdInterface
 
       // CSV encoder settings.
       'csv_settings' => [
-        'sanitize' => $form_state->getValue('sanitize'),
+        'sanitize' => (bool) $form_state->getValue('sanitize'),
         'strip_tags' => FALSE,
       ],
     ];
     $output = $this->serializer->serialize($accessible_entities, 'csv', $context);
 
     // Prepare the file directory.
-    $directory = $this->defaultFileScheme . '://csv';
+    $default_file_scheme = $this->config('system.file')->get('default_scheme') ?? 'public';
+    $directory = $default_file_scheme . '://csv';
     $this->fileSystem->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY);
 
     // Create the file.
@@ -381,7 +294,7 @@ class EntityCsvActionForm extends ConfirmFormBase implements BaseFormIdInterface
       '%filename' => $file->label(),
     ]));
 
-    $this->tempStore->delete($this->currentUser()->id() . ':' . $this->entityType->id());
+    $this->tempStoreFactory->get('entity_csv_confirm')->delete($this->currentUser()->id() . ':' . $this->entityType->id());
     $form_state->setRedirectUrl($this->getCancelUrl());
   }
 

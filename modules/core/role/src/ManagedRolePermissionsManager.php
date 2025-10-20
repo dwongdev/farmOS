@@ -24,27 +24,6 @@ use Drupal\user\RoleInterface;
 class ManagedRolePermissionsManager extends DefaultPluginManager implements ManagedRolePermissionsManagerInterface {
 
   /**
-   * Controller resolver service.
-   *
-   * @var \Drupal\Core\Controller\ControllerResolverInterface
-   */
-  protected $controllerResolver;
-
-  /**
-   * Entity type bundle info service.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeBundleInfoInterface
-   */
-  protected $entityTypeBundleInfo;
-
-  /**
-   * The entity type manager service.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
    * Default values for each FarmRolePermissions plugin.
    *
    * @var array
@@ -61,35 +40,21 @@ class ManagedRolePermissionsManager extends DefaultPluginManager implements Mana
    *
    * @var array
    */
-  protected $rolePermissions;
+  protected $rolePermissions = [];
 
-  /**
-   * Constructs a ManagedRolePermissionsManager object.
-   *
-   * @param \Traversable $namespaces
-   *   An object that implements \Traversable which contains the root paths
-   *   keyed by the corresponding namespace to look for plugin implementations.
-   * @param \Drupal\Core\Cache\CacheBackendInterface $cache_backend
-   *   Cache backend instance to use.
-   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
-   *   The module handler to invoke the alter hook with.
-   * @param \Drupal\Core\Controller\ControllerResolverInterface $controller_resolver
-   *   The controller resolver service.
-   * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $entity_type_bundle_info
-   *   The entity type bundle info service.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   */
-  public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler, ControllerResolverInterface $controller_resolver, EntityTypeBundleInfoInterface $entity_type_bundle_info, EntityTypeManagerInterface $entity_type_manager) {
+  public function __construct(
+    \Traversable $namespaces,
+    CacheBackendInterface $cache_backend,
+    ModuleHandlerInterface $module_handler,
+    protected ControllerResolverInterface $controllerResolver,
+    protected EntityTypeBundleInfoInterface $entityTypeBundleInfo,
+    protected EntityTypeManagerInterface $entityTypeManager,
+  ) {
     parent::__construct(
       'Plugin/ManagedRolePermissions',
       $namespaces,
       $module_handler
     );
-    $this->controllerResolver = $controller_resolver;
-    $this->entityTypeBundleInfo = $entity_type_bundle_info;
-    $this->entityTypeManager = $entity_type_manager;
-    $this->rolePermissions = [];
     $this->alterInfo('managed_role_permissions_info');
     $this->setCacheBackend($cache_backend, 'managed_role_permissions_plugins');
   }

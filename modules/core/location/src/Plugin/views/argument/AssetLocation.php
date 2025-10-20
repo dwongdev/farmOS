@@ -19,38 +19,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 #[ViewsArgument("asset_location")]
 class AssetLocation extends ArgumentPluginBase {
 
-  /**
-   * The entity type manager service.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
-   * The asset location service.
-   *
-   * @var \Drupal\farm_location\AssetLocationInterface
-   */
-  protected $assetLocation;
-
-  /**
-   * Constructs an AssetLocation object.
-   *
-   * @param array $configuration
-   *   A configuration array containing information about the plugin instance.
-   * @param string $plugin_id
-   *   The plugin_id for the plugin instance.
-   * @param mixed $plugin_definition
-   *   The plugin implementation definition.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   * @param \Drupal\farm_location\AssetLocationInterface $asset_location
-   *   The asset location service.
-   */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, AssetLocationInterface $asset_location) {
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected AssetLocationInterface $assetLocation,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->entityTypeManager = $entity_type_manager;
-    $this->assetLocation = $asset_location;
   }
 
   /**

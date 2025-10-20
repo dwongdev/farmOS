@@ -17,21 +17,8 @@ class OrganizationEvent extends Event {
   const UPDATE = 'organization_update';
   const DELETE = 'organization_delete';
 
-  /**
-   * The Organization entity.
-   *
-   * @var \Drupal\organization\Entity\OrganizationInterface
-   */
-  public OrganizationInterface $organization;
-
-  /**
-   * Constructs the object.
-   *
-   * @param \Drupal\organization\Entity\OrganizationInterface $organization
-   *   The Organization entity.
-   */
-  public function __construct(OrganizationInterface $organization) {
-    $this->organization = $organization;
-  }
+  public function __construct(
+    protected OrganizationInterface $organization,
+  ) {}
 
 }

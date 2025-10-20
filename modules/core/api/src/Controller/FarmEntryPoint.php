@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\farm_api\Controller;
 
-use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Extension\ProfileExtensionList;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\jsonapi\CacheableResourceResponse;
@@ -32,36 +31,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class FarmEntryPoint extends EntryPoint {
 
-  /**
-   * Farm profile info.
-   *
-   * @var mixed[]
-   */
-  protected $farmProfileInfo;
-
-  /**
-   * The module handler.
-   *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface
-   */
-  protected $moduleHandler;
-
-  /**
-   * EntryPoint constructor.
-   *
-   * @param \Drupal\jsonapi\ResourceType\ResourceTypeRepositoryInterface $resource_type_repository
-   *   The resource type repository.
-   * @param \Drupal\Core\Session\AccountInterface $user
-   *   The current user.
-   * @param \Drupal\Core\Extension\ProfileExtensionList $profile_extension_list
-   *   The profile extension list service.
-   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
-   *   The module handler.
-   */
-  public function __construct(ResourceTypeRepositoryInterface $resource_type_repository, AccountInterface $user, ProfileExtensionList $profile_extension_list, ModuleHandlerInterface $module_handler) {
-    parent::__construct($resource_type_repository, $user);
-    $this->farmProfileInfo = $profile_extension_list->getExtensionInfo('farm');
-    $this->moduleHandler = $module_handler;
+  public function __construct(
+    ResourceTypeRepositoryInterface $resourceTypeRepository,
+    AccountInterface $user,
+    protected ProfileExtensionList $profileExtensionList,
+  ) {
+    parent::__construct($resourceTypeRepository, $user);
   }
 
   /**
@@ -72,7 +47,6 @@ class FarmEntryPoint extends EntryPoint {
       $container->get('jsonapi.resource_type.repository'),
       $container->get('current_user'),
       $container->get('extension.list.profile'),
-      $container->get('module_handler'),
     );
   }
 
@@ -94,15 +68,18 @@ class FarmEntryPoint extends EntryPoint {
     $urls = $data->getLinks();
     $meta = $data->getMeta();
 
+    // Get the farmOS profile info.
+    $farm_profile_info = $this->profileExtensionList->getExtensionInfo('farm');
+
     // Add a "farm" object to meta.
     $meta['farm'] = [
       'name' => $this->config('system.site')->get('name'),
       'url' => $base_url,
-      'version' => $this->farmProfileInfo['version'],
+      'version' => $farm_profile_info['version'],
     ];
 
     // Allow modules to add additional meta information.
-    $this->moduleHandler->alter('farm_api_meta', $meta['farm']);
+    $this->moduleHandler()->alter('farm_api_meta', $meta['farm']);
 
     // Build a new response.
     $new_response = new CacheableResourceResponse(new JsonApiDocumentTopLevel(new ResourceObjectData([]), new NullIncludedData(), $urls, $meta));

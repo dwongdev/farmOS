@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Drupal\farm_inventory;
 
 use Drupal\Component\Datetime\TimeInterface;
-use Drupal\Core\Database\Database;
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\asset\Entity\AssetInterface;
 use Drupal\fraction\Fraction;
@@ -15,40 +15,11 @@ use Drupal\fraction\Fraction;
  */
 class AssetInventory implements AssetInventoryInterface {
 
-  /**
-   * The database object.
-   *
-   * @var \Drupal\Core\Database\Connection
-   */
-  protected $database;
-
-  /**
-   * The time service.
-   *
-   * @var \Drupal\Component\Datetime\TimeInterface
-   */
-  protected $time;
-
-  /**
-   * Entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected EntityTypeManagerInterface $entityTypeManager;
-
-  /**
-   * Class constructor.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   Entity type manager.
-   * @param \Drupal\Component\Datetime\TimeInterface $time
-   *   The time service.
-   */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, TimeInterface $time) {
-    $this->database = Database::getConnection();
-    $this->entityTypeManager = $entity_type_manager;
-    $this->time = $time;
-  }
+  public function __construct(
+    protected Connection $database,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected TimeInterface $time,
+  ) {}
 
   /**
    * {@inheritdoc}

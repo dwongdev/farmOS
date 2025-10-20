@@ -13,6 +13,7 @@ use DrupalRector\Drupal10\Rector\ValueObject\AnnotationToAttributeConfiguration;
 use DrupalRector\Rector\PHPUnit\ShouldCallParentMethodsRector;
 use DrupalRector\Set\Drupal10SetList;
 use Rector\Config\RectorConfig;
+use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
 
 return static function (RectorConfig $rectorConfig): void {
 
@@ -78,5 +79,10 @@ return static function (RectorConfig $rectorConfig): void {
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'PlanRecordType', 'Drupal\farm_entity\Attribute\PlanRecordType'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'QuantityType', 'Drupal\farm_entity\Attribute\QuantityType'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'QuickForm', 'Drupal\farm_quick\Attribute\QuickForm'),
+  ]);
+
+  // Use PHP 8 constructor property promotion.
+  $rectorConfig->ruleWithConfiguration(ClassPropertyAssignToConstructorPromotionRector::class, [
+    ClassPropertyAssignToConstructorPromotionRector::INLINE_PUBLIC => TRUE,
   ]);
 };

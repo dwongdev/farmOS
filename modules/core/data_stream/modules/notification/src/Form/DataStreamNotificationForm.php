@@ -24,32 +24,10 @@ class DataStreamNotificationForm extends EntityForm {
    */
   protected $entity;
 
-  /**
-   * The notification condition manager service.
-   *
-   * @var \Drupal\data_stream_notification\NotificationConditionManagerInterface
-   */
-  protected $conditionManager;
-
-  /**
-   * The notification delivery manager service.
-   *
-   * @var \Drupal\data_stream_notification\NotificationDeliveryManagerInterface
-   */
-  protected $deliveryManager;
-
-  /**
-   * Constructs a new DataStreamNotificationForm object.
-   *
-   * @param \Drupal\data_stream_notification\NotificationConditionManagerInterface $condition_manager
-   *   The notification condition manager service.
-   * @param \Drupal\data_stream_notification\NotificationDeliveryManagerInterface $delivery_manager
-   *   The notification delivery manager service.
-   */
-  public function __construct(NotificationConditionManagerInterface $condition_manager, NotificationDeliveryManagerInterface $delivery_manager) {
-    $this->conditionManager = $condition_manager;
-    $this->deliveryManager = $delivery_manager;
-  }
+  public function __construct(
+    protected NotificationConditionManagerInterface $conditionManager,
+    protected NotificationDeliveryManagerInterface $deliveryManager,
+  ) {}
 
   /**
    * {@inheritdoc}

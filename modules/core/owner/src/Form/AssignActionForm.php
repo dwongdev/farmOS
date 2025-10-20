@@ -21,34 +21,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class AssignActionForm extends ConfirmFormBase {
 
   /**
-   * The private temp store.
-   *
-   * @var \Drupal\Core\TempStore\PrivateTempStore
-   */
-  protected $tempStore;
-
-  /**
-   * The entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
-   * The managed role permissions manager.
-   *
-   * @var \Drupal\farm_role\ManagedRolePermissionsManagerInterface
-   */
-  protected $managedRolePermissionsManager;
-
-  /**
-   * The current user.
-   *
-   * @var \Drupal\Core\Session\AccountInterface
-   */
-  protected $user;
-
-  /**
    * The entity type.
    *
    * @var \Drupal\Core\Entity\EntityTypeInterface|null
@@ -62,24 +34,12 @@ class AssignActionForm extends ConfirmFormBase {
    */
   protected $entities;
 
-  /**
-   * Constructs an AssignActionForm form object.
-   *
-   * @param \Drupal\Core\TempStore\PrivateTempStoreFactory $temp_store_factory
-   *   The tempstore factory.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager.
-   * @param \Drupal\farm_role\ManagedRolePermissionsManagerInterface $managed_role_permissions_manager
-   *   The managed role permissions manager.
-   * @param \Drupal\Core\Session\AccountInterface $user
-   *   The current user.
-   */
-  public function __construct(PrivateTempStoreFactory $temp_store_factory, EntityTypeManagerInterface $entity_type_manager, ManagedRolePermissionsManagerInterface $managed_role_permissions_manager, AccountInterface $user) {
-    $this->tempStore = $temp_store_factory->get('entity_assign_confirm');
-    $this->entityTypeManager = $entity_type_manager;
-    $this->managedRolePermissionsManager = $managed_role_permissions_manager;
-    $this->user = $user;
-  }
+  public function __construct(
+    protected PrivateTempStoreFactory $tempStoreFactory,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected ManagedRolePermissionsManagerInterface $managedRolePermissionsManager,
+    protected AccountInterface $user,
+  ) {}
 
   /**
    * {@inheritdoc}
@@ -143,7 +103,7 @@ class AssignActionForm extends ConfirmFormBase {
     $this->entityType = $this->entityTypeManager->getDefinition($entity_type, FALSE);
 
     // Load saved entities.
-    $this->entities = $this->tempStore->get((string) $this->user->id());
+    $this->entities = $this->tempStoreFactory->get('entity_assign_confirm')->get((string) $this->user->id());
 
     // If there are no entities, or if the entity type definition didn't load,
     // redirect the user to the cancel URL.
@@ -264,7 +224,7 @@ class AssignActionForm extends ConfirmFormBase {
       ]));
     }
 
-    $this->tempStore->delete((string) $this->currentUser()->id());
+    $this->tempStoreFactory->get('entity_assign_confirm')->delete((string) $this->currentUser()->id());
     $form_state->setRedirectUrl($this->getCancelUrl());
   }
 

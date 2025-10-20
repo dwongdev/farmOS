@@ -68,6 +68,7 @@ requirements (inherited from Drupal 11):
 - [Inject entity_type.manager and current_user service dependencies into QuickFormBase class #989](https://github.com/farmOS/farmOS/pull/989)
 - [Allow the "type" base field view display to be configured #990](https://github.com/farmOS/farmOS/pull/990)
 - [Title improvements to entity forms, buttons, and Views #996](https://github.com/farmOS/farmOS/pull/996)
+- [Use PHP 8 constructor property promotion #1005](https://github.com/farmOS/farmOS/pull/1005)
 
 ### Deprecated
 

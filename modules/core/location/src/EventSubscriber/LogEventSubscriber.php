@@ -26,42 +26,11 @@ class LogEventSubscriber implements EventSubscriberInterface {
    */
   const LOG_FIELD_ASSET = 'asset';
 
-  /**
-   * Log location service.
-   *
-   * @var \Drupal\farm_location\LogLocationInterface
-   */
-  protected LogLocationInterface $logLocation;
-
-  /**
-   * Asset location service.
-   *
-   * @var \Drupal\farm_location\AssetLocationInterface
-   */
-  protected AssetLocationInterface $assetLocation;
-
-  /**
-   * Cache tag invalidator service.
-   *
-   * @var \Drupal\Core\Cache\CacheTagsInvalidatorInterface
-   */
-  protected CacheTagsInvalidatorInterface $cacheTagsInvalidator;
-
-  /**
-   * LogEventSubscriber Constructor.
-   *
-   * @param \Drupal\farm_location\LogLocationInterface $log_location
-   *   Log location service.
-   * @param \Drupal\farm_location\AssetLocationInterface $asset_locaiton
-   *   Asset location service.
-   * @param \Drupal\Core\Cache\CacheTagsInvalidatorInterface $cache_tags_invalidator
-   *   Cache tag invalidator service.
-   */
-  public function __construct(LogLocationInterface $log_location, AssetLocationInterface $asset_locaiton, CacheTagsInvalidatorInterface $cache_tags_invalidator) {
-    $this->logLocation = $log_location;
-    $this->assetLocation = $asset_locaiton;
-    $this->cacheTagsInvalidator = $cache_tags_invalidator;
-  }
+  public function __construct(
+    protected LogLocationInterface $logLocation,
+    protected AssetLocationInterface $assetLocation,
+    protected CacheTagsInvalidatorInterface $cacheTagsInvalidator,
+  ) {}
 
   /**
    * {@inheritdoc}

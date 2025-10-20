@@ -15,32 +15,10 @@ use Drupal\farm_location\AssetLocationInterface;
  */
 class FarmLocationAssetViewsAccessCheck implements AccessInterface {
 
-  /**
-   * The asset storage.
-   *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
-   */
-  protected $assetStorage;
-
-  /**
-   * The asset location service.
-   *
-   * @var \Drupal\farm_location\AssetLocationInterface
-   */
-  protected $assetLocation;
-
-  /**
-   * FarmLocationAssetViewsAccessCheck constructor.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   * @param \Drupal\farm_location\AssetLocationInterface $asset_location
-   *   The asset location service.
-   */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, AssetLocationInterface $asset_location) {
-    $this->assetStorage = $entity_type_manager->getStorage('asset');
-    $this->assetLocation = $asset_location;
-  }
+  public function __construct(
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected AssetLocationInterface $assetLocation,
+  ) {}
 
   /**
    * A custom access check.
@@ -55,7 +33,7 @@ class FarmLocationAssetViewsAccessCheck implements AccessInterface {
     // filter validation returns a 404.
     $asset_id = $route_match->getParameter('asset');
     /** @var \Drupal\asset\Entity\AssetInterface|null $asset */
-    $asset = $this->assetStorage->load($asset_id);
+    $asset = $this->entityTypeManager->getStorage('asset')->load($asset_id);
     if (is_null($asset)) {
       return AccessResult::allowed();
     }

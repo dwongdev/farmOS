@@ -19,42 +19,11 @@ class FarmActions extends DeriverBase implements ContainerDeriverInterface {
 
   use StringTranslationTrait;
 
-  /**
-   * The entity type manager service.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
-   * The module handler.
-   *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface
-   */
-  protected $moduleHandler;
-
-  /**
-   * The entity type bundle info.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeBundleInfoInterface
-   */
-  protected $entityTypeBundleInfo;
-
-  /**
-   * Constructs a FarmActions object.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
-   *   The module handler.
-   * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $entity_type_bundle_info
-   *   The entity type bundle info.
-   */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, ModuleHandlerInterface $module_handler, EntityTypeBundleInfoInterface $entity_type_bundle_info) {
-    $this->entityTypeManager = $entity_type_manager;
-    $this->moduleHandler = $module_handler;
-    $this->entityTypeBundleInfo = $entity_type_bundle_info;
-  }
+  public function __construct(
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected ModuleHandlerInterface $moduleHandler,
+    protected EntityTypeBundleInfoInterface $entityTypeBundleInfo,
+  ) {}
 
   /**
    * {@inheritdoc}

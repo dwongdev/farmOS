@@ -18,32 +18,10 @@ class MapRenderEventSubscriber implements EventSubscriberInterface {
 
   use StringTranslationTrait;
 
-  /**
-   * Land asset type.
-   *
-   * @var \Drupal\asset\Entity\AssetTypeInterface
-   */
-  protected $landAssetType;
-
-  /**
-   * The layer style loader service.
-   *
-   * @var \Drupal\farm_map\LayerStyleLoaderInterface
-   */
-  protected $layerStyleLoader;
-
-  /**
-   * MapRenderEventSubscriber Constructor.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   * @param \Drupal\farm_map\LayerStyleLoaderInterface $layer_style_loader
-   *   The layer style loader service.
-   */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, LayerStyleLoaderInterface $layer_style_loader) {
-    $this->landAssetType = $entity_type_manager->getStorage('asset_type')->load('land');
-    $this->layerStyleLoader = $layer_style_loader;
-  }
+  public function __construct(
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected LayerStyleLoaderInterface $layerStyleLoader,
+  ) {}
 
   /**
    * {@inheritdoc}
@@ -73,10 +51,13 @@ class MapRenderEventSubscriber implements EventSubscriberInterface {
       // Define the parent group.
       $group = $this->t('Locations');
 
+      // Load the land asset type.
+      $land_asset_type = $this->entityTypeManager->getStorage('asset_type')->load('land');
+
       // Create a layer group for the asset type.
       $layers['land'] = [
         'group' => $group,
-        'label' => $this->landAssetType->label(),
+        'label' => $land_asset_type->label(),
         'is_group' => TRUE,
       ];
 
@@ -95,7 +76,7 @@ class MapRenderEventSubscriber implements EventSubscriberInterface {
           $color = $layer_style->get('color');
         }
         $layers['land_' . $land_type->id()] = [
-          'group' => $this->landAssetType->label(),
+          'group' => $land_asset_type->label(),
           'label' => $land_type->label(),
           'asset_type' => 'land',
           'filters' => $filters + ['land_type_value[]' => $land_type->id()],

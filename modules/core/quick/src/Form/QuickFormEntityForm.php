@@ -27,22 +27,9 @@ class QuickFormEntityForm extends EntityForm {
    */
   protected $entity;
 
-  /**
-   * The quick form plugin manager.
-   *
-   * @var \Drupal\farm_quick\QuickFormPluginManager
-   */
-  protected $quickFormPluginManager;
-
-  /**
-   * Constructs a new QuickFormEntityForm object.
-   *
-   * @param \Drupal\farm_quick\QuickFormPluginManager $quick_form_plugin_manager
-   *   The quick form plugin manager.
-   */
-  public function __construct(QuickFormPluginManager $quick_form_plugin_manager) {
-    $this->quickFormPluginManager = $quick_form_plugin_manager;
-  }
+  public function __construct(
+    protected QuickFormPluginManager $quickFormPluginManager,
+  ) {}
 
   /**
    * {@inheritdoc}

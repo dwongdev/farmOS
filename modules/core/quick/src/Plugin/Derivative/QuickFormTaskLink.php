@@ -17,22 +17,9 @@ class QuickFormTaskLink extends DeriverBase implements ContainerDeriverInterface
 
   use StringTranslationTrait;
 
-  /**
-   * The quick form instance manager.
-   *
-   * @var \Drupal\farm_quick\QuickFormInstanceManagerInterface
-   */
-  protected $quickFormInstanceManager;
-
-  /**
-   * QuickFormTaskLink constructor.
-   *
-   * @param \Drupal\farm_quick\QuickFormInstanceManagerInterface $quick_form_instance_manager
-   *   The quick form plugin manager.
-   */
-  public function __construct(QuickFormInstanceManagerInterface $quick_form_instance_manager) {
-    $this->quickFormInstanceManager = $quick_form_instance_manager;
-  }
+  public function __construct(
+    protected QuickFormInstanceManagerInterface $quickFormInstanceManager,
+  ) {}
 
   /**
    * {@inheritdoc}

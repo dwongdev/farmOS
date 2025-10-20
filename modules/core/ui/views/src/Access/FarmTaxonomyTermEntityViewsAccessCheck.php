@@ -16,52 +16,12 @@ use Drupal\Core\Routing\RouteMatchInterface;
  */
 class FarmTaxonomyTermEntityViewsAccessCheck implements AccessInterface {
 
-  /**
-   * The base entity type of the views this access check will be applied to.
-   *
-   * @var string
-   */
-  protected $baseEntityType;
-
-  /**
-   * The taxonomy term storage.
-   *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
-   */
-  protected $taxonomyTermStorage;
-
-  /**
-   * The entity type bundle info.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeBundleInfoInterface
-   */
-  protected $entityTypeBundleInfo;
-
-  /**
-   * The entity field manager service.
-   *
-   * @var \Drupal\Core\Entity\EntityFieldManagerInterface
-   */
-  protected $entityFieldManager;
-
-  /**
-   * FarmTaxonomyTermEntityViewsAccessCheck constructor.
-   *
-   * @param string $base_entity_type
-   *   The base entity type of the views this access check will be applied to.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $entity_bundle_info
-   *   The entity type bundle info service.
-   * @param \Drupal\Core\Entity\EntityFieldManagerInterface $entity_field_manager
-   *   The entity field manager service.
-   */
-  public function __construct(string $base_entity_type, EntityTypeManagerInterface $entity_type_manager, EntityTypeBundleInfoInterface $entity_bundle_info, EntityFieldManagerInterface $entity_field_manager) {
-    $this->baseEntityType = $base_entity_type;
-    $this->taxonomyTermStorage = $entity_type_manager->getStorage('taxonomy_term');
-    $this->entityTypeBundleInfo = $entity_bundle_info;
-    $this->entityFieldManager = $entity_field_manager;
-  }
+  public function __construct(
+    protected string $baseEntityType,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected EntityTypeBundleInfoInterface $entityTypeBundleInfo,
+    protected EntityFieldManagerInterface $entityFieldManager,
+  ) {}
 
   /**
    * A custom access check to filter out irrelevant entity bundles.
@@ -76,7 +36,7 @@ class FarmTaxonomyTermEntityViewsAccessCheck implements AccessInterface {
     // filter validation returns a 404.
     $term_id = $route_match->getParameter('taxonomy_term');
     /** @var \Drupal\taxonomy\TermInterface|null $term */
-    $term = $this->taxonomyTermStorage->load($term_id);
+    $term = $this->entityTypeManager->getStorage('taxonomy_term')->load($term_id);
     if (is_null($term)) {
       return AccessResult::allowed();
     }

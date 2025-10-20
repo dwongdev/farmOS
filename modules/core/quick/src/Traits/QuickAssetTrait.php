@@ -67,7 +67,7 @@ trait QuickAssetTrait {
 
     // Display a message with a link to the asset.
     $message = $this->t('Asset created: <a href=":url">@name</a>', [':url' => $asset->toUrl()->toString(), '@name' => $asset->label()]);
-    $this->messenger->addStatus($message);
+    $this->messenger()->addStatus($message);
 
     // Return the asset entity.
     return $asset;

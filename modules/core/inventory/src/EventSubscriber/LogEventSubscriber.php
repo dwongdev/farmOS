@@ -17,32 +17,10 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class LogEventSubscriber implements EventSubscriberInterface {
 
-  /**
-   * Cache tag invalidator service.
-   *
-   * @var \Drupal\Core\Cache\CacheTagsInvalidatorInterface
-   */
-  protected CacheTagsInvalidatorInterface $cacheTagsInvalidator;
-
-  /**
-   * Datetime time service.
-   *
-   * @var \Drupal\Component\Datetime\TimeInterface
-   */
-  protected $time;
-
-  /**
-   * LogEventSubscriber Constructor.
-   *
-   * @param \Drupal\Core\Cache\CacheTagsInvalidatorInterface $cache_tags_invalidator
-   *   Cache tag invalidator service.
-   * @param \Drupal\Component\Datetime\TimeInterface $date_time
-   *   Datetime time service.
-   */
-  public function __construct(CacheTagsInvalidatorInterface $cache_tags_invalidator, TimeInterface $date_time) {
-    $this->time = $date_time;
-    $this->cacheTagsInvalidator = $cache_tags_invalidator;
-  }
+  public function __construct(
+    protected CacheTagsInvalidatorInterface $cacheTagsInvalidator,
+    protected TimeInterface $time,
+  ) {}
 
   /**
    * {@inheritdoc}

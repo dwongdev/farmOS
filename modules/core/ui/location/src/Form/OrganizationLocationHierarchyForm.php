@@ -4,14 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\farm_ui_location\Form;
 
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\asset\Entity\AssetInterface;
-use Drupal\farm_location\AssetLocationInterface;
 use Drupal\organization\Entity\OrganizationInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Form for changing the hierarchy of location assets within an organization.
@@ -19,32 +15,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @ingroup farm
  */
 class OrganizationLocationHierarchyForm extends BaseLocationHierarchyForm {
-
-  /**
-   * The route match service.
-   *
-   * @var \Drupal\Core\Routing\RouteMatchInterface
-   */
-  protected $routeMatch;
-
-  /**
-   * {@inheritdoc}
-   */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, AssetLocationInterface $asset_location, RouteMatchInterface $route_match) {
-    parent::__construct($entity_type_manager, $asset_location);
-    $this->routeMatch = $route_match;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('entity_type.manager'),
-      $container->get('asset.location'),
-      $container->get('current_route_match'),
-    );
-  }
 
   /**
    * {@inheritdoc}
@@ -101,7 +71,7 @@ class OrganizationLocationHierarchyForm extends BaseLocationHierarchyForm {
 
     // Add farm organization condition to query.
     $query = parent::getLocationQuery($parent);
-    if ($organization = $this->routeMatch->getParameter('organization')) {
+    if ($organization = $this->getRouteMatch()->getParameter('organization')) {
       $query->condition('farm', $organization->id());
     }
     return $query;

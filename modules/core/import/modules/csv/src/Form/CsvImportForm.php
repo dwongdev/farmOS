@@ -24,82 +24,15 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class CsvImportForm extends FormBase {
 
-  /**
-   * The migration plugin manager.
-   *
-   * @var \Drupal\migrate\Plugin\MigrationPluginManager
-   */
-  protected MigrationPluginManager $migrationPluginManager;
-
-  /**
-   * The file system service.
-   *
-   * @var \Drupal\Core\File\FileSystemInterface
-   */
-  protected FileSystemInterface $fileSystem;
-
-  /**
-   * The time service.
-   *
-   * @var \Drupal\Component\Datetime\TimeInterface
-   */
-  protected TimeInterface $time;
-
-  /**
-   * The key-value factory.
-   *
-   * @var \Drupal\Core\KeyValueStore\KeyValueFactoryInterface
-   */
-  protected KeyValueFactoryInterface $keyValueFactory;
-
-  /**
-   * The translation manager.
-   *
-   * @var \Drupal\Core\StringTranslation\TranslationManager
-   */
-  protected TranslationManager $translationManager;
-
-  /**
-   * The file usage service.
-   *
-   * @var \Drupal\file\FileUsage\FileUsageInterface
-   */
-  protected $fileUsage;
-
-  /**
-   * The farm_import_csv temp store.
-   *
-   * @var \Drupal\Core\TempStore\PrivateTempStore
-   */
-  protected $tempStore;
-
-  /**
-   * CsvImportForm constructor.
-   *
-   * @param \Drupal\migrate\Plugin\MigrationPluginManager $plugin_manager_migration
-   *   The migration plugin manager.
-   * @param \Drupal\Core\File\FileSystemInterface $file_system
-   *   The File System service.
-   * @param \Drupal\Component\Datetime\TimeInterface $time
-   *   The time service.
-   * @param \Drupal\Core\KeyValueStore\KeyValueFactoryInterface $key_value
-   *   The key value factory.
-   * @param \Drupal\Core\StringTranslation\TranslationManager $translation_manager
-   *   The translation manager service.
-   * @param \Drupal\file\FileUsage\FileUsageInterface $file_usage
-   *   The file usage service.
-   * @param \Drupal\Core\TempStore\PrivateTempStoreFactory $temp_store_factory
-   *   The tempstore service.
-   */
-  public function __construct(MigrationPluginManager $plugin_manager_migration, FileSystemInterface $file_system, TimeInterface $time, KeyValueFactoryInterface $key_value, TranslationManager $translation_manager, FileUsageInterface $file_usage, PrivateTempStoreFactory $temp_store_factory) {
-    $this->migrationPluginManager = $plugin_manager_migration;
-    $this->fileSystem = $file_system;
-    $this->time = $time;
-    $this->keyValueFactory = $key_value;
-    $this->translationManager = $translation_manager;
-    $this->fileUsage = $file_usage;
-    $this->tempStore = $temp_store_factory->get('farm_import_csv');
-  }
+  public function __construct(
+    protected MigrationPluginManager $migrationPluginManager,
+    protected FileSystemInterface $fileSystem,
+    protected TimeInterface $time,
+    protected KeyValueFactoryInterface $keyValueFactory,
+    protected TranslationManager $translationManager,
+    protected FileUsageInterface $fileUsage,
+    protected PrivateTempStoreFactory $tempStoreFactory,
+  ) {}
 
   /**
    * {@inheritdoc}
@@ -194,7 +127,7 @@ class CsvImportForm extends FormBase {
     $this->fileUsage->add($file, 'farm_import_csv', 'migration', $form_state->getValue('migration_id'));
 
     // Save the file ID to the private tempstore.
-    $this->tempStore->set($this->currentUser()->id() . ':' . $form_state->getValue('migration_id'), $file->id());
+    $this->tempStoreFactory->get('farm_import_csv')->set($this->currentUser()->id() . ':' . $form_state->getValue('migration_id'), $file->id());
   }
 
   /**
