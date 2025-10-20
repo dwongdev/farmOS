@@ -73,6 +73,29 @@ class EntityHooks {
   }
 
   /**
+   * Implements hook_entity_type_alter().
+   */
+  #[Hook('entity_type_alter')]
+  public function entityTypeAlter(array &$entity_types) {
+    /** @var \Drupal\Core\Entity\EntityTypeInterface[] $entity_types */
+
+    // Remove the form for reverting entity revisions.
+    // We do this because farmOS modules provide entity constraint validation
+    // logic that may depend on other entities in the database (not just the
+    // data in the entity being reverted), and Drupal does not validate entities
+    // when they are reverted. This could result in entities that no longer
+    // validate, leaving the database in a state that would normally be
+    // considered invalid.
+    foreach ($entity_types as $entity_type) {
+      if ($entity_type->hasLinkTemplate('revision-revert-form')) {
+        $links = $entity_type->getLinkTemplates();
+        unset($links['revision-revert-form']);
+        $entity_type->set('links', $links);
+      }
+    }
+  }
+
+  /**
    * Implements hook_entity_presave().
    *
    * Forces revisions on all farm entities if the entity type supports them and
