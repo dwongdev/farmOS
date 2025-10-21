@@ -8,6 +8,6 @@ farm_manager:
       status: true
     refresh_token:
       status: true
-  granularity_id: 'role'
+  granularity_id: 'managed_role'
   granularity_configuration:
     role: 'farm_manager'

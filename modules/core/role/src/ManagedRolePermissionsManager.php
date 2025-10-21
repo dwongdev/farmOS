@@ -99,17 +99,7 @@ class ManagedRolePermissionsManager extends DefaultPluginManager implements Mana
    * {@inheritdoc}
    */
   public function isPermissionInRole($permission, RoleInterface $role) {
-
-    // Check if permissions have been built for the specified role.
-    if (isset($this->rolePermissions[$role->id()])) {
-      $permissions = $this->rolePermissions[$role->id()];
-    }
-    else {
-      // Build permissions for the role.
-      $permissions = $this->getManagedPermissionsForRole($role);
-    }
-
-    return in_array($permission, $permissions);
+    return in_array($permission, $this->getManagedRolePermissions($role));
   }
 
   /**
@@ -118,10 +108,10 @@ class ManagedRolePermissionsManager extends DefaultPluginManager implements Mana
    * @param \Drupal\user\RoleInterface $role
    *   The role to load permissions for.
    *
-   * @return array
+   * @return string[]
    *   Array of permissions for the managed role.
    */
-  protected function getManagedPermissionsForRole(RoleInterface $role) {
+  public function getManagedRolePermissions(RoleInterface $role): array {
 
     // Start list of permissions.
     $perms = [];
@@ -337,7 +327,6 @@ class ManagedRolePermissionsManager extends DefaultPluginManager implements Mana
       }
     }
 
-    $this->rolePermissions[$role->id()] = $perms;
     return $perms;
   }
 

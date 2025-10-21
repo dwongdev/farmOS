@@ -41,6 +41,24 @@ class ManagedRolePermissionsTest extends KernelTestBase {
   }
 
   /**
+   * Test that managed roles get standard role permissions.
+   */
+  public function testManagedRoleStandardPermissions() {
+
+    // Create a user.
+    $user = $this->setUpCurrentUser([], [], FALSE);
+
+    // Ensure the user does not have standard role permissions.
+    $this->assertFalse($user->hasPermission('standard role permission'));
+
+    // Add farm_test role.
+    $user->addRole('farm_test');
+
+    // Ensure the user has standard role permissions.
+    $this->assertTrue($user->hasPermission('standard role permission'));
+  }
+
+  /**
    * Test that managed roles get default permissions.
    */
   public function testManagedRoleDefaultAccess() {
@@ -218,6 +236,33 @@ class ManagedRolePermissionsTest extends KernelTestBase {
         $this->assertEquals($should_have_permission, $has_permission);
       }
     }
+  }
+
+  /**
+   * Test caching of managed role permissions access policy.
+   */
+  public function testManagedRolePermissionsCaching() {
+
+    // Create a user.
+    $user = $this->setUpCurrentUser();
+
+    // Ensure the user does not have permission to create any log.
+    $this->assertFalse($user->hasPermission('create observation log'));
+    $this->assertFalse($user->hasPermission('create harvest log'));
+
+    // Grant farm_test role and ensure the user can create observation log.
+    $user->addRole('farm_test');
+    $this->assertTrue($user->hasPermission('create observation log'));
+    $this->assertFalse($user->hasPermission('create harvest log'));
+
+    // Update the role to allow creating any log.
+    $farm_test = Role::load('farm_test');
+    $access_settings = $farm_test->getThirdPartySetting('farm_role', 'access');
+    $access_settings['entity']['create all'] = TRUE;
+    $farm_test->setThirdPartySetting('farm_role', 'access', $access_settings);
+    $farm_test->save();
+    $this->assertTrue($user->hasPermission('create observation log'));
+    $this->assertTrue($user->hasPermission('create harvest log'));
   }
 
 }
