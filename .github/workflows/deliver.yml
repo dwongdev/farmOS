@@ -183,12 +183,14 @@ jobs:
           docker compose -f docker-compose.testing.common.yml -f docker-compose.testing.${{ matrix.dbms }}.yml config > docker-compose.yml
           # Replace the generic 'farmos/farmos:${FARMOS_DEV_BRANCH}-dev' image name/tag with the reference to our local platform-specific tagged image
           sed -i "s%farmos/farmos:${FARMOS_DEV_BRANCH}-dev%${DOCKER_IMG_PREFIX}:${FARMOS_DEV_BRANCH}-dev-${{ matrix.platform }}%g" docker-compose.yml
+      - name: Create www directory owned by www-data for bind-mount volume.
+        run: mkdir www && sudo chown 1000:1000 www
       - name: Start containers
         run: docker compose up -d
       - name: Wait until www container is ready
       # The www-container-fs-ready file is only created once we expect the containers to be online
       # so waiting for that lets us know it is safe to start the tests
-        run: until [ -f ./www/www-container-fs-ready ]; do sleep 0.1; done
+        run: sudo bash -c 'until [ -f ./www/www-container-fs-ready ]; do sleep 0.1; done'
       - name: Install pg_trgm PostgreSQL extension
       # This avoids race conditions when trying to automatically install it in concurrently run tests.
         if: matrix.dbms == 'pgsql'
