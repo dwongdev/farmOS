@@ -17,7 +17,12 @@ continue with the [farmOS installation steps](/hosting/install).
 
 ## Docker Run
 
-The following command will run farmOS in a Docker container (replace `x.y.z`
+Start by creating a directory for site data to be stored in, owned by user/group
+ID `33` (`www-data` inside the Docker container).
+
+    mkdir sites && sudo chown 33:33 sites
+
+Use the following command to run farmOS in a Docker container (replace `x.y.z`
 with the latest stable release version from the
 [GitHub releases page](https://github.com/farmOS/farmOS/releases)):
 
