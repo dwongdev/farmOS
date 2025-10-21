@@ -62,18 +62,34 @@ If a module overrides certain configuration items, either in
 module can list these configuration items in an array returned by an
 implementation of `hook_farm_update_exclude_config()`.
 
-For example, in `mymodule.module`:
+For example, in `src/Hook/UpdateHooks.module`:
 
 ```php
-/**
- * Implements hook_farm_update_exclude_config().
- */
-function mymodule_farm_update_exclude_config() {
+<?php
 
-  // Exclude mymodule_custom view from automatic configuration updates.
-  return [
-    'views.view.mymodule_custom',
-  ];
+declare(strict_types=1);
+
+namespace Drupal\mymodule\Hook;
+
+use Drupal\Core\Hook\Attribute\Hook;
+
+/**
+ * Update hook implementations for mymodule.
+ */
+class UpdateHooks {
+
+  /**
+   * Implements hook_farm_update_exclude_config().
+   */
+  #[Hook('farm_update_exclude_config')]
+  public function farmUpdateExcludeConfig() {
+  
+    // Exclude mymodule_custom view from automatic configuration updates.
+    return [
+      'views.view.mymodule_custom',
+    ];
+  }
+
 }
 ```
 

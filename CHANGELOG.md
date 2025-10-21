@@ -70,6 +70,7 @@ requirements (inherited from Drupal 11):
 - [Title improvements to entity forms, buttons, and Views #996](https://github.com/farmOS/farmOS/pull/996)
 - [Use PHP 8 constructor property promotion #1005](https://github.com/farmOS/farmOS/pull/1005)
 - [Autowire injected service dependencies #1006](https://github.com/farmOS/farmOS/pull/1006)
+- [Convert all procedural hook implementations to Hook classes #1007](https://github.com/farmOS/farmOS/pull/1007)
 
 ### Deprecated
 

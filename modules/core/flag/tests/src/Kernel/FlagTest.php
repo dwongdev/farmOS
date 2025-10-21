@@ -6,6 +6,7 @@ namespace Drupal\Tests\farm_flag\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\farm_flag\Entity\FarmFlag;
+use Drupal\farm_flag\FarmFlagHelper;
 
 /**
  * Tests for farm_flag logic.
@@ -91,36 +92,36 @@ class FlagTest extends KernelTestBase {
     $all_flag_ids = array_keys($all_flags);
 
     // 1. With default parameters all flag options are returned.
-    $expected_flag_ids = array_keys(farm_flag_options());
+    $expected_flag_ids = array_keys(FarmFlagHelper::flagOptions());
     $this->assertEmpty(array_diff($expected_flag_ids, $all_flag_ids), 'All flag options are returned.');
 
     // 2. Flags applying to any asset type are returned.
-    $flag_ids = array_keys(farm_flag_options('asset'));
+    $flag_ids = array_keys(FarmFlagHelper::flagOptions('asset'));
     $expected_flag_ids = ['general', 'asset_flag'];
     $this->assertEmpty(array_diff($expected_flag_ids, $flag_ids));
 
     // 3. Flags applying to any log type are returned.
-    $flag_ids = array_keys(farm_flag_options('log'));
+    $flag_ids = array_keys(FarmFlagHelper::flagOptions('log'));
     $expected_flag_ids = ['general', 'log_flag', 'special_flag', 'activity_flag', 'input_flag', 'observation_flag'];
     $this->assertEmpty(array_diff($expected_flag_ids, $flag_ids));
 
     // 4. Flags applying to every log type are returned.
-    $flag_ids = array_keys(farm_flag_options('log', [], TRUE));
+    $flag_ids = array_keys(FarmFlagHelper::flagOptions('log', [], TRUE));
     $expected_flag_ids = ['general', 'log_flag'];
     $this->assertEmpty(array_diff($expected_flag_ids, $flag_ids));
 
     // 5. Flags applying to either activity or input log types are returned.
-    $flag_ids = array_keys(farm_flag_options('log', ['activity', 'input']));
+    $flag_ids = array_keys(FarmFlagHelper::flagOptions('log', ['activity', 'input']));
     $expected_flag_ids = ['general', 'log_flag', 'special_flag', 'activity_flag', 'input_flag'];
     $this->assertEmpty(array_diff($expected_flag_ids, $flag_ids));
 
     // 6. Flags applying to both activity and input log types are returned.
-    $flag_ids = array_keys(farm_flag_options('log', ['activity', 'input'], TRUE));
+    $flag_ids = array_keys(FarmFlagHelper::flagOptions('log', ['activity', 'input'], TRUE));
     $expected_flag_ids = ['general', 'log_flag'];
     $this->assertEmpty(array_diff($expected_flag_ids, $flag_ids));
 
     // 7. Flags applying to only the activity log types are returned.
-    $flag_ids = array_keys(farm_flag_options('log', ['activity'], TRUE));
+    $flag_ids = array_keys(FarmFlagHelper::flagOptions('log', ['activity'], TRUE));
     $expected_flag_ids = ['general', 'log_flag', 'special_flag', 'activity_flag'];
     $this->assertEmpty(array_diff($expected_flag_ids, $flag_ids));
   }

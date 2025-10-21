@@ -17,7 +17,8 @@ interface AssetInventoryInterface {
    * @param \Drupal\asset\Entity\AssetInterface $asset
    *   The Asset entity.
    * @param string $measure
-   *   The quantity measure of the inventory. See quantity_measures().
+   *   The quantity measure of the inventory.
+   *   See QuantityHelper::quantityMeasures().
    * @param string|int|null $units
    *   The quantity units of the inventory (term ID).
    * @param int|null $timestamp

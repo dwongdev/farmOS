@@ -11,6 +11,7 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\asset\Entity\Asset;
 use Drupal\farm_geo\GeometryWrapper;
+use Drupal\farm_land\FarmLandHelper;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -65,7 +66,7 @@ class KmlImporter extends FormBase {
     ];
 
     // Build land type options.
-    $land_type_options = farm_land_type_options();
+    $land_type_options = FarmLandHelper::landTypeOptions();
     $form['input']['land_type'] = [
       '#type' => 'select',
       '#title' => $this->t('Default land type'),

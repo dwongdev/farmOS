@@ -21,6 +21,7 @@ use Drupal\entity\Routing\RevisionRouteProvider;
 use Drupal\entity\UncacheableEntityAccessControlHandler;
 use Drupal\entity\UncacheableEntityPermissionProvider;
 use Drupal\quantity\Form\QuantityInlineForm;
+use Drupal\quantity\QuantityHelper;
 use Drupal\quantity\QuantityListBuilder;
 use Drupal\quantity\QuantityViewBuilder;
 use Drupal\quantity\QuantityViewsData;
@@ -155,7 +156,7 @@ class Quantity extends RevisionableContentEntityBase implements QuantityInterfac
       ->setDescription(t('The measure of the quantity.'))
       ->setRevisionable(TRUE)
       ->setSettings([
-        'allowed_values_function' => 'quantity_measure_field_allowed_values',
+        'allowed_values_function' => [QuantityHelper::class, 'quantityMeasureAllowedValues'],
       ])
       ->setDisplayOptions('view', [
         'label' => 'hidden',

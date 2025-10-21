@@ -18,37 +18,61 @@ types), then they should be added as "base fields" via
 A `farm_field.factory` helper service is provided to make this easier. For more
 information on how this works, see [Field factory service](/development/module/services/#field-factory-service).
 
-To get started, place the following in the `[modulename].module` file:
+To get started, place the following in a `src/Hook/FieldHooks.php` file
+(replace `mymodule` with the name of your module, and `myfield` with the name
+of the new field):
 
 ```php
 <?php
 
+declare(strict_types=1);
+
+namespace Drupal\mymodule\Hook;
+
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
- * Implements hook_entity_base_field_info().
- * NOTE: Replace 'mymodule' with the module name.
+ * Field hook implementations for mymodule.
  */
-function mymodule_entity_base_field_info(EntityTypeInterface $entity_type) {
-  $fields = [];
+class FieldHooks {
 
-  // 'log' specifies the entity type to apply to.
-  if ($entity_type->id() == 'log') {
-    // Options for the new field. See Field options below.
-    $options = [
-      'type' => 'string',
-      'label' => t('My new field'),
-      'description' => t('My field description.'),
-      'weight' => [
-        'form' => 10,
-        'view' => 10,
-      ],
-    ];
-    // NOTE: Replace 'myfield' with the internal name of the field.
-    $fields['myfield'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
+  use AutowireTrait;
+  use StringTranslationTrait;
+
+  public function __construct(
+    protected FarmFieldFactoryInterface $farmFieldFactory,
+  ) {}
+
+  /**
+   * Implements hook_entity_base_field_info().
+   */
+  #[Hook('entity_base_field_info')]
+  public function entityBaseFieldInfo(EntityTypeInterface $entity_type) {
+    $fields = [];
+    
+    // Add a new string base field to log entities.
+    if ($entity_type->id() == 'log') {
+    
+      // Options for the new field. See Field options below.
+      $options = [
+        'type' => 'string',
+        'label' => $this->t('My new field'),
+        'description' => $this->t('My field description.'),
+        'weight' => [
+          'form' => 10,
+          'view' => 10,
+        ],
+      ];
+      $fields['myfield'] = \Drupal::service('farm_field.factory')->baseFieldDefinition($options);
+    }
+    
+    return $fields;
   }
 
-  return $fields;
 }
 ```
 
@@ -69,38 +93,61 @@ The format for bundle field definitions is identical to base field definitions
 (above), but the `bundleFieldDefinition()` method must be used instead of
 `baseFieldDefinition()`.
 
-To get started, place the following in the `[modulename].module` file:
+To get started, place the following in a `src/Hook/FieldHooks.php` file in your
+module (replace `mymodule` with the name of your module, and `myfield` with the
+name of the new field):
 
 ```php
 <?php
 
+declare(strict_types=1);
+
+namespace Drupal\mymodule\Hook;
+
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\farm_field\FarmFieldFactoryInterface;
 
 /**
- * Implements hook_farm_entity_bundle_field_info().
- * NOTE: Replace 'mymodule' with the module name.
+ * Field hook implementations for mymodule.
  */
-function mymodule_farm_entity_bundle_field_info(EntityTypeInterface $entity_type, $bundle) {
-  $fields = [];
+class FieldHooks {
 
-  // Add a new string field to Input Logs. 'log' specifies the entity type and
-  // 'input' specifies the bundle.
-  if ($entity_type->id() == 'log' && $bundle == 'input') {
-    // Options for the new field. See Field options below.
-    $options = [
-      'type' => 'string',
-      'label' => t('My new field'),
-      'description' => t('My field description.'),
-      'weight' => [
-        'form' => 10,
-        'view' => 10,
-      ],
-    ];
-    // NOTE: Replace 'myfield' with the internal name of the field.
-    $fields['myfield'] = \Drupal::service('farm_field.factory')->bundleFieldDefinition($options);
+  use AutowireTrait;
+  use StringTranslationTrait;
+
+  public function __construct(
+    protected FarmFieldFactoryInterface $farmFieldFactory,
+  ) {}
+
+  /**
+   * Implements hook_farm_entity_bundle_field_info().
+   */
+  #[Hook('farm_entity_bundle_field_info')]
+  public function farmEntityBundleFieldInfo(EntityTypeInterface $entity_type) {
+    $fields = [];
+
+    // Add a new string bundle field to input logs.
+    if ($entity_type->id() == 'log' && $bundle == 'input') {
+    
+      // Options for the new field. See Field options below.
+      $options = [
+        'type' => 'string',
+        'label' => $this->t('My new field'),
+        'description' => $this->t('My field description.'),
+        'weight' => [
+          'form' => 10,
+          'view' => 10,
+        ],
+      ];
+      $fields['myfield'] = \Drupal::service('farm_field.factory')->bundleFieldDefinition($options);
+    }
+
+    return $fields;
   }
 
-  return $fields;
 }
 ```
 
@@ -181,39 +228,41 @@ implement `hook_farm_ui_views_base_fields()` and
 `hook_farm_import_csv_base_fields()` in order to tell farmOS to include them.
 
 For example, to add the `myfield` base field declared in the example
-`hook_entity_base_field_info()` hook above, the following additional hooks can
-be added to `mymodule.module`:
+`hook_entity_base_field_info()` hook above, the following additional methods can
+be added to the same `src/Hook/FieldHooks.php` class:
 
 ```php
-/**
- * Implements hook_farm_ui_views_base_fields(). 
- */
-function mymodule_farm_ui_views_base_fields(string $entity_type) {
-  $base_fields = [];
+  /**
+   * Implements hook_farm_ui_views_base_fields().
+   */
+  #[Hook('farm_ui_views_base_fields')]
+  public function farmUiViewsBaseFields(string $entity_type) {
+    $base_fields = [];
 
-  // Add the myfield base field to farmOS log Views.
-  if ($entity_type == 'log') {
-    $base_fields[] = 'myfield';
+    // Add the myfield base field to farmOS log Views.
+    if ($entity_type == 'log') {
+      $base_fields[] = 'myfield';
+    }
+
+    return $base_fields;
   }
-
-  return $base_fields;
-}
 ```
 
 ```php
-/**
- * Implements hook_farm_import_csv_base_fields(). 
- */
-function mymodule_farm_import_csv_base_fields(string $entity_type) {
-  $base_fields = [];
+  /**
+   * Implements hook_farm_import_csv_base_fields().
+   */
+  #[Hook('farm_import_csv_base_fields')]
+  public function farmImportCsvBaseFields(string $entity_type) {
+    $base_fields = [];
 
-  // Add the myfield base field to log CSV importers.
-  if ($entity_type == 'log') {
-    $base_fields[] = 'myfield';
+    // Add the myfield base field to log CSV importers.
+    if ($entity_type == 'log') {
+      $base_fields[] = 'myfield';
+    }
+
+    return $base_fields;
   }
-
-  return $base_fields;
-}
 ```
 
 ## Select options

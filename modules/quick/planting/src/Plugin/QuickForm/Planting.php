@@ -19,6 +19,7 @@ use Drupal\farm_quick\Traits\QuickFormElementsTrait;
 use Drupal\farm_quick\Traits\QuickLogTrait;
 use Drupal\farm_quick\Traits\QuickQuantityTrait;
 use Drupal\farm_quick\Traits\QuickStringTrait;
+use Drupal\quantity\QuantityHelper;
 use Drupal\taxonomy\TermInterface;
 use Psr\Container\ContainerInterface;
 
@@ -275,7 +276,7 @@ class Planting extends QuickFormBase {
     ];
 
     // Filter the available quantity measures, if desired.
-    $quantity_measure_options = quantity_measure_options();
+    $quantity_measure_options = QuantityHelper::quantityMeasureOptions();
     $filtered_quantity_measure_options = $quantity_measure_options;
     if (!empty($quantity_measures)) {
       $filtered_quantity_measure_options = [];

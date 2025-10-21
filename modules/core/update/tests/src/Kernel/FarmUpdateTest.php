@@ -34,6 +34,7 @@ class FarmUpdateTest extends KernelTestBase {
     'config_update',
     'farm_update',
     'farm_update_test',
+    'farm_field',
     'farm_flag',
   ];
 

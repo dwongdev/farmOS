@@ -62,7 +62,8 @@ class AssetInventory implements AssetInventoryInterface {
    * @param \Drupal\asset\Entity\AssetInterface $asset
    *   The asset we are querying inventory of.
    * @param string $measure
-   *   The quantity measure of the inventory. See quantity_measures().
+   *   The quantity measure of the inventory.
+   *   See QuantityHelper::quantityMeasures().
    * @param string|int|null $units
    *   The quantity units of the inventory (term ID).
    *
@@ -115,7 +116,8 @@ class AssetInventory implements AssetInventoryInterface {
    * @param \Drupal\asset\Entity\AssetInterface $asset
    *   The asset we are querying inventory of.
    * @param string $measure
-   *   The quantity measure of the inventory. See quantity_measures().
+   *   The quantity measure of the inventory.
+   *   See QuantityHelper::quantityMeasures().
    * @param string|int|null $units
    *   The quantity units of the inventory (term ID).
    * @param int|null $timestamp
@@ -140,7 +142,8 @@ class AssetInventory implements AssetInventoryInterface {
    * @param \Drupal\asset\Entity\AssetInterface $asset
    *   The asset we are querying inventory of.
    * @param string $measure
-   *   The quantity measure of the inventory. See quantity_measures().
+   *   The quantity measure of the inventory.
+   *   See QuantityHelper::quantityMeasures().
    * @param string|int|null $units
    *   The quantity units of the inventory (term ID).
    * @param int|null $timestamp
@@ -192,7 +195,8 @@ class AssetInventory implements AssetInventoryInterface {
    * @param \Drupal\asset\Entity\AssetInterface $asset
    *   The asset we are querying inventory of.
    * @param string $measure
-   *   The quantity measure of the inventory. See quantity_measures().
+   *   The quantity measure of the inventory.
+   *   See QuantityHelper::quantityMeasures().
    * @param string|int|null $units
    *   The quantity units of the inventory (term ID).
    * @param int|null $timestamp
@@ -235,7 +239,8 @@ class AssetInventory implements AssetInventoryInterface {
    * @param \Drupal\asset\Entity\AssetInterface $asset
    *   The asset we are querying inventory of.
    * @param string $measure
-   *   The quantity measure of the inventory. See quantity_measures().
+   *   The quantity measure of the inventory.
+   *   See QuantityHelper::quantityMeasures().
    * @param string|int|null $units
    *   The quantity units of the inventory (term ID).
    * @param int|null $timestamp

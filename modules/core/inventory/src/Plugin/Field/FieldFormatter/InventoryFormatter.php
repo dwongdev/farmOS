@@ -8,6 +8,7 @@ use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\quantity\QuantityHelper;
 
 /**
  * Plugin implementation of the 'inventory' formatter.
@@ -32,7 +33,7 @@ class InventoryFormatter extends FormatterBase {
         $summary .= ' ' . $item->units;
       }
       if (!empty($item->measure)) {
-        $measures = quantity_measures();
+        $measures = QuantityHelper::quantityMeasures();
         if (!empty($measures[$item->measure]['label'])) {
           $summary .= ' (' . $measures[$item->measure]['label'] . ')';
         }

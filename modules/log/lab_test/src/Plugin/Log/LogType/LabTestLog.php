@@ -7,6 +7,7 @@ namespace Drupal\farm_lab_test\Plugin\Log\LogType;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\farm_entity\Attribute\LogType;
 use Drupal\farm_entity\Plugin\Log\LogType\FarmLogType;
+use Drupal\farm_lab_test\FarmLabTestHelper;
 
 /**
  * Provides the lab test log type.
@@ -51,7 +52,7 @@ class LabTestLog extends FarmLogType {
     $options = [
       'type' => 'list_string',
       'label' => $this->t('Test type'),
-      'allowed_values_function' => 'farm_lab_test_type_field_allowed_values',
+      'allowed_values_function' => [FarmLabTestHelper::class, 'labTestTypeAllowedValues'],
       'weight' => [
         'form' => -50,
         'view' => -50,

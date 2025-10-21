@@ -12,6 +12,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\TempStore\PrivateTempStoreFactory;
 use Drupal\Core\Url;
+use Drupal\farm_flag\FarmFlagHelper;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -109,7 +110,7 @@ class EntityFlagActionForm extends ConfirmFormBase {
     $entity_bundles = array_unique(array_map(function ($entity) {
       return $entity->bundle();
     }, $this->entities));
-    $allowed_values = farm_flag_options($entity_type_id, $entity_bundles, TRUE);
+    $allowed_values = FarmFlagHelper::flagOptions($entity_type_id, $entity_bundles, TRUE);
 
     $form['flags'] = [
       '#type' => 'select',

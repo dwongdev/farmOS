@@ -21,6 +21,7 @@ use Drupal\farm_quick\Traits\QuickFormElementsTrait;
 use Drupal\farm_quick\Traits\QuickLogTrait;
 use Drupal\farm_quick\Traits\QuickTermTrait;
 use Drupal\log\Entity\Log;
+use Drupal\quantity\QuantityHelper;
 use Drupal\taxonomy\TermInterface;
 use Psr\Container\ContainerInterface;
 
@@ -153,7 +154,7 @@ class Inventory extends QuickFormBase implements ConfigurableQuickFormInterface 
     $form['quantity']['measure'] = [
       '#type' => 'select',
       '#title' => $this->t('Measure'),
-      '#options' => array_merge(['' => ''], quantity_measure_options()),
+      '#options' => array_merge(['' => ''], QuantityHelper::quantityMeasureOptions()),
       '#default_value' => $this->configuration['measure'],
     ];
 
@@ -427,7 +428,7 @@ class Inventory extends QuickFormBase implements ConfigurableQuickFormInterface 
     $form['measure'] = [
       '#type' => 'select',
       '#title' => $this->t('Measure'),
-      '#options' => array_merge(['' => ''], quantity_measure_options()),
+      '#options' => array_merge(['' => ''], QuantityHelper::quantityMeasureOptions()),
       '#default_value' => $this->configuration['measure'],
     ];
 

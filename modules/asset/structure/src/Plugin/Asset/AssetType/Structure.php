@@ -7,6 +7,7 @@ namespace Drupal\farm_structure\Plugin\Asset\AssetType;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\farm_entity\Attribute\AssetType;
 use Drupal\farm_entity\Plugin\Asset\AssetType\FarmAssetType;
+use Drupal\farm_structure\FarmStructureHelper;
 
 /**
  * Provides the structure asset type.
@@ -27,7 +28,7 @@ class Structure extends FarmAssetType {
     $options = [
       'type' => 'list_string',
       'label' => $this->t('Structure type'),
-      'allowed_values_function' => 'farm_structure_type_field_allowed_values',
+      'allowed_values_function' => [FarmStructureHelper::class, 'structureTypeAllowedValues'],
       'required' => TRUE,
       'weight' => [
         'form' => -80,

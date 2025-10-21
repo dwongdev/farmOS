@@ -358,7 +358,8 @@ class InventoryTest extends KernelTestBase {
    * @param string $value
    *   The value of the adjustment.
    * @param string $measure
-   *   The quantity measure of the inventory. See quantity_measures().
+   *   The quantity measure of the inventory.
+   *   See QuantityHelper::quantityMeasures().
    * @param string|int|null $units
    *   The quantity units of the inventory (term ID).
    * @param int|null $timestamp
