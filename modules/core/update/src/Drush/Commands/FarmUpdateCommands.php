@@ -8,7 +8,6 @@ use Drupal\farm_update\FarmUpdateInterface;
 use Drush\Attributes as CLI;
 use Drush\Commands\AutowireTrait;
 use Drush\Commands\DrushCommands;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Farm Update Drush commands.
@@ -20,7 +19,6 @@ final class FarmUpdateCommands extends DrushCommands {
   use AutowireTrait;
 
   public function __construct(
-    #[Autowire(service: 'farm.update')]
     private readonly FarmUpdateInterface $farmUpdate,
   ) {
     parent::__construct();

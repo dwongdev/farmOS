@@ -12,6 +12,7 @@ use Drupal\config_update\ConfigDiffer;
 use Drupal\config_update\ConfigListerWithProviders;
 use Drupal\config_update\ConfigReverter;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Farm update service.
@@ -23,12 +24,16 @@ class FarmUpdate implements FarmUpdateInterface {
   use StringTranslationTrait;
 
   public function __construct(
+    #[Autowire(service: 'logger.channel.farm_update')]
     protected LoggerInterface $logger,
     protected ModuleHandlerInterface $moduleHandler,
     protected EntityTypeManagerInterface $entityTypeManager,
     protected ConfigFactoryInterface $configFactory,
+    #[Autowire(service: 'config_update.config_diff')]
     protected ConfigDiffer $configDiff,
+    #[Autowire(service: 'config_update.config_list')]
     protected ConfigListerWithProviders $configList,
+    #[Autowire(service: 'config_update.config_update')]
     protected ConfigReverter $configUpdate,
   ) {}
 

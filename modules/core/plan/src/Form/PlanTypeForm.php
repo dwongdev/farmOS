@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Drupal\plan\Form;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\state_machine\WorkflowManagerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Form controller for plan type entities.
@@ -15,6 +16,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @package Drupal\plan\Form
  */
 class PlanTypeForm extends EntityForm {
+
+  use AutowireTrait;
 
   /**
    * The plan type entity.
@@ -24,17 +27,9 @@ class PlanTypeForm extends EntityForm {
   protected $entity;
 
   public function __construct(
+    #[Autowire(service: 'plugin.manager.workflow')]
     protected WorkflowManagerInterface $workflowManager,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('plugin.manager.workflow')
-    );
-  }
 
   /**
    * {@inheritdoc}

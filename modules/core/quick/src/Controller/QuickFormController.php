@@ -7,31 +7,23 @@ namespace Drupal\farm_quick\Controller;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\farm_quick\QuickFormInstanceManagerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Quick form controller.
  */
 class QuickFormController extends ControllerBase {
 
+  use AutowireTrait;
   use StringTranslationTrait;
 
   public function __construct(
     protected QuickFormInstanceManagerInterface $quickFormInstanceManager,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('quick_form.instance_manager'),
-    );
-  }
 
   /**
    * The index of quick forms.

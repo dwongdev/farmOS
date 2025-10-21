@@ -1,13 +1,13 @@
 services:
+  _defaults:
+    autowire: true
   asset.location:
     class: Drupal\farm_location\AssetLocation
-    arguments:
-      [ '@log.location', '@farm.log_query', '@entity_type.manager', '@datetime.time' , '@database']
+  Drupal\farm_location\AssetLocationInterface: '@asset.location'
   log.location:
     class: Drupal\farm_location\LogLocation
+  Drupal\farm_location\LogLocationInterface: '@log.location'
   farm_location.log_event_subscriber:
     class: Drupal\farm_location\EventSubscriber\LogEventSubscriber
-    arguments:
-      [ '@log.location', '@asset.location', '@cache_tags.invalidator' ]
     tags:
       - { name: 'event_subscriber' }

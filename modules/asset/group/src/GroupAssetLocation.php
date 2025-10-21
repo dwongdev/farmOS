@@ -6,6 +6,7 @@ namespace Drupal\farm_group;
 
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Database\Connection;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\asset\Entity\AssetInterface;
 use Drupal\farm_location\AssetLocation;
@@ -13,12 +14,13 @@ use Drupal\farm_location\AssetLocationInterface;
 use Drupal\farm_location\LogLocationInterface;
 use Drupal\farm_log\LogQueryFactoryInterface;
 use Drupal\log\Entity\LogInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Asset location logic, accounting for group membership.
  */
 class GroupAssetLocation extends AssetLocation implements AssetLocationInterface {
+
+  use AutowireTrait;
 
   public function __construct(
     protected LogLocationInterface $logLocation,
@@ -29,20 +31,6 @@ class GroupAssetLocation extends AssetLocation implements AssetLocationInterface
     protected GroupMembershipInterface $groupMembership,
   ) {
     parent::__construct($logLocation, $logQueryFactory, $entityTypeManager, $time, $database);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('log.location'),
-      $container->get('farm.log_query'),
-      $container->get('entity_type.manager'),
-      $container->get('datetime.time'),
-      $container->get('database'),
-      $container->get('group.membership')
-    );
   }
 
   /**

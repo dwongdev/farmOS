@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Drupal\farm_import_kml\Form;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\asset\Entity\Asset;
 use Drupal\farm_geo\GeometryWrapper;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
@@ -23,22 +24,14 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 class KmlImporter extends FormBase {
 
+  use AutowireTrait;
+
   public function __construct(
     protected EntityTypeManagerInterface $entityTypeManager,
+    #[Autowire(service: 'serializer')]
     protected SerializerInterface $serializer,
     protected FileSystemInterface $fileSystem,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('entity_type.manager'),
-      $container->get('serializer'),
-      $container->get('file_system')
-    );
-  }
 
   /**
    * {@inheritdoc}

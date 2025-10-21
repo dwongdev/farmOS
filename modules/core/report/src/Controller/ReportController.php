@@ -6,30 +6,22 @@ namespace Drupal\farm_report\Controller;
 
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Menu\MenuLinkTreeInterface;
 use Drupal\Core\Menu\MenuTreeParameters;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Report controller.
  */
 class ReportController extends ControllerBase {
 
+  use AutowireTrait;
   use StringTranslationTrait;
 
   public function __construct(
     protected MenuLinkTreeInterface $menuLinkTree,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('menu.link_tree')
-    );
-  }
 
   /**
    * The index of reports.

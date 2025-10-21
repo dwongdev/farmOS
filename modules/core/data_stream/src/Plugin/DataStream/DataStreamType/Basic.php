@@ -17,6 +17,7 @@ use Drupal\data_stream\Event\DataStreamEvent;
 use Drupal\data_stream\Traits\DataStreamPrivateKeyAccess;
 use Drupal\fraction\Fraction;
 use Drupal\jsonapi\Exception\UnprocessableHttpEntityException;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -51,6 +52,7 @@ class Basic extends DataStreamTypeBase implements DataStreamStorageInterface, Da
     string $plugin_id,
     $plugin_definition,
     protected Connection $connection,
+    #[Autowire(service: 'event_dispatcher')]
     protected EventDispatcherInterface $eventDispatcher,
     protected TimeInterface $time,
   ) {

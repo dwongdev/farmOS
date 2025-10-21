@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\farm_import_csv\Form;
 
 use Drupal\Component\Datetime\TimeInterface;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\File\FileExists;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Form\FormBase;
@@ -17,37 +18,27 @@ use Drupal\migrate\MigrateMessage;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\Plugin\MigrationPluginManager;
 use Drupal\migrate_tools\MigrateBatchExecutable;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Provides the CSV import form.
  */
 class CsvImportForm extends FormBase {
 
+  use AutowireTrait;
+
   public function __construct(
+    #[Autowire(service: 'plugin.manager.migration')]
     protected MigrationPluginManager $migrationPluginManager,
     protected FileSystemInterface $fileSystem,
     protected TimeInterface $time,
+    #[Autowire(service: 'keyvalue')]
     protected KeyValueFactoryInterface $keyValueFactory,
+    #[Autowire(service: 'string_translation')]
     protected TranslationManager $translationManager,
     protected FileUsageInterface $fileUsage,
     protected PrivateTempStoreFactory $tempStoreFactory,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container): static {
-    return new static(
-      $container->get('plugin.manager.migration'),
-      $container->get('file_system'),
-      $container->get('datetime.time'),
-      $container->get('keyvalue'),
-      $container->get('string_translation'),
-      $container->get('file.usage'),
-      $container->get('tempstore.private'),
-    );
-  }
 
   /**
    * {@inheritdoc}

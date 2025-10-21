@@ -6,8 +6,8 @@ namespace Drupal\farm_fieldkit\Controller;
 
 use Drupal\Core\Asset\LibraryDiscoveryInterface;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\farm_fieldkit\Entity\FieldModuleInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
@@ -16,18 +16,11 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
  */
 class FieldModuleController extends ControllerBase {
 
+  use AutowireTrait;
+
   public function __construct(
     protected LibraryDiscoveryInterface $libraryDiscovery,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('library.discovery')
-    );
-  }
 
   /**
    * Returns the FieldModule JS.

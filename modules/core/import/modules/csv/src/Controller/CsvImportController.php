@@ -8,6 +8,7 @@ use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Database\Connection;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Link;
 use Drupal\Core\Menu\MenuLinkTreeInterface;
 use Drupal\Core\Menu\MenuTreeParameters;
@@ -16,7 +17,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_import_csv\Access\CsvImportMigrationAccess;
 use Drupal\migrate\Plugin\MigrationPluginManager;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
@@ -25,26 +26,17 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
  */
 class CsvImportController extends ControllerBase {
 
+  use AutowireTrait;
   use StringTranslationTrait;
 
   public function __construct(
     protected MenuLinkTreeInterface $menuLinkTree,
+    #[Autowire(service: 'plugin.manager.migration')]
     protected MigrationPluginManager $pluginManagerMigration,
+    #[Autowire(service: 'farm_import_csv.access')]
     protected CsvImportMigrationAccess $migrationAccess,
     protected Connection $database,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('menu.link_tree'),
-      $container->get('plugin.manager.migration'),
-      $container->get('farm_import_csv.access'),
-      $container->get('database'),
-    );
-  }
 
   /**
    * The index of importers.

@@ -6,6 +6,7 @@ namespace Drupal\farm_ui_theme\Form;
 
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Datetime\DateFormatterInterface;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Entity\EntityChangedInterface;
 use Drupal\Core\Entity\EntityRepositoryInterface;
@@ -15,12 +16,13 @@ use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element\RenderCallbackInterface;
 use Drupal\user\EntityOwnerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Entity form for gin content form styling.
  */
 class GinContentFormBase extends ContentEntityForm implements RenderCallbackInterface {
+
+  use AutowireTrait;
 
   public function __construct(
     EntityRepositoryInterface $entity_repository,
@@ -31,19 +33,6 @@ class GinContentFormBase extends ContentEntityForm implements RenderCallbackInte
   ) {
     parent::__construct($entity_repository, $entity_type_bundle_info, $time);
     $this->setModuleHandler($module_handler);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('entity.repository'),
-      $container->get('entity_type.bundle.info'),
-      $container->get('datetime.time'),
-      $container->get('date.formatter'),
-      $container->get('module_handler'),
-    );
   }
 
   /**

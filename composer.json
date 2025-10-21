@@ -29,7 +29,7 @@
         "drupal/entity_reference_revisions": "1.12",
         "drupal/entity_reference_validators": "^2.0",
         "drupal/fraction": "^3.0",
-        "drupal/geofield": "^1.62",
+        "drupal/geofield": "^1.66",
         "drupal/gin": "5.0.3",
         "drupal/inline_entity_form": "^3.0@RC",
         "drupal/inspire_tree": "^1.0.6",

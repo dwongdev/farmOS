@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\farm_settings\Form;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Form for installing farmOS modules.
@@ -15,6 +15,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @ingroup farm
  */
 class FarmSettingsModulesForm extends FormBase {
+
+  use AutowireTrait;
 
   /**
    * The package name for farmOS contrib modules.
@@ -40,15 +42,6 @@ class FarmSettingsModulesForm extends FormBase {
   public function __construct(
     protected ModuleExtensionList $moduleExtensionList,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('extension.list.module'),
-    );
-  }
 
   /**
    * {@inheritdoc}

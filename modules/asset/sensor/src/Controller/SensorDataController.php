@@ -6,11 +6,12 @@ namespace Drupal\farm_sensor\Controller;
 
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\asset\Entity\AssetInterface;
 use Drupal\data_stream\DataStreamTypeManager;
 use Drupal\data_stream\Entity\DataStreamInterface;
 use Drupal\jsonapi\Exception\UnprocessableHttpEntityException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,18 +24,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class SensorDataController extends ControllerBase {
 
+  use AutowireTrait;
+
   public function __construct(
+    #[Autowire(service: 'plugin.manager.data_stream_type')]
     protected DataStreamTypeManager $dataStreamTypeManager,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('plugin.manager.data_stream_type')
-    );
-  }
 
   /**
    * Respond to GET or POST requests referencing sensor assets by UUID.

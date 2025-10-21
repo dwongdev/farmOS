@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\farm_export_csv\Form;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystemInterface;
@@ -15,7 +16,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\TempStore\PrivateTempStoreFactory;
 use Drupal\Core\Url;
 use Drupal\file\FileRepositoryInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -26,6 +27,8 @@ use Symfony\Component\Serializer\SerializerInterface;
  * @see \Drupal\Core\Entity\Form\DeleteMultipleForm
  */
 class EntityCsvActionForm extends ConfirmFormBase implements BaseFormIdInterface {
+
+  use AutowireTrait;
 
   /**
    * The entity type.
@@ -45,28 +48,13 @@ class EntityCsvActionForm extends ConfirmFormBase implements BaseFormIdInterface
     protected PrivateTempStoreFactory $tempStoreFactory,
     protected EntityTypeManagerInterface $entityTypeManager,
     protected EntityFieldManagerInterface $entityFieldManager,
+    #[Autowire(service: 'serializer')]
     protected SerializerInterface $serializer,
     protected FileSystemInterface $fileSystem,
     protected FileRepositoryInterface $fileRepository,
     protected FileUrlGeneratorInterface $fileUrlGenerator,
     protected AccountInterface $user,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('tempstore.private'),
-      $container->get('entity_type.manager'),
-      $container->get('entity_field.manager'),
-      $container->get('serializer'),
-      $container->get('file_system'),
-      $container->get('file.repository'),
-      $container->get('file_url_generator'),
-      $container->get('current_user'),
-    );
-  }
 
   /**
    * {@inheritdoc}

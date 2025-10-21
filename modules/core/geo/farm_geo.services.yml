@@ -1,6 +1,7 @@
 services:
+  _defaults:
+    autowire: true
   serializer.farm_geo.geometry.content_entity_geometry:
     class: Drupal\farm_geo\Normalizer\ContentEntityGeometryNormalizer
-    arguments: ['@geofield.geophp']
     tags:
       - { name: normalizer, priority: 10 }

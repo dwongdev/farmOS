@@ -4,29 +4,23 @@ declare(strict_types=1);
 
 namespace Drupal\farm_quick;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\farm_quick\Entity\QuickFormInstance;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Quick form instance manager.
  */
 class QuickFormInstanceManager implements QuickFormInstanceManagerInterface {
 
+  use AutowireTrait;
+
   public function __construct(
     protected EntityTypeManagerInterface $entityTypeManager,
+    #[Autowire(service: 'plugin.manager.quick_form')]
     protected QuickFormPluginManager $quickFormPluginManager,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('entity_type.manager'),
-      $container->get('plugin.manager.quick_form'),
-    );
-  }
 
   /**
    * {@inheritdoc}

@@ -6,9 +6,9 @@ namespace Drupal\farm_ui_dashboard\Controller;
 
 use Drupal\Core\Block\BlockManagerInterface;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Layout\LayoutPluginManagerInterface;
 use Drupal\views\Views;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Dashboard controller.
@@ -17,20 +17,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class DashboardController extends ControllerBase {
 
+  use AutowireTrait;
+
   public function __construct(
     protected LayoutPluginManagerInterface $layoutPluginManager,
     protected BlockManagerInterface $blockManager,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('plugin.manager.core.layout'),
-      $container->get('plugin.manager.block'),
-    );
-  }
 
   /**
    * Builds the farm dashboard page.

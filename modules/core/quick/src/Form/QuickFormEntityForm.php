@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\farm_quick\Form;
 
 use Drupal\Component\Utility\Html;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Form\SubformState;
@@ -12,13 +13,15 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\farm_quick\Entity\QuickFormInstance;
 use Drupal\farm_quick\Plugin\QuickForm\ConfigurableQuickFormInterface;
 use Drupal\farm_quick\QuickFormPluginManager;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Form that renders quick form configuration forms.
  */
 class QuickFormEntityForm extends EntityForm {
+
+  use AutowireTrait;
 
   /**
    * The entity being used by this form.
@@ -28,17 +31,9 @@ class QuickFormEntityForm extends EntityForm {
   protected $entity;
 
   public function __construct(
+    #[Autowire(service: 'plugin.manager.quick_form')]
     protected QuickFormPluginManager $quickFormPluginManager,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('plugin.manager.quick_form'),
-    );
-  }
 
   /**
    * {@inheritdoc}
