@@ -93,6 +93,7 @@ requirements (inherited from Drupal 11):
 - Remove [JSON:API Extras](https://www.drupal.org/project/jsonapi_extras) module (see [Remove dependency on JSON:API Extras module #964](https://github.com/farmOS/farmOS/pull/964)).
 - Remove [Migrate Source UI](https://www.drupal.org/project/migrate_source_ui) module (see [Remove dependency on Migrate Source UI module #994](https://github.com/farmOS/farmOS/pull/994)).
 - [Do not generate keys during farm_api_install() #972](https://github.com/farmOS/farmOS/pull/972)
+- [Remove asset_admin and plan_admin Views #1012](https://github.com/farmOS/farmOS/pull/1012)
 
 ### Fixed
 

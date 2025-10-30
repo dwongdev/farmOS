@@ -68,7 +68,6 @@ use Drupal\views\EntityViewsData;
     'canonical' => '/plan/{plan}',
     'add-page' => '/plan/add',
     'add-form' => '/plan/add/{plan_type}',
-    'collection' => '/admin/content/plan',
     'delete-form' => '/plan/{plan}/delete',
     'delete-multiple-form' => '/plan/delete',
     'edit-form' => '/plan/{plan}/edit',

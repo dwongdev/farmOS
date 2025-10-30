@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\system\Entity\Action;
+use Drupal\views\Entity\View;
 
 /**
  * Move archived plan status to boolean field.
@@ -67,6 +68,14 @@ function plan_post_update_move_archived_status(&$sandbox) {
     $action->set('id', 'plan_unarchive_action');
     $action->save();
   }
+}
+
+/**
+ * Remove the plan_admin View.
+ */
+function plan_post_update_remove_admin_view(&$sandbox) {
+  $view = View::load('plan_admin');
+  $view->delete();
 }
 
 /**

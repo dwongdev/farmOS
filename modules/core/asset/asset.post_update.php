@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\system\Entity\Action;
+use Drupal\views\Entity\View;
 
 /**
  * Remove the asset status field.
@@ -84,4 +85,12 @@ function asset_post_update_remove_status(&$sandbox) {
   foreach ($asset_types as $name => $asset_type) {
     \Drupal::configFactory()->getEditable('asset.type.' . $name)->clear('workflow')->save();
   }
+}
+
+/**
+ * Remove the asset_admin View.
+ */
+function asset_post_update_remove_admin_view(&$sandbox) {
+  $view = View::load('asset_admin');
+  $view->delete();
 }

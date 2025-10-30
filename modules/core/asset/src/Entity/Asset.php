@@ -70,7 +70,6 @@ use Drupal\views\EntityViewsData;
     'canonical' => '/asset/{asset}',
     'add-page' => '/asset/add',
     'add-form' => '/asset/add/{asset_type}',
-    'collection' => '/admin/content/asset',
     'delete-form' => '/asset/{asset}/delete',
     'delete-multiple-form' => '/asset/delete',
     'edit-form' => '/asset/{asset}/edit',
