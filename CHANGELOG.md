@@ -54,6 +54,7 @@ requirements (inherited from Drupal 11):
 - [farmOS 4.x requires PHP 8.4 #979](https://github.com/farmOS/farmOS/pull/979)
 - [Issue #3488916: Update Drupal core to 11.x](https://www.drupal.org/project/farm/issues/3488916)
 - [Run Docker container as www-data user #1009](https://github.com/farmOS/farmOS/pull/1009)
+- [Declare PHP extensions as required: bcmath, exif, geos #1013](https://github.com/farmOS/farmOS/pull/1013)
 - [Update Drupal to v11.2, PHPUnit to v11, PHPStan to v2 #980](https://github.com/farmOS/farmOS/pull/980)
 - [Update Docker base image to Debian Trixie #992](https://github.com/farmOS/farmOS/pull/992)
 - [Change how assets and plans are archived #986](https://github.com/farmOS/farmOS/pull/986)
