@@ -1,4 +1,0 @@
-entity.organization.collection:
-  route_name: entity.organization.collection
-  title: 'Organizations'
-  base_route: system.admin_content

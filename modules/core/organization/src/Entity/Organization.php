@@ -68,7 +68,6 @@ use Drupal\views\EntityViewsData;
     'canonical' => '/organization/{organization}',
     'add-page' => '/organization/add',
     'add-form' => '/organization/add/{organization_type}',
-    'collection' => '/admin/content/organization',
     'delete-form' => '/organization/{organization}/delete',
     'delete-multiple-form' => '/organization/delete',
     'edit-form' => '/organization/{organization}/edit',
