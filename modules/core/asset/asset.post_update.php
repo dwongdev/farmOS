@@ -78,4 +78,10 @@ function asset_post_update_remove_status(&$sandbox) {
   // Delete the status field.
   $storage_definition = $update_manager->getFieldStorageDefinition('status', 'asset');
   $update_manager->uninstallFieldStorageDefinition($storage_definition);
+
+  // Remove workflow from all asset.type.* config.
+  $asset_types = \Drupal::entityTypeManager()->getStorage('asset_type')->loadMultiple();
+  foreach ($asset_types as $name => $asset_type) {
+    \Drupal::configFactory()->getEditable('asset.type.' . $name)->clear('workflow')->save();
+  }
 }
