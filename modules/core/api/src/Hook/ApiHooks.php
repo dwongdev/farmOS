@@ -27,6 +27,8 @@ class ApiHooks {
       'file',
       'log',
       'log_type',
+      'organization',
+      'organization_type',
       'plan',
       'plan_type',
       'plan_record',

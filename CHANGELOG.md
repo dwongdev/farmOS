@@ -40,6 +40,7 @@ requirements (inherited from Drupal 11):
 ### Added
 
 - [Add an Organization entity type with a Farm bundle #849](https://github.com/farmOS/farmOS/pull/849)
+- [Allow API access to organizations #1010](https://github.com/farmOS/farmOS/pull/1010)
 - [Issue #3304608: Add an "abandoned" log status](https://www.drupal.org/project/farm/issues/3304608)
 - [Add default plan status options: "planning", "done", "abandoned" #986](https://github.com/farmOS/farmOS/pull/986)
 - [Add support for attributes in farmOS plugin types #963](https://github.com/farmOS/farmOS/pull/963)
