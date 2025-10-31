@@ -6,7 +6,6 @@ dependencies:
     - organization.type.farm
   module:
     - asset
-    - farm_farm
     - farm_location
     - image
     - options

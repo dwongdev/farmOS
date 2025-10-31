@@ -6,7 +6,6 @@ dependencies:
   module:
     - entity_reference_revisions
     - farm_farm
-    - farm_ui_views
     - log
     - options
     - state_machine
