@@ -1,4 +1,4 @@
-# Schema for views access plugins.
+# Schema for Views access plugin.
 views.access.farm_entity_collection:
   type: mapping
   label: 'Entity collection access'
