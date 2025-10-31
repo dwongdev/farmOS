@@ -5,13 +5,13 @@ dependencies:
     - system.menu.admin
     - taxonomy.vocabulary.unit
   module:
+    - farm_entity_access
     - fraction
     - log
     - options
     - quantity
     - state_machine
     - taxonomy
-    - user
   enforced:
     module:
       - farm_ui_views
@@ -895,9 +895,10 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: perm
+        type: farm_entity_collection
         options:
-          perm: 'view any quantity'
+          entity_type:
+            quantity: quantity
       cache:
         type: tag
         options: {  }
@@ -1587,13 +1588,12 @@ display:
           content: 'Displaying @start - @end of @total'
       display_extenders: {  }
     cache_metadata:
-      max-age: -1
+      max-age: 0
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
         - url.query_args
-        - user
         - user.permissions
       tags: {  }
   page:
@@ -1630,13 +1630,12 @@ display:
         parent: farm.records
         context: '0'
     cache_metadata:
-      max-age: -1
+      max-age: 0
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
         - url.query_args
-        - user
         - user.permissions
       tags: {  }
   page_type:
@@ -1710,12 +1709,11 @@ display:
           collapsible: true
       path: log-quantities/%
     cache_metadata:
-      max-age: -1
+      max-age: 0
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
         - url.query_args
-        - user
         - user.permissions
       tags: {  }

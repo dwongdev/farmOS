@@ -55,7 +55,7 @@ class InputViewMaterialTypeTest extends FarmBrowserTestBase {
     parent::setUp();
 
     // Create and login a user with permission to view logs.
-    $this->user = $this->createUser(['view any log']);
+    $this->user = $this->createUser(['access log collection', 'view any log']);
     $this->drupalLogin($this->user);
 
     // Create material type terms.

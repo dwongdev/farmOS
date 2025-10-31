@@ -54,8 +54,8 @@ class DashboardTasksTest extends FarmBrowserTestBase {
     $this->user = $this->createUser(['access farm dashboard']);
     $this->drupalLogin($this->user);
 
-    // Create a role that has permission to view log.
-    $this->role = $this->drupalCreateRole(['access farm dashboard', 'view any log']);
+    // Create a role that has permission to view logs.
+    $this->role = $this->drupalCreateRole(['access farm dashboard', 'access log collection', 'view any log']);
 
     // Create a log that is done.
     $this->log = Log::create([

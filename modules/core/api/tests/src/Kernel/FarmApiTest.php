@@ -35,6 +35,7 @@ class FarmApiTest extends KernelTestBase {
     'farm_api',
     'farm_api_test',
     'farm_entity',
+    'farm_entity_access',
     'farm_field',
     'farm_log_asset',
     'farm_manager',
