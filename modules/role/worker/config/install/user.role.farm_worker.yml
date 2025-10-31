@@ -8,10 +8,7 @@ id: farm_worker
 label: 'Worker'
 weight: 1
 is_admin: false
-permissions:
-  - revert all asset revisions
-  - revert all log revisions
-  - revert all quantity revisions
+permissions: { }
 third_party_settings:
   farm_role:
     access:
