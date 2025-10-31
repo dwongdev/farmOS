@@ -1,6 +1,8 @@
 langcode: en
 status: true
 dependencies:
+  module:
+    - farm_role
   enforced:
     module:
       - farm_viewer

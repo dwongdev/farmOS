@@ -35,9 +35,6 @@ class FarmEntityRevisionsTest extends FarmBrowserTestBase {
       'view all asset revisions',
       'view all log revisions',
       'view all plan revisions',
-      'revert all asset revisions',
-      'revert all log revisions',
-      'revert all plan revisions',
     ]);
     $this->drupalLogin($user);
   }
