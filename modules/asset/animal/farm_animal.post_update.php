@@ -44,4 +44,16 @@ function farm_animal_post_update_rename_is_castrated_is_sterile(&$sandbox) {
   // Delete the old is_castrated field.
   $storage_definition = $update_manager->getFieldStorageDefinition('is_castrated', 'asset');
   $update_manager->uninstallFieldStorageDefinition($storage_definition);
+
+  // Update core.entity_view_display.asset.animal.map_popup config.
+  $config = \Drupal::configFactory()->getEditable('core.entity_view_display.asset.animal.map_popup');
+  if (!$config->isNew()) {
+    $hidden = $config->get('hidden');
+    if (isset($hidden['is_castrated'])) {
+      unset($hidden['is_castrated']);
+      $hidden['is_sterile'] = TRUE;
+      $config->set('hidden', $hidden);
+      $config->save();
+    }
+  }
 }
