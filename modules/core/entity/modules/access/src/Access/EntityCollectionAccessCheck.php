@@ -36,8 +36,18 @@ class EntityCollectionAccessCheck implements AccessInterface {
     }
 
     // Check if the route is expecting a specific bundle.
+    // The name of the bundle parameter may be either the bundle entity type
+    // machine name (eg: "asset_type", "log_type", etc.), "entity_bundle", or
+    // "arg_0". Take the first one we find.
     $entity_type = $this->entityTypeManager->getDefinition($this->entityTypeId);
-    $bundle = $route_match->getParameter($entity_type->getBundleEntityType()) ?: $route_match->getParameter('arg_0');
+    $bundle_parameters = [
+      $entity_type->getBundleEntityType(),
+      'entity_bundle',
+      'arg_0',
+    ];
+    $bundle = array_reduce($bundle_parameters, function ($carry, $parameter) use ($route_match) {
+      return $carry ?: $route_match->getParameter($parameter);
+    });
 
     // Return entity collection access result.
     return self::checkEntityCollectionAccess($this->currentUser, $this->entityTypeId, $bundle);
