@@ -24,12 +24,11 @@ dependencies. The [farmOS Docker images](/hosting/docker/) include these.
     - `max_input_vars=5000`
     - `realpath_cache_size=4096K`
     - `realpath_cache_ttl=3600`
-- **[PHP BCMath extension](https://www.php.net/manual/en/book.bc.php)** and
-  **[GEOS](https://trac.osgeo.org/geos)** are required for accurate geometric
-  calculations. farmOS can be installed without these, but production usage
-  without them is strongly discouraged.
-- **[PHP EXIF extension](https://www.php.net/manual/en/book.exif.php)** is
-  necessary for automatic image rotation, but is not required.
+- **PHP extensions** - The following PHP extensions are required:
+    - [BCMath](https://www.php.net/manual/en/book.bc.php)
+    - [EXIF](https://www.php.net/manual/en/book.exif.php)
+    - [GEOS](https://git.osgeo.org/gitea/geos/php-geos)
+    - [SimpleXML](https://www.php.net/manual/en/book.simplexml.php)
 
 ## Database server
 

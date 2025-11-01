@@ -46,6 +46,9 @@
         "drupal/token": "^1.15",
         "drupal/views_geojson": "^1.3",
         "drush/drush": "^13.0",
+        "ext-bcmath": "*",
+        "ext-exif": "*",
+        "ext-geos": "*",
         "ext-simplexml": "*",
         "itamair/geophp": "1.6",
         "php": ">=8.4"
