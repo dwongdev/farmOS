@@ -32,7 +32,6 @@ class EntityCollectionAccessCheck implements AccessInterface {
 
     // Bail if the entity type does not exist.
     if (!$this->entityTypeManager->hasDefinition($this->entityTypeId)) {
-      // TODO: Cache tag for when entity type is later installed?
       return AccessResult::forbidden();
     }
 
@@ -62,7 +61,6 @@ class EntityCollectionAccessCheck implements AccessInterface {
     // Bail if the entity type does not exist.
     $entity_type_manager = \Drupal::entityTypeManager();
     if (!$entity_type_manager->hasDefinition($entity_type_id)) {
-      // TODO: Cache tag for when entity type is later installed?
       return AccessResult::forbidden();
     }
 
