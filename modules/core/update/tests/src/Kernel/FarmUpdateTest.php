@@ -67,6 +67,11 @@ class FarmUpdateTest extends KernelTestBase {
     // Confirm that managed config listed in farm_update.settings does get
     // reverted.
     $this->farmUpdateTestRevertSetting('farm_flag.flag.review', 'label', 'Changed');
+
+    // Confirm that managed config listed in hook_farm_update_managed_config()
+    // can be removed with hook_farm_update_managed_config_alter(), and does
+    // not get reverted.
+    $this->farmUpdateTestRevertSetting('farm_flag.flag.test', 'label', 'Changed', FALSE);
   }
 
   /**

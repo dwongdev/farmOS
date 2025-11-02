@@ -94,6 +94,9 @@ class FarmUpdate implements FarmUpdateInterface {
       $managed_config = array_merge($managed_config, $settings_managed_config);
     }
 
+    // Allow modules to alter the list of managed configuration items.
+    $this->moduleHandler->alter('farm_update_managed_config', $managed_config);
+
     return $managed_config;
   }
 
