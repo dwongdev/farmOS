@@ -27,17 +27,4 @@ class UpdateHooks {
     $this->farmUpdate->rebuild();
   }
 
-  /**
-   * Implements hook_farm_update_exclude_config().
-   */
-  #[Hook('farm_update_exclude_config')]
-  public function farmUpdateExcludeConfig() {
-
-    // Exclude Drupal core configurations from automatic updates.
-    return [
-      'user.role.anonymous',
-      'user.role.authenticated',
-    ];
-  }
-
 }

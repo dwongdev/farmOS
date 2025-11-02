@@ -75,6 +75,7 @@ requirements (inherited from Drupal 11):
 - [Autowire injected service dependencies #1006](https://github.com/farmOS/farmOS/pull/1006)
 - [Convert all procedural hook implementations to Hook classes #1007](https://github.com/farmOS/farmOS/pull/1007)
 - [Implement ManagedRolePermissions access policy and simple_oauth scope granularity #922](https://github.com/farmOS/farmOS/pull/922)
+- [Change farmOS Update config revert logic from opt-out to opt-in #1011](https://github.com/farmOS/farmOS/pull/1011)
 
 ### Deprecated
 
