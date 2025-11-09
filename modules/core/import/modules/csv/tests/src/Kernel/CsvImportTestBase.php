@@ -34,6 +34,7 @@ class CsvImportTestBase extends MigrateTestBase {
     'entity_reference_validators',
     'farm_animal_type',
     'farm_entity_fields',
+    'farm_entity_access',
     'farm_field',
     'farm_format',
     'farm_import',

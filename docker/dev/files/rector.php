@@ -64,6 +64,7 @@ return static function (RectorConfig $rectorConfig): void {
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'MigrateProcessPlugin', 'Drupal\migrate\Attribute\MigrateProcess'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'MigrateSource', 'Drupal\migrate\Attribute\MigrateSource'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'RenderElement', 'Drupal\Core\Render\Attribute\RenderElement'),
+    new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'ViewsAccess', 'Drupal\views\Attribute\ViewsAccess'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'ViewsArgument', 'Drupal\views\Attribute\ViewsArgument'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'ViewsDisplayExtender', 'Drupal\views\Attribute\ViewsDisplayExtender'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'ViewsField', 'Drupal\views\Attribute\ViewsField'),

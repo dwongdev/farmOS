@@ -5,6 +5,7 @@ farm.locations:
     _form: \Drupal\farm_ui_location\Form\LocationHierarchyForm
   requirements:
     _permission: 'access locations overview'
+    _asset_collection_access: 'TRUE'
 
 farm.asset.locations:
   path: '/asset/{asset}/locations'

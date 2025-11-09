@@ -40,6 +40,10 @@ class FarmUiViewsTest extends FarmBrowserTestBase {
 
     // Create and login a user with necessary permissions.
     $user = $this->createUser([
+      'access asset collection',
+      'access log collection',
+      'access organization collection',
+      'access quantity collection',
       'view any asset',
       'view any log',
       'view any organization',

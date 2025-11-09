@@ -1,3 +1,7 @@
+access asset collection:
+  title: 'View asset collection'
+  description: 'View a collection of asset entities.'
+
 administer assets:
   title: 'Administer assets'
   description: 'Admin access to all asset entities.'

@@ -34,7 +34,7 @@
         "drupal/inline_entity_form": "^3.0@RC",
         "drupal/inspire_tree": "^1.0.6",
         "drupal/jsonapi_schema": "^1.0",
-        "drupal/log": "^2.3.1",
+        "drupal/log": "^3.0",
         "drupal/migrate_plus": "^6.0.8",
         "drupal/migrate_source_csv": "^3.6",
         "drupal/migrate_tools": "^6.1.2",

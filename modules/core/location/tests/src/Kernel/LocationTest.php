@@ -8,6 +8,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\Tests\farm_test\Kernel\FarmAssetTestTrait;
 use Drupal\Tests\farm_test\Kernel\FarmEntityCacheTestTrait;
+use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\asset\Entity\Asset;
 use Drupal\farm_geo\Traits\WktTrait;
 use Drupal\log\Entity\Log;
@@ -22,6 +23,7 @@ class LocationTest extends KernelTestBase {
   use StringTranslationTrait;
   use FarmEntityCacheTestTrait;
   use FarmAssetTestTrait;
+  use UserCreationTrait;
   use WktTrait;
 
   /**
@@ -66,6 +68,8 @@ class LocationTest extends KernelTestBase {
     'asset',
     'geofield',
     'log',
+    'entity',
+    'farm_entity_access',
     'farm_field',
     'farm_location',
     'farm_location_test',
@@ -676,6 +680,13 @@ class LocationTest extends KernelTestBase {
    * Test that circular asset location is prevented.
    */
   public function testCircularAssetLocation() {
+
+    // Create and login a user with access to view any asset. This is necessary
+    // to validate the log entities below, because the entity reference fields
+    // use Views to validate that entities are referencable, and the Views use
+    // the farm_entity_collection Views access plugin.
+    $user = $this->createUser(['view any asset']);
+    $this->container->get('current_user')->setAccount($user);
 
     // First, make sure we can't create a movement log that references the same
     // asset in both the asset and location fields.

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\farm_farm\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
+use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\farm_farm\Plugin\Validation\Constraint\AssetGroupAssignmentFarm;
 use Drupal\farm_farm\Plugin\Validation\Constraint\AssetMovementFarm;
 use Drupal\farm_farm\Plugin\Validation\Constraint\AssetParentFarm;
@@ -18,6 +19,8 @@ use Drupal\farm_farm\Plugin\Validation\Constraint\LogMovementFarm;
  */
 class FieldConstraintsTest extends KernelTestBase {
 
+  use UserCreationTrait;
+
   /**
    * {@inheritdoc}
    */
@@ -26,6 +29,7 @@ class FieldConstraintsTest extends KernelTestBase {
     'entity',
     'entity_reference_validators',
     'farm_entity',
+    'farm_entity_access',
     'farm_farm',
     'farm_farm_test',
     'farm_field',
@@ -51,6 +55,7 @@ class FieldConstraintsTest extends KernelTestBase {
     $this->installEntitySchema('asset');
     $this->installEntitySchema('log');
     $this->installEntitySchema('organization');
+    $this->installEntitySchema('user');
     $this->installConfig([
       'farm_farm',
       'farm_farm_test',
@@ -58,6 +63,13 @@ class FieldConstraintsTest extends KernelTestBase {
       'farm_location',
       'farm_log_asset',
     ]);
+
+    // Create and login a user with access to view any organization. This is
+    // necessary to validate the asset entities below, because the entity
+    // module's query access handler enforces view access to referenced entities
+    // during validation.
+    $user = $this->createUser(['view any organization']);
+    $this->container->get('current_user')->setAccount($user);
   }
 
   /**

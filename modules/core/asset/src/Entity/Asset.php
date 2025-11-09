@@ -17,6 +17,7 @@ use Drupal\asset\AssetListBuilder;
 use Drupal\asset\AssetStorage;
 use Drupal\asset\Form\AssetForm;
 use Drupal\entity\Menu\DefaultEntityLocalTaskProvider;
+use Drupal\entity\QueryAccess\UncacheableQueryAccessHandler;
 use Drupal\entity\Revision\RevisionableContentEntityBase;
 use Drupal\entity\Routing\AdminHtmlRouteProvider;
 use Drupal\entity\Routing\RevisionRouteProvider;
@@ -50,6 +51,7 @@ use Drupal\views\EntityViewsData;
     'access' => UncacheableEntityAccessControlHandler::class,
     'list_builder' => AssetListBuilder::class,
     'permission_provider' => UncacheableEntityPermissionProvider::class,
+    'query_access' => UncacheableQueryAccessHandler::class,
     'view_builder' => EntityViewBuilder::class,
     'views_data' => EntityViewsData::class,
     'form' => [
@@ -78,6 +80,7 @@ use Drupal\views\EntityViewsData;
     'version-history' => '/asset/{asset}/revisions',
   ],
   admin_permission: 'administer assets',
+  collection_permission: 'access asset collection',
   permission_granularity: 'bundle',
   bundle_entity_type: 'asset_type',
   bundle_label: new TranslatableMarkup('Asset type'),

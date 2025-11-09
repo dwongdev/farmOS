@@ -17,6 +17,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\data_stream\Form\DataStreamForm;
 use Drupal\entity\EntityViewsData;
 use Drupal\entity\Menu\DefaultEntityLocalTaskProvider;
+use Drupal\entity\QueryAccess\UncacheableQueryAccessHandler;
 use Drupal\entity\Routing\AdminHtmlRouteProvider;
 use Drupal\entity\UncacheableEntityAccessControlHandler;
 use Drupal\entity\UncacheableEntityPermissionProvider;
@@ -40,6 +41,7 @@ use Drupal\entity\UncacheableEntityPermissionProvider;
   handlers: [
     'access' => UncacheableEntityAccessControlHandler::class,
     'permission_provider' => UncacheableEntityPermissionProvider::class,
+    'query_access' => UncacheableQueryAccessHandler::class,
     'view_builder' => EntityViewBuilder::class,
     'views_data' => EntityViewsData::class,
     'form' => [

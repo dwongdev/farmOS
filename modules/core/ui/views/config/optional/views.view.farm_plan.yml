@@ -4,10 +4,10 @@ dependencies:
   config:
     - system.menu.admin
   module:
+    - farm_entity_access
     - options
     - plan
     - state_machine
-    - user
   enforced:
     module:
       - farm_ui_views
@@ -504,9 +504,10 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: perm
+        type: farm_entity_collection
         options:
-          perm: 'view any plan'
+          entity_type:
+            plan: plan
       cache:
         type: tag
         options: {  }

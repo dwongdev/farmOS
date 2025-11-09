@@ -6,6 +6,7 @@ namespace Drupal\Tests\farm_quick\Kernel;
 
 use Drupal\Core\Form\FormState;
 use Drupal\KernelTests\KernelTestBase;
+use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\farm_quick\Form\QuickFormEntityForm;
 use Drupal\farm_quick\Plugin\QuickForm\ConfigurableQuickFormInterface;
 
@@ -15,6 +16,8 @@ use Drupal\farm_quick\Plugin\QuickForm\ConfigurableQuickFormInterface;
  * @group farm
  */
 class QuickFormTest extends KernelTestBase {
+
+  use UserCreationTrait;
 
   /**
    * The quick form instance manager.
@@ -41,6 +44,7 @@ class QuickFormTest extends KernelTestBase {
     'options',
     'quantity',
     'state_machine',
+    'system',
     'taxonomy',
     'text',
     'user',
@@ -108,6 +112,13 @@ class QuickFormTest extends KernelTestBase {
    * Test quick form submission.
    */
   public function testQuickFormSubmission() {
+
+    // Create and login a user with access to view any quantity. This is
+    // necessary because quick form entity creation traits validate entities
+    // before saving them, and the entity module's query access handler enforces
+    // view access to referenced entities during validation.
+    $user = $this->createUser(['view any quantity']);
+    $this->container->get('current_user')->setAccount($user);
 
     // Programmatically submit the test quick form.
     $form_state = (new FormState())->setValues([

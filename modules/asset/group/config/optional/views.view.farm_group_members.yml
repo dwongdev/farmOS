@@ -6,11 +6,11 @@ dependencies:
     - image.style.thumbnail
   module:
     - asset
+    - farm_entity_access
     - farm_group
     - farm_location
     - image
     - options
-    - user
 id: farm_group_members
 label: 'Farm Group Members'
 module: views
@@ -634,9 +634,10 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: perm
+        type: farm_entity_collection
         options:
-          perm: 'view any asset'
+          entity_type:
+            asset: asset
       cache:
         type: tag
         options: {  }

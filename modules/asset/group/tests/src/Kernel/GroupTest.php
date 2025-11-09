@@ -8,6 +8,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\Tests\farm_test\Kernel\FarmAssetTestTrait;
 use Drupal\Tests\farm_test\Kernel\FarmEntityCacheTestTrait;
+use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\asset\Entity\Asset;
 use Drupal\farm_geo\Traits\WktTrait;
 use Drupal\log\Entity\Log;
@@ -22,6 +23,7 @@ class GroupTest extends KernelTestBase {
   use StringTranslationTrait;
   use FarmAssetTestTrait;
   use FarmEntityCacheTestTrait;
+  use UserCreationTrait;
   use WktTrait;
 
   /**
@@ -58,6 +60,8 @@ class GroupTest extends KernelTestBase {
   protected static $modules = [
     'asset',
     'log',
+    'entity',
+    'farm_entity_access',
     'farm_field',
     'farm_group',
     'farm_group_test',
@@ -481,6 +485,13 @@ class GroupTest extends KernelTestBase {
    * Test that circular group membership is prevented.
    */
   public function testCircularGroupMembership() {
+
+    // Create and login a user with access to view any asset. This is necessary
+    // to validate the log entities below, because the entity reference fields
+    // use Views to validate that entities are referencable, and the Views use
+    // the farm_entity_collection Views access plugin.
+    $user = $this->createUser(['view any asset']);
+    $this->container->get('current_user')->setAccount($user);
 
     // Create two group assets.
     /** @var \Drupal\asset\Entity\AssetInterface $first_group */

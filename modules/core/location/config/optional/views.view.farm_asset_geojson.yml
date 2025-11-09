@@ -3,10 +3,10 @@ status: true
 dependencies:
   module:
     - asset
+    - farm_entity_access
     - farm_location
     - geofield
     - rest
-    - user
     - views_geojson
   enforced:
     module:
@@ -304,9 +304,10 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: perm
+        type: farm_entity_collection
         options:
-          perm: 'view any asset'
+          entity_type:
+            asset: asset
       cache:
         type: tag
         options: {  }

@@ -62,6 +62,7 @@ abstract class QuickFormTestBase extends KernelTestBase {
     'entity',
     'entity_reference_revisions',
     'farm_entity',
+    'farm_entity_access',
     'farm_entity_fields',
     'farm_field',
     'farm_format',

@@ -5,6 +5,7 @@ dependencies:
     - asset.type.group
   module:
     - asset
+    - farm_entity_access
   enforced:
     module:
       - farm_entity
@@ -117,8 +118,10 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: none
-        options: {  }
+        type: farm_entity_collection
+        options:
+          entity_type:
+            asset: asset
       cache:
         type: tag
         options: {  }
@@ -215,6 +218,7 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url.query_args
+        - user.permissions
       tags: {  }
   entity_reference:
     id: entity_reference
@@ -240,4 +244,5 @@ display:
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
+        - user.permissions
       tags: {  }

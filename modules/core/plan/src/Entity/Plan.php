@@ -14,6 +14,7 @@ use Drupal\Core\Entity\RevisionLogEntityTrait;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\entity\Menu\DefaultEntityLocalTaskProvider;
+use Drupal\entity\QueryAccess\UncacheableQueryAccessHandler;
 use Drupal\entity\Revision\RevisionableContentEntityBase;
 use Drupal\entity\Routing\AdminHtmlRouteProvider;
 use Drupal\entity\Routing\RevisionRouteProvider;
@@ -48,6 +49,7 @@ use Drupal\views\EntityViewsData;
     'access' => UncacheableEntityAccessControlHandler::class,
     'list_builder' => PlanListBuilder::class,
     'permission_provider' => UncacheableEntityPermissionProvider::class,
+    'query_access' => UncacheableQueryAccessHandler::class,
     'view_builder' => EntityViewBuilder::class,
     'views_data' => EntityViewsData::class,
     'form' => [
@@ -76,6 +78,7 @@ use Drupal\views\EntityViewsData;
     'version-history' => '/plan/{plan}/revisions',
   ],
   admin_permission: 'administer plans',
+  collection_permission: 'access plan collection',
   permission_granularity: 'bundle',
   bundle_entity_type: 'plan_type',
   bundle_label: new TranslatableMarkup('Plan type'),

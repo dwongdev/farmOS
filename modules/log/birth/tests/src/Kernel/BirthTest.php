@@ -6,6 +6,7 @@ namespace Drupal\Tests\farm_birth\Kernel;
 
 use Drupal\Component\Render\FormattableMarkup;
 use Drupal\KernelTests\KernelTestBase;
+use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\asset\Entity\Asset;
 use Drupal\log\Entity\Log;
 use Drupal\taxonomy\Entity\Term;
@@ -16,6 +17,8 @@ use Drupal\taxonomy\Entity\Term;
  * @group farm
  */
 class BirthTest extends KernelTestBase {
+
+  use UserCreationTrait;
 
   /**
    * {@inheritdoc}
@@ -28,6 +31,7 @@ class BirthTest extends KernelTestBase {
     'farm_animal_type',
     'farm_birth',
     'farm_entity',
+    'farm_entity_access',
     'farm_entity_fields',
     'farm_field',
     'farm_id_tag',
@@ -171,6 +175,13 @@ class BirthTest extends KernelTestBase {
    * Test that only one birth log can reference an asset.
    */
   public function testUniqueBirthLogConstraint() {
+
+    // Create and login a user with access to view any asset and access
+    // taxonomy terms. This is necessary to validate the log entities below,
+    // because the entity module's query access handler enforces view access to
+    // referenced entities during validation.
+    $user = $this->createUser(['view any asset', 'access content']);
+    $this->container->get('current_user')->setAccount($user);
 
     // Create a Cow animal type term.
     /** @var \Drupal\taxonomy\TermInterface $cow */

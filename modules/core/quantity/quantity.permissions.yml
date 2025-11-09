@@ -1,3 +1,7 @@
+access quantity collection:
+  title: 'View quantity collection'
+  description: 'View a collection of quantity entities.'
+
 administer quantity:
   title: 'Administer quantity'
 

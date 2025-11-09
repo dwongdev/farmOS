@@ -5,11 +5,11 @@ dependencies:
     - system.menu.admin
   module:
     - entity_reference_revisions
+    - farm_entity_access
     - farm_ui_views
     - log
     - options
     - state_machine
-    - user
   enforced:
     module:
       - farm_ui_views
@@ -781,9 +781,10 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: perm
+        type: farm_entity_collection
         options:
-          perm: 'view any log'
+          entity_type:
+            log: log
       cache:
         type: tag
         options: {  }

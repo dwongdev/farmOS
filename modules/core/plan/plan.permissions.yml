@@ -1,3 +1,7 @@
+access plan collection:
+  title: 'View plan collection'
+  description: 'View a collection of plan entities.'
+
 administer plans:
   title: 'Administer plans'
   description: 'Admin access to all plan entities.'

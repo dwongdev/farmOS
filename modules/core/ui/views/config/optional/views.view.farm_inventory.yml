@@ -4,13 +4,13 @@ dependencies:
   config:
     - taxonomy.vocabulary.unit
   module:
+    - farm_entity_access
     - fraction
     - log
     - options
     - quantity
     - state_machine
     - taxonomy
-    - user
   enforced:
     module:
       - farm_inventory
@@ -905,9 +905,10 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: perm
+        type: farm_entity_collection
         options:
-          perm: 'view any quantity'
+          entity_type:
+            quantity: quantity
       cache:
         type: tag
         options: {  }
@@ -1606,7 +1607,6 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
-        - user
         - user.permissions
       tags: {  }
   page_asset:
@@ -1636,6 +1636,5 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
-        - user
         - user.permissions
       tags: {  }
