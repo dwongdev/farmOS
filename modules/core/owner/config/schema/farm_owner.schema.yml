@@ -5,3 +5,6 @@ action.configuration.asset_assign_action:
 action.configuration.log_assign_action:
   type: action_configuration_default
   label: 'Configuration for the log assign action'
+action.configuration.plan_assign_action:
+  type: action_configuration_default
+  label: 'Configuration for the plan assign action'

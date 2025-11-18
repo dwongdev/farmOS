@@ -313,6 +313,7 @@ class ThemeHooks {
         break;
 
       case 'plan':
+        $fields['owner'] = 'meta';
         $fields['archived'] = 'meta';
         break;
 
@@ -381,6 +382,7 @@ class ThemeHooks {
           'first' => [],
           'second' => [
             'status',
+            'owner',
             'type',
             'archived',
           ],

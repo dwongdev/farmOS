@@ -16,6 +16,8 @@
   to a status of `active`.
 - Plans now have additional options for their `status` attribute: `planning`,
   `done` and `abandoned`, in addition to the existing `active` option.
+- Plans can now optionally be assigned to users via a new `owner` field (similar
+  to assets and logs).
 - The Animal asset `is_castrated` attribute has been renamed to `is_sterile`.
 
 ## 3.x vs 2.x

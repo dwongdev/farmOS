@@ -29,10 +29,11 @@ class FieldHooks {
   public function entityBaseFieldInfo(EntityTypeInterface $entity_type) {
     $fields = [];
 
-    // Add owner field to logs and assets.
+    // Add owner field to logs, assets, and plans.
     if (in_array($entity_type->id(), [
       'asset',
       'log',
+      'plan',
     ])) {
       $field_info = [
         'type' => 'entity_reference',

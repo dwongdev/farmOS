@@ -12,3 +12,10 @@ farm_owner.asset_assign_action_form:
     entity_type: 'asset'
   requirements:
     _user_is_logged_in: 'TRUE'
+farm_owner.plan_assign_action_form:
+  path: '/plan/assign'
+  defaults:
+    _form: 'Drupal\farm_owner\Form\AssignActionForm'
+    entity_type: 'plan'
+  requirements:
+    _user_is_logged_in: 'TRUE'

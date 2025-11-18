@@ -48,6 +48,7 @@ requirements (inherited from Drupal 11):
 - [Include config fields in CSV importers #959](https://github.com/farmOS/farmOS/pull/959)
 - Add support for decimal and integer fields in CSV importers.
 - [Add map layer for "Other Location" assets #966](https://github.com/farmOS/farmOS/pull/966)
+- [Add ability to assign plan ownership #1015](https://github.com/farmOS/farmOS/pull/1015)
 
 ### Changed
 

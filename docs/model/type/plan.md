@@ -119,8 +119,13 @@ additional relationships.
 
 Relationships that are common to all Plan types include:
 
+- Owners
 - Files
 - Images
+
+#### Owners
+
+Plans can be assigned to one or more Users in farmOS.
 
 #### Images
 

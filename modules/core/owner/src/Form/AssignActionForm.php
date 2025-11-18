@@ -82,8 +82,8 @@ class AssignActionForm extends ConfirmFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state, ?string $entity_type = NULL): array|RedirectResponse {
 
-    // Only allow asset and log entities.
-    if (!in_array($entity_type, ['asset', 'log'])) {
+    // Only allow asset, log, and plan entities.
+    if (!in_array($entity_type, ['asset', 'log', 'plan'])) {
       throw new PluginException('Unsupported entity type given when building form to assign entity');
     }
 
