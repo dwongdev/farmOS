@@ -12,7 +12,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\TempStore\PrivateTempStoreFactory;
 use Drupal\Core\Url;
-use Drupal\farm_role\ManagedRolePermissionsManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -39,7 +38,6 @@ class AssignActionForm extends ConfirmFormBase {
   public function __construct(
     protected PrivateTempStoreFactory $tempStoreFactory,
     protected EntityTypeManagerInterface $entityTypeManager,
-    protected ManagedRolePermissionsManagerInterface $managedRolePermissionsManager,
     protected AccountInterface $user,
   ) {}
 
