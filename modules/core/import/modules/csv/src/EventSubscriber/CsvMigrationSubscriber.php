@@ -98,6 +98,7 @@ class CsvMigrationSubscriber implements EventSubscriberInterface {
       // module, only when needed. If no rows get imported (due to validation
       // errors, empty CSV files, etc), then the table will not be generated
       // when this code runs.
+      // @todo https://github.com/farmOS/farmOS/issues/930
       $table = $event->getMigration()->getIdMap()->mapTableName();
       if ($this->database->schema()->tableExists($table)) {
         $query = $this->database->select($table, 'm');
