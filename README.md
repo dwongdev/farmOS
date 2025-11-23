@@ -28,6 +28,7 @@ Current maintainers:
  * Michael Stenta (m.stenta) - https://drupal.org/user/581414
 
 This project has been sponsored by:
+
  * [Farmier](http://farmier.com)
  * [Cornell University](http://www.cornell.edu)
  * [Vermont Agency of Agriculture Food & Markets](http://agriculture.vermont.gov)
@@ -46,6 +47,10 @@ This project has been sponsored by:
  * [Rothamsted Research](https://www.rothamsted.ac.uk/)
  * [OpenTEAM](https://openteam.community)
  * [Wolfe's Neck Center for Agriculture and the Environment](https://www.wolfesneck.org)
+ * [Rooted Solutions](https://www.rootedsolutions.io/)
+ * [Cal Poly Initiative for Climate Leadership and Resilience](https://climate.calpoly.edu/)
+ * [Upper Salinas-Las Tablas Resource Conservation District](https://www.us-ltrcd.org/)
+ * [Point Blue Conservation Science](https://www.pointblue.org/)
 
 ## CONTRIBUTORS
 
@@ -60,7 +65,7 @@ Thank you to all our OpenCollective backers! [[Become a backer](https://opencoll
 
 ## OPENCOLLECTIVE SPONSORS
 
-Support this project by becoming an OpenCollective sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/farmOS#sponsor)]
+Support this project by becoming an OpenCollective sponsor. [[Become a sponsor](https://opencollective.com/farmOS#sponsor)]
 
 <a href="https://opencollective.com/farmOS/sponsor/0/website" target="_blank"><img src="https://opencollective.com/farmOS/sponsor/0/avatar.svg"></a>
 <a href="https://opencollective.com/farmOS/sponsor/1/website" target="_blank"><img src="https://opencollective.com/farmOS/sponsor/1/avatar.svg"></a>
