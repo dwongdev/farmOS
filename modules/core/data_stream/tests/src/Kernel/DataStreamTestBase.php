@@ -22,7 +22,6 @@ abstract class DataStreamTestBase extends KernelTestBase {
     'entity',
     'field',
     'fraction',
-    'state_machine',
     'asset',
     'data_stream',
   ];

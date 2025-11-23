@@ -23,7 +23,6 @@ class IdTagTest extends KernelTestBase {
     'farm_field',
     'farm_id_tag',
     'farm_id_tag_test',
-    'state_machine',
     'user',
   ];
 

@@ -25,7 +25,6 @@ class QuickStringTest extends KernelTestBase {
     'asset',
     'farm_field',
     'farm_quick',
-    'state_machine',
     'user',
   ];
 
