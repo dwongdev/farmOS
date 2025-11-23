@@ -38,8 +38,6 @@ class NotificationTest extends DataStreamTestBase {
    * {@inheritdoc}
    */
   protected static $modules = [
-    'asset',
-    'data_stream',
     'data_stream_notification',
     'data_stream_notification_test',
   ];

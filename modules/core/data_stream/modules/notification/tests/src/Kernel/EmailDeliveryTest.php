@@ -46,8 +46,6 @@ class EmailDeliveryTest extends DataStreamTestBase {
    * {@inheritdoc}
    */
   protected static $modules = [
-    'asset',
-    'data_stream',
     'data_stream_notification',
   ];
 
