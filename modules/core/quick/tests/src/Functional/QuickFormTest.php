@@ -49,7 +49,10 @@ class QuickFormTest extends FarmBrowserTestBase {
     $this->assertSession()->statusCodeEquals(403);
 
     // Create and login a test user with access to view quick forms.
-    $user = $this->createUser(['view quick_form']);
+    $permissions = [
+      'view quick_form',
+    ];
+    $user = $this->createUser($permissions);
     $this->drupalLogin($user);
 
     // Go to the quick form index and confirm that access is granted, but no
@@ -62,9 +65,9 @@ class QuickFormTest extends FarmBrowserTestBase {
     $this->drupalGet('quick/test');
     $this->assertSession()->statusCodeEquals(403);
 
-    // Create and login a test user with access to the quick form index, and
-    // permission to create test logs.
-    $user = $this->createUser(['view quick_form', 'create test log']);
+    // Create and login a test user with additional access to create test logs.
+    $permissions[] = 'create test log';
+    $user = $this->createUser($permissions);
     $this->drupalLogin($user);
 
     // Go to the quick form index and confirm that:
@@ -109,9 +112,10 @@ class QuickFormTest extends FarmBrowserTestBase {
     $this->drupalGet('setup/quick/configurable_test2/edit');
     $this->assertSession()->statusCodeEquals(403);
 
-    // Create and login a test user with permission to create test logs and
-    // permission to update quick forms.
-    $user = $this->createUser(['view quick_form', 'create test log', 'update quick_form']);
+    // Create and login a test user with additional permission to update quick
+    // forms.
+    $permissions[] = 'update quick_form';
+    $user = $this->createUser($permissions);
     $this->drupalLogin($user);
 
     // Go to the configurable_test2 quick form and confirm that the default
@@ -135,6 +139,39 @@ class QuickFormTest extends FarmBrowserTestBase {
     // confirm 404 not found.
     $this->drupalGet('setup/quick/foo/edit');
     $this->assertSession()->statusCodeEquals(404);
+
+    // Confirm that access is denied to create new quick form instances.
+    $this->drupalGet('setup/quick/add');
+    $this->assertSession()->statusCodeEquals(403);
+    $this->drupalGet('setup/quick/add/configurable_test');
+    $this->assertSession()->statusCodeEquals(403);
+
+    // Create and login a test user with additional permission to create quick
+    // forms.
+    $permissions[] = 'create quick_form';
+    $user = $this->createUser($permissions);
+    $this->drupalLogin($user);
+
+    // Confirm that /setup/quick/add is accessible and only includes
+    // configurable quick forms.
+    $this->drupalGet('setup/quick/add');
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextContains('Test configurable quick form');
+    $this->assertSession()->pageTextNotContains('Test quick form');
+
+    // Confirm that submitting the form for creating a new configurable quick
+    // form instance works.
+    $this->drupalGet('setup/quick/add/configurable_test');
+    $this->assertSession()->statusCodeEquals(200);
+    $this->getSession()->getPage()->fillField('label', 'Test configurable quick form 2');
+    $this->getSession()->getPage()->fillField('id', 'configurable_test3');
+    $this->getSession()->getPage()->fillField('description', 'Test configurable quick form 2 description');
+    $this->getSession()->getPage()->pressButton('Save');
+    $this->assertSession()->pageTextContains('Saved quick form: Test configurable quick form 2');
+    $this->drupalGet('quick');
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextContains('Test configurable quick form 2');
+    $this->assertSession()->pageTextContains('Test configurable quick form 2 description');
 
     // Go to the requires_entity_test quick form and confirm 404 not found.
     $this->drupalGet('quick/requires_entity_test');
