@@ -10,6 +10,7 @@ dependencies:
   - farm:farm_field
   - farm:farm_geo
   - farm:farm_log
+  - farm:farm_map
   - geofield:geofield
   - log:log
   - views_geojson:views_geojson

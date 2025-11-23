@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\farm_field;
 
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Field\FieldException;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
@@ -14,6 +15,10 @@ use Drupal\inline_entity_form\Plugin\Field\FieldWidget\InlineEntityFormComplex;
  * Factory for generating farmOS field definitions.
  */
 class FarmFieldFactory implements FarmFieldFactoryInterface {
+
+  public function __construct(
+    protected ModuleHandlerInterface $moduleHandler,
+  ) {}
 
   /**
    * Generate a base field definition.
@@ -136,19 +141,27 @@ class FarmFieldFactory implements FarmFieldFactoryInterface {
         break;
 
       case 'file':
+        $this->checkModuleDependency($options['type'], 'file');
+        $this->modifyFileField($field, $options);
+        break;
+
       case 'image':
+        $this->checkModuleDependency($options['type'], 'image');
         $this->modifyFileField($field, $options);
         break;
 
       case 'fraction':
+        $this->checkModuleDependency($options['type'], 'fraction');
         $this->modifyFractionField($field, $options);
         break;
 
       case 'geofield':
+        $this->checkModuleDependency($options['type'], 'farm_map');
         $this->modifyGeofieldField($field, $options);
         break;
 
       case 'id_tag':
+        $this->checkModuleDependency($options['type'], 'farm_id_tag');
         $this->modifyIdTagField($field, $options);
         break;
 
@@ -157,10 +170,12 @@ class FarmFieldFactory implements FarmFieldFactoryInterface {
         break;
 
       case 'inventory':
+        $this->checkModuleDependency($options['type'], 'farm_inventory');
         $this->modifyInventoryField($field, $options);
         break;
 
       case 'list_string':
+        $this->checkModuleDependency($options['type'], 'options');
         $this->modifyListStringField($field, $options);
         break;
 
@@ -170,6 +185,7 @@ class FarmFieldFactory implements FarmFieldFactoryInterface {
         break;
 
       case 'text_long':
+        $this->checkModuleDependency($options['type'], 'text');
         $this->modifyTextField($field, $options);
         break;
 
@@ -349,13 +365,25 @@ class FarmFieldFactory implements FarmFieldFactoryInterface {
             'auto_create_bundle' => '',
           ];
         }
-        else {
+        elseif ($this->moduleHandler->moduleExists('farm_log_asset')) {
           $handler = 'views';
           $handler_settings = [
             'view' => [
               'view_name' => 'farm_asset_reference',
               'display_name' => 'entity_reference',
             ],
+          ];
+        }
+        else {
+          $handler = 'default:asset';
+          $handler_settings = [
+            'target_bundles' => NULL,
+            'sort' => [
+              'field' => 'name',
+              'direction' => 'asc',
+            ],
+            'auto_create' => FALSE,
+            'auto_create_bundle' => '',
           ];
         }
         $form_display_options = [
@@ -1006,6 +1034,20 @@ class FarmFieldFactory implements FarmFieldFactoryInterface {
 
     // Add URI validation constraint.
     $field->addConstraint('Uri');
+  }
+
+  /**
+   * Check if a field type's module is installed.
+   *
+   * @param string $field_type
+   *   The field type machine name.
+   * @param string $module
+   *   The module machine name.
+   */
+  protected function checkModuleDependency(string $field_type, string $module): void {
+    if (!$this->moduleHandler->moduleExists($module)) {
+      throw new FieldException('The field type "' . $field_type . '" requires the ' . $module . ' module.');
+    }
   }
 
 }

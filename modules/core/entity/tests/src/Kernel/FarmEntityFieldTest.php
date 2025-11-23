@@ -43,9 +43,14 @@ class FarmEntityFieldTest extends KernelTestBase {
     'farm_location',
     'farm_log',
     'farm_log_asset',
+    'farm_map',
     'farm_owner',
     'farm_parent',
+    'file',
+    'image',
+    'options',
     'taxonomy',
+    'text',
     'user',
   ];
 

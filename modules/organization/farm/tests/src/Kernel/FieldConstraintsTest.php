@@ -37,6 +37,7 @@ class FieldConstraintsTest extends KernelTestBase {
     'farm_location',
     'farm_log',
     'farm_log_asset',
+    'farm_map',
     'farm_parent',
     'geofield',
     'log',
