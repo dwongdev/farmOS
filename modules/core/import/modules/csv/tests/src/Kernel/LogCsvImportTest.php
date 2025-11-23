@@ -181,7 +181,7 @@ class LogCsvImportTest extends CsvImportTestBase {
       $this->assertEquals('default', $log->get('notes')->first()->format);
       if (!empty($expected_values[$id]['categories'])) {
         foreach ($log->get('category')->referencedEntities() as $category) {
-          $this->assertTRUE(in_array($category->label(), $expected_values[$id]['categories']));
+          $this->assertTrue(in_array($category->label(), $expected_values[$id]['categories']));
         }
       }
       $this->assertEquals($expected_values[$id]['status'], $log->get('status')->value);
