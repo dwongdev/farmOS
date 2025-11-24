@@ -44,6 +44,84 @@ class FarmModulesForm extends FormBase {
   ) {}
 
   /**
+   * Define farmOS core modules that will appear in the form.
+   *
+   * @return array
+   *   Returns an array of farmOS core modules.
+   */
+  protected function coreModules() {
+    return [
+
+      // Asset types.
+      'farm_land' => $this->t('Land assets'),
+      'farm_plant' => $this->t('Plant assets'),
+      'farm_animal' => $this->t('Animal assets'),
+      'farm_equipment' => $this->t('Equipment assets'),
+      'farm_structure' => $this->t('Structure assets'),
+      'farm_water' => $this->t('Water assets'),
+      'farm_material' => $this->t('Material assets'),
+      'farm_seed' => $this->t('Seed assets'),
+      'farm_product' => $this->t('Product assets'),
+      'farm_sensor' => $this->t('Sensor assets'),
+      'farm_compost' => $this->t('Compost assets'),
+      'farm_group' => $this->t('Group assets'),
+
+      // Defaults land and structure types.
+      'farm_land_types' => $this->t('Default land types: Property, Field, Bed, Paddock, Landmark'),
+      'farm_structure_types' => $this->t('Default structure types: Building, Greenhouse'),
+
+      // Log types.
+      'farm_activity' => $this->t('Activity logs'),
+      'farm_observation' => $this->t('Observation logs'),
+      'farm_seeding' => $this->t('Seeding logs'),
+      'farm_input' => $this->t('Input logs'),
+      'farm_harvest' => $this->t('Harvest logs'),
+      'farm_maintenance' => $this->t('Maintenance logs'),
+      'farm_transplanting' => $this->t('Transplanting logs'),
+      'farm_lab_test' => $this->t('Lab test logs'),
+      'farm_birth' => $this->t('Birth logs'),
+      'farm_medical' => $this->t('Medical logs'),
+
+      // Quantity types.
+      'farm_quantity_standard' => $this->t('Standard quantity type'),
+
+      // Roles.
+      'farm_manager' => $this->t('Manager role'),
+      'farm_viewer' => $this->t('Viewer role'),
+      'farm_worker' => $this->t('Worker role'),
+
+      // Inventory.
+      'farm_inventory' => $this->t('Inventory management'),
+
+      // Export/import.
+      'farm_export_csv' => $this->t('CSV exporter'),
+      'farm_import_csv' => $this->t('CSV importer'),
+      'farm_export_kml' => $this->t('KML exporter'),
+      'farm_import_kml' => $this->t('KML asset importer'),
+
+      // Comments.
+      'farm_comment_asset' => $this->t('Asset comments'),
+      'farm_comment_log' => $this->t('Log comments'),
+      'farm_comment_plan' => $this->t('Plan comments'),
+
+      // Organizations.
+      'farm_farm' => $this->t('Farm organizations'),
+
+      // Map layers.
+      'farm_map_mapbox' => $this->t('Mapbox map layers: Satellite, Outdoors'),
+
+      // API.
+      'farm_api' => $this->t('farmOS API'),
+      'farm_api_oauth' => $this->t('farmOS API OAuth2 Server'),
+      'farm_api_default_consumer' => $this->t('Default API Consumer'),
+      'farm_fieldkit' => $this->t('Field Kit integration'),
+
+      // Localization.
+      'farm_l10n' => $this->t('Translation/localization features'),
+    ];
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
@@ -140,15 +218,11 @@ class FarmModulesForm extends FormBase {
       'quick' => [],
     ];
 
-    // Build core module options.
-    $modules = farm_modules();
-    $core_modules = array_merge($modules['default'], $modules['optional']);
-
     // Load information about all modules.
     $all_module_info = $this->moduleExtensionList->getAllAvailableInfo();
 
     // Iterate through core modules and build options with name and description.
-    foreach ($core_modules as $module => $module_name) {
+    foreach ($this->coreModules() as $module => $module_name) {
       $options['core']['options'][$module] = [
         'name' => $all_module_info[$module]['name'],
         'description' => $all_module_info[$module]['description'] ?? NULL,

@@ -80,6 +80,11 @@ function farm_install_base_modules(array $install_state): void {
   }
 
   // Install base modules.
-  $modules = farm_modules()['base'];
+  $modules = [
+    'farm_login',
+    'farm_setup',
+    'farm_ui',
+    'farm_update',
+  ];
   \Drupal::service('module_installer')->install($modules, TRUE);
 }
