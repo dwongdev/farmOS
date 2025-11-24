@@ -176,6 +176,10 @@ class GinContentFormBase extends ContentEntityForm implements RenderCallbackInte
         '#theme' => 'item_list',
         '#items' => $revision_items,
       ];
+
+      // Enable form protection.
+      $form['#attributes']['class'][] = 'form-protected';
+      $form['#attached']['library'][] = 'farm_form/form_protection';
     }
 
     return $form;
