@@ -3,3 +3,6 @@ access farm setup:
 
 administer farm settings:
   title: 'Administer farmOS settings'
+
+install farm modules:
+  title: 'Install farmOS modules'
