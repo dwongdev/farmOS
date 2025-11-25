@@ -12,11 +12,7 @@ declare(strict_types=1);
  *
  * @return array
  *   Returns an array with three sub-arrays: 'base', 'default' and 'optional'.
- *   Base modules will always be installed, but can be uninstalled. Default and
- *   optional modules will appear as options during farmOS installation and in
- *   a form available to admins. During initial farmOS installation, default
- *   modules will be selected by default, and optional modules will require the
- *   user to select them for installation.
+ *   Base modules will always be installed, but can be uninstalled.
  */
 function farm_modules() {
   return [
