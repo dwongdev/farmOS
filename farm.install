@@ -71,10 +71,9 @@ function farm_install_base_modules(array $install_state): void {
     return;
   }
 
-  // If this is running in the context of a functional test, do not install any
-  // additional modules. This is a temporary hack.
+  // Skip base module installation if this is running in the context of a
+  // functional test.
   // @see Drupal\Tests\farm_test\Functional\FarmBrowserTestBase::setUp()
-  // @todo https://www.drupal.org/project/farm/issues/3183739
   if (!empty($GLOBALS['farm_test'])) {
     return;
   }

@@ -27,10 +27,8 @@ abstract class FarmBrowserTestBase extends BrowserTestBase {
   protected function setUp(): void {
 
     // Set a global farm_test variable and then delegate to the parent setUp().
-    // This is a temporary hack to prevent optional default farmOS modules from
-    // being installed via the profile's hook_install_tasks().
-    // @see farm_install_modules()
-    // @todo https://www.drupal.org/project/farm/issues/3183739
+    // This prevents farmOS base modules from being installed.
+    // @see farm_install_base_modules()
     $GLOBALS['farm_test'] = TRUE;
     parent::setUp();
   }
