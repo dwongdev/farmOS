@@ -11,7 +11,6 @@ use DrupalFinder\DrupalFinderComposerRuntime;
 use DrupalRector\Drupal10\Rector\Deprecation\AnnotationToAttributeRector;
 use DrupalRector\Drupal10\Rector\ValueObject\AnnotationToAttributeConfiguration;
 use DrupalRector\Rector\Convert\HookConvertRector;
-use DrupalRector\Rector\PHPUnit\ShouldCallParentMethodsRector;
 use DrupalRector\Set\Drupal10SetList;
 use Rector\Config\RectorConfig;
 use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
@@ -35,15 +34,6 @@ return static function (RectorConfig $rectorConfig): void {
   $rectorConfig->fileExtensions(['php', 'module', 'theme', 'install', 'profile', 'inc', 'engine']);
   $rectorConfig->importNames(TRUE, FALSE);
   $rectorConfig->importShortClasses(FALSE);
-
-  // Temporarily disable ShouldCallParentMethodsRector in LocationTest.
-  // @todo Issue #3494872: Remove farm_install_modules() installation task
-  // @see https://www.drupal.org/project/farm/issues/3183739
-  $rectorConfig->skip([
-    ShouldCallParentMethodsRector::class => [
-      '*/modules/core/location/tests/src/Functional/LocationTest.php',
-    ],
-  ]);
 
   // Ensure that annotations are not used when attributes are available.
   // @todo Remove this if/when PHPStan or PHP CodeSniffer can check for it.
