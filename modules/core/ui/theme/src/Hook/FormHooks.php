@@ -45,4 +45,19 @@ class FormHooks {
     $form['#attached']['library'][] = 'farm_ui_theme/quick';
   }
 
+  /**
+   * Implements hook_form_FORM_ID_alter().
+   */
+  #[Hook('form_farm_modules_form_alter')]
+  public function formFarmModulesFormAlter(&$form, FormStateInterface $form_state, $form_id) {
+
+    // Add the form-checkboxes class to module list checkbox fields so Gin does
+    // not render each checkbox as a toggle element.
+    foreach (['core', 'contrib', 'quick'] as $type) {
+      if (isset($form[$type])) {
+        $form[$type]['modules']['#attributes']['class'][] = 'form-checkboxes';
+      }
+    }
+  }
+
 }
