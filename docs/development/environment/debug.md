@@ -36,4 +36,7 @@ browser, and you should see a prompt appear in PHPStorm that will begin the
 debugging session and pause execution at your breakpoint.
 
 This also works with command-line scripts like `drush`. You may need to map the
-path to Drush (`vendor/drush`) in the PHPStorm debugger config.
+path to Drush (`vendor/drush`) in the PHPStorm debugger config. Note that Drush
+13+ disables XDebug by default. Run with the `--xdebug` flag to enable it.
+
+For example: `drush --xdebug status`
