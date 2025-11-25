@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\Tests\farm_settings\FunctionalJavascript;
+namespace Drupal\Tests\farm_setup\FunctionalJavascript;
 
 use Drupal\FunctionalJavascriptTests\JSWebAssert;
 use Drupal\Tests\farm_test\FunctionalJavascript\FarmWebDriverTestBase;
@@ -12,7 +12,7 @@ use Drupal\Tests\farm_test\FunctionalJavascript\FarmWebDriverTestBase;
  *
  * @group farm
  *
- * @see \Drupal\farm_settings\Form\FarmSettingsModulesForm
+ * @see \Drupal\farm_setup\Form\FarmModulesForm
  */
 class ModulesFormTest extends FarmWebDriverTestBase {
 
@@ -20,7 +20,7 @@ class ModulesFormTest extends FarmWebDriverTestBase {
    * {@inheritdoc}
    */
   protected static $modules = [
-    'farm_settings',
+    'farm_setup',
     'farm_land',
     'farm_observation',
   ];
@@ -55,15 +55,15 @@ class ModulesFormTest extends FarmWebDriverTestBase {
     }
 
     // Assert that the test module is uninstalled.
-    $this->assertModuleCheckboxState('contrib', 'farm_settings_test', FALSE, FALSE);
+    $this->assertModuleCheckboxState('contrib', 'farm_setup_test', FALSE, FALSE);
 
-    // Install the farm_plant and farm_settings_test modules.
+    // Install the farm_plant and farm_setup_test modules.
     $this->installModules([
       'core' => ['farm_plant'],
-      'contrib' => ['farm_settings_test'],
+      'contrib' => ['farm_setup_test'],
     ]);
 
-    // Ensure farm_maintenance installed as farm_settings_test depends on it.
+    // Ensure farm_maintenance installed as farm_setup_test depends on it.
     $this->assertModuleCheckboxState('core', 'farm_maintenance', TRUE, TRUE);
   }
 

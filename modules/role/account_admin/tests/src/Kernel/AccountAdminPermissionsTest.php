@@ -23,7 +23,7 @@ class AccountAdminPermissionsTest extends KernelTestBase {
     'farm_role',
     'farm_account_admin',
     'farm_manager',
-    'farm_settings',
+    'farm_setup',
     'farm_viewer',
     'farm_worker',
     'role_delegation',

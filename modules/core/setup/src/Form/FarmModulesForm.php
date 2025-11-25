@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\farm_settings\Form;
+namespace Drupal\farm_setup\Form;
 
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Extension\ModuleExtensionList;
@@ -14,7 +14,7 @@ use Drupal\Core\Form\FormStateInterface;
  *
  * @ingroup farm
  */
-class FarmSettingsModulesForm extends FormBase {
+class FarmModulesForm extends FormBase {
 
   use AutowireTrait;
 
@@ -36,7 +36,7 @@ class FarmSettingsModulesForm extends FormBase {
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'farm_settings_modules_form';
+    return 'farm_modules_form';
   }
 
   public function __construct(
@@ -217,7 +217,7 @@ class FarmSettingsModulesForm extends FormBase {
     $operations = [];
     foreach ($to_install as $module => $weight) {
       $operations[] = [
-        [__NAMESPACE__ . '\FarmSettingsModulesForm', 'farmInstallModuleBatch'],
+        [self::class, 'farmInstallModuleBatch'],
         [$module, $this->moduleExtensionList->getName($module)],
       ];
     }
