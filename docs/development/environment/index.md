@@ -40,6 +40,30 @@ bind-mounted into the `db` container's `/var/lib/postgresql/data` directory.
 With the containers stopped, this directory can be backed up (eg: via tarball)
 to create snapshots for easy rollback during development.
 
+From here, there are a few different ways to continue, based on your needs:
+
+### 3a. Maintaining a custom deployment
+
+If you simply want to maintain your own deployment of farmOS, you can create a
+Git repository inside the `www` directory and check in `composer.json` and
+`composer.lock`. Combined with a [Composer deployment](/hosting/composer)
+workflow this allows you to create reproducible builds of farmOS and keep track
+of package dependency versions.
+
+You can also build custom modules directly in `www/modules` and commit them to
+the same repository (see [farmOS module development](/development/module)). This
+is useful for custom modules that are specific to your deployment and may not
+be generally useful to others.
+
+If you would like to develop modules that can be shared with others, see below.
+
+### 3b. farmOS core or community module development
+
+If you want to work on farmOS core development, or community contributed add-on
+modules, it helps to set these up as separate Git repositories that are managed
+as "local" Composer packages. For recommended setup instructions, see
+[managing local Git repositories](/development/repositories).
+
 ## Optional
 
 ### Configure private filesystem
@@ -69,3 +93,4 @@ See [Debugging](/development/environment/debug).
 ### Enable HTTPS
 
 See [HTTPS](/development/environment/https).
+

@@ -12,13 +12,14 @@ documentation.
 
 ## Modules directory
 
-Modules should be placed in the `sites/all/modules` directory of the server's
-document root. If you are using the farmOS Docker image, this will be:
-`/opt/drupal/web/sites/all/modules`
+Modules are typically downloaded via [Composer](/hosting/composer) into the
+`modules` directory of the server's document root. If you are using the farmOS
+Docker image, this will be mapped to `/opt/drupal/web/modules` inside the
+container.
 
-A good practice is to download farmOS-specific modules into `modules/farm` to
-keep them separate. You may also consider creating a `modules/custom` directory
-for custom modules that are specific to your farmOS instance.
+The [development environment](/development/environment) documentation outlines
+two approaches to managing your local module development, depending on your
+needs and whether you plan on sharing the module with others.
 
 ## Namespacing
 

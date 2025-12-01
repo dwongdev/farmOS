@@ -53,6 +53,7 @@ nav:
       - PostgreSQL: development/environment/postgresql.md
       - Drush: development/environment/drush.md
       - Composer: development/environment/composer.md
+      - Repositories: development/environment/repositories.md
       - Debugging: development/environment/debug.md
       - Automated tests: development/environment/tests.md
       - Coding standards: development/environment/code.md
