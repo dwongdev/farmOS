@@ -111,6 +111,7 @@ requirements (inherited from Drupal 11):
 - Remove [Migrate Source UI](https://www.drupal.org/project/migrate_source_ui) module (see [Remove dependency on Migrate Source UI module #994](https://github.com/farmOS/farmOS/pull/994)).
 - [Do not generate keys during farm_api_install() #972](https://github.com/farmOS/farmOS/pull/972)
 - [Remove asset_admin and plan_admin Views #1012](https://github.com/farmOS/farmOS/pull/1012)
+- Remove `farm_settings` module (see [The farm_settings module has been merged into farm_setup](https://www.drupal.org/node/3559903))
 
 ### Fixed
 

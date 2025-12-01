@@ -1,7 +1,0 @@
-name: farm_settings (deprecated)
-description: This module has merged into the farm_setup module.
-type: module
-package: farmOS (deprecated)
-core_version_requirement: ^11
-lifecycle: obsolete
-lifecycle_link: 'https://www.drupal.org/node/3559903'

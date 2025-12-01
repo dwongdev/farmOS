@@ -8,24 +8,10 @@
 declare(strict_types=1);
 
 /**
- * Uninstall the farm_settings module.
+ * Implements hook_removed_post_updates().
  */
-function farm_setup_post_update_uninstall_farm_settings(&$sandbox) {
-
-  // Uninstall the farm_settings module, if no other installed modules depend on
-  // it.
-  if (\Drupal::service('module_handler')->moduleExists('farm_settings')) {
-    $modules = \Drupal::service('extension.list.module')->reset()->getList();
-    $installed_dependents = [];
-    if (!empty($modules['farm_settings']->required_by)) {
-      foreach (array_keys($modules['farm_settings']->required_by) as $module) {
-        if (\Drupal::service('module_handler')->moduleExists($module)) {
-          $installed_dependents[] = $module;
-        }
-      }
-    }
-    if (empty($installed_dependents)) {
-      \Drupal::service('module_installer')->uninstall(['farm_settings']);
-    }
-  }
+function farm_setup_removed_post_updates() {
+  return [
+    'farm_setup_post_update_uninstall_farm_settings' => '4.x',
+  ];
 }
