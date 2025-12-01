@@ -82,13 +82,13 @@ class QuickFormEntityForm extends EntityForm {
       '#machine_name' => [
         'exists' => '\Drupal\farm_quick\Entity\QuickFormInstance::load',
       ],
-      '#disabled' => !$this->entity->isNew() || $this->getRequest()->get('override'),
+      '#disabled' => !$this->entity->isNew() || $this->getRequest()->query->get('override'),
       '#group' => $tab_group,
     ];
 
     // Provide default label and ID for existing config entities
     // or if the override parameter is set.
-    if (!$this->entity->isNew() || $this->getRequest()->get('override')) {
+    if (!$this->entity->isNew() || $this->getRequest()->query->get('override')) {
       $form['label']['#default_value'] = $this->entity->label();
       $form['id']['#default_value'] = $this->entity->id();
     }
@@ -96,7 +96,7 @@ class QuickFormEntityForm extends EntityForm {
     // Adjust form title.
     if ($this->entity->isNew()) {
       $form['#title'] = $this->t('Add quick form: @label', ['@label' => $this->entity->getPlugin()->getLabel()]);
-      if ($this->getRequest()->get('override')) {
+      if ($this->getRequest()->query->get('override')) {
         $form['#title'] = $this->t('Override quick form: @label', ['@label' => $this->entity->getPlugin()->getLabel()]);
       }
     }
@@ -179,7 +179,7 @@ class QuickFormEntityForm extends EntityForm {
     else {
       if (($plugin = $route_match->getRawParameter('plugin')) && $this->quickFormPluginManager->hasDefinition($plugin)) {
         $entity = QuickFormInstance::create(['plugin' => $plugin]);
-        if ($this->getRequest()->get('override')) {
+        if ($this->getRequest()->query->get('override')) {
           $entity->set('id', $plugin);
         }
       }

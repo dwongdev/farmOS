@@ -149,6 +149,8 @@ class SensorDataController extends ControllerBase {
   /**
    * Helper function to determine if the request provides a correct private_key.
    *
+   * Private key may be passed via query string or request body.
+   *
    * @param \Drupal\asset\Entity\AssetInterface $asset
    *   The asset.
    * @param \Symfony\Component\HttpFoundation\Request $request
@@ -159,7 +161,8 @@ class SensorDataController extends ControllerBase {
    */
   protected function requestHasValidPrivateKey(AssetInterface $asset, Request $request) {
     $private_key = $asset->get('private_key')->value;
-    return $private_key == $request->get('private_key', '');
+    $request_private_key = $request->query->get('private_key', NULL) ?? $request->request->get('private_key', '');
+    return $private_key == $request_private_key;
   }
 
   /**

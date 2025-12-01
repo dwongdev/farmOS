@@ -29,7 +29,9 @@ trait DataStreamPrivateKeyAccess {
     $private_key = $stream->getPrivateKey();
 
     // Check if the private key matches.
-    if ($private_key == $request->get('private_key', '')) {
+    // Private key may be passed via query string or request body.
+    $request_private_key = $request->query->get('private_key', NULL) ?? $request->request->get('private_key', '');
+    if ($private_key == $request_private_key) {
       return TRUE;
     }
 

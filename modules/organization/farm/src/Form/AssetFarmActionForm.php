@@ -83,12 +83,7 @@ class AssetFarmActionForm extends ConfirmFormBase {
   public function buildForm(array $form, FormStateInterface $form_state): array|RedirectResponse {
 
     // Check if asset IDs were provided in the asset query param.
-    if ($asset_ids = $this->getRequest()->get('asset')) {
-
-      // Wrap in an array, if necessary.
-      if (!is_array($asset_ids)) {
-        $asset_ids = [$asset_ids];
-      }
+    if ($asset_ids = $this->getRequest()->query->all('asset')) {
 
       // Add each asset the user has view access to.
       $this->entities = array_filter($this->entityTypeManager->getStorage('asset')->loadMultiple($asset_ids), function (AssetInterface $asset) {
