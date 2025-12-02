@@ -11,7 +11,7 @@ use Drupal\user\Entity\Role;
 use Drupal\user\Entity\User;
 
 /**
- * Move farm_role_account_admin module to farm_account_admin.
+ * Move farm_account_admin role module and grant farm_config_admin role.
  */
 function farm_role_account_admin_post_update_move_module(&$sandbox = NULL) {
 
@@ -46,13 +46,23 @@ function farm_role_account_admin_post_update_move_module(&$sandbox = NULL) {
     $role->delete();
   }
 
-  // Install the farm_account_admin module.
-  \Drupal::service('module_installer')->install(['farm_account_admin']);
+  // If there are no users with the farm_account_admin role, stop here.
+  if (empty($uids)) {
+    return;
+  }
 
-  // Grant the farm_account_admin role to all users who had it originally.
+  // Install the farm_account_admin and farm_config_admin modules.
+  \Drupal::service('module_installer')->install([
+    'farm_account_admin',
+    'farm_config_admin',
+  ]);
+
+  // Grant the farm_account_admin and farm_config_admin roles to all users who
+  // had the farm_account_admin role originally.
   foreach ($uids as $uid) {
     $user = User::load($uid);
     $user->addRole('farm_account_admin');
+    $user->addRole('farm_config_admin');
     $user->save();
   }
 
