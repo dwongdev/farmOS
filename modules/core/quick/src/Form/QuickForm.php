@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\farm_quick\Form;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityMalformedException;
 use Drupal\Core\Form\BaseFormIdInterface;
@@ -31,7 +32,10 @@ class QuickForm extends FormBase implements BaseFormIdInterface {
 
   public function __construct(
     protected QuickFormInstanceManagerInterface $quickFormInstanceManager,
-  ) {}
+    ConfigFactoryInterface $config_factory,
+  ) {
+    $this->setConfigFactory($config_factory);
+  }
 
   /**
    * {@inheritdoc}
@@ -108,9 +112,11 @@ class QuickForm extends FormBase implements BaseFormIdInterface {
       ];
     }
 
-    // Enable form protection.
-    $form['#attributes']['class'][] = 'form-protected';
-    $form['#attached']['library'][] = 'farm_form/form_protection';
+    // Enable form protection, if configured.
+    if ($this->config('farm_form.settings')->get('enable_form_protection')) {
+      $form['#attributes']['class'][] = 'form-protected';
+      $form['#attached']['library'][] = 'farm_form/form_protection';
+    }
 
     return $form;
   }
