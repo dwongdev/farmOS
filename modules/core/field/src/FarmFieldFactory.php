@@ -449,7 +449,8 @@ class FarmFieldFactory implements FarmFieldFactoryInterface {
           ],
           'target_bundles' => NULL,
           'sort' => [
-            'field' => '_none',
+            'field' => 'name',
+            'direction' => 'asc',
           ],
           'auto_create' => FALSE,
         ];
