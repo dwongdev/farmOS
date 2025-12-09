@@ -1268,20 +1268,12 @@ display:
           default_row_class: true
           columns:
             plan_bulk_form: plan_bulk_form
-            image_target_id: image_target_id
             id: id
             name: name
             type: type
-            flag_value: flag_value
-            status: status
           default: name
           info:
             plan_bulk_form:
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            image_target_id:
               align: ''
               separator: ''
               empty_column: false
@@ -1307,14 +1299,6 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-            flag_value:
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            status:
-              sortable: false
-              default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
