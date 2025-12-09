@@ -81,6 +81,7 @@ requirements (inherited from Drupal 11):
 - [Allow more granular access to views #965](https://github.com/farmOS/farmOS/pull/965)
 - [Do not set blank revision log messages #1029](https://github.com/farmOS/farmOS/pull/1029)
 - [Sort user selection alphabetically by name #1026](https://github.com/farmOS/farmOS/pull/1026)
+- [Sort "Active plans" by last updated #1027](https://github.com/farmOS/farmOS/pull/1027)
 
 ### Deprecated
 
