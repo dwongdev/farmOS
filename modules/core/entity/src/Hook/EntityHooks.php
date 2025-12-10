@@ -127,15 +127,6 @@ class EntityHooks {
       // Always create a new revision.
       $entity->setNewRevision(TRUE);
 
-      // If the new revision log message matches the original, then set a blank
-      // revision log message. We don't want the same message repeated across
-      // every revision created by the API.
-      if (!empty($entity->getOriginal())) {
-        if ($entity->getOriginal()->get('revision_log_message')->value == $entity->get('revision_log_message')->value) {
-          $entity->setRevisionLogMessage('');
-        }
-      }
-
       // Set the user ID and creation time.
       $entity->setRevisionUserId($this->currentUser->id());
       $entity->setRevisionCreationTime($this->time->getRequestTime());

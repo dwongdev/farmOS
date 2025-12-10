@@ -79,6 +79,7 @@ requirements (inherited from Drupal 11):
 - [Change farmOS Update config revert logic from opt-out to opt-in #1011](https://github.com/farmOS/farmOS/pull/1011)
 - [Issue #3413263: Use Entity API query access handler to filter entity queries based on user permissions](https://www.drupal.org/project/farm/issues/3413263)
 - [Allow more granular access to views #965](https://github.com/farmOS/farmOS/pull/965)
+- [Do not set blank revision log messages #1029](https://github.com/farmOS/farmOS/pull/1029)
 
 ### Deprecated
 
