@@ -85,7 +85,7 @@
         },
         "phpstan": {
             "includes": [
-                "entity_mapping.neon"
+                "docker/dev/files/entity_mapping.neon"
             ]
         }
     }
