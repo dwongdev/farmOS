@@ -21,3 +21,6 @@ farm.setup.modules:
     _form: \Drupal\farm_setup\Form\FarmModulesForm
   requirements:
     _permission: install farm modules
+
+route_callbacks:
+  - '\Drupal\farm_setup\Routing\SetupFormRoutes::routes'

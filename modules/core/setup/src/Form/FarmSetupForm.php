@@ -48,6 +48,19 @@ class FarmSetupForm extends FormBase {
   }
 
   /**
+   * Get the title of the setup form.
+   *
+   * @param string $plugin_id
+   *   The setup form plugin ID.
+   *
+   * @return string
+   *   Quick form title.
+   */
+  public function getTitle(string $plugin_id) {
+    return $this->setupFormPluginManager->createInstance($plugin_id)->getTitle();
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, ?string $plugin_id = NULL) {
