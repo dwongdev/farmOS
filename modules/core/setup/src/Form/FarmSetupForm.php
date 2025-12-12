@@ -124,13 +124,50 @@ class FarmSetupForm extends FormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->setupFormPluginManager->createInstance($form_state->getValue('plugin_id'))->submitForm($form, $form_state);
+    $this->proceed($form_state);
   }
 
   /**
    * {@inheritdoc}
    */
   public function skipSubmit(array &$form, FormStateInterface $form_state) {
+    $this->proceed($form_state);
+  }
 
+  /**
+   * Get the next setup form plugin ID.
+   *
+   * @param string $plugin_id
+   *   The current setup form plugin ID.
+   *
+   * @return string|null
+   *   The next setup form plugin ID, or NULL if there is none.
+   */
+  protected function getNextPluginId(string $plugin_id): ?string {
+    $plugins = $this->setupFormPluginManager->getDefinitions();
+    $keys = array_keys($plugins);
+    $index = array_search($plugin_id, $keys);
+    if ($index !== FALSE && isset($keys[$index + 1])) {
+      return $keys[$index + 1];
+    }
+    return NULL;
+  }
+
+  /**
+   * Proceed to the next setup form.
+   *
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
+   */
+  protected function proceed(FormStateInterface $form_state): void {
+    $plugin_id = $form_state->getValue('plugin_id');
+    $next_plugin_id = $this->getNextPluginId($plugin_id);
+    if (!is_null($next_plugin_id)) {
+      $form_state->setRedirect('farm.setup.wizard.' . $next_plugin_id);
+    }
+    else {
+      $form_state->setRedirect('<front>');
+    }
   }
 
 }
