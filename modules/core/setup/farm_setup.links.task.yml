@@ -3,3 +3,6 @@ farm_setup.settings:
   route_name: farm.setup.settings
   title: 'Farm Info'
   weight: -5
+
+farm_setup.wizard:
+  deriver: Drupal\farm_setup\Plugin\Derivative\SetupFormTaskLink

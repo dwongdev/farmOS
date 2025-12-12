@@ -16,6 +16,7 @@ class SetupForm extends Plugin {
   public function __construct(
     public readonly string $id,
     public readonly TranslatableMarkup $title,
+    public readonly TranslatableMarkup $task_title,
     public readonly ?TranslatableMarkup $description = NULL,
     public readonly int $weight = 0,
   ) {}

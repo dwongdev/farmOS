@@ -14,6 +14,7 @@ use Drupal\farm_setup\Attribute\SetupForm;
 #[SetupForm(
   id: 'resources',
   title: new TranslatableMarkup('Next steps'),
+  task_title: new TranslatableMarkup('Resources'),
   weight: 100,
 )]
 class SetupResourcesForm extends SetupFormBase {

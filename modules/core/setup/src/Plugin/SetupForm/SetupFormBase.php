@@ -49,6 +49,13 @@ class SetupFormBase extends PluginBase implements SetupFormInterface, ContainerF
   /**
    * {@inheritdoc}
    */
+  public function getTaskTitle() {
+    return (string) ($this->pluginDefinition['task_title'] ?? '');
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getDescription() {
     return (string) ($this->pluginDefinition['description'] ?? '');
   }

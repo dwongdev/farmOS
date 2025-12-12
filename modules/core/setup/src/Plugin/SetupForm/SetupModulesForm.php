@@ -21,6 +21,7 @@ use Psr\Container\ContainerInterface;
 #[SetupForm(
   id: 'modules',
   title: new TranslatableMarkup('What are your record keeping needs?'),
+  task_title: new TranslatableMarkup('Install modules'),
   description: new TranslatableMarkup('farmOS allows you to choose which features are relevant to your operation. These are packaged into "modules" that can be turned on/off. The questions below will help to determine what you need.'),
   weight: -95,
 )]

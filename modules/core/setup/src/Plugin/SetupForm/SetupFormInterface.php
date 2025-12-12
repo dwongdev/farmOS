@@ -21,6 +21,14 @@ interface SetupFormInterface extends FormInterface {
   public function getTitle();
 
   /**
+   * Returns the setup form task title.
+   *
+   * @return string
+   *   The setup form task title.
+   */
+  public function getTaskTitle();
+
+  /**
    * Returns the setup form description.
    *
    * @return string

@@ -13,6 +13,7 @@ use Drupal\farm_setup\Attribute\SetupForm;
 #[SetupForm(
   id: 'welcome',
   title: new TranslatableMarkup('Welcome to farmOS'),
+  task_title: new TranslatableMarkup('Welcome'),
   description: new TranslatableMarkup('This will guide you through the process of setting up your farmOS system.'),
   weight: -100,
 )]
