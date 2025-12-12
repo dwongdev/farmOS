@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\farm_setup\Plugin\Block;
 
+use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\Attribute\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormBuilderInterface;
@@ -51,6 +52,13 @@ class FarmSetupBlock extends BlockBase implements ContainerFactoryPluginInterfac
       $container->get('form_builder'),
       $container->get('current_user'),
     );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function blockAccess(AccountInterface $account) {
+    return AccessResult::allowedIfHasPermission($account, 'access farm setup wizard');
   }
 
   /**

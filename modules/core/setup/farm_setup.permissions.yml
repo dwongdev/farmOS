@@ -1,6 +1,9 @@
 access farm setup:
   title: 'Access farmOS setup'
 
+access farm setup wizard:
+  title: 'Access farmOS setup wizard'
+
 administer farm settings:
   title: 'Administer farmOS settings'
 
