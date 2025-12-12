@@ -167,7 +167,15 @@ class FarmSetupForm extends FormBase {
     }
     else {
       $form_state->setRedirect('<front>');
+      $this->completeMessage();
     }
+  }
+
+  /**
+   * Show a setup completion message.
+   */
+  protected function completeMessage() {
+    $this->messenger()->addStatus($this->t('farmOS setup is complete! Happy record keeping!'));
   }
 
 }
