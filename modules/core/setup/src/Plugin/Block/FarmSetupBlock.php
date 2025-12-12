@@ -75,6 +75,20 @@ class FarmSetupBlock extends BlockBase implements ContainerFactoryPluginInterfac
     /** @var \Drupal\farm_setup\Plugin\SetupForm\SetupFormInterface $plugin */
     $plugin = $this->setupFormPluginManager->createInstance($plugin_id);
 
+    // Show a progress bar (only include plugins the user has access to).
+    $accessible_plugins = array_filter($plugins, function ($plugin) {
+      return $this->setupFormPluginManager->createInstance($plugin['id'])->access($this->account)->isAllowed();
+    });
+    $step_count = count($accessible_plugins) - 1;
+    $step_number = array_search($plugin_id, array_keys($accessible_plugins));
+    $step_progress = round(($step_number / $step_count) * 100);
+    $build['progress'] = [
+      '#theme' => 'progress_bar',
+      '#label' => $this->t('Setup progress'),
+      '#percent' => $step_progress,
+      '#message' => $this->t('Step @step_number: @step_label', ['@step_number' => $step_number + 1, '@step_label' => $plugin->getTaskTitle()]),
+    ];
+
     // Build the setup form.
     $build['form'] = [
       '#type' => 'details',
