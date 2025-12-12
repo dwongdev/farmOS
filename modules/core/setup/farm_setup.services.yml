@@ -1,0 +1,4 @@
+services:
+  plugin.manager.setup_form:
+    class: Drupal\farm_setup\SetupFormPluginManager
+    parent: default_plugin_manager
