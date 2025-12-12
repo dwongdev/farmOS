@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Drupal\farm_setup\Plugin\SetupForm;
 
+use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Plugin\PluginBase;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Psr\Container\ContainerInterface;
 
@@ -70,6 +72,13 @@ class SetupFormBase extends PluginBase implements SetupFormInterface, ContainerF
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     // Submit is optional, but presumably this will be overridden.
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function access(AccountInterface $account) {
+    return AccessResult::allowed();
   }
 
 }

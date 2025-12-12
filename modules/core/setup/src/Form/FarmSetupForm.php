@@ -7,6 +7,7 @@ namespace Drupal\farm_setup\Form;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\farm_setup\SetupFormPluginManager;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
@@ -29,6 +30,21 @@ class FarmSetupForm extends FormBase {
    */
   public function getFormId() {
     return 'farm_setup_form';
+  }
+
+  /**
+   * Checks access for a specific setup form.
+   *
+   * @param \Drupal\Core\Session\AccountInterface $account
+   *   Run access checks for this account.
+   * @param string $plugin_id
+   *   The setup form plugin ID.
+   *
+   * @return \Drupal\Core\Access\AccessResultInterface
+   *   The access result.
+   */
+  public function access(AccountInterface $account, string $plugin_id) {
+    return $this->setupFormPluginManager->createInstance($plugin_id)->access($account);
   }
 
   /**
