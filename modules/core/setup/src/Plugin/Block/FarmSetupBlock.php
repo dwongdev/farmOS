@@ -8,6 +8,7 @@ use Drupal\Core\Block\Attribute\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormBuilderInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\farm_setup\Form\FarmSetupBlockForm;
 use Drupal\farm_setup\SetupFormPluginManager;
@@ -32,6 +33,7 @@ class FarmSetupBlock extends BlockBase implements ContainerFactoryPluginInterfac
     protected SetupFormPluginManager $setupFormPluginManager,
     protected SetupWizardInterface $setupWizard,
     protected FormBuilderInterface $formBuilder,
+    protected AccountInterface $account,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
   }
@@ -47,6 +49,7 @@ class FarmSetupBlock extends BlockBase implements ContainerFactoryPluginInterfac
       $container->get('plugin.manager.setup_form'),
       $container->get('farm_setup.wizard'),
       $container->get('form_builder'),
+      $container->get('current_user'),
     );
   }
 
@@ -59,8 +62,8 @@ class FarmSetupBlock extends BlockBase implements ContainerFactoryPluginInterfac
     // Get all setup form plugins.
     $plugins = $this->setupFormPluginManager->getDefinitions();
 
-    // Get the current form plugin ID from state.
-    $plugin_id = $this->state->get('farm_setup.block');
+    // Get the next accessible plugin ID.
+    $plugin_id = $this->getAccessiblePluginId();
 
     // If the current setup form plugin ID is NULL, or if it does not exist,
     // then consider the setup process to be complete and show nothing.
@@ -82,6 +85,32 @@ class FarmSetupBlock extends BlockBase implements ContainerFactoryPluginInterfac
     ];
 
     return $build;
+  }
+
+  /**
+   * Get the next accessible plugin ID.
+   *
+   * @param string|null $plugin_id
+   *   Optionally provide the current plugin ID. If this is omitted, it will be
+   *   loaded from state.
+   *
+   * @return string|null
+   *   A plugin ID.
+   */
+  protected function getAccessiblePluginId(?string $plugin_id = NULL): ?string {
+
+    // Get the current plugin ID from state, if necessary.
+    if (is_null($plugin_id)) {
+      $plugin_id = $this->setupWizard->getBlockPluginId();
+    }
+
+    // If the user does not have access to the plugin, look up the next one that
+    // they do have access to.
+    $plugins = $this->setupFormPluginManager->getDefinitions();
+    if (!is_null($plugin_id) && array_key_exists($plugin_id, $plugins) && !$this->setupFormPluginManager->createInstance($plugin_id)->access($this->account)->isAllowed()) {
+      $plugin_id = $this->getAccessiblePluginId($this->setupWizard->getNextPluginId($plugin_id));
+    }
+    return $plugin_id;
   }
 
 }
