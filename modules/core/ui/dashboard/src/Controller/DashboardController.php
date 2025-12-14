@@ -48,7 +48,7 @@ class DashboardController extends ControllerBase {
 
       // Set default values.
       $args = [];
-      $output = '';
+      $output = [];
       $title = '';
       $region = 'first';
       $group = 'default';
