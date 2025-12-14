@@ -31,4 +31,17 @@ class SetupFormPluginManager extends DefaultPluginManager {
     $this->setCacheBackend($cache_backend, 'farm_setup_forms');
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getDefinitions() {
+
+    // Sort definitions by weight.
+    $definitions = parent::getDefinitions();
+    uasort($definitions, function ($a, $b) {
+      return $a['weight'] <=> $b['weight'];
+    });
+    return $definitions;
+  }
+
 }

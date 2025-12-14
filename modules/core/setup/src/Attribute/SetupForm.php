@@ -17,6 +17,7 @@ class SetupForm extends Plugin {
     public readonly string $id,
     public readonly TranslatableMarkup $title,
     public readonly ?TranslatableMarkup $description = NULL,
+    public readonly int $weight = 0,
   ) {}
 
 }
