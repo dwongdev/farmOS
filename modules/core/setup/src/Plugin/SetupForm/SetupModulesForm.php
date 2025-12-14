@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Drupal\farm_setup\Plugin\SetupForm;
 
+use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
 use Drupal\farm_setup\Attribute\SetupForm;
@@ -45,6 +47,13 @@ class SetupModulesForm extends SetupFormBase {
       $container->get('module_handler'),
       $container->get('extension.list.module'),
     );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function access(AccountInterface $account) {
+    return AccessResult::allowedIfHasPermission($account, 'install farm modules');
   }
 
   /**
