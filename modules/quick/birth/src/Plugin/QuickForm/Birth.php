@@ -71,7 +71,7 @@ class Birth extends QuickFormBase {
     ];
 
     // Number of children.
-    $range = range(1, 15);
+    $range = range(1, 20);
     $form['child_count'] = [
       '#type' => 'select',
       '#title' => $this->t('How many children were born?'),
