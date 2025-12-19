@@ -48,7 +48,6 @@ nav:
     - Environment:
       - Getting started: development/environment/index.md
       - HTTPS: development/environment/https.md
-      - Updating: development/environment/update.md
       - Docker: development/environment/docker.md
       - PostgreSQL: development/environment/postgresql.md
       - Drush: development/environment/drush.md
