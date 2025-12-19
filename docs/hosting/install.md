@@ -72,7 +72,7 @@ If you are running farmOS in the official Docker container, your `crontab`
 will look something like this (replace `[container-name]` with the name of your
 running farmOS container):
 
-`4 0 * * 0 sudo docker exec -it -u www-data [container-name] drush cron > /dev/null`
+`4 0 * * 0 sudo docker exec -it [container-name] drush cron > /dev/null`
 
 **2. Via the secret cron URL**
 

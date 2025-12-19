@@ -40,5 +40,5 @@ cd www/web/profiles/farm
 git checkout 4.x && git pull origin 4.x
 
 # Run Drupal database updates.
-docker compose exec -u www-data www drush updb
+docker compose exec www drush updb
 ```

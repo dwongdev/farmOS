@@ -9,15 +9,15 @@ analysis. All farmOS code must pass both.
 
 The following command will run PHP CodeSniffer on all farmOS code:
 
-    docker exec -it -u www-data farmos_www_1 phpcs /opt/drupal/web/profiles/farm
+    docker exec -it farmos_www_1 phpcs /opt/drupal/web/profiles/farm
 
 If you see no output, then there are no issues.
 
 In some cases, code standard violations can be fixed automatically with
 `phpcbf`:
 
-    docker exec -it -u www-data farmos_www_1 phpcbf /opt/drupal/web/profiles/farm
+    docker exec -it farmos_www_1 phpcbf /opt/drupal/web/profiles/farm
 
 The following command will run PHPStan on all farmOS code:
 
-    docker exec -it -u www-data farmos_www_1 phpstan analyze /opt/drupal/web/profiles/farm
+    docker exec -it farmos_www_1 phpstan analyze /opt/drupal/web/profiles/farm

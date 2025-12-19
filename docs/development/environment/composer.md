@@ -8,11 +8,11 @@ The farmOS development Docker image comes pre-installed with
 In order to run the `composer` command, you must use `docker exec` to run the
 command inside the farmOS container.
 
-    docker exec -it -u www-data farmos_www_1 composer
+    docker exec -it farmos_www_1 composer
 
 For example, the following will run the `composer help` command:
 
-    docker exec -it -u www-data farmos_www_1 composer help'
+    docker exec -it farmos_www_1 composer help'
 
 **Warning**: If `composer update farmos/farmos` is run, it will replace the
 Git repository in `web/profiles/farm`, discarding all

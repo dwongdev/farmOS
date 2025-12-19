@@ -196,9 +196,9 @@ jobs:
         if: matrix.dbms == 'pgsql'
         run: docker compose exec -T db psql -U farm -c 'CREATE EXTENSION IF NOT EXISTS pg_trgm;'
       - name: Run PHPUnit tests
-        run: docker compose exec -u www-data -T www ${{ matrix.test_cmd }} /opt/drupal/web/profiles/farm
+        run: docker compose exec -T www ${{ matrix.test_cmd }} /opt/drupal/web/profiles/farm
       - name: Test Drush site install with all modules
-        run: docker compose exec -u www-data -T www drush site-install --db-url=${{ matrix.DB_URL }} farm farm.modules='all'
+        run: docker compose exec -T www drush site-install --db-url=${{ matrix.DB_URL }} farm farm.modules='all'
 
   release:
     name: Create release
