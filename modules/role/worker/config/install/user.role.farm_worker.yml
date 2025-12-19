@@ -25,8 +25,6 @@ third_party_settings:
               - all
             update own:
               - all
-            delete any:
-              - all
             delete own:
               - all
           data_stream:
@@ -34,16 +32,12 @@ third_party_settings:
               - all
             update:
               - all
-            delete:
-              - all
           log:
             create:
               - all
             update any:
               - all
             update own:
-              - all
-            delete any:
               - all
             delete own:
               - all
@@ -54,8 +48,6 @@ third_party_settings:
               - all
             update own:
               - all
-            delete any:
-              - all
             delete own:
               - all
           quantity:
@@ -64,8 +56,6 @@ third_party_settings:
             update any:
               - all
             update own:
-              - all
-            delete any:
               - all
             delete own:
               - all
