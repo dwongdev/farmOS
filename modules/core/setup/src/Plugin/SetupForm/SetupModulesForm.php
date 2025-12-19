@@ -335,6 +335,46 @@ class SetupModulesForm extends SetupFormBase {
       ];
     }
 
+    // Recommend that at least one location asset type and one basic log type
+    // modules are installed, but allow the user to ignore this recommendation.
+    $recommended_modules = [
+      'asset' => [
+        'farm_land',
+        'farm_structure',
+        'farm_water',
+      ],
+      'log' => [
+        'farm_activity',
+        'farm_harvest',
+        'farm_input',
+        'farm_observation',
+      ],
+    ];
+    if (
+      empty(array_intersect($recommended_modules['asset'], $modules))
+      ||
+      empty(array_intersect($recommended_modules['log'], $modules))
+    ) {
+      $form['summary']['recommended'] = [
+        '#theme' => 'status_messages',
+        '#message_list' => [
+          'warning' => [
+            $this->t('It is recommended that at least one location asset type and one basic log type is installed. To proceed anyway, use the "Ignore recommendations" checkbox below.'),
+          ],
+        ],
+        '#status_headings' => [
+          'warning' => $this->t('Recommendations'),
+        ],
+      ];
+      $form['summary']['ignore_recommended'] = [
+        '#type' => 'checkbox',
+        '#title' => $this->t('Ignore recommendations'),
+        '#description' => $this->t('This allows you to proceed without installing any recommended modules.'),
+        '#default_value' => FALSE,
+        '#required' => TRUE,
+      ];
+    }
+
     return $form;
   }
 
