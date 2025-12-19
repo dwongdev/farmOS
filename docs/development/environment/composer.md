@@ -39,4 +39,3 @@ To install the module, use [Drush](/development/environment/drush).
 
 - `Could not delete /var/www/html/web/sites/default/default.settings.php`
   See https://www.drupal.org/docs/develop/using-composer/starting-a-site-using-drupal-composer-project-templates#s-troubleshooting-permission-issues-prevent-running-composer
-
