@@ -6,6 +6,10 @@ This document describes how to get started with farmOS module development. For
 detailed documentation of Drupal development more generally, refer to the
 [guide on drupal.org](https://www.drupal.org/docs/creating-custom-modules).
 
+For instructions on setting up a local Docker container for development and
+testing, refer to the [development environment](/development/environment)
+documentation.
+
 ## Modules directory
 
 Modules should be placed in the `sites/all/modules` directory of the server's
