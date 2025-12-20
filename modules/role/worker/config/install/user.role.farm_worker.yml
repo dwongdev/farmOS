@@ -62,7 +62,3 @@ third_party_settings:
           taxonomy_term:
             create:
               - all
-            update:
-              - all
-            delete:
-              - all

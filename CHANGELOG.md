@@ -87,6 +87,7 @@ requirements (inherited from Drupal 11):
 - [Do not use birth log label in child revision log message #1019](https://github.com/farmOS/farmOS/pull/1019)
 - [Soften farm_field module dependencies #1020](https://github.com/farmOS/farmOS/pull/1020)
 - [Workers can only delete their own records #1033](https://github.com/farmOS/farmOS/pull/1033)
+- [Workers cannot update or delete taxonomy terms #1033](https://github.com/farmOS/farmOS/pull/1033)
 
 ### Deprecated
 
