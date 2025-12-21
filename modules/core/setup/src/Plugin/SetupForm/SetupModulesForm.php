@@ -13,6 +13,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
 use Drupal\farm_setup\Attribute\SetupForm;
 use Drupal\farm_setup\Form\FarmModulesForm;
+use Drupal\farm_setup\Form\FarmSetupBlockForm;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -503,6 +504,7 @@ class SetupModulesForm extends SetupFormBase {
     }
     $batch = [
       'operations' => $operations,
+      'finished' => [FarmSetupBlockForm::class, 'finishInstallModulesBatch'],
       'title' => $this->t('Installing farmOS modules'),
       'error_message' => $this->t('The installation has encountered an error.'),
     ];

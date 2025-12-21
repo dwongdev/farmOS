@@ -35,4 +35,25 @@ class FarmSetupBlockForm extends FarmSetupForm {
     }
   }
 
+  /**
+   * Batch 'finished' callback that runs after module installation.
+   *
+   * We need a bit of special logic here to ensure that setup wizard forms from
+   * newly installed modules are shown next in the setup wizard block context.
+   * We only do this if the module installation batch operation was successful,
+   * and the current block plugin state is not NULL (which would indicate that
+   * the setup wizard process has already been completed).
+   */
+  public static function finishInstallModulesBatch($success, $results, $operations) {
+    /** @var \Drupal\farm_setup\SetupWizardInterface $wizard */
+    $wizard = \Drupal::service('farm_setup.wizard');
+    if (!$success || is_null($wizard->getBlockPluginId())) {
+      return;
+    }
+    $next_plugin_id = $wizard->getNextPluginId('modules');
+    if (!is_null($next_plugin_id)) {
+      $wizard->setBlockPluginId($next_plugin_id);
+    }
+  }
+
 }

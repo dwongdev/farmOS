@@ -20,6 +20,7 @@ class SetupModulesFormTest extends FarmWebDriverTestBase {
    */
   protected static $modules = [
     'farm_setup',
+    'farm_setup_test_modules',
     'farm_ui_dashboard',
   ];
 
@@ -144,6 +145,15 @@ class SetupModulesFormTest extends FarmWebDriverTestBase {
     $this->assertSession()->pageTextNotContains($recommended_title);
     $this->assertSession()->pageTextNotContains($recommended_message);
     $this->assertEmpty($this->getSession()->getPage()->findField('ignore_recommended'));
+
+    // Test installing a module that provides a setup form, and confirm that it
+    // appears after the modules form.
+    $this->assertSession()->pageTextContains('Install farm_setup_test module');
+    $this->getSession()->getPage()->checkField('install_farm_setup_test');
+    $this->getSession()->getPage()->pressButton('Save and continue');
+    $this->assertTrue($this->assertSession()->waitForText('Step 3: Test', 30000));
+    $this->assertSession()->pageTextContains('This is just a test');
+    $this->assertSession()->pageTextContains('Pay no attention.');
   }
 
   /**
