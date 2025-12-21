@@ -8,10 +8,10 @@ use Drupal\Core\Block\Attribute\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormBuilderInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\Core\State\StateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\farm_setup\Form\FarmSetupBlockForm;
 use Drupal\farm_setup\SetupFormPluginManager;
+use Drupal\farm_setup\SetupWizardInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -30,7 +30,7 @@ class FarmSetupBlock extends BlockBase implements ContainerFactoryPluginInterfac
     $plugin_definition,
     #[Autowire(service: 'plugin.manager.setup_form')]
     protected SetupFormPluginManager $setupFormPluginManager,
-    protected StateInterface $state,
+    protected SetupWizardInterface $setupWizard,
     protected FormBuilderInterface $formBuilder,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
@@ -45,7 +45,7 @@ class FarmSetupBlock extends BlockBase implements ContainerFactoryPluginInterfac
       $plugin_id,
       $plugin_definition,
       $container->get('plugin.manager.setup_form'),
-      $container->get('state'),
+      $container->get('farm_setup.wizard'),
       $container->get('form_builder'),
     );
   }

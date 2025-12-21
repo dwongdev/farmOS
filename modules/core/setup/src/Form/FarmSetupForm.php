@@ -9,6 +9,7 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\farm_setup\SetupFormPluginManager;
+use Drupal\farm_setup\SetupWizardInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
@@ -23,6 +24,7 @@ class FarmSetupForm extends FormBase {
   public function __construct(
     #[Autowire(service: 'plugin.manager.setup_form')]
     protected SetupFormPluginManager $setupFormPluginManager,
+    protected SetupWizardInterface $setupWizard,
   ) {}
 
   /**
@@ -135,33 +137,13 @@ class FarmSetupForm extends FormBase {
   }
 
   /**
-   * Get the next setup form plugin ID.
-   *
-   * @param string $plugin_id
-   *   The current setup form plugin ID.
-   *
-   * @return string|null
-   *   The next setup form plugin ID, or NULL if there is none.
-   */
-  protected function getNextPluginId(string $plugin_id): ?string {
-    $plugins = $this->setupFormPluginManager->getDefinitions();
-    $keys = array_keys($plugins);
-    $index = array_search($plugin_id, $keys);
-    if ($index !== FALSE && isset($keys[$index + 1])) {
-      return $keys[$index + 1];
-    }
-    return NULL;
-  }
-
-  /**
    * Proceed to the next setup form.
    *
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The current state of the form.
    */
   protected function proceed(FormStateInterface $form_state): void {
-    $plugin_id = $form_state->getValue('plugin_id');
-    $next_plugin_id = $this->getNextPluginId($plugin_id);
+    $next_plugin_id = $this->setupWizard->getNextPluginId($form_state->getValue('plugin_id'));
     if (!is_null($next_plugin_id)) {
       $form_state->setRedirect('farm.setup.wizard.' . $next_plugin_id);
     }
