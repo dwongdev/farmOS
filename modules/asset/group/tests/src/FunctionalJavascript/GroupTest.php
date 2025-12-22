@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\Tests\farm_group\Functional;
+namespace Drupal\Tests\farm_group\FunctionalJavascript;
 
 use Drupal\Tests\farm_test\FunctionalJavascript\FarmWebDriverTestBase;
 use Drupal\log\Entity\Log;

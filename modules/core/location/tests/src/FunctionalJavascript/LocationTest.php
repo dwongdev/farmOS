@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Drupal\Tests\farm_location\Functional;
+namespace Drupal\Tests\farm_location\FunctionalJavascript;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Tests\farm_location\Functional\LocationFunctionalTestTrait;
 use Drupal\Tests\farm_test\FunctionalJavascript\FarmWebDriverTestBase;
 use Drupal\Tests\jsonapi\Functional\JsonApiRequestTestTrait;
 use Drupal\farm_geo\Traits\WktTrait;

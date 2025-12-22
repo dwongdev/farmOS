@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\Tests\farm_settings\Functional;
+namespace Drupal\Tests\farm_settings\FunctionalJavascript;
 
 use Drupal\FunctionalJavascriptTests\JSWebAssert;
 use Drupal\Tests\farm_test\FunctionalJavascript\FarmWebDriverTestBase;
