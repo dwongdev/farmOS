@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\farm_group\Functional;
 
-use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
+use Drupal\Tests\farm_test\FunctionalJavascript\FarmWebDriverTestBase;
 use Drupal\log\Entity\Log;
 
 /**
@@ -12,17 +12,7 @@ use Drupal\log\Entity\Log;
  *
  * @group farm
  */
-class GroupTest extends WebDriverTestBase {
-
-  /**
-   * {@inheritdoc}
-   */
-  protected $profile = 'farm';
-
-  /**
-   * {@inheritdoc}
-   */
-  protected $defaultTheme = 'stark';
+class GroupTest extends FarmWebDriverTestBase {
 
   /**
    * {@inheritdoc}
@@ -36,7 +26,6 @@ class GroupTest extends WebDriverTestBase {
    * {@inheritdoc}
    */
   protected function setUp(): void {
-    $GLOBALS['farm_test'] = TRUE;
     parent::setUp();
 
     // Create and login a user with permission to administer logs.

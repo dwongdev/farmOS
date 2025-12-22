@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\farm_location\Functional;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
+use Drupal\Tests\farm_test\FunctionalJavascript\FarmWebDriverTestBase;
 use Drupal\Tests\jsonapi\Functional\JsonApiRequestTestTrait;
 use Drupal\farm_geo\Traits\WktTrait;
 
@@ -14,22 +14,12 @@ use Drupal\farm_geo\Traits\WktTrait;
  *
  * @group farm
  */
-class LocationTest extends WebDriverTestBase {
+class LocationTest extends FarmWebDriverTestBase {
 
   use StringTranslationTrait;
   use WktTrait;
   use JsonApiRequestTestTrait;
   use LocationFunctionalTestTrait;
-
-  /**
-   * {@inheritdoc}
-   */
-  protected $profile = 'farm';
-
-  /**
-   * {@inheritdoc}
-   */
-  protected $defaultTheme = 'stark';
 
   /**
    * {@inheritdoc}

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\farm_settings\Functional;
 
 use Drupal\FunctionalJavascriptTests\JSWebAssert;
-use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
+use Drupal\Tests\farm_test\FunctionalJavascript\FarmWebDriverTestBase;
 
 /**
  * Tests installing modules via the module settings form.
@@ -14,17 +14,7 @@ use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
  *
  * @see \Drupal\farm_settings\Form\FarmSettingsModulesForm
  */
-class ModulesFormTest extends WebDriverTestBase {
-
-  /**
-   * {@inheritdoc}
-   */
-  protected $profile = 'farm';
-
-  /**
-   * {@inheritdoc}
-   */
-  protected $defaultTheme = 'stark';
+class ModulesFormTest extends FarmWebDriverTestBase {
 
   /**
    * {@inheritdoc}
@@ -39,7 +29,6 @@ class ModulesFormTest extends WebDriverTestBase {
    * {@inheritdoc}
    */
   protected function setUp(): void {
-    $GLOBALS['farm_test'] = TRUE;
     parent::setUp();
 
     // Login a user with administer farm settings permission.
