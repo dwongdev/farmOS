@@ -110,7 +110,7 @@ class SetupModulesFormTest extends FarmWebDriverTestBase {
     $this->getSession()->getPage()->checkField('land');
     $this->assertTrue($this->assertSession()->waitForText('The following modules will be installed: Land asset, Default land types'));
     $this->getSession()->getPage()->checkField('activity');
-    $this->assertTrue($this->assertSession()->waitForText('The following modules will be installed: Activity log, Land asset, Default land types'));
+    $this->assertTrue($this->assertSession()->waitForText('Activity log, Land asset, Default land types, Standard quantity'));
 
     // Confirm that the recommended modules warning and ignore_recommended
     // checkbox is not visible.
@@ -130,7 +130,8 @@ class SetupModulesFormTest extends FarmWebDriverTestBase {
 
     // Confirm that the modules form is visible, the plant, land, and activity
     // checkboxes are checked, and the farm_activity, farm_land,
-    // farm_land_types, and farm_plant modules are installed.
+    // farm_land_types, farm_plant, and farm_quantity_standard modules are
+    // installed.
     $this->assertSession()->pageTextContains('Step 2: Install modules');
     $this->assertCheckboxState('plant', TRUE, TRUE);
     $this->assertCheckboxState('land', TRUE, TRUE);
@@ -139,6 +140,7 @@ class SetupModulesFormTest extends FarmWebDriverTestBase {
     $this->assertModuleInstalled('farm_land', TRUE);
     $this->assertModuleInstalled('farm_land_types', TRUE);
     $this->assertModuleInstalled('farm_plant', TRUE);
+    $this->assertModuleInstalled('farm_quantity_standard', TRUE);
 
     // Confirm that the recommended modules warning and ignore_recommended
     // checkbox is not visible.

@@ -308,8 +308,20 @@ class SetupModulesForm extends SetupFormBase {
     $form['logs'] += $this->buildQuestionsForm($log_questions);
     $modules = array_merge($modules, $this->buildModules($log_questions, $form_state));
 
-    // Filter out duplicates and sort modules alphabetically.
+    // Filter out duplicates.
     $modules = array_unique($modules);
+
+    // If any log modules are installed, add the standard quantity type module.
+    // We do this to ensure that at least one quantity type is available, since
+    // log type modules do not explicitly depend on any specific type.
+    $log_modules = array_keys(array_filter($this->moduleExtensionList->getAllAvailableInfo(), function ($module_info) {
+      return isset($module_info['package']) && $module_info['package'] == 'farmOS Logs';
+    }));
+    if (!empty(array_intersect($modules, $log_modules))) {
+      $modules[] = 'farm_quantity_standard';
+    }
+
+    // Sort modules alphabetically.
     sort($modules);
 
     // Build a summary of modules that will be installed.
