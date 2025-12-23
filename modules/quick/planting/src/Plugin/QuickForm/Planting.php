@@ -17,7 +17,6 @@ use Drupal\farm_quick\Plugin\QuickForm\QuickFormBase;
 use Drupal\farm_quick\Traits\QuickAssetTrait;
 use Drupal\farm_quick\Traits\QuickFormElementsTrait;
 use Drupal\farm_quick\Traits\QuickLogTrait;
-use Drupal\farm_quick\Traits\QuickQuantityTrait;
 use Drupal\farm_quick\Traits\QuickStringTrait;
 use Drupal\quantity\QuantityHelper;
 use Drupal\taxonomy\TermInterface;
@@ -41,7 +40,6 @@ class Planting extends QuickFormBase {
 
   use QuickAssetTrait;
   use QuickLogTrait;
-  use QuickQuantityTrait;
   use QuickStringTrait;
   use QuickFormElementsTrait;
 
