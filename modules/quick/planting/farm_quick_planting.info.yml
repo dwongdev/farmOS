@@ -5,4 +5,5 @@ package: farmOS Quick Forms
 core_version_requirement: ^11
 dependencies:
   - farm:farm_plant
+  - farm:farm_quantity_standard
   - farm:farm_quick

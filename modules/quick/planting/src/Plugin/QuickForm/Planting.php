@@ -524,6 +524,9 @@ class Planting extends QuickFormBase {
       return NULL;
     }
 
+    // Use the standard quantity type.
+    $values['type'] = 'standard';
+
     // If units is specified, then we need to convert it to units_id, which
     // is expected by createLog() and createQuantity().
     if (!empty($values['units'])) {
