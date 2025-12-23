@@ -519,7 +519,7 @@ class Planting extends QuickFormBase {
    */
   protected function prepareQuantity(array $values) {
 
-    // If there is no value, return an empty array.
+    // If there is no value, return NULL.
     if (empty($values['value'])) {
       return NULL;
     }
