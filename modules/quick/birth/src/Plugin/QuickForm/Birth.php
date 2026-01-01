@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\farm_quick_birth\Plugin\QuickForm;
 
+use Drupal\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -12,7 +13,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Drupal\farm_group\GroupMembershipInterface;
 use Drupal\farm_id_tag\FarmIdTagHelper;
 use Drupal\farm_location\AssetLocationInterface;
 use Drupal\farm_quick\Attribute\QuickForm;
@@ -20,7 +20,7 @@ use Drupal\farm_quick\Plugin\QuickForm\QuickFormBase;
 use Drupal\farm_quick\Traits\QuickAssetTrait;
 use Drupal\farm_quick\Traits\QuickLogTrait;
 use Drupal\farm_quick\Traits\QuickStringTrait;
-use Psr\Container\ContainerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Birth quick form.
@@ -51,7 +51,8 @@ class Birth extends QuickFormBase {
     protected ModuleHandlerInterface $moduleHandler,
     protected ConfigFactoryInterface $configFactory,
     protected AssetLocationInterface $assetLocation,
-    protected ?GroupMembershipInterface $groupMembership = NULL,
+    #[Autowire(service: 'service_container')]
+    protected ContainerInterface $container,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager, $current_user);
   }
@@ -69,12 +70,6 @@ class Birth extends QuickFormBase {
       $container->get('module_handler'),
       $container->get('config.factory'),
       $container->get('asset.location'),
-      // PHPStan level 3+ throws the following error on the next line:
-      // Ternary operator condition is always true.
-      // We ignore this because we know that the group.membership service will
-      // not exist if the group module is not installed.
-      // @phpstan-ignore ternary.alwaysTrue
-      $container->has('group.membership') ? $container->get('group.membership') : NULL,
     );
   }
 
@@ -433,8 +428,13 @@ class Birth extends QuickFormBase {
       if (!empty($group)) {
         $group = [$this->entityTypeManager->getStorage('asset')->load($group)];
       }
-      if (empty($group) && $this->groupMembership !== NULL) {
-        $group = $this->groupMembership->getGroup($birth_mother, $birthdate->getTimestamp());
+      // PHPStan throws the following error on the next line:
+      // Right side of && is always true.
+      // We ignore this because we need to check that the group.membership
+      // container service exists before we use it.
+      // @phpstan-ignore booleanAnd.rightAlwaysTrue
+      if (empty($group) && $this->container->has('group.membership')) {
+        $group = $this->container->get('group.membership')->getGroup($birth_mother, $birthdate->getTimestamp());
       }
       if (!empty($group)) {
         $birth_log_values['group'] = $group;
