@@ -41,6 +41,8 @@ class FarmViewsMenuLink extends ViewsMenuLink {
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, $base_plugin_id) {
+    // @todo Remove when DeriverBase provides a create() method with autowiring.
+    // @see https://www.drupal.org/project/drupal/issues/3565338
     return new static(
       $container->get('entity_type.manager')->getStorage('view'),
       $container->get('entity_type.manager'),

@@ -39,6 +39,8 @@ class IdTagFormatter extends FormatterBase {
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    // @todo Use autowiring and remove this when the parent class does.
+    // @see https://www.drupal.org/project/drupal/issues/3552110
     return new static(
       $plugin_id,
       $plugin_definition,

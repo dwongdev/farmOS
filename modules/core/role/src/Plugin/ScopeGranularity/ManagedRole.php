@@ -35,6 +35,7 @@ class ManagedRole extends Role implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $pluginId, $pluginDefinition) {
+    // @todo Use autowiring and remove this when the parent class does.
     return new static(
       $configuration,
       $pluginId,

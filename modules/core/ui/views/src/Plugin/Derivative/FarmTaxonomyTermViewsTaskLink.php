@@ -27,6 +27,8 @@ class FarmTaxonomyTermViewsTaskLink extends DeriverBase implements ContainerDeri
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, $base_plugin_id) {
+    // @todo Remove when DeriverBase provides a create() method with autowiring.
+    // @see https://www.drupal.org/project/drupal/issues/3565338
     return new static(
       $container->get('entity_type.manager'),
       $container->get('entity_type.bundle.info')

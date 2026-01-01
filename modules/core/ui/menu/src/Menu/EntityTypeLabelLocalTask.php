@@ -33,6 +33,9 @@ class EntityTypeLabelLocalTask extends LocalTaskDefault implements ContainerFact
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    // @todo Remove this when \Drupal\Core\Menu\LocalTaskDefault extends from
+    // \Drupal\Core\Plugin\PluginBase.
+    // @see https://www.drupal.org/project/drupal/issues/3565337
     return new static(
       $configuration,
       $plugin_id,

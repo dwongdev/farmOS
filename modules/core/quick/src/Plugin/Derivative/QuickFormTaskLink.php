@@ -25,6 +25,8 @@ class QuickFormTaskLink extends DeriverBase implements ContainerDeriverInterface
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, $base_plugin_id) {
+    // @todo Remove when DeriverBase provides a create() method with autowiring.
+    // @see https://www.drupal.org/project/drupal/issues/3565338
     return new static(
       $container->get('quick_form.instance_manager')
     );
