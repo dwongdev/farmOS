@@ -24,6 +24,7 @@ abstract class DataStreamTestBase extends KernelTestBase {
     'fraction',
     'asset',
     'data_stream',
+    'user',
   ];
 
   /**

@@ -46,6 +46,7 @@ class FarmEntityFieldTest extends KernelTestBase {
     'farm_owner',
     'farm_parent',
     'taxonomy',
+    'user',
   ];
 
   /**

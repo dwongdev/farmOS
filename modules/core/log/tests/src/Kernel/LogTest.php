@@ -33,6 +33,7 @@ class LogTest extends KernelTestBase {
   protected static $modules = [
     'asset',
     'log',
+    'entity',
     'farm_field',
     'farm_log',
     'farm_log_asset',

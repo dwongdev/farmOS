@@ -19,11 +19,13 @@ class FlagTest extends KernelTestBase {
    * {@inheritdoc}
    */
   protected static $modules = [
+    'entity',
     'farm_field',
     'farm_flag',
     'log',
     'asset',
     'state_machine',
+    'user',
   ];
 
   /**

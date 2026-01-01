@@ -30,6 +30,7 @@ class CsvImportTestBase extends MigrateTestBase {
    */
   protected static $modules = [
     'asset',
+    'entity',
     'entity_reference_revisions',
     'entity_reference_validators',
     'farm_animal_type',

@@ -20,6 +20,7 @@ class IdTagTest extends KernelTestBase {
    */
   protected static $modules = [
     'asset',
+    'entity',
     'farm_field',
     'farm_id_tag',
     'farm_id_tag_test',

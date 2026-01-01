@@ -34,6 +34,7 @@ class InventoryTest extends KernelTestBase {
    */
   protected static $modules = [
     'asset',
+    'entity',
     'entity_reference_revisions',
     'farm_field',
     'farm_inventory',

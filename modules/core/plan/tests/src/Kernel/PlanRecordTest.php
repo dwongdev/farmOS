@@ -19,6 +19,7 @@ class PlanRecordTest extends KernelTestBase {
    * {@inheritdoc}
    */
   protected static $modules = [
+    'entity',
     'plan',
     'plan_test',
     'user',

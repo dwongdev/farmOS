@@ -34,6 +34,7 @@ class LogQuantityTest extends KernelTestBase {
    * {@inheritdoc}
    */
   protected static $modules = [
+    'entity',
     'entity_reference_revisions',
     'log',
     'farm_field',
