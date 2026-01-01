@@ -161,16 +161,16 @@ class LogTest extends KernelTestBase {
     $bar_log->save();
 
     // Test that the asset.logs service returns both logs.
-    $logs = $this->assetLogs->getLogs($asset);
+    $logs = $this->assetLogs->getLogs($asset, NULL, FALSE);
     $this->assertCount(2, $logs);
 
     // Test that logs can be filtered by type.
-    $logs = $this->assetLogs->getLogs($asset, 'bar');
+    $logs = $this->assetLogs->getLogs($asset, 'bar', FALSE);
     $this->assertCount(1, $logs);
     $this->assertEquals($bar_log->id(), reset($logs)->id());
 
     // Test that we can get the first log.
-    $first_log = $this->assetLogs->getFirstLog($asset);
+    $first_log = $this->assetLogs->getFirstLog($asset, NULL, FALSE);
     $this->assertEquals($bar_log->id(), $first_log->id());
   }
 
