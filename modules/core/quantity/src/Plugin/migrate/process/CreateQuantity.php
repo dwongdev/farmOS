@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\quantity\Plugin\migrate\process;
 
 use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
@@ -28,24 +29,25 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 )]
 class CreateQuantity extends ProcessPluginBase implements ContainerFactoryPluginInterface {
 
-  /**
-   * Quantity entity storage.
-   *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
-   */
-  protected $quantityStorage;
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    protected EntityTypeManagerInterface $entityTypeManager,
+  ) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+  }
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    $instance = new static(
+    return new static(
       $configuration,
       $plugin_id,
-      $plugin_definition
+      $plugin_definition,
+      $container->get('entity_type.manager'),
     );
-    $instance->quantityStorage = $container->get('entity_type.manager')->getStorage('quantity');
-    return $instance;
   }
 
   /**
@@ -78,7 +80,7 @@ class CreateQuantity extends ProcessPluginBase implements ContainerFactoryPlugin
 
         // Create the entity.
         /** @var \Drupal\quantity\Entity\QuantityInterface $entity */
-        $entity = $this->quantityStorage->create($entity_values);
+        $entity = $this->entityTypeManager->getStorage('quantity')->create($entity_values);
 
         // Validate the entity.
         /** @var \Symfony\Component\Validator\ConstraintViolationInterface[] $violations */
