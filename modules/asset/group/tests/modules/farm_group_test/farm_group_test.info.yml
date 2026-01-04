@@ -1,5 +1,5 @@
-name: farmOS Equipment Test
-description: Module for testing Equipment field.
+name: farmOS Group Test
+description: Module for testing Group membership.
 type: module
 package: Testing
 core_version_requirement: ^11
