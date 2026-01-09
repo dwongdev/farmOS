@@ -20,8 +20,10 @@ class ViewsExecutionHooks {
    */
   #[Hook('views_pre_view')]
   public function viewsPreView(ViewExecutable $view, $display_id, array &$args) {
+
     // Alter the farm_log View.
     if ($view->id() == 'farm_log') {
+
       // Only alter the page_type and page_asset displays.
       if (!in_array($display_id, [
         'page_type',
@@ -29,10 +31,12 @@ class ViewsExecutionHooks {
       ])) {
         return;
       }
+
       // Bail if not a view of input logs.
       if (!in_array('input', $args)) {
         return;
       }
+
       // Add a filter for the quantity material type.
       $table = 'log_field_data';
       $field = 'quantity_material_type';

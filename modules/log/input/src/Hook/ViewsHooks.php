@@ -20,6 +20,7 @@ class ViewsHooks {
   #[Hook('views_data')]
   public function viewsData() {
     $data = [];
+
     // Add a quantity_material_type pseudo field to the log_field_data table.
     // This pseudo field only has a filter configured to support filtering logs
     // by the quantity material type.
@@ -34,6 +35,7 @@ class ViewsHooks {
         'field_name' => 'material_type',
       ],
     ];
+
     return $data;
   }
 
