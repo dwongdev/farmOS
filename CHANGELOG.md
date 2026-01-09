@@ -110,6 +110,7 @@ requirements (inherited from Drupal 11):
 - [Check that real path exists before loading exif data #1000](https://github.com/farmOS/farmOS/pull/1000)
 - [Do not allow entity revisions to be reverted #1004](https://github.com/farmOS/farmOS/pull/1004)
 - [Fix dashboard block access checking #1031](https://github.com/farmOS/farmOS/pull/1031)
+- [Fix page for adding quick form instances #1017](https://github.com/farmOS/farmOS/pull/1017)
 
 ## farmOS 3.x
 
