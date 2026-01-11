@@ -25,6 +25,13 @@ class ManagedRolePermissions extends PluginBase implements ManagedRolePermission
   /**
    * {@inheritdoc}
    */
+  public function getManagerPermissions() {
+    return (array) $this->pluginDefinition['manager_permissions'];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getConfigPermissions() {
     return (array) $this->pluginDefinition['config_permissions'];
   }

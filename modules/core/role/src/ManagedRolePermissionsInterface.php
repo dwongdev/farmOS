@@ -22,6 +22,14 @@ interface ManagedRolePermissionsInterface {
   public function getDefaultPermissions();
 
   /**
+   * Returns the manager permissions.
+   *
+   * @return array
+   *   Array of permission strings.
+   */
+  public function getManagerPermissions();
+
+  /**
    * Returns the config permissions.
    *
    * @return array

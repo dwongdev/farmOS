@@ -2,6 +2,8 @@
 test:
   default_permissions:
     - test default permission
+  manager_permissions:
+    - test manager access permission
   config_permissions:
     - test config access permission
   permission_callbacks:

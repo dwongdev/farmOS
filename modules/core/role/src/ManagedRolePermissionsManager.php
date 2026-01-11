@@ -32,6 +32,7 @@ class ManagedRolePermissionsManager extends DefaultPluginManager implements Mana
   protected $defaults = [
     'class' => 'Drupal\farm_role\ManagedRolePermissions',
     'default_permissions' => [],
+    'manager_permissions' => [],
     'config_permissions' => [],
     'permission_callbacks' => [],
   ];
@@ -136,6 +137,12 @@ class ManagedRolePermissionsManager extends DefaultPluginManager implements Mana
       // Always include default permissions.
       $default_perms = $plugin->getDefaultPermissions();
       $perms = array_merge($perms, $default_perms);
+
+      // Include manager permissions if the role has manager access.
+      if (!empty($access_settings['manager'])) {
+        $manager_perms = $plugin->getManagerPermissions();
+        $perms = array_merge($perms, $manager_perms);
+      }
 
       // Include config permissions if the role has config access.
       if (!empty($access_settings['config'])) {

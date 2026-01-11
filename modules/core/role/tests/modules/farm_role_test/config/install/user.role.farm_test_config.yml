@@ -1,22 +1,16 @@
+# Test role that has typical config access.
 langcode: en
 status: true
-dependencies:
-  module:
-    - farm_role
-  enforced:
-    module:
-      - farm_account_admin
-id: farm_account_admin
-label: 'Account Admin'
+id: farm_test_config
+label: 'Test config role for farm_role'
 weight: 1
 is_admin: false
-permissions:
-  - 'administer users'
+permissions: { }
 third_party_settings:
   farm_role:
     access:
-      config: false
       manager: false
+      config: true
       entity:
         view all: false
         create all: false

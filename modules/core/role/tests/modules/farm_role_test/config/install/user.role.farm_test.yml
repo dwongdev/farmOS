@@ -11,6 +11,7 @@ permissions:
 third_party_settings:
   farm_role:
     access:
+      manager: false
       config: false
       entity:
         view all: false

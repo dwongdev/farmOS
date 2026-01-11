@@ -110,7 +110,6 @@ class ScopeGranularityTest extends KernelTestBase {
         'farm_test_manager',
         [
           'test default permission',
-          'test config access permission',
           'default callback permission',
           'my manager permission',
           'view any harvest log',
@@ -122,7 +121,28 @@ class ScopeGranularityTest extends KernelTestBase {
           'delete any harvest log',
           'delete own harvest log',
         ],
-        [],
+        [
+          'test config access permission',
+        ],
+      ],
+      'farm_test_config' => [
+        'farm_test_config',
+        [
+          'test config access permission',
+          'default callback permission',
+          'test default permission',
+        ],
+        [
+          'my manager permission',
+          'view any harvest log',
+          'view any observation log',
+          'create harvest log',
+          'create observation log',
+          'update any harvest log',
+          'update own harvest log',
+          'delete any harvest log',
+          'delete own harvest log',
+        ],
       ],
     ];
   }

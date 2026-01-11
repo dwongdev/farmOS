@@ -55,7 +55,7 @@ configuration):
 third_party_settings:
   farm_role:
     access:
-      config: true
+      manager: true
       entity:
         view all: true
         create all: true
@@ -106,6 +106,8 @@ are provided by creating a `ManagedRolePermissions` plugin in the
 
 - `default_permissions`: A list of permissions that will be added to *all*
   managed roles.
+- `manager_permissions`: A list of permissions that will be added to managed
+  roles that have access to additional management features (`manager: true`).
 - `config_permissions`: A list of permissions that will be added to managed
   roles that have access to configuration (`config: true`).
 - `permission_callbacks`: A list of callbacks in controller notation that
@@ -123,8 +125,10 @@ farm_role:
     - access content
     - access user profiles
     - change own username
-  config_permissions:
+  manager_permissions:
     - access taxonomy overview
+  config_permissions:
+    - access farm setup
 ```
 
 #### Permission callbacks
