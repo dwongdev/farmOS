@@ -113,6 +113,7 @@ requirements (inherited from Drupal 11):
 - [Do not generate keys during farm_api_install() #972](https://github.com/farmOS/farmOS/pull/972)
 - [Remove asset_admin and plan_admin Views #1012](https://github.com/farmOS/farmOS/pull/1012)
 - Remove `farm_settings` module (see [The farm_settings module has been merged into farm_setup](https://www.drupal.org/node/3559903))
+- [Remove farm_install_modules() installation task #1034](https://github.com/farmOS/farmOS/pull/1034)
 
 ### Fixed
 
