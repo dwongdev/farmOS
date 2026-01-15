@@ -114,7 +114,6 @@ class FarmModulesForm extends FormBase {
       'farm_api' => $this->t('farmOS API'),
       'farm_api_oauth' => $this->t('farmOS API OAuth2 Server'),
       'farm_api_default_consumer' => $this->t('Default API Consumer'),
-      'farm_fieldkit' => $this->t('Field Kit integration'),
 
       // Localization.
       'farm_l10n' => $this->t('Translation/localization features'),

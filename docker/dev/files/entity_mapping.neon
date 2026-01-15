@@ -13,9 +13,6 @@ parameters:
       data_stream_type:
         class: Drupal\data_stream\Entity\DataStreamType
         storage: Drupal\Core\Config\Entity\ConfigEntityStorage
-      field_module:
-        class: Drupal\farm_fieldkit\Entity\FieldModule
-        storage: Drupal\Core\Config\Entity\ConfigEntityStorage
       flag:
         class: Drupal\farm_flag\Entity\FarmFlag
         storage: Drupal\Core\Config\Entity\ConfigEntityStorage
