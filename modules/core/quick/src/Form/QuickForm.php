@@ -11,6 +11,7 @@ use Drupal\Core\Form\BaseFormIdInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\farm_form\Traits\FarmFormProtectionTrait;
 use Drupal\farm_quick\QuickFormInstanceManagerInterface;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
@@ -22,6 +23,7 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 class QuickForm extends FormBase implements BaseFormIdInterface {
 
   use AutowireTrait;
+  use FarmFormProtectionTrait;
 
   /**
    * The quick form ID.
@@ -112,11 +114,8 @@ class QuickForm extends FormBase implements BaseFormIdInterface {
       ];
     }
 
-    // Enable form protection, if configured.
-    if ($this->config('farm_form.settings')->get('enable_form_protection')) {
-      $form['#attributes']['class'][] = 'form-protected';
-      $form['#attached']['library'][] = 'farm_form/form_protection';
-    }
+    // Enable form protection.
+    $this->enableFormProtection($form);
 
     return $form;
   }

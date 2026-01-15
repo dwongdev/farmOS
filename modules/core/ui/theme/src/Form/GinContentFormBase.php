@@ -16,6 +16,7 @@ use Drupal\Core\Entity\RevisionLogInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element\RenderCallbackInterface;
+use Drupal\farm_form\Traits\FarmFormProtectionTrait;
 use Drupal\user\EntityOwnerInterface;
 
 /**
@@ -24,6 +25,7 @@ use Drupal\user\EntityOwnerInterface;
 class GinContentFormBase extends ContentEntityForm implements RenderCallbackInterface {
 
   use AutowireTrait;
+  use FarmFormProtectionTrait;
 
   public function __construct(
     EntityRepositoryInterface $entity_repository,
@@ -180,11 +182,8 @@ class GinContentFormBase extends ContentEntityForm implements RenderCallbackInte
         '#items' => $revision_items,
       ];
 
-      // Enable form protection, if configured.
-      if ($this->config('farm_form.settings')->get('enable_form_protection')) {
-        $form['#attributes']['class'][] = 'form-protected';
-        $form['#attached']['library'][] = 'farm_form/form_protection';
-      }
+      // Enable form protection.
+      $this->enableFormProtection($form);
     }
 
     return $form;
