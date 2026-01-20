@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Drupal\farm_quick\Form;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityMalformedException;
 use Drupal\Core\Form\BaseFormIdInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\farm_form\Traits\FarmFormProtectionTrait;
 use Drupal\farm_quick\QuickFormInstanceManagerInterface;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
@@ -21,6 +23,7 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 class QuickForm extends FormBase implements BaseFormIdInterface {
 
   use AutowireTrait;
+  use FarmFormProtectionTrait;
 
   /**
    * The quick form ID.
@@ -31,7 +34,10 @@ class QuickForm extends FormBase implements BaseFormIdInterface {
 
   public function __construct(
     protected QuickFormInstanceManagerInterface $quickFormInstanceManager,
-  ) {}
+    ConfigFactoryInterface $config_factory,
+  ) {
+    $this->setConfigFactory($config_factory);
+  }
 
   /**
    * {@inheritdoc}
@@ -107,6 +113,9 @@ class QuickForm extends FormBase implements BaseFormIdInterface {
         '#value' => $this->t('Submit'),
       ];
     }
+
+    // Enable form protection.
+    $this->enableFormProtection($form);
 
     return $form;
   }

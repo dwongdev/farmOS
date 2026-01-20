@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\farm_ui_theme\Form;
 
 use Drupal\Component\Datetime\TimeInterface;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\ContentEntityForm;
@@ -15,6 +16,7 @@ use Drupal\Core\Entity\RevisionLogInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element\RenderCallbackInterface;
+use Drupal\farm_form\Traits\FarmFormProtectionTrait;
 use Drupal\user\EntityOwnerInterface;
 
 /**
@@ -23,6 +25,7 @@ use Drupal\user\EntityOwnerInterface;
 class GinContentFormBase extends ContentEntityForm implements RenderCallbackInterface {
 
   use AutowireTrait;
+  use FarmFormProtectionTrait;
 
   public function __construct(
     EntityRepositoryInterface $entity_repository,
@@ -30,9 +33,11 @@ class GinContentFormBase extends ContentEntityForm implements RenderCallbackInte
     TimeInterface $time,
     protected DateFormatterInterface $dateFormatter,
     ModuleHandlerInterface $module_handler,
+    ConfigFactoryInterface $config_factory,
   ) {
     parent::__construct($entity_repository, $entity_type_bundle_info, $time);
     $this->setModuleHandler($module_handler);
+    $this->setConfigFactory($config_factory);
   }
 
   /**
@@ -176,6 +181,9 @@ class GinContentFormBase extends ContentEntityForm implements RenderCallbackInte
         '#theme' => 'item_list',
         '#items' => $revision_items,
       ];
+
+      // Enable form protection.
+      $this->enableFormProtection($form);
     }
 
     return $form;
