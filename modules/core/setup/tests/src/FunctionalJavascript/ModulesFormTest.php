@@ -31,8 +31,8 @@ class ModulesFormTest extends FarmWebDriverTestBase {
   protected function setUp(): void {
     parent::setUp();
 
-    // Login a user with administer farm settings permission.
-    $user = $this->createUser(['administer farm settings']);
+    // Login a user with permission to install farmOS modules.
+    $user = $this->createUser(['install farm modules']);
     $this->drupalLogin($user);
   }
 

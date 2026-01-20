@@ -1,4 +1,4 @@
-name: farmOS Default Structure Types
+name: Default structure types
 description: 'Provides default structure types: Building, Greenhouse.'
 type: module
 package: farmOS Defaults

@@ -86,4 +86,8 @@ function farm_install_base_modules(array $install_state): void {
     'farm_update',
   ];
   \Drupal::service('module_installer')->install($modules, TRUE);
+
+  // Initialize the setup wizard state so that the welcome form is displayed on
+  // the dashboard.
+  \Drupal::service('farm_setup.wizard')->setBlockPluginId('welcome');
 }
