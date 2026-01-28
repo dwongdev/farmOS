@@ -7,7 +7,7 @@ namespace Drupal\Tests\farm_entity\Functional;
 use Drupal\Tests\farm_test\Functional\FarmBrowserTestBase;
 
 /**
- * Tests that entity revisions cannot be reverted.
+ * Test expected farmOS entity revision behavior.
  *
  * @group farm
  */
@@ -40,7 +40,7 @@ class FarmEntityRevisionsTest extends FarmBrowserTestBase {
   }
 
   /**
-   * Test that entity revisions cannot be reverted.
+   * Test expected farmOS entity revision behavior.
    */
   public function testFarmEntityRevisions() {
     $entity_types = [
@@ -50,19 +50,27 @@ class FarmEntityRevisionsTest extends FarmBrowserTestBase {
     ];
     foreach ($entity_types as $entity_type) {
       $storage = \Drupal::entityTypeManager()->getStorage($entity_type);
+
+      // Create a test entity.
       /** @var \Drupal\Core\Entity\RevisionableInterface $entity */
       $entity = $storage->create([
         'name' => $this->randomMachineName(),
         'type' => 'test',
       ]);
       $entity->save();
+
+      // Create a second revision and remember both revision IDs.
       $first_revision_id = $entity->getRevisionId();
       $entity->setNewRevision();
       $entity->save();
       $second_revision_id = $entity->getRevisionId();
       $this->assertNotEquals($first_revision_id, $second_revision_id);
+
+      // Confirm that a /revisions tab is available.
       $this->drupalGet($entity_type . '/' . $entity->id() . '/revisions');
       $this->assertSession()->statusCodeEquals(200);
+
+      // Test that entity revisions cannot be reverted.
       $this->assertSession()->responseNotContains('Revert');
       $this->drupalGet($entity_type . '/' . $entity->id() . '/revisions/' . $first_revision_id . '/revert');
       $this->assertSession()->statusCodeEquals(404);
