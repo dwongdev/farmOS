@@ -10,6 +10,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Entity\RevisionLogInterface;
 use Drupal\Core\Entity\RevisionableEntityBundleInterface;
+use Drupal\Core\Entity\TranslatableRevisionableInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Hook\Order\OrderBefore;
 use Drupal\Core\Session\AccountInterface;
@@ -126,6 +127,18 @@ class EntityHooks {
 
       // Always create a new revision.
       $entity->setNewRevision(TRUE);
+
+      // Always consider revision translations affected. Without this, if an
+      // entity is saved with a revision log message, but without any changes to
+      // the entity itself, then Drupal core will hide this revision from the
+      // list of revisions in the UI.
+      // @see \Drupal\Core\Entity\ContentEntityStorageBase::populateAffectedRevisionTranslations()
+      // @see \Drupal\Core\Entity\ContentEntityBase::hasTranslationChanges()
+      // @see https://www.drupal.org/project/drupal/issues/2722307
+      // @see https://www.drupal.org/project/drupal/issues/2933518
+      if ($entity instanceof TranslatableRevisionableInterface) {
+        $entity->setRevisionTranslationAffected(TRUE);
+      }
 
       // Set the user ID and creation time.
       $entity->setRevisionUserId($this->currentUser->id());

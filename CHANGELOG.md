@@ -99,6 +99,7 @@ requirements (inherited from Drupal 11):
 - [Workers can only delete their own records #1033](https://github.com/farmOS/farmOS/pull/1033)
 - [Workers cannot update or delete taxonomy terms #1033](https://github.com/farmOS/farmOS/pull/1033)
 - [Allow birth quick form to create up to 20 children #1030](https://github.com/farmOS/farmOS/pull/1030)
+- [Always consider revision translations affected #1041](https://github.com/farmOS/farmOS/pull/1041)
 
 ### Deprecated
 

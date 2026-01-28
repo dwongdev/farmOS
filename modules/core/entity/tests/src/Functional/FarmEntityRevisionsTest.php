@@ -52,16 +52,18 @@ class FarmEntityRevisionsTest extends FarmBrowserTestBase {
       $storage = \Drupal::entityTypeManager()->getStorage($entity_type);
 
       // Create a test entity.
-      /** @var \Drupal\Core\Entity\RevisionableInterface $entity */
+      /** @var \Drupal\Core\Entity\RevisionLogInterface $entity */
       $entity = $storage->create([
         'name' => $this->randomMachineName(),
         'type' => 'test',
       ]);
+      $entity->setRevisionLogMessage('First revision log.');
       $entity->save();
 
       // Create a second revision and remember both revision IDs.
       $first_revision_id = $entity->getRevisionId();
       $entity->setNewRevision();
+      $entity->setRevisionLogMessage('Second revision log.');
       $entity->save();
       $second_revision_id = $entity->getRevisionId();
       $this->assertNotEquals($first_revision_id, $second_revision_id);
@@ -69,6 +71,10 @@ class FarmEntityRevisionsTest extends FarmBrowserTestBase {
       // Confirm that a /revisions tab is available.
       $this->drupalGet($entity_type . '/' . $entity->id() . '/revisions');
       $this->assertSession()->statusCodeEquals(200);
+
+      // Confirm that both revisions are shown in the /revisions tab.
+      $this->assertSession()->pageTextContains('First revision log');
+      $this->assertSession()->pageTextContains('Second revision log');
 
       // Test that entity revisions cannot be reverted.
       $this->assertSession()->responseNotContains('Revert');

@@ -37,3 +37,22 @@ function farm_entity_post_update_install_farm_entity_access(&$sandbox) {
     \Drupal::service('module_installer')->install(['farm_entity_access']);
   }
 }
+
+/**
+ * Consider all existing revision translations affected.
+ */
+function farm_entity_post_update_revision_translations_affected(&$sandbox) {
+  $entity_types = [
+    'asset',
+    'log',
+    'organization',
+    'plan',
+    'quantity',
+  ];
+  foreach ($entity_types as $entity_type) {
+    if (\Drupal::moduleHandler()->moduleExists($entity_type)) {
+      \Drupal::database()->query('UPDATE {' . $entity_type . '_field_data} SET revision_translation_affected = 1');
+      \Drupal::database()->query('UPDATE {' . $entity_type . '_field_revision} SET revision_translation_affected = 1');
+    }
+  }
+}
