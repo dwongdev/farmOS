@@ -67,6 +67,16 @@ class ManagedRole extends Role implements ContainerFactoryPluginInterface {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function getPermissions(): array {
+    $permissions = parent::getPermissions();
+    $role_id = $this->getConfiguration()['role'];
+    $role = $this->entityTypeManager->getStorage('user_role')->load($role_id);
+    return array_unique(array_merge($permissions, $this->managedRolePermissionsManager->getManagedRolePermissions($role)));
+  }
+
+  /**
    * Gets the role options.
    *
    * @return \Drupal\Core\StringTranslation\TranslatableMarkup[]
