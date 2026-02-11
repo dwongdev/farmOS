@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.0-beta1] 2026-02-11
+
+This is the first release of the farmOS 4.x branch, following
+[semantic versioning](https://semver.org/). This means changes have been made
+which may be incompatible with existing integrations. These "breaking" changes
+are described below, with links to specific issues/pull requests for more
+details.
+
 Update to the latest farmOS 3.x release before attempting to update to farmOS
 4.x. All the automated database and configuration updates for the farmOS 2.x and
 3.x branches have been removed. Updating to the latest release on the 3.x branch
@@ -148,4 +156,5 @@ farmOS 2.x release notes are available in the 2.x branch's
 farmOS 1.x release notes are available in the
 [farmOS releases on Drupal.org](https://www.drupal.org/project/farm/releases?version=7.x-1).
 
-[Unreleased]: https://github.com/farmOS/farmOS/compare/3.x...4.x
+[Unreleased]: https://github.com/farmOS/farmOS/compare/4.0.0-beta1...4.x
+[4.0.0-beta1]: https://github.com/farmOS/farmOS/releases/tag/4.0.0-beta1
