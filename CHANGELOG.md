@@ -7,7 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-<<<<<<< HEAD
 Update to the latest farmOS 3.x release before attempting to update to farmOS
 4.x. All the automated database and configuration updates for the farmOS 2.x and
 3.x branches have been removed. Updating to the latest release on the 3.x branch
