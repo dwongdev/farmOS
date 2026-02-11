@@ -30,15 +30,6 @@ function farm_entity_post_update_enforce_organization_eri(&$sandbox) {
 }
 
 /**
- * Install the farm_entity_access module.
- */
-function farm_entity_post_update_install_farm_entity_access(&$sandbox) {
-  if (!\Drupal::service('module_handler')->moduleExists('farm_entity_access')) {
-    \Drupal::service('module_installer')->install(['farm_entity_access']);
-  }
-}
-
-/**
  * Consider all existing revision translations affected.
  */
 function farm_entity_post_update_revision_translations_affected(&$sandbox) {

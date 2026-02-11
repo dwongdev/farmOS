@@ -69,6 +69,15 @@ function farm_ui_theme_install() {
 }
 
 /**
+ * Install the farm_form module.
+ */
+function farm_ui_theme_update_11400() {
+  if (!\Drupal::service('module_handler')->moduleExists('farm_form')) {
+    \Drupal::service('module_installer')->install(['farm_form']);
+  }
+}
+
+/**
  * Implements hook_update_last_removed().
  */
 function farm_ui_theme_update_last_removed() {
