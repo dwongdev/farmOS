@@ -47,7 +47,6 @@ function farm_entity_post_update_revision_translations_affected(&$sandbox) {
     'log',
     'organization',
     'plan',
-    'quantity',
   ];
   foreach ($entity_types as $entity_type) {
     if (\Drupal::moduleHandler()->moduleExists($entity_type)) {
