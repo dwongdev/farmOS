@@ -231,6 +231,8 @@ jobs:
           key: farmos-${{ matrix.platform }}-${{ github.run_id }}
       - name: Load the Docker image
         run: docker load < /tmp/farmos-${{ matrix.platform }}.tar
+      - name: Create /tmp/farmOS directory owned by www-data for bind-mount volume.
+        run: mkdir /tmp/farmOS && sudo chown 33:33 /tmp/farmOS
       - name: Run the farmOS Docker container
         run: docker run --rm -v /tmp/farmOS:/opt/drupal ${DOCKER_IMG_PREFIX}:${FARMOS_DEV_BRANCH}-${{ matrix.platform }} true
       - name: Create artifact
