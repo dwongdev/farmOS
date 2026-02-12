@@ -62,7 +62,7 @@ If you would like to develop modules that can be shared with others, see below.
 If you want to work on farmOS core development, or community contributed add-on
 modules, it helps to set these up as separate Git repositories that are managed
 as "local" Composer packages. For recommended setup instructions, see
-[managing local Git repositories](/development/repositories).
+[managing local Git repositories](/development/environment/repositories).
 
 ## Optional
 
