@@ -72,9 +72,17 @@ These resources may be helpful:
 
 ## Satellite map layers
 
-farmOS includes an optional [Mapbox](https://www.mapbox.com) module that can be
-enabled to add satellite imagery layers to the map. A Mapbox API key is
-required. For more information, see Mapbox's official documentation:
-[Access tokens](https://docs.mapbox.com/help/how-mapbox-works/access-tokens).
-Enable the Mapbox module at Setup > Modules, and then add the API key at
-Setup > Settings > Map > Mapbox.
+farmOS includes optional [Mapbox](https://www.mapbox.com) and
+[Google Maps](https://maps.google.com/) modules that add satellite imagery base
+layers to the map. These can be installed in Setup > Modules, and configured in
+Setup > Settings > Map > Mapbox / Google Maps.
+
+Both Mapbox and Google Maps require an API key to use their layers. Refer to
+the links below for instructions.
+
+### Obtaining Map API keys
+
+- Mapbox:
+  [Access tokens](https://docs.mapbox.com/help/how-mapbox-works/access-tokens)
+- Google Maps:
+  [Set up the Map Tiles API](https://developers.google.com/maps/documentation/tile/get-api-key)
