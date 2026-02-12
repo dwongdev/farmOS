@@ -41,15 +41,19 @@ For example, if you want to work on farmOS core, the first step is to clone
 the farmOS Git repository into a local directory. Create a directory called
 `repos` alongside your `composer.json` file, and clone the repository into it.
 
+Assuming you are starting with a default
+[local development environment](/development/environment) your `composer.json`
+will be located inside the `www` bind-mount volume directory.
+
 ```bash
 mkdir repos
 cd repos
 git clone --branch 4.x https://github.com/farmOS/farmOS.git
 ```
 
-Assuming you are starting with a default
-[local development environment](/development/environment) your `composer.json`
-will include the following `repositories` and `require` sections:
+The `composer.json` file (in a default
+[local development environment](/development/environment)) will include the
+following `repositories` and `require` sections:
 
 ```json
     ...
