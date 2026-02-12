@@ -23,6 +23,15 @@ a breakpoint in your code, load the page in your browser, and you should see a
 prompt appear in PHPStorm that will begin the debugging session and pause
 execution at your breakpoint.
 
+Path mappings will be automatically configured to map your local `www/web`
+directory to `/opt/drupal/web` inside the container, but this will only work
+for requests made through the browser. It is recommended that `www` is mapped
+to `/opt/drupal` instead. This will allow debugging with `drush` or `composer`
+commands, as well as code in
+[local repositories](/development/environment/repositories).
+
+Path mappings can be configured in PHPStorm Settings > PHP > Servers.
+
 ## Drush commands
 
 Drush disables XDebug by default. Run with the `--xdebug` flag to enable it.
