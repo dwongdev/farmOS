@@ -96,6 +96,38 @@ After making the modifications described above, it should look like this:
 After running `composer update`, your local instance of farmOS will now be using
 the code from your local Git repository.
 
+If you want to add another repository (eg: for an add-on module), simply add
+an additional `repositories` section, and `require` line. For example:
+
+```json
+    ...
+    "repositories": [
+        {
+            "name": "farmos",
+            "type": "path",
+            "url": "repos/farmOS",
+        },
+        {
+            "name": "mymodule",
+            "type": "path",
+            "url": "repos/mymodule",
+        },
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        }
+    ],
+    "require": {
+        "farmos/farmos": "*",
+        "myorg/mymodule": "*",
+        ...
+```
+
+Replace `mymodule` with your module name and `myorg/mymodule` with the package
+name from your module's `composer.json` file.
+
+Run `composer update` to use your local repository.
+
 ### Tips
 
 - If you are running farmOS in Docker (as described in the official
