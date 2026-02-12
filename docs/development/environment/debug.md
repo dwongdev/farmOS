@@ -16,6 +16,36 @@ following `extra_hosts` and `environment` configuration in `docker-compose.yml`:
 
 ## IDEs
 
+### VSCode / VSCodium
+
+In VSCode / VSCodium, install the
+[XDebug extension](https://marketplace.visualstudio.com/items?itemName=xdebug.php-debug)
+(`xdebug.php-debug`), then create a `launch.json` file in your `.vscode`
+project directory with the following content:
+
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Listen for Xdebug",
+            "type": "php",
+            "request": "launch",
+            "hostname": "0.0.0.0",
+            "port": 9003,
+            "pathMappings": {
+                "/opt/drupal": "${workspaceRoot}"
+            }
+        }
+    ]
+}
+```
+
+Then go to Run > Start Debugging to start listening for XDebug connections, add
+a breakpoint in your code, load a page in your browser, and you should see a
+prompt appear in VSCode / VSCodium that will begin the debugging session and
+pause execution at your breakpoint.
+
 ### PHPStorm
 
 In PHPStorm, enable the "Start listening for PHP Debug Connections" option, add
