@@ -75,7 +75,7 @@
                 "Issue #3342164: Remove implicit dependency on node module for gin content form.": "https://www.drupal.org/files/issues/2024-01-15/3342164-6.patch"
             },
             "drupal/simple_oauth": {
-                "Issue #3572695: Use AccessPolicyInterface::calculatePermissions() instead of AccessPolicyInterface::alterPermissions()": "https://git.drupalcode.org/issue/simple_oauth-3572695/-/commit/53a2cecab69c98216ab8c4f154f9392ffc1959a2.patch"
+                "Issue #3573262: Calculated permissions have a cache max age of 0": "https://git.drupalcode.org/project/simple_oauth/-/commit/11081aa8e80cc1c6eb91dbfc03eb32c3e5622297.patch"
             },
             "drupal/subrequests": {
                 "Issue #3524429: PHP 8.4 deprecation: Implicitly marking parameter as nullable": "https://git.drupalcode.org/issue/subrequests-3524429/-/commit/784ccfe8af7d803f392263d2dbf7dcd89f9566d5.patch"
