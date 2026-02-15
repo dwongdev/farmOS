@@ -86,3 +86,9 @@ the links below for instructions.
   [Access tokens](https://docs.mapbox.com/help/how-mapbox-works/access-tokens)
 - Google Maps:
   [Set up the Map Tiles API](https://developers.google.com/maps/documentation/tile/get-api-key)
+
+## Browser
+
+Unless otherwise noted, farmOS is compatible with all modern browsers, and aims
+to support the same versions as
+[Drupal core](https://www.drupal.org/docs/getting-started/system-requirements/browser-requirements).

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- [Document browser version support #1047](https://github.com/farmOS/farmOS/pull/1047)
+
 ### Changed
 
 - [Change comment form "Save" button to "Save comment" #1046](https://github.com/farmOS/farmOS/pull/1046)
