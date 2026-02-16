@@ -125,6 +125,10 @@ class FarmUiViewsTest extends FarmBrowserTestBase {
     $this->assertSession()->pageTextContains('Manufacturer');
     $this->assertSession()->pageTextContains('Model');
     $this->assertSession()->pageTextContains('Serial number');
+
+    // Check that a non-existent asset type returns 404.
+    $this->drupalGet('/assets/foo');
+    $this->assertSession()->statusCodeEquals(404);
   }
 
   /**
@@ -165,6 +169,10 @@ class FarmUiViewsTest extends FarmBrowserTestBase {
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->pageTextContains('Foo activity');
     $this->assertSession()->pageTextNotContains('Baz activity');
+
+    // Check that a non-existent log type returns 404.
+    $this->drupalGet('/logs/foo');
+    $this->assertSession()->statusCodeEquals(404);
   }
 
   /**
