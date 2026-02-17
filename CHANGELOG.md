@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [Fix missing action links on entity collection pages #1050](https://github.com/farmOS/farmOS/pull/1050)
 - [Fix asset and plan update hooks for prefixed database tables #1051](https://github.com/farmOS/farmOS/pull/1051)
+- [Validate entity bundle in asset/log/etc page_type display logic #1048](https://github.com/farmOS/farmOS/pull/1048)
 
 ## [4.0.0-beta2] 2026-02-12
 
