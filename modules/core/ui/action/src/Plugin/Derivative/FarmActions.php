@@ -72,7 +72,6 @@ class FarmActions extends DeriverBase implements ContainerDeriverInterface {
 
       // Add it to entity Views, if the farm_ui_views module is enabled.
       if ($this->moduleHandler->moduleExists('farm_ui_views')) {
-        $this->derivatives[$name]['appears_on'][] = 'view.farm_' . $type . '.page';
 
         // If this is a log, also add it to view.farm_log.page_user.
         if ($type == 'log') {
