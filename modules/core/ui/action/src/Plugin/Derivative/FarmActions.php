@@ -63,27 +63,6 @@ class FarmActions extends DeriverBase implements ContainerDeriverInterface {
         continue;
       }
 
-      // Generate a link to [entity-type]/add.
-      $name = 'farm.add.' . $type;
-      $entity_type_label = $this->entityTypeManager->getStorage($type)->getEntityType()->getLabel();
-      $this->derivatives[$name] = $base_plugin_definition;
-      $this->derivatives[$name]['title'] = $this->t('Add :entity_type', [':entity_type' => $entity_type_label]);
-      $this->derivatives[$name]['route_name'] = 'entity.' . $type . '.add_page';
-
-      // Add it to entity Views, if the farm_ui_views module is enabled.
-      if ($this->moduleHandler->moduleExists('farm_ui_views')) {
-
-        // If this is a log, also add it to view.farm_log.page_user.
-        if ($type == 'log') {
-          $this->derivatives[$name]['appears_on'][] = 'view.farm_log.page_user';
-        }
-      }
-
-      // Add it to farm.dashboard, if the farm_ui_dashboard module is enabled.
-      if ($this->moduleHandler->moduleExists('farm_ui_dashboard')) {
-        $this->derivatives[$name]['appears_on'][] = 'farm.dashboard';
-      }
-
       // Generate a link to [entity-type]/add/[bundle].
       $name = 'farm.add.' . $type . '.bundle';
       $this->derivatives[$name] = $base_plugin_definition;
