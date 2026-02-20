@@ -101,7 +101,7 @@ class FarmActions extends DeriverBase implements ContainerDeriverInterface {
         $this->derivatives[$name]['bundle_parameter'] = 'arg_0';
       }
 
-      // Generate links to [entity-type]/add/[bundle]?asset=[id] on asset pages.
+      // Generate links to /log/add/[bundle]?asset=[id] on asset pages.
       if ($type == 'log') {
         $bundles = $this->entityTypeBundleInfo->getBundleInfo('log');
         foreach ($bundles as $bundle => $bundle_info) {
