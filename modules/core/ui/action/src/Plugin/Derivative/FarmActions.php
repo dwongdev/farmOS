@@ -10,6 +10,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\Discovery\ContainerDeriverInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\farm_ui_action\Plugin\Menu\LocalAction\AddEntity;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -88,7 +89,7 @@ class FarmActions extends DeriverBase implements ContainerDeriverInterface {
       $name = 'farm.add.' . $type . '.bundle';
       $this->derivatives[$name] = $base_plugin_definition;
       $this->derivatives[$name]['route_name'] = 'entity.' . $type . '.add_form';
-      $this->derivatives[$name]['class'] = 'Drupal\farm_ui_action\Plugin\Menu\LocalAction\AddEntity';
+      $this->derivatives[$name]['class'] = AddEntity::class;
       $this->derivatives[$name]['entity_type'] = $type;
 
       // Add the entity_bundles cache tag so action links are recreated after
@@ -108,7 +109,7 @@ class FarmActions extends DeriverBase implements ContainerDeriverInterface {
           $name = 'farm.asset.add.' . $type . '.' . $bundle;
           $this->derivatives[$name] = $base_plugin_definition;
           $this->derivatives[$name]['route_name'] = 'entity.' . $type . '.add_form';
-          $this->derivatives[$name]['class'] = 'Drupal\farm_ui_action\Plugin\Menu\LocalAction\AddEntity';
+          $this->derivatives[$name]['class'] = AddEntity::class;
           $this->derivatives[$name]['entity_type'] = $type;
           $this->derivatives[$name]['bundle'] = $bundle;
           $this->derivatives[$name]['appears_on'][] = 'entity.asset.canonical';
