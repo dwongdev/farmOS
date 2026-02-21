@@ -50,14 +50,14 @@ function plan_post_update_move_archived_status(&$sandbox) {
   $update_manager->installFieldStorageDefinition('archived', 'plan', 'plan', $field_definition);
 
   // Archive plans with a status of archived.
-  \Drupal::database()->query("UPDATE plan_field_data SET archived = 0 WHERE status != 'archived'");
-  \Drupal::database()->query("UPDATE plan_field_data SET archived = 1 WHERE status = 'archived'");
-  \Drupal::database()->query("UPDATE plan_field_revision SET archived = 0 WHERE status != 'archived'");
-  \Drupal::database()->query("UPDATE plan_field_revision SET archived = 1 WHERE status = 'archived'");
+  \Drupal::database()->query("UPDATE {plan_field_data} SET archived = 0 WHERE status != 'archived'");
+  \Drupal::database()->query("UPDATE {plan_field_data} SET archived = 1 WHERE status = 'archived'");
+  \Drupal::database()->query("UPDATE {plan_field_revision} SET archived = 0 WHERE status != 'archived'");
+  \Drupal::database()->query("UPDATE {plan_field_revision} SET archived = 1 WHERE status = 'archived'");
 
   // Change the status of archived plans to active.
-  \Drupal::database()->query("UPDATE plan_field_data SET status = 'active' WHERE status = 'archived'");
-  \Drupal::database()->query("UPDATE plan_field_revision SET status = 'active' WHERE status = 'archived'");
+  \Drupal::database()->query("UPDATE {plan_field_data} SET status = 'active' WHERE status = 'archived'");
+  \Drupal::database()->query("UPDATE {plan_field_revision} SET status = 'active' WHERE status = 'archived'");
 
   // Rename plan_activate_action action configuration entity to
   // plan_unarchive_action.

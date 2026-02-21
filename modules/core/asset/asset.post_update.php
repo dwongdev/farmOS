@@ -27,8 +27,8 @@ function asset_post_update_remove_status(&$sandbox) {
   $update_manager->installFieldStorageDefinition('last_archived', 'asset', 'asset', $field_definition);
 
   // Populate last_archived field values from the old archived field.
-  \Drupal::database()->query("UPDATE asset_field_data SET last_archived = archived");
-  \Drupal::database()->query("UPDATE asset_field_revision SET last_archived = archived");
+  \Drupal::database()->query("UPDATE {asset_field_data} SET last_archived = archived");
+  \Drupal::database()->query("UPDATE {asset_field_revision} SET last_archived = archived");
 
   // Delete the old archived field.
   $storage_definition = $update_manager->getFieldStorageDefinition('archived', 'asset');
@@ -61,10 +61,10 @@ function asset_post_update_remove_status(&$sandbox) {
   $update_manager->installFieldStorageDefinition('archived', 'asset', 'asset', $field_definition);
 
   // Archive assets with a status of archived.
-  \Drupal::database()->query("UPDATE asset_field_data SET archived = 0 WHERE status != 'archived'");
-  \Drupal::database()->query("UPDATE asset_field_data SET archived = 1 WHERE status = 'archived'");
-  \Drupal::database()->query("UPDATE asset_field_revision SET archived = 0 WHERE status != 'archived'");
-  \Drupal::database()->query("UPDATE asset_field_revision SET archived = 1 WHERE status = 'archived'");
+  \Drupal::database()->query("UPDATE {asset_field_data} SET archived = 0 WHERE status != 'archived'");
+  \Drupal::database()->query("UPDATE {asset_field_data} SET archived = 1 WHERE status = 'archived'");
+  \Drupal::database()->query("UPDATE {asset_field_revision} SET archived = 0 WHERE status != 'archived'");
+  \Drupal::database()->query("UPDATE {asset_field_revision} SET archived = 1 WHERE status = 'archived'");
 
   // Rename asset_activate_action action configuration entity to
   // asset_unarchive_action.
