@@ -68,7 +68,7 @@ class ViewsExecutionHooks {
       }
 
       // If a type argument is present, add bundle-specific exposed filters.
-      if (!empty($args[0]) && $args[0] != 'all') {
+      if (!empty($args[0]) && $args[0] != 'all' && array_key_exists($args[0], $this->entityTypeBundleInfo->getBundleInfo($view->getBaseEntityType()->id()))) {
         /** @var \Drupal\entity\BundleFieldDefinition[] $bundle_fields */
         $bundle_fields = $this->entityTypeManager->getHandler($view->getBaseEntityType()->id(), 'bundle_plugin')->getFieldDefinitions($args[0]);
         foreach (array_reverse($bundle_fields) as $field_definition) {

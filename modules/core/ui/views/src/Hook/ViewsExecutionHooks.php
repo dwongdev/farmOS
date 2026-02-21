@@ -55,8 +55,9 @@ class ViewsExecutionHooks {
     }
 
     // If this is a "By type" display, alter the fields and filters.
+    // Confirm that the bundle exists first.
     $bundle = FarmUiViewsHelper::getBundleArgument($view, $display_id, $args);
-    if (!empty($bundle)) {
+    if (!empty($bundle) && array_key_exists($bundle, $this->entityTypeBundleInfo->getBundleInfo($view->getBaseEntityType()->id()))) {
 
       // Remove the type field and filter handlers.
       $view->removeHandler($display_id, 'field', 'type');
