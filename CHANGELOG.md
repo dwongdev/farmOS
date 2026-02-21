@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [Change comment form "Save" button to "Save comment" #1046](https://github.com/farmOS/farmOS/pull/1046)
 
+### Fixed
+
+- [Fix missing action links on entity collection pages #1050](https://github.com/farmOS/farmOS/pull/1050)
+
 ## [4.0.0-beta2] 2026-02-12
 
 ### Changed

@@ -18,11 +18,12 @@ class EntityHooks {
   public function entityTypeBuild(array &$entity_types) {
     /** @var \Drupal\Core\Entity\EntityTypeInterface[] $entity_types */
 
-    // Override the "collection" link path for assets, logs, and plans to use
-    // the Views provided by this module.
+    // Override the "collection" link path for assets, logs, organizations,
+    // and plans to use the Views provided by this module.
     $collection_paths = [
       'asset' => '/assets',
       'log' => '/logs',
+      'organization' => '/organizations',
       'plan' => '/plans',
     ];
     foreach ($collection_paths as $entity_type => $path) {
