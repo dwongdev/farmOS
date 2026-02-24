@@ -3,7 +3,7 @@ status: true
 dependencies:
   module:
     - asset
-    - farm_log
+    - farm_log_asset
 id: asset_add_log_action
 label: 'Add log'
 type: asset
