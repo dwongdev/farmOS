@@ -52,7 +52,7 @@ class AccountAdminSettingsForm extends ConfigFormbase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateinterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config(static::SETTINGS);
 
     $form['allow_peer_role_assignment'] = [

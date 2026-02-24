@@ -41,7 +41,7 @@ class FormSettingsForm extends ConfigFormbase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateinterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config(static::SETTINGS);
     $form['enable_form_protection'] = [
       '#type' => 'checkbox',
