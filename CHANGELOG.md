@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - [Fix exposed log category filter in Views #1060](https://github.com/farmOS/farmOS/pull/1060)
+- [Allow importing taxonomy term CSVs without parent column #1054](https://github.com/farmOS/farmOS/pull/1054)
 
 ## [4.0.0-beta3] 2026-02-21
 
