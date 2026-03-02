@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Drupal\farm_birth\EventSubscriber;
+namespace Drupal\farm_birth\Hook;
 
+use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\log\Event\LogEvent;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Drupal\log\Entity\LogInterface;
 
 /**
- * Sync child asset fields to reflect those saved in a birth log.
+ * Entity hook implementations for farm_birth.
  */
-class LogEventSubscriber implements EventSubscriberInterface {
+class EntityHooks {
 
   use StringTranslationTrait;
 
@@ -21,28 +21,28 @@ class LogEventSubscriber implements EventSubscriberInterface {
   ) {}
 
   /**
-   * {@inheritdoc}
-   *
-   * @return array
-   *   The event names to listen for, and the methods that should be executed.
+   * Implements hook_ENTITY_TYPE_insert().
    */
-  public static function getSubscribedEvents(): array {
-    return [
-      LogEvent::INSERT => 'syncBirthChildren',
-      LogEvent::UPDATE => 'syncBirthChildren',
-    ];
+  #[Hook('log_insert')]
+  public function logInsert(LogInterface $log) {
+    $this->syncBirthChildren($log);
+  }
+
+  /**
+   * Implements hook_ENTITY_TYPE_update().
+   */
+  #[Hook('log_update')]
+  public function logUpdate(LogInterface $log) {
+    $this->syncBirthChildren($log);
   }
 
   /**
    * Sync child asset fields to reflect those saved in a birth log.
    *
-   * @param \Drupal\log\Event\LogEvent $event
-   *   The log event.
+   * @param \Drupal\log\Entity\LogInterface $log
+   *   The log entity.
    */
-  public function syncBirthChildren(LogEvent $event): void {
-
-    // Get the log entity from the event.
-    $log = $event->log;
+  public function syncBirthChildren(LogInterface $log): void {
 
     // If this is not a birth log, bail.
     if ($log->bundle() != 'birth') {

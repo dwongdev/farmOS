@@ -2,21 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Drupal\farm_group\EventSubscriber;
+namespace Drupal\farm_group\Hook;
 
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
+use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\asset\Entity\AssetInterface;
 use Drupal\farm_group\GroupMembershipInterface;
-use Drupal\farm_location\EventSubscriber\LogEventSubscriber as LocationLogEventSubscriber;
 use Drupal\log\Entity\LogInterface;
-use Drupal\log\Event\LogEvent;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Invalidate asset cache when group membership and group location changes.
+ * Entity hook implementations for farm_group.
  */
-class LogEventSubscriber implements EventSubscriberInterface {
+class EntityHooks {
 
   public function __construct(
     protected CacheTagsInvalidatorInterface $cacheTagsInvalidator,
@@ -25,38 +23,21 @@ class LogEventSubscriber implements EventSubscriberInterface {
   ) {}
 
   /**
-   * {@inheritdoc}
-   *
-   * @return array
-   *   The event names to listen for, and the methods that should be executed.
+   * Implements hook_ENTITY_TYPE_presave().
    */
-  public static function getSubscribedEvents(): array {
-    return [
-      LogEvent::DELETE => 'logDelete',
-      LogEvent::PRESAVE => 'logPresave',
-    ];
+  #[Hook('log_presave')]
+  public function logPresave(LogInterface $log) {
+    $this->invalidateAssetCacheOnGroupAssignment($log);
+    $this->invalidateGroupMemberAssetCacheOnMovement($log);
   }
 
   /**
-   * Perform actions on log delete.
-   *
-   * @param \Drupal\log\Event\LogEvent $event
-   *   The log event.
+   * Implements hook_ENTITY_TYPE_delete().
    */
-  public function logDelete(LogEvent $event) {
-    $this->invalidateAssetCacheOnGroupAssignment($event->log);
-    $this->invalidateGroupMemberAssetCacheOnMovement($event->log);
-  }
-
-  /**
-   * Perform actions on log presave.
-   *
-   * @param \Drupal\log\Event\LogEvent $event
-   *   The log event.
-   */
-  public function logPresave(LogEvent $event) {
-    $this->invalidateAssetCacheOnGroupAssignment($event->log);
-    $this->invalidateGroupMemberAssetCacheOnMovement($event->log);
+  #[Hook('log_delete')]
+  public function logDelete(LogInterface $log) {
+    $this->invalidateAssetCacheOnGroupAssignment($log);
+    $this->invalidateGroupMemberAssetCacheOnMovement($log);
   }
 
   /**
@@ -114,18 +95,19 @@ class LogEventSubscriber implements EventSubscriberInterface {
    *   The Log entity.
    */
   protected function invalidateGroupMemberAssetCacheOnMovement(LogInterface $log) {
+
     // Keep track if we need to invalidate the cache of referenced assets so
     // the computed 'location' and 'geometry' fields are updated.
     $update_asset_cache = FALSE;
 
     // If the log is a 'done' movement log, invalidate the cache.
-    if (LocationLogEventSubscriber::isActiveMovementLog($log)) {
+    if ($this->isActiveMovementLog($log)) {
       $update_asset_cache = TRUE;
     }
 
     // If updating an existing 'done' movement log, invalidate the cache.
     // This catches any movement logs changing from done to another status.
-    if (!empty($log->getOriginal()) && LocationLogEventSubscriber::isActiveMovementLog($log->getOriginal())) {
+    if (!empty($log->getOriginal()) && $this->isActiveMovementLog($log->getOriginal())) {
       $update_asset_cache = TRUE;
     }
 
@@ -166,6 +148,19 @@ class LogEventSubscriber implements EventSubscriberInterface {
 
     // Invalidate the cache tags.
     $this->cacheTagsInvalidator->invalidateTags($tags);
+  }
+
+  /**
+   * Helper method to check if a log is an active movement log.
+   *
+   * @param \Drupal\log\Entity\LogInterface $log
+   *   The Log entity.
+   *
+   * @return bool
+   *   Boolean indicating if the log is an active movement log.
+   */
+  protected function isActiveMovementLog(LogInterface $log): bool {
+    return $log->get('status')->value == 'done' && $log->get('is_movement')->value && $log->get('timestamp')->value <= $this->time->getCurrentTime();
   }
 
   /**

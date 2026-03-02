@@ -7,7 +7,3 @@ services:
   log.location:
     class: Drupal\farm_location\LogLocation
   Drupal\farm_location\LogLocationInterface: '@log.location'
-  farm_location.log_event_subscriber:
-    class: Drupal\farm_location\EventSubscriber\LogEventSubscriber
-    tags:
-      - { name: 'event_subscriber' }

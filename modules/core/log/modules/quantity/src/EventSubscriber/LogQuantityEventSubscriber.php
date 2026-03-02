@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\farm_log_quantity\EventSubscriber;
 
-use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\log\Event\LogEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -13,12 +11,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  * Subscribe to events related to log quantities.
  */
 class LogQuantityEventSubscriber implements EventSubscriberInterface {
-
-  use StringTranslationTrait;
-
-  public function __construct(
-    protected EntityTypeManagerInterface $entityTypeManager,
-  ) {}
 
   /**
    * {@inheritdoc}
@@ -29,7 +21,6 @@ class LogQuantityEventSubscriber implements EventSubscriberInterface {
   public static function getSubscribedEvents(): array {
     return [
       LogEvent::CLONE => 'logClone',
-      LogEvent::DELETE => 'logDelete',
     ];
   }
 
@@ -59,31 +50,6 @@ class LogQuantityEventSubscriber implements EventSubscriberInterface {
 
     // Update the log to reference the new duplicated quantities.
     $log->set('quantity', $new_quantities);
-  }
-
-  /**
-   * Perform actions on log delete.
-   *
-   * @param \Drupal\log\Event\LogEvent $event
-   *   The log event.
-   */
-  public function logDelete(LogEvent $event) {
-
-    // Get the log entity from the event.
-    $log = $event->log;
-
-    // If the log doesn't have a quantity field, bail.
-    if (!$log->hasField('quantity')) {
-      return;
-    }
-
-    // Get any quantities the log references.
-    $quantities = $log->get('quantity')->referencedEntities();
-
-    // Delete quantity entities.
-    if (!empty($quantities)) {
-      $this->entityTypeManager->getStorage('quantity')->delete($quantities);
-    }
   }
 
 }

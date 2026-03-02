@@ -2,20 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Drupal\farm_inventory\EventSubscriber;
+namespace Drupal\farm_inventory\Hook;
 
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
+use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\asset\Entity\AssetInterface;
 use Drupal\log\Entity\LogInterface;
-use Drupal\log\Event\LogEvent;
 use Drupal\quantity\Entity\QuantityInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Invalidate asset cache when inventory changes.
+ * Entity hook implementations for farm_inventory.
  */
-class LogEventSubscriber implements EventSubscriberInterface {
+class EntityHooks {
 
   public function __construct(
     protected CacheTagsInvalidatorInterface $cacheTagsInvalidator,
@@ -23,36 +22,19 @@ class LogEventSubscriber implements EventSubscriberInterface {
   ) {}
 
   /**
-   * {@inheritdoc}
-   *
-   * @return array
-   *   The event names to listen for, and the methods that should be executed.
+   * Implements hook_ENTITY_TYPE_presave().
    */
-  public static function getSubscribedEvents(): array {
-    return [
-      LogEvent::DELETE => 'logDelete',
-      LogEvent::PRESAVE => 'logPresave',
-    ];
+  #[Hook('log_presave')]
+  public function logPresave(LogInterface $log) {
+    $this->invalidateAssetCacheOnInventoryChange($log);
   }
 
   /**
-   * Perform actions on log delete.
-   *
-   * @param \Drupal\log\Event\LogEvent $event
-   *   The log event.
+   * Implements hook_ENTITY_TYPE_delete().
    */
-  public function logDelete(LogEvent $event) {
-    $this->invalidateAssetCacheOnInventoryChange($event->log);
-  }
-
-  /**
-   * Perform actions on log presave.
-   *
-   * @param \Drupal\log\Event\LogEvent $event
-   *   The log event.
-   */
-  public function logPresave(LogEvent $event) {
-    $this->invalidateAssetCacheOnInventoryChange($event->log);
+  #[Hook('log_delete')]
+  public function logDelete(LogInterface $log) {
+    $this->invalidateAssetCacheOnInventoryChange($log);
   }
 
   /**

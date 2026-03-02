@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Drupal\farm_location\EventSubscriber;
+namespace Drupal\farm_location\Hook;
 
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
+use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\farm_geo\Traits\WktTrait;
 use Drupal\farm_location\AssetLocationInterface;
 use Drupal\farm_location\LogLocationInterface;
 use Drupal\log\Entity\LogInterface;
-use Drupal\log\Event\LogEvent;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Populate log geometry and invalidate asset cache on movement logs.
+ * Entity hook implementations for farm_location.
  */
-class LogEventSubscriber implements EventSubscriberInterface {
+class EntityHooks {
 
   use WktTrait;
 
@@ -30,46 +30,27 @@ class LogEventSubscriber implements EventSubscriberInterface {
     protected LogLocationInterface $logLocation,
     protected AssetLocationInterface $assetLocation,
     protected CacheTagsInvalidatorInterface $cacheTagsInvalidator,
+    protected TimeInterface $time,
   ) {}
 
   /**
-   * {@inheritdoc}
-   *
-   * @return array
-   *   The event names to listen for, and the methods that should be executed.
+   * Implements hook_ENTITY_TYPE_presave().
    */
-  public static function getSubscribedEvents(): array {
-    return [
-      LogEvent::DELETE => 'logDelete',
-      LogEvent::PRESAVE => 'logPresave',
-    ];
-  }
-
-  /**
-   * Perform actions on log delete.
-   *
-   * @param \Drupal\log\Event\LogEvent $event
-   *   The log event.
-   */
-  public function logDelete(LogEvent $event) {
-    $this->invalidateAssetCacheOnMovement($event->log);
-  }
-
-  /**
-   * Perform actions on log presave.
-   *
-   * @param \Drupal\log\Event\LogEvent $event
-   *   The log event.
-   */
-  public function logPresave(LogEvent $event) {
-
-    // Get the log entity from the event.
-    $log = $event->log;
+  #[Hook('log_presave')]
+  public function logPresave(LogInterface $log) {
 
     // Populate the log geometry from the location geometry.
     $this->populateGeometryFromLocation($log);
 
     // Invalidate asset caches when assets are moved.
+    $this->invalidateAssetCacheOnMovement($log);
+  }
+
+  /**
+   * Implements hook_ENTITY_TYPE_delete().
+   */
+  #[Hook('log_delete')]
+  public function logDelete(LogInterface $log) {
     $this->invalidateAssetCacheOnMovement($log);
   }
 
@@ -272,8 +253,8 @@ class LogEventSubscriber implements EventSubscriberInterface {
    * @return bool
    *   Boolean indicating if the log is an active movement log.
    */
-  public static function isActiveMovementLog(LogInterface $log): bool {
-    return $log->get('status')->value == 'done' && $log->get('is_movement')->value && $log->get('timestamp')->value <= \Drupal::time()->getCurrentTime();
+  protected function isActiveMovementLog(LogInterface $log): bool {
+    return $log->get('status')->value == 'done' && $log->get('is_movement')->value && $log->get('timestamp')->value <= $this->time->getCurrentTime();
   }
 
 }

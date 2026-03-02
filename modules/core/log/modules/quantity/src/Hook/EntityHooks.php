@@ -7,6 +7,7 @@ namespace Drupal\farm_log_quantity\Hook;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\log\Entity\LogInterface;
 use Drupal\quantity\Entity\QuantityInterface;
 
 /**
@@ -19,6 +20,26 @@ class EntityHooks {
   public function __construct(
     protected EntityTypeManagerInterface $entityTypeManager,
   ) {}
+
+  /**
+   * Implements hook_ENTITY_TYPE_delete().
+   */
+  #[Hook('log_delete')]
+  public function logDelete(LogInterface $log) {
+
+    // If the log doesn't have a quantity field, bail.
+    if (!$log->hasField('quantity')) {
+      return;
+    }
+
+    // Get any quantities the log references.
+    $quantities = $log->get('quantity')->referencedEntities();
+
+    // Delete quantity entities.
+    if (!empty($quantities)) {
+      $this->entityTypeManager->getStorage('quantity')->delete($quantities);
+    }
+  }
 
   /**
    * Implements hook_ENTITY_TYPE_delete().
