@@ -22,7 +22,7 @@ parameters:
 			message: '#^Call to method Drupal\\Core\\Entity\\Query\\QueryInterface\:\:accessCheck\(\) with false will always evaluate to true\.$#'
 			identifier: method.alreadyNarrowedType
 			count: 1
-			path: web/profiles/farm/modules/core/log/modules/quantity/src/EventSubscriber/LogQuantityEventSubscriber.php
+			path: web/profiles/farm/modules/core/log/modules/quantity/src/Hook/EntityHooks.php
 
 		-
 			message: '#^Call to method Drupal\\Core\\Entity\\Query\\QueryInterface\:\:accessCheck\(\) with true will always evaluate to true\.$#'
