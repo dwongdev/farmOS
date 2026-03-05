@@ -192,10 +192,10 @@ process:
 ...
 ```
 
-Chaining plugins together provides more advanced capabilities. For following
-process pipeline will populate the log categories from a CSV column called
-`Log categories`, using the `explode` plugin to split a comma-separated list
-of categories into separate items, and the `term_lookup` plugin to look up
+Chaining plugins together provides more advanced capabilities. For example, the
+following process pipeline will populate the log categories from a CSV column
+called `Log categories`, using the `explode` plugin to split a comma-separated
+list of categories into separate items, and the `term_lookup` plugin to look up
 existing terms from the `log_category` vocabulary to reference:
 
 ```yaml
