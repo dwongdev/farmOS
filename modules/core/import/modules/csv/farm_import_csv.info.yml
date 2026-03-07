@@ -8,6 +8,7 @@ dependencies:
   - drupal:taxonomy
   - drupal:views
   - farm:asset
+  - farm:farm_entity_fields
   - farm:farm_import
   - farm:farm_location
   - farm:farm_log_asset
