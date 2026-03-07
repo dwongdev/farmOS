@@ -135,6 +135,22 @@ class FieldConstraintsTest extends KernelTestBase {
     // asset has a child in a different farm.
     $this->assertEquals(1, $violations->count());
     $this->assertInstanceOf(AssetParentFarm::class, $violations->get(0)->getConstraint());
+
+    // Reset the first asset to the first farm and confirm that it validates.
+    $asset1->set('farm', [$farm1]);
+    $violations = $asset1->validate();
+    $this->assertEquals(0, $violations->count());
+
+    // Remove farm assignment from both assets, save them, and confirm that they
+    // both validate.
+    $asset1->set('farm', []);
+    $asset1->save();
+    $asset2->set('farm', []);
+    $asset2->save();
+    $violations = $asset1->validate();
+    $this->assertEquals(0, $violations->count());
+    $violations = $asset2->validate();
+    $this->assertEquals(0, $violations->count());
   }
 
   /**

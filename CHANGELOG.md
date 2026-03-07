@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [Allow importing taxonomy term CSVs without parent column #1054](https://github.com/farmOS/farmOS/pull/1054)
 - [Fix exposed taxonomy term reference filters in Views #1060](https://github.com/farmOS/farmOS/pull/1060)
+- [Fix asset parent/child farm validation when neither asset is in a farm #1061](https://github.com/farmOS/farmOS/pull/1061)
 
 ### Changed
 

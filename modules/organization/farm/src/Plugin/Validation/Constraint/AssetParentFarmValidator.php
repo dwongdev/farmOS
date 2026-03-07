@@ -69,8 +69,8 @@ class AssetParentFarmValidator extends ConstraintValidator implements ContainerI
         }
       }
 
-      // Otherwise, add a violation because the relation isn't in a farm.
-      else {
+      // Or, if the relation isn't in a farm, but the asset is, add a violation.
+      elseif (!empty($farm_id)) {
         $violation = TRUE;
         break;
       }
