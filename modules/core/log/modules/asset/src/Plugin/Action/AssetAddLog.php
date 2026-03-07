@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\farm_log\Plugin\Action;
+namespace Drupal\farm_log_asset\Plugin\Action;
 
 use Drupal\Core\Action\Attribute\Action;
 use Drupal\Core\Action\Plugin\Action\EntityActionBase;
@@ -18,7 +18,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 #[Action(
   id: 'asset_add_log_action',
   label: new TranslatableMarkup('Add a log referencing assets.'),
-  confirm_form_route_name: 'farm_log.asset_add_log_action_form',
+  confirm_form_route_name: 'farm_log_asset.asset_add_log_action_form',
   type: 'asset',
 )]
 class AssetAddLog extends EntityActionBase {
