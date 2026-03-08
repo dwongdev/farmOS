@@ -18,11 +18,20 @@ trait EntityViewsDataReverseRelationshipsTrait {
   protected function addReverseRelationships(array &$data, array $fields) {
     parent::addReverseRelationships($data, $fields);
 
-    // Configure the taxonomy_term reference field filter.
+    // Configure entity reference field filter plugins.
     foreach ($fields as $field) {
 
-      // If this is not a taxonomy term reference field, skip it.
-      if ($field->getSettings()['target_type'] !== 'taxonomy_term') {
+      // Only proceed if the target entity type is one we care about.
+      $target_type = $field->getSettings()['target_type'];
+      $target_types = [
+        'asset',
+        'log',
+        'organization',
+        'plan',
+        'taxonomy_term',
+        'user',
+      ];
+      if (!in_array($target_type, $target_types)) {
         continue;
       }
 
@@ -48,9 +57,20 @@ trait EntityViewsDataReverseRelationshipsTrait {
           ];
           if (in_array($table_field_name, $table_field_names)) {
 
-            // Set the filter handler ID.
+            // Use the taxonomy_index_tid plugin for taxonomy term reference
+            // fields.
             // @see \Drupal\taxonomy\Hook\TaxonomyViewsHooks::fieldViewsDataAlter()
-            $data[$table_name][$table_field_name]['filter']['id'] = 'taxonomy_index_tid';
+            if ($target_type == 'taxonomy_term') {
+              $data[$table_name][$table_field_name]['filter']['id'] = 'taxonomy_index_tid';
+            }
+
+            // Use the entity_reference plugin for everything else.
+            // @todo Refactor/remove this when the following core issues are resolved.
+            // @see https://www.drupal.org/project/drupal/issues/3458099
+            // @see https://www.drupal.org/project/drupal/issues/3438054
+            else {
+              $data[$table_name][$table_field_name]['filter']['id'] = 'entity_reference';
+            }
           }
         }
       }
