@@ -11,6 +11,9 @@ dependencies:
     - farm_location
     - image
     - options
+  enforced:
+    module:
+      - farm_group
 id: farm_group_members
 label: 'Farm Group Members'
 module: views
