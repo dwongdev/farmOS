@@ -7,8 +7,8 @@ namespace Drupal\farm_entity_views;
 /**
  * Configures Views filter plugins for entity reference fields.
  *
- * @see EntityViewsData
- * @see \taxonomy_field_views_data_alter()
+ * @see \Drupal\entity\EntityViewsData
+ * @see \Drupal\taxonomy\Hook\TaxonomyViewsHooks::fieldViewsDataAlter()
  */
 trait EntityViewsDataReverseRelationshipsTrait {
 
@@ -19,7 +19,6 @@ trait EntityViewsDataReverseRelationshipsTrait {
     parent::addReverseRelationships($data, $fields);
 
     // Configure the taxonomy_term reference field filter.
-    // Logic derived form taxonomy_field_views_data_alter().
     foreach ($fields as $field) {
 
       // If this is not a taxonomy term reference field, skip it.
@@ -50,6 +49,7 @@ trait EntityViewsDataReverseRelationshipsTrait {
           if (in_array($table_field_name, $table_field_names)) {
 
             // Set the filter handler ID.
+            // @see \Drupal\taxonomy\Hook\TaxonomyViewsHooks::fieldViewsDataAlter()
             $data[$table_name][$table_field_name]['filter']['id'] = 'taxonomy_index_tid';
           }
         }
