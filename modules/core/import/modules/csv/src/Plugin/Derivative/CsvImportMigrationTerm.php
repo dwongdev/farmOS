@@ -41,7 +41,7 @@ class CsvImportMigrationTerm extends CsvImportMigrationBase {
       [
         'plugin' => 'skip_on_empty',
         'method' => 'process',
-        'source' => 'assets',
+        'source' => 'parent',
       ],
       [
         'plugin' => 'term_lookup',
