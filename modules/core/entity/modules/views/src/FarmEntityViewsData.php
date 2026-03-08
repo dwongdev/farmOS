@@ -11,6 +11,6 @@ use Drupal\entity\EntityViewsData;
  */
 class FarmEntityViewsData extends EntityViewsData {
 
-  use EntityViewsDataTaxonomyFilterTrait;
+  use EntityViewsDataReverseRelationshipsTrait;
 
 }

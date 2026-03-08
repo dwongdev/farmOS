@@ -12,7 +12,7 @@ use Drupal\log\LogViewsData;
  */
 class FarmLogViewsData extends LogViewsData {
 
-  use EntityViewsDataTaxonomyFilterTrait;
+  use EntityViewsDataReverseRelationshipsTrait;
 
   /**
    * {@inheritdoc}

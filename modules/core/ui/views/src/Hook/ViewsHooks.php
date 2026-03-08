@@ -27,19 +27,6 @@ class ViewsHooks {
   #[Hook('views_data_alter')]
   public function viewsDataAlter(array &$data) {
 
-    // Use core entity_reference filter plugin for all entity reference fields.
-    // @todo Refactor/remove this when the following core issues are resolved.
-    // @see https://www.drupal.org/project/drupal/issues/3458099
-    // @see https://www.drupal.org/project/drupal/issues/3438054
-    $entity_reference_field_map = $this->entityFieldManager->getFieldMapByFieldType('entity_reference');
-    foreach ($entity_reference_field_map as $entity_type_id => $fields) {
-      foreach ($fields as $field_name => $map) {
-        if (!empty($data[$entity_type_id . '__' . $field_name][$field_name . '_target_id']['filter'])) {
-          $data[$entity_type_id . '__' . $field_name][$field_name . '_target_id']['filter']['id'] = 'entity_reference';
-        }
-      }
-    }
-
     // Provide an asset_or_location argument for views of logs.
     if (isset($data['log_field_data'])) {
       $data['log_field_data']['asset_or_location'] = [
