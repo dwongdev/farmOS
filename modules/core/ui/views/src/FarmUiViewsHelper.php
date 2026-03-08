@@ -233,6 +233,7 @@ class FarmUiViewsHelper {
               if (!empty($handler_settings['target_bundles'])) {
                 $filter_options['limit'] = TRUE;
                 $filter_options['vid'] = reset($handler_settings['target_bundles']);
+                $filter_options['hierarchy'] = TRUE;
               }
             }
 

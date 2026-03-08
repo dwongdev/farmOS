@@ -970,7 +970,7 @@ display:
           reduce_duplicates: true
           vid: log_category
           type: select
-          hierarchy: false
+          hierarchy: true
           limit: true
           error_message: true
         flag_value:
