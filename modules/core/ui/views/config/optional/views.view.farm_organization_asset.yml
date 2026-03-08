@@ -1080,7 +1080,7 @@ display:
             parent_target_id: parent_target_id
             owner_target_id: owner_target_id
             location: location
-            status: status
+            archived: archived
           default: name
           info:
             asset_bulk_form:
@@ -1134,8 +1134,8 @@ display:
               separator: ''
               empty_column: true
               responsive: ''
-            status:
-              sortable: true
+            archived:
+              sortable: false
               default_sort_order: asc
               align: ''
               separator: ''
@@ -1147,6 +1147,7 @@ display:
           empty_table: true
           caption: ''
           description: ''
+          class: ''
       row:
         type: fields
         options:
