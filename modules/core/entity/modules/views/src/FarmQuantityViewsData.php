@@ -11,6 +11,6 @@ use Drupal\quantity\QuantityViewsData;
  */
 class FarmQuantityViewsData extends QuantityViewsData {
 
-  use EntityViewsDataTaxonomyFilterTrait;
+  use EntityViewsDataReverseRelationshipsTrait;
 
 }

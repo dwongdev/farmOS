@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Drupal\farm_entity_views;
 
 /**
- * Configures the correct view filter for taxonomy_term reference fields.
+ * Configures Views filter plugins for entity reference fields.
  *
  * @see EntityViewsData
  * @see \taxonomy_field_views_data_alter()
  */
-trait EntityViewsDataTaxonomyFilterTrait {
+trait EntityViewsDataReverseRelationshipsTrait {
 
   /**
    * {@inheritdoc}
