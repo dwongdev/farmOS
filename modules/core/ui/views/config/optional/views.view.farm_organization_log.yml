@@ -975,7 +975,7 @@ display:
           entity_field: category
           plugin_id: taxonomy_index_tid
           operator: or
-          value: null
+          value: {  }
           group: 1
           exposed: true
           expose:
@@ -1011,16 +1011,6 @@ display:
           hierarchy: false
           limit: true
           error_message: true
-          sub_handler: 'default:taxonomy_term'
-          sub_handler_settings:
-            target_bundles:
-              log_category: log_category
-            sort:
-              field: name
-              direction: asc
-            auto_create: false
-            auto_create_bundle: ''
-          widget: select
         flag_value:
           id: flag_value
           table: log__flag
