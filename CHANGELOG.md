@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.0-beta4] 2026-03-09
+
 ### Fixed
 
 - [Fix Fatal error: Trait FarmFormProtectionTrait not found during update from 3.x #1063](https://github.com/farmOS/farmOS/pull/1063)
@@ -191,7 +193,8 @@ farmOS 2.x release notes are available in the 2.x branch's
 farmOS 1.x release notes are available in the
 [farmOS releases on Drupal.org](https://www.drupal.org/project/farm/releases?version=7.x-1).
 
-[Unreleased]: https://github.com/farmOS/farmOS/compare/4.0.0-beta3...4.x
+[Unreleased]: https://github.com/farmOS/farmOS/compare/4.0.0-beta4...4.x
+[4.0.0-beta4]: https://github.com/farmOS/farmOS/releases/tag/4.0.0-beta4
 [4.0.0-beta3]: https://github.com/farmOS/farmOS/releases/tag/4.0.0-beta3
 [4.0.0-beta2]: https://github.com/farmOS/farmOS/releases/tag/4.0.0-beta2
 [4.0.0-beta1]: https://github.com/farmOS/farmOS/releases/tag/4.0.0-beta1
