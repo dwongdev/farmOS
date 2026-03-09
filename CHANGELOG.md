@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - [Move "Add log" action and asset field population logic to farm_log_asset module #1053](https://github.com/farmOS/farmOS/pull/1053)
+- Update PostgreSQL to 17 in Docker Compose configurations.
 
 ## [4.0.0-beta3] 2026-02-21
 
