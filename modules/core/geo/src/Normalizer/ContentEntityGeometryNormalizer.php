@@ -98,7 +98,7 @@ class ContentEntityGeometryNormalizer implements NormalizerInterface, Serializer
     // Check that the data is a content entity.
     // Only formats that are prefixed with "geometry_" are supported.
     // This makes it easier for other modules to provide geometry encoders.
-    return $data instanceof ContentEntityInterface && strpos($format, 'geometry_') === 0;
+    return $data instanceof ContentEntityInterface && !is_null($format) && str_starts_with($format, 'geometry_');
   }
 
   /**

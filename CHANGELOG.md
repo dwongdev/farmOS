@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- [Fix ContentEntityGeometryNormalizer support check #1064](https://github.com/farmOS/farmOS/pull/1064)
+
 ## [4.0.0-beta4] 2026-03-09
 
 ### Fixed
