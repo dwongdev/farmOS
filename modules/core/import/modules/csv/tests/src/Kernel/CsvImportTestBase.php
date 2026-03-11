@@ -14,7 +14,7 @@ use Drupal\file\Entity\File;
  *
  * @group farm
  */
-class CsvImportTestBase extends MigrateTestBase {
+abstract class CsvImportTestBase extends MigrateTestBase {
 
   use UserCreationTrait;
 
