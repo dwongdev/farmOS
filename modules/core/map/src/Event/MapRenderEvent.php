@@ -10,8 +10,6 @@ use Drupal\farm_map\Entity\MapTypeInterface;
 
 /**
  * An event that is dispatched before rendering a map on the page.
- *
- * @group farm
  */
 class MapRenderEvent extends Event {
 

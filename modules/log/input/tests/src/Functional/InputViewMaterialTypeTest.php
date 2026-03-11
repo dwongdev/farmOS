@@ -8,15 +8,15 @@ use Drupal\Tests\farm_test\Functional\FarmBrowserTestBase;
 use Drupal\log\Entity\Log;
 use Drupal\quantity\Entity\Quantity;
 use Drupal\taxonomy\Entity\Term;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Test material type filter functionality.
  *
  * @see \Drupal\farm_input\Plugin\views\filter\LogQuantityMaterialType
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class InputViewMaterialTypeTest extends FarmBrowserTestBase {
 

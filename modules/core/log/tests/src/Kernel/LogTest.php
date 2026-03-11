@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Drupal\Tests\farm_log\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests for farmOS log module.
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class LogTest extends KernelTestBase {
 

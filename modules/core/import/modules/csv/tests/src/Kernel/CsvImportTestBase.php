@@ -11,8 +11,6 @@ use Drupal\file\Entity\File;
 
 /**
  * Base class for farmOS CSV importer kernel tests.
- *
- * @group farm
  */
 abstract class CsvImportTestBase extends MigrateTestBase {
 

@@ -9,13 +9,13 @@ use Drupal\Core\Url;
 use Drupal\Tests\farm_test\Functional\FarmBrowserTestBase;
 use Drupal\Tests\jsonapi\Functional\JsonApiRequestTestTrait;
 use GuzzleHttp\RequestOptions;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the API entry point functionality.
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class EntryPointTest extends FarmBrowserTestBase {
 

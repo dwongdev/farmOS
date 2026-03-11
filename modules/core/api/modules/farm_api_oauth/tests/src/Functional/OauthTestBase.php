@@ -8,8 +8,6 @@ use Drupal\Tests\simple_oauth\Functional\TokenBearerFunctionalTestBase;
 
 /**
  * Base class that handles common logic for OAuth tests.
- *
- * @group farm
  */
 abstract class OauthTestBase extends TokenBearerFunctionalTestBase {
 

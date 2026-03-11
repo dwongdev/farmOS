@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Drupal\Tests\farm_entity\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests farmOS entity fields.
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class FarmEntityFieldTest extends KernelTestBase {
 

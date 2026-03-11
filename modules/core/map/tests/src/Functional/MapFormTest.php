@@ -6,13 +6,13 @@ namespace Drupal\Tests\farm_map\Functional;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Tests\farm_test\Functional\FarmBrowserTestBase;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the farmOS map form element.
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class MapFormTest extends FarmBrowserTestBase {
 

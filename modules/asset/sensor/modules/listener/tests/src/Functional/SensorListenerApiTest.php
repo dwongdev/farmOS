@@ -6,13 +6,13 @@ namespace Drupal\Tests\farm_sensor_listener\Functional;
 
 use Drupal\Tests\farm_sensor\Functional\SensorDataApiTest;
 use Drupal\asset\Entity\AssetInterface;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Test the sensor listener (legacy) API.
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class SensorListenerApiTest extends SensorDataApiTest {
 

@@ -6,13 +6,13 @@ namespace Drupal\Tests\farm_entity\Kernel;
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\KernelTests\KernelTestBase;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests farmOS entity revisions.
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class FarmEntityRevisionsTest extends KernelTestBase {
 

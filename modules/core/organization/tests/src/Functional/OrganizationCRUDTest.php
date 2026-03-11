@@ -6,13 +6,13 @@ namespace Drupal\Tests\organization\Functional;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\organization\Entity\Organization;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the organization CRUD.
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class OrganizationCRUDTest extends OrganizationTestBase {
 

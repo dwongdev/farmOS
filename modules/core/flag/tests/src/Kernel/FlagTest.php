@@ -7,13 +7,13 @@ namespace Drupal\Tests\farm_flag\Kernel;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\farm_flag\Entity\FarmFlag;
 use Drupal\farm_flag\FarmFlagHelper;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests for farm_flag logic.
- *
- * @group farm_flag
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class FlagTest extends KernelTestBase {
 

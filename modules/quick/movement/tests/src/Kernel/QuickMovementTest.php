@@ -7,13 +7,13 @@ namespace Drupal\Tests\farm_quick_movement\Kernel;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Tests\farm_quick\Kernel\QuickFormTestBase;
 use Drupal\asset\Entity\Asset;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests for farmOS movement quick form.
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class QuickMovementTest extends QuickFormTestBase {
 

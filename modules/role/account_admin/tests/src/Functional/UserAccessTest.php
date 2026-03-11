@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Drupal\Tests\farm_account_admin\Functional;
 
 use Drupal\Tests\farm_test\Functional\FarmBrowserTestBase;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests access to user 1.
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class UserAccessTest extends FarmBrowserTestBase {
 

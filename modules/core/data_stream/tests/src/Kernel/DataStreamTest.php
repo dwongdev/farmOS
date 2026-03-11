@@ -6,14 +6,14 @@ namespace Drupal\Tests\data_stream\Kernel;
 
 use Drupal\Component\Serialization\Json;
 use Drupal\Tests\data_stream\Traits\DataStreamCreationTrait;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Test the basic data stream type.
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class DataStreamTest extends DataStreamTestBase {
 

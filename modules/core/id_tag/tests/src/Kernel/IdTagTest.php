@@ -7,13 +7,13 @@ namespace Drupal\Tests\farm_id_tag\Kernel;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\asset\Entity\Asset;
 use Drupal\farm_id_tag\Plugin\Field\FieldType\IdTagItem;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Test ID tag field.
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class IdTagTest extends KernelTestBase {
 

@@ -9,13 +9,13 @@ use Drupal\asset\Entity\Asset;
 use Drupal\log\Entity\Log;
 use Drupal\organization\Entity\Organization;
 use Drupal\quantity\Entity\Quantity;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the farm_ui_views Views.
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class FarmUiViewsTest extends FarmBrowserTestBase {
 

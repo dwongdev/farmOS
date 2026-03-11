@@ -6,13 +6,13 @@ namespace Drupal\Tests\asset\Functional;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\asset\Entity\Asset;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the asset CRUD.
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class AssetCRUDTest extends AssetTestBase {
 

@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Drupal\Tests\data_stream\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Tests for Data Streams.
- *
- * @group farm
  */
+#[Group('farm')]
 abstract class DataStreamTestBase extends KernelTestBase {
 
   /**

@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Drupal\Tests\data_stream_notification\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the numeric notification condition.
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class NumericConditionTest extends KernelTestBase {
 

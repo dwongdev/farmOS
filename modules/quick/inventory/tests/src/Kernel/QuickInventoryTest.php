@@ -8,13 +8,13 @@ use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Tests\farm_quick\Kernel\QuickFormTestBase;
 use Drupal\asset\Entity\Asset;
 use Drupal\taxonomy\Entity\Term;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests for farmOS inventory quick form.
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class QuickInventoryTest extends QuickFormTestBase {
 

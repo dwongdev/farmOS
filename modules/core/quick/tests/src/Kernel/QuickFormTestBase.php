@@ -11,8 +11,6 @@ use Drupal\Tests\user\Traits\UserCreationTrait;
 /**
  * Base class that modules can use to test their quick forms.
  *
- * @group farm
- *
  * @internal
  */
 abstract class QuickFormTestBase extends KernelTestBase {

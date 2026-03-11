@@ -12,13 +12,13 @@ use Drupal\fraction\Fraction;
 use Drupal\log\Entity\Log;
 use Drupal\quantity\Entity\Quantity;
 use Drupal\taxonomy\Entity\Term;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests for farmOS inventory logic.
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class InventoryTest extends KernelTestBase {
 

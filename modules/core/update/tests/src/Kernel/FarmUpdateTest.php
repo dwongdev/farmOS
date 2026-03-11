@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Drupal\Tests\farm_update\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests for farmOS Update module.
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class FarmUpdateTest extends KernelTestBase {
 

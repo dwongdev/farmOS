@@ -9,13 +9,13 @@ use Drupal\Tests\farm_location\Functional\LocationFunctionalTestTrait;
 use Drupal\Tests\farm_test\FunctionalJavascript\FarmWebDriverTestBase;
 use Drupal\Tests\jsonapi\Functional\JsonApiRequestTestTrait;
 use Drupal\farm_geo\Traits\WktTrait;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests for farmOS location logic.
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class LocationTest extends FarmWebDriverTestBase {
 

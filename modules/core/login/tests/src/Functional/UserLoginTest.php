@@ -9,6 +9,7 @@ use Drupal\Core\Url;
 use Drupal\Tests\farm_test\Functional\FarmBrowserTestBase;
 use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
@@ -17,9 +18,8 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * These tests are based on the core UserLoginTests.
  *
  * @see \Drupal\Tests\farm_login\Functional\UserLoginTest
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class UserLoginTest extends FarmBrowserTestBase {
 

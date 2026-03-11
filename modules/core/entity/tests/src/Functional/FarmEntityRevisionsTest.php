@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Drupal\Tests\farm_entity\Functional;
 
 use Drupal\Tests\farm_test\Functional\FarmBrowserTestBase;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Test expected farmOS entity revision behavior.
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class FarmEntityRevisionsTest extends FarmBrowserTestBase {
 

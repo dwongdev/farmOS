@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Drupal\Tests\farm_setup\FunctionalJavascript;
 
 use Drupal\Tests\farm_test\FunctionalJavascript\FarmWebDriverTestBase;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests installing modules via the setup wizard modules form.
  *
- * @group farm
- *
  * @see \Drupal\farm_setup\Plugin\SetupForm\SetupModulesForm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class SetupModulesFormTest extends FarmWebDriverTestBase {
 

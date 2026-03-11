@@ -7,13 +7,13 @@ namespace Drupal\Tests\farm_ui_action\Functional;
 use Drupal\Tests\farm_test\Functional\FarmBrowserTestBase;
 use Drupal\asset\Entity\Asset;
 use Drupal\log\Entity\Log;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the farmOS action functionality.
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class ActionsTest extends FarmBrowserTestBase {
 

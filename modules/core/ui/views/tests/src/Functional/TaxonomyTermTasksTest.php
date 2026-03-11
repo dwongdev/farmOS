@@ -6,13 +6,13 @@ namespace Drupal\Tests\farm_ui_views\Functional;
 
 use Drupal\Tests\farm_test\Functional\FarmBrowserTestBase;
 use Drupal\asset\Entity\Asset;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the farm_ui_views taxonomy views routes.
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class TaxonomyTermTasksTest extends FarmBrowserTestBase {
 

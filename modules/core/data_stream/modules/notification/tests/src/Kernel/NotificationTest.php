@@ -8,15 +8,15 @@ use Drupal\Component\Serialization\Json;
 use Drupal\Tests\data_stream\Kernel\DataStreamTestBase;
 use Drupal\Tests\data_stream\Traits\DataStreamCreationTrait;
 use Drupal\data_stream_notification\Entity\DataStreamNotification;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Test functionality of data stream notification execution.
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class NotificationTest extends DataStreamTestBase {
 

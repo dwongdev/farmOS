@@ -6,6 +6,7 @@ namespace Drupal\tests\farm_login\Functional;
 
 use Drupal\Component\Serialization\Json;
 use Drupal\Tests\farm_api_oauth\Functional\OauthTestBase;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
@@ -14,9 +15,8 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * These tests are based on the simple_oauth PasswordFunctionalTests.
  *
  * @see \Drupal\Tests\simple_oauth\Functional\PasswordFunctionalTest
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class OauthPasswordTest extends OauthTestBase {
 

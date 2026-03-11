@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Drupal\Tests\farm_ui_dashboard\Functional;
 
 use Drupal\Tests\farm_test\Functional\FarmBrowserTestBase;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the farmOS dashboard functionality.
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class DashboardTest extends FarmBrowserTestBase {
 

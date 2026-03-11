@@ -16,8 +16,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Tests farmOS API OAuth features.
- *
- * @group farm
  */
 abstract class FarmApiOauthTestBase extends FarmApiTest {
 

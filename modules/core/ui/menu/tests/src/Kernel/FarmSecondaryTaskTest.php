@@ -6,13 +6,13 @@ namespace Drupal\Tests\farm_ui_menu\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\farm_ui_menu\Menu\EntityTypeLabelLocalTask;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests farmOS secondary task links.
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class FarmSecondaryTaskTest extends KernelTestBase {
 

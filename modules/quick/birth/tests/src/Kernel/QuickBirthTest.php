@@ -10,13 +10,13 @@ use Drupal\asset\Entity\Asset;
 use Drupal\farm_id_tag\Plugin\Field\FieldType\IdTagItem;
 use Drupal\log\Entity\Log;
 use Drupal\taxonomy\Entity\Term;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests for farmOS birth quick form.
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class QuickBirthTest extends QuickFormTestBase {
 

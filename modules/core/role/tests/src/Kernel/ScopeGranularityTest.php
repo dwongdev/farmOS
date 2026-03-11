@@ -7,13 +7,13 @@ namespace Drupal\Tests\farm_role\Kernel;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\simple_oauth\Entity\Oauth2Scope;
 use Drupal\simple_oauth\Oauth2ScopeProviderInterface;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the managed role permissions scope granularity.
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class ScopeGranularityTest extends KernelTestBase {
 

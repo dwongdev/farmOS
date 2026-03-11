@@ -6,13 +6,13 @@ namespace Drupal\Tests\farm_l10n\Kernel;
 
 use Drupal\Tests\farm_api\Kernel\FarmApiTest;
 use Drupal\language\Entity\ConfigurableLanguage;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests farmOS API features.
- *
- * @group farm
  */
+#[Group('farm')]
 #[RunTestsInSeparateProcesses]
 class FarmLocalizationApiTest extends FarmApiTest {
 
