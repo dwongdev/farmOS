@@ -7,6 +7,7 @@ namespace Drupal\Tests\farm_role\Kernel;
 use Drupal\Tests\farm_api_oauth\Kernel\FarmApiOauthTestBase;
 use Drupal\asset\Entity\Asset;
 use Drupal\log\Entity\Log;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -14,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class FarmApiOauthRoleTest extends FarmApiOauthTestBase {
 
   /**

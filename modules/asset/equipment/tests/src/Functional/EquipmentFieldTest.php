@@ -6,12 +6,14 @@ namespace Drupal\Tests\farm_equipment\Functional;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Tests\farm_test\Functional\FarmBrowserTestBase;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the equipment used field.
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class EquipmentFieldTest extends FarmBrowserTestBase {
 
   use StringTranslationTrait;

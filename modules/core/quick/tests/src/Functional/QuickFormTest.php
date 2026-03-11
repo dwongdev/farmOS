@@ -7,12 +7,14 @@ namespace Drupal\Tests\farm_quick\Functional;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Tests\farm_test\Functional\FarmBrowserTestBase;
 use Drupal\farm_quick\Entity\QuickFormInstance;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the quick form framework.
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class QuickFormTest extends FarmBrowserTestBase {
 
   use StringTranslationTrait;

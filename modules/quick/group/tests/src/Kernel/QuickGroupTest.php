@@ -7,12 +7,14 @@ namespace Drupal\Tests\farm_quick_group\Kernel;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Tests\farm_quick\Kernel\QuickFormTestBase;
 use Drupal\asset\Entity\Asset;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests for farmOS group quick form.
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class QuickGroupTest extends QuickFormTestBase {
 
   /**

@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Drupal\Tests\farm_setup\Functional;
 
 use Drupal\Tests\farm_test\Functional\FarmBrowserTestBase;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests for the farmOS setup wizard.
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class SetupWizardTest extends FarmBrowserTestBase {
 
   /**

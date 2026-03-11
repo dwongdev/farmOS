@@ -8,12 +8,14 @@ use Drupal\KernelTests\KernelTestBase;
 use Drupal\asset\Entity\Asset;
 use Drupal\asset\Entity\AssetType;
 use Drupal\farm_quick\Traits\QuickStringTrait;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests for quick string trait methods.
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class QuickStringTest extends KernelTestBase {
 
   use QuickStringTrait;

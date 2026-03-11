@@ -7,12 +7,14 @@ namespace Drupal\Tests\farm_role\Kernel;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\user\Entity\Role;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests for Managed Role permissions.
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class ManagedRolePermissionsTest extends KernelTestBase {
 
   use UserCreationTrait;

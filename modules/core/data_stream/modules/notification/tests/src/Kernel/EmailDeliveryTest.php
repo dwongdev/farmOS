@@ -9,6 +9,7 @@ use Drupal\Core\Test\AssertMailTrait;
 use Drupal\Tests\data_stream\Kernel\DataStreamTestBase;
 use Drupal\Tests\data_stream\Traits\DataStreamCreationTrait;
 use Drupal\data_stream_notification\Entity\DataStreamNotification;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -16,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class EmailDeliveryTest extends DataStreamTestBase {
 
   use AssertMailTrait;

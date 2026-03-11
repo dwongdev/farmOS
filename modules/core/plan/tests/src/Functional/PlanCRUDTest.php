@@ -6,12 +6,14 @@ namespace Drupal\Tests\plan\Functional;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\plan\Entity\Plan;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the plan CRUD.
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class PlanCRUDTest extends PlanTestBase {
 
   use StringTranslationTrait;

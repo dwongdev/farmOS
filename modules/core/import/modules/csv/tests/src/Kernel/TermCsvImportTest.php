@@ -6,12 +6,14 @@ namespace Drupal\Tests\farm_import_csv\Kernel;
 
 use Drupal\taxonomy\Entity\Term;
 use Drupal\text\Plugin\Field\FieldType\TextLongItem;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests for taxonomy term CSV importers.
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class TermCsvImportTest extends CsvImportTestBase {
 
   /**

@@ -8,12 +8,14 @@ use Drupal\asset\Entity\Asset;
 use Drupal\farm_id_tag\Plugin\Field\FieldType\IdTagItem;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\text\Plugin\Field\FieldType\TextLongItem;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests for asset CSV importers.
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class AssetCsvImportTest extends CsvImportTestBase {
 
   /**

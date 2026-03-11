@@ -8,12 +8,14 @@ use Drupal\KernelTests\KernelTestBase;
 use Drupal\log\Entity\Log;
 use Drupal\log\Event\LogEvent;
 use Drupal\quantity\Entity\Quantity;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests for farmOS log quantity module.
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class LogQuantityTest extends KernelTestBase {
 
   /**

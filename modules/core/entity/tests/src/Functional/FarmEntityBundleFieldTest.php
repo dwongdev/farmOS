@@ -6,12 +6,14 @@ namespace Drupal\Tests\farm_entity\Functional;
 
 use Drupal\Core\Entity\Sql\SqlEntityStorageInterface;
 use Drupal\Tests\farm_test\Functional\FarmBrowserTestBase;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests that bundle fields are created during a postponed install.
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class FarmEntityBundleFieldTest extends FarmBrowserTestBase {
 
   /**

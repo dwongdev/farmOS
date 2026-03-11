@@ -10,12 +10,14 @@ use Drupal\Tests\farm_test\Functional\FarmBrowserTestBase;
 use Drupal\Tests\jsonapi\Functional\JsonApiRequestTestTrait;
 use Drupal\farm_geo\Traits\WktTrait;
 use GuzzleHttp\RequestOptions;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests for the location api.
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class LocationAPITest extends FarmBrowserTestBase {
 
   use WktTrait;

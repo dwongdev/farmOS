@@ -6,12 +6,14 @@ namespace Drupal\Tests\asset\Functional;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\asset\Entity\Asset;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the asset CRUD.
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class AssetCRUDTest extends AssetTestBase {
 
   use StringTranslationTrait;

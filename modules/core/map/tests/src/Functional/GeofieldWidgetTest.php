@@ -9,12 +9,14 @@ use Drupal\Tests\field\Functional\FieldTestBase;
 use Drupal\entity_test\Entity\EntityTest;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the farmOS Geofield widget.
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class GeofieldWidgetTest extends FieldTestBase {
 
   /**

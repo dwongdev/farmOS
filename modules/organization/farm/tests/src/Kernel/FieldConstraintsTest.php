@@ -11,12 +11,14 @@ use Drupal\farm_farm\Plugin\Validation\Constraint\AssetMovementFarm;
 use Drupal\farm_farm\Plugin\Validation\Constraint\AssetParentFarm;
 use Drupal\farm_farm\Plugin\Validation\Constraint\LogGroupAssignmentFarm;
 use Drupal\farm_farm\Plugin\Validation\Constraint\LogMovementFarm;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Field constraint tests for Farm organization module.
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class FieldConstraintsTest extends KernelTestBase {
 
   use UserCreationTrait;

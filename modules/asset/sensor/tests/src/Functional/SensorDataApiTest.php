@@ -10,12 +10,14 @@ use Drupal\Tests\farm_test\Functional\FarmBrowserTestBase;
 use Drupal\asset\Entity\Asset;
 use Drupal\asset\Entity\AssetInterface;
 use GuzzleHttp\RequestOptions;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Test the Sensor data API.
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class SensorDataApiTest extends FarmBrowserTestBase {
 
   /**

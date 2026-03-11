@@ -10,12 +10,14 @@ use Drupal\Core\Url;
 use Drupal\Tests\farm_test\Functional\FarmBrowserTestBase;
 use Drupal\Tests\jsonapi\Functional\JsonApiRequestTestTrait;
 use GuzzleHttp\RequestOptions;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests for farmOS inventory logic.
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class InventoryTest extends FarmBrowserTestBase {
 
   use JsonApiRequestTestTrait;

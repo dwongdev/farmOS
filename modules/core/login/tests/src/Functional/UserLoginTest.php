@@ -9,6 +9,7 @@ use Drupal\Core\Url;
 use Drupal\Tests\farm_test\Functional\FarmBrowserTestBase;
 use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Test using an email in the UserLoginForm.
@@ -19,6 +20,7 @@ use Drupal\user\UserInterface;
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class UserLoginTest extends FarmBrowserTestBase {
 
   use StringTranslationTrait;

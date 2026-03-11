@@ -6,6 +6,7 @@ namespace Drupal\Tests\farm_setup\FunctionalJavascript;
 
 use Drupal\FunctionalJavascriptTests\JSWebAssert;
 use Drupal\Tests\farm_test\FunctionalJavascript\FarmWebDriverTestBase;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests installing modules via the module settings form.
@@ -14,6 +15,7 @@ use Drupal\Tests\farm_test\FunctionalJavascript\FarmWebDriverTestBase;
  *
  * @see \Drupal\farm_setup\Form\FarmModulesForm
  */
+#[RunTestsInSeparateProcesses]
 class ModulesFormTest extends FarmWebDriverTestBase {
 
   /**

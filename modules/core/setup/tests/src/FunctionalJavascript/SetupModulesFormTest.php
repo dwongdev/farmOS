@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\farm_setup\FunctionalJavascript;
 
 use Drupal\Tests\farm_test\FunctionalJavascript\FarmWebDriverTestBase;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests installing modules via the setup wizard modules form.
@@ -13,6 +14,7 @@ use Drupal\Tests\farm_test\FunctionalJavascript\FarmWebDriverTestBase;
  *
  * @see \Drupal\farm_setup\Plugin\SetupForm\SetupModulesForm
  */
+#[RunTestsInSeparateProcesses]
 class SetupModulesFormTest extends FarmWebDriverTestBase {
 
   /**

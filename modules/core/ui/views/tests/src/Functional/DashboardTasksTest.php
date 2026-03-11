@@ -6,12 +6,14 @@ namespace Drupal\Tests\farm_ui_views\Functional;
 
 use Drupal\Tests\farm_test\Functional\FarmBrowserTestBase;
 use Drupal\log\Entity\Log;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the farm_ui_views dashboard panes.
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class DashboardTasksTest extends FarmBrowserTestBase {
 
   /**

@@ -10,12 +10,14 @@ use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\asset\Entity\Asset;
 use Drupal\log\Entity\Log;
 use Drupal\taxonomy\Entity\Term;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests for farmOS birth log logic.
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class BirthTest extends KernelTestBase {
 
   use UserCreationTrait;

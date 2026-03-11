@@ -9,12 +9,14 @@ use Drupal\KernelTests\KernelTestBase;
 use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\farm_quick\Form\QuickFormEntityForm;
 use Drupal\farm_quick\Plugin\QuickForm\ConfigurableQuickFormInterface;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests for farmOS quick forms.
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class QuickFormTest extends KernelTestBase {
 
   use UserCreationTrait;

@@ -6,12 +6,14 @@ namespace Drupal\Tests\farm_group\FunctionalJavascript;
 
 use Drupal\Tests\farm_test\FunctionalJavascript\FarmWebDriverTestBase;
 use Drupal\log\Entity\Log;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests for farmOS group membership logic.
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class GroupTest extends FarmWebDriverTestBase {
 
   /**

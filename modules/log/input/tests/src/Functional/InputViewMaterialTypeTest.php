@@ -8,6 +8,7 @@ use Drupal\Tests\farm_test\Functional\FarmBrowserTestBase;
 use Drupal\log\Entity\Log;
 use Drupal\quantity\Entity\Quantity;
 use Drupal\taxonomy\Entity\Term;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Test material type filter functionality.
@@ -16,6 +17,7 @@ use Drupal\taxonomy\Entity\Term;
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class InputViewMaterialTypeTest extends FarmBrowserTestBase {
 
   /**

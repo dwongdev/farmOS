@@ -9,6 +9,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\asset\Entity\AssetInterface;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -17,6 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class FarmApiTest extends KernelTestBase {
 
   use UserCreationTrait;

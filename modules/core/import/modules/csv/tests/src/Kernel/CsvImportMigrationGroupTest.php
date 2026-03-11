@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\farm_import_csv\Kernel;
 
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+
 /**
  * Tests for CSV import migration group.
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class CsvImportMigrationGroupTest extends CsvImportTestBase {
 
   /**

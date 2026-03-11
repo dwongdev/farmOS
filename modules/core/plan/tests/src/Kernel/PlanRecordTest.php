@@ -7,12 +7,14 @@ namespace Drupal\Tests\plan\Kernel;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\plan\Entity\Plan;
 use Drupal\plan\Entity\PlanRecord;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests for plan_record entities.
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class PlanRecordTest extends KernelTestBase {
 
   /**

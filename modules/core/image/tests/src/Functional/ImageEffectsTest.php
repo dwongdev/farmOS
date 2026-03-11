@@ -7,12 +7,14 @@ namespace Drupal\Tests\farm_image\Functional;
 use Drupal\Core\File\FileExists;
 use Drupal\Tests\farm_test\Functional\FarmBrowserTestBase;
 use Drupal\image\Entity\ImageStyle;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests for the farm_image image effects.
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class ImageEffectsTest extends FarmBrowserTestBase {
 
   /**

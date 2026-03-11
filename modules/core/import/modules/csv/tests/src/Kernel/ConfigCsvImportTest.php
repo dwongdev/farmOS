@@ -6,12 +6,14 @@ namespace Drupal\Tests\farm_import_csv\Kernel;
 
 use Drupal\log\Entity\Log;
 use Drupal\taxonomy\Entity\Term;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests for config CSV importers.
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class ConfigCsvImportTest extends CsvImportTestBase {
 
   /**

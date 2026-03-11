@@ -9,6 +9,7 @@ use Drupal\Tests\farm_test\Functional\FarmBrowserTestBase;
 use Drupal\Tests\jsonapi\Functional\JsonApiRequestTestTrait;
 use Drupal\consumers\Entity\Consumer;
 use GuzzleHttp\RequestOptions;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -16,6 +17,7 @@ use Psr\Http\Message\ResponseInterface;
  *
  * @group farm
  */
+#[RunTestsInSeparateProcesses]
 class CorsResponseEventSubscriberTest extends FarmBrowserTestBase {
 
   use JsonApiRequestTestTrait;
