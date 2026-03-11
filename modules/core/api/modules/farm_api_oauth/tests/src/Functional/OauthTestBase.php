@@ -11,7 +11,7 @@ use Drupal\Tests\simple_oauth\Functional\TokenBearerFunctionalTestBase;
  *
  * @group farm
  */
-class OauthTestBase extends TokenBearerFunctionalTestBase {
+abstract class OauthTestBase extends TokenBearerFunctionalTestBase {
 
   /**
    * {@inheritdoc}
