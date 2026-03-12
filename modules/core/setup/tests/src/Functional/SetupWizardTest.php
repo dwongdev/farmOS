@@ -157,19 +157,18 @@ class SetupWizardTest extends FarmBrowserTestBase {
     // and that it redirects back to the dashboard with a message at the end.
     $this->drupalGet('/setup/wizard');
     $this->assertSession()->statusCodeEquals(200);
-    $base_url = 'http://www/';
     $this->getSession()->getPage()->pressButton('Continue');
     $this->assertSession()->statusCodeEquals(200);
-    $this->assertEquals($base_url . 'setup/wizard/modules', $this->getSession()->getCurrentUrl());
+    $this->assertSession()->addressEquals('setup/wizard/modules');
     $this->getSession()->getPage()->pressButton('Skip');
     $this->assertSession()->statusCodeEquals(200);
-    $this->assertEquals($base_url . 'setup/wizard/test', $this->getSession()->getCurrentUrl());
+    $this->assertSession()->addressEquals('setup/wizard/test');
     $this->getSession()->getPage()->pressButton('Skip');
     $this->assertSession()->statusCodeEquals(200);
-    $this->assertEquals($base_url . 'setup/wizard/resources', $this->getSession()->getCurrentUrl());
+    $this->assertSession()->addressEquals('setup/wizard/resources');
     $this->getSession()->getPage()->pressButton('Finish');
     $this->assertSession()->statusCodeEquals(200);
-    $this->assertEquals($base_url, $this->getSession()->getCurrentUrl());
+    $this->assertSession()->addressEquals('');
     $this->assertSession()->pageTextContains('farmOS setup is complete! Happy record keeping!');
 
     // Remove the user's "install farm modules" permission and confirm that
