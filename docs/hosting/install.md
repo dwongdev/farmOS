@@ -101,7 +101,7 @@ host system does not have the ability to configure cron jobs. It can cause
 random requests to farmOS to be very slow, as the cron tasks are tacked onto
 the normal page loading process.
 
-# OAuth2 keys
+### OAuth2 keys
 
 If you need to connect to the farmOS API from an outside source, you will need
 to install the farmOS API OAuth2 Server module (`farm_api_oauth`) and generate
