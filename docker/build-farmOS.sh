@@ -71,8 +71,6 @@ else
   composer install "$*"
 fi
 
-composer why sebastian/diff
-
 # Set the version in farm.info.yml.
 sed -i "s|version: 4.x|version: ${FARMOS_VERSION}|g" ${BUILD_PATH}/web/profiles/farm/farm.info.yml
 
