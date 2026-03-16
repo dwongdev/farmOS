@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 /**
- * Validates the LogGroupAssignmentFarmValidator constraint.
+ * Validates the LogGroupAssignmentFarm constraint.
  */
 class LogGroupAssignmentFarmValidator extends ConstraintValidator {
 

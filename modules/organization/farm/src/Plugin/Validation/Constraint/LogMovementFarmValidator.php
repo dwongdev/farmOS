@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 /**
- * Validates the LogMovementFarmValidator constraint.
+ * Validates the LogMovementFarm constraint.
  */
 class LogMovementFarmValidator extends ConstraintValidator {
 
