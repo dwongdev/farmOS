@@ -122,7 +122,7 @@ requirements (inherited from Drupal 11):
 - [Convert equipment to a base field #956](https://github.com/farmOS/farmOS/pull/956)
 - [Convert quick to a base field #957](https://github.com/farmOS/farmOS/pull/957)
 - [Make farmOS API OAuth2 Server optional #973](https://github.com/farmOS/farmOS/pull/973)
-- [Make the farmOS API optional #974](https://github.com/farmOS/farmOS/pull/973)
+- [Make the farmOS API optional #974](https://github.com/farmOS/farmOS/pull/974)
 - [Move QuantityCsvNormalizer to farm_csv module #977](https://github.com/farmOS/farmOS/pull/977)
 - [The farm_account_admin role has moved to a new farm_account_admin module](https://www.drupal.org/node/3527786)
 - [The farm_manager, farm_worker, and farm_viewer roles have moved to their own modules](https://www.drupal.org/node/3527787)
