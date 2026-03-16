@@ -6,11 +6,11 @@ namespace Drupal\Tests\farm_farm\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\Tests\user\Traits\UserCreationTrait;
+use Drupal\asset\Entity\AssetInterface;
 use Drupal\farm_farm\Plugin\Validation\Constraint\AssetGroupAssignmentFarm;
 use Drupal\farm_farm\Plugin\Validation\Constraint\AssetMovementFarm;
 use Drupal\farm_farm\Plugin\Validation\Constraint\AssetParentFarm;
-use Drupal\farm_farm\Plugin\Validation\Constraint\LogGroupAssignmentFarm;
-use Drupal\farm_farm\Plugin\Validation\Constraint\LogMovementFarm;
+use Drupal\farm_farm\Plugin\Validation\Constraint\LogAssetFarm;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
@@ -29,23 +29,34 @@ class FieldConstraintsTest extends KernelTestBase {
   protected static $modules = [
     'asset',
     'entity',
+    'entity_reference_revisions',
     'entity_reference_validators',
     'farm_entity',
     'farm_entity_access',
+    'farm_equipment',
+    'farm_equipment_type',
     'farm_farm',
     'farm_farm_test',
     'farm_field',
     'farm_group',
+    'farm_inventory',
     'farm_location',
     'farm_log',
     'farm_log_asset',
+    'farm_log_quantity',
     'farm_map',
     'farm_parent',
+    'farm_quantity_standard',
+    'fraction',
     'geofield',
     'log',
+    'options',
     'organization',
+    'quantity',
     'state_machine',
     'system',
+    'taxonomy',
+    'text',
     'user',
     'views',
   ];
@@ -58,13 +69,17 @@ class FieldConstraintsTest extends KernelTestBase {
     $this->installEntitySchema('asset');
     $this->installEntitySchema('log');
     $this->installEntitySchema('organization');
+    $this->installEntitySchema('quantity');
     $this->installEntitySchema('user');
     $this->installConfig([
+      'farm_equipment',
+      'farm_equipment_type',
       'farm_farm',
       'farm_farm_test',
       'farm_group',
       'farm_location',
       'farm_log_asset',
+      'farm_quantity_standard',
     ]);
 
     // Create and login a user with access to view any organization. This is
@@ -156,6 +171,176 @@ class FieldConstraintsTest extends KernelTestBase {
   }
 
   /**
+   * Test log asset reference constraints.
+   */
+  public function testLogAssetConstraints() {
+    $entity_type_manager = $this->container->get('entity_type.manager');
+    $asset_storage = $entity_type_manager->getStorage('asset');
+    $log_storage = $this->container->get('entity_type.manager')->getStorage('log');
+    $organization_storage = $entity_type_manager->getStorage('organization');
+    $quantity_storage = $entity_type_manager->getStorage('quantity');
+
+    // Create two assets.
+    // Both are equipment and are locations so that they can be referenced in
+    // the asset, equipment, and location fields of a log.
+    $asset1 = $asset_storage->create([
+      'type' => 'equipment',
+      'name' => $this->randomMachineName(),
+      'is_location' => TRUE,
+    ]);
+    $asset1->save();
+    $asset2 = $asset_storage->create([
+      'type' => 'equipment',
+      'name' => $this->randomMachineName(),
+      'is_location' => TRUE,
+    ]);
+    $asset2->save();
+
+    // Confirm that a log validates when it references both assets.
+    $this->assertLogAssetReferenceValidates($asset1, $asset2);
+
+    // Create two farm organizations.
+    $farm1 = $organization_storage->create([
+      'type' => 'farm',
+      'name' => $this->randomMachineName(),
+    ]);
+    $farm1->save();
+    $farm2 = $organization_storage->create([
+      'type' => 'farm',
+      'name' => $this->randomMachineName(),
+    ]);
+    $farm2->save();
+
+    // Assign the first asset to the first farm.
+    $asset1->set('farm', [$farm1]);
+    $asset1->save();
+
+    // Confirm that a log does not validate when it references both assets.
+    $this->assertLogAssetReferenceValidates($asset1, $asset2, FALSE);
+
+    // Add the second asset to the first farm and confirm that a log validates
+    // when it references both.
+    $asset2->set('farm', [$farm1]);
+    $asset2->save();
+    $this->assertLogAssetReferenceValidates($asset1, $asset2);
+
+    // Add the second asset to the second farm and confirm that a log does not
+    // validate when it references both.
+    $asset2->set('farm', [$farm2]);
+    $asset2->save();
+    $this->assertLogAssetReferenceValidates($asset1, $asset2, FALSE);
+
+    // Create a quantity with an asset inventory adjustment, referenced by a
+    // log that references the other asset, and confirm that the log does not
+    // validate.
+    $quantity = $quantity_storage->create([
+      'type' => 'standard',
+      'value' => 1,
+      'inventory_adjustment' => 'reset',
+      'inventory_asset' => [$asset1],
+    ]);
+    $quantity->save();
+    $log = $log_storage->create([
+      'type' => 'test',
+      'asset' => [$asset2],
+      'quantity' => [$quantity],
+    ]);
+    $violations = $log->validate();
+    $this->assertEquals(1, $violations->count());
+    $this->assertInstanceOf(LogAssetFarm::class, $violations->get(0)->getConstraint());
+
+    // Move the second asset to the first farm and confirm that the log
+    // validates.
+    $asset2->set('farm', [$farm1]);
+    $asset2->save();
+    $violations = $log->validate();
+    $this->assertEquals(0, $violations->count());
+  }
+
+  /**
+   * Helper method for testing log asset references.
+   *
+   * @param \Drupal\asset\Entity\AssetInterface $asset1
+   *   The first asset.
+   * @param \Drupal\asset\Entity\AssetInterface $asset2
+   *   The second asset.
+   * @param bool $validates
+   *   Whether validation is expected (defaults to TRUE).
+   */
+  protected function assertLogAssetReferenceValidates(AssetInterface $asset1, AssetInterface $asset2, bool $validates = TRUE) {
+    $log_storage = $this->container->get('entity_type.manager')->getStorage('log');
+
+    // Test assets in the asset reference field.
+    $log = $log_storage->create([
+      'type' => 'test',
+      'asset' => [$asset1, $asset2],
+    ]);
+    $violations = $log->validate();
+    $this->assertEquals($validates ? 0 : 1, $violations->count());
+    if (!$validates) {
+      $this->assertInstanceOf(LogAssetFarm::class, $violations->get(0)->getConstraint());
+    }
+
+    // Test assets in the equipment reference field.
+    $log = $log_storage->create([
+      'type' => 'test',
+      'equipment' => [$asset1, $asset2],
+    ]);
+    $violations = $log->validate();
+    $this->assertEquals($validates ? 0 : 1, $violations->count());
+    if (!$validates) {
+      $this->assertInstanceOf(LogAssetFarm::class, $violations->get(0)->getConstraint());
+    }
+
+    // Test assets in the location reference field.
+    $log = $log_storage->create([
+      'type' => 'test',
+      'location' => [$asset1, $asset2],
+    ]);
+    $violations = $log->validate();
+    $this->assertEquals($validates ? 0 : 1, $violations->count());
+    if (!$validates) {
+      $this->assertInstanceOf(LogAssetFarm::class, $violations->get(0)->getConstraint());
+    }
+
+    // Test assets in asset and location fields.
+    $log = $log_storage->create([
+      'type' => 'test',
+      'asset' => [$asset1],
+      'location' => [$asset2],
+    ]);
+    $violations = $log->validate();
+    $this->assertEquals($validates ? 0 : 1, $violations->count());
+    if (!$validates) {
+      $this->assertInstanceOf(LogAssetFarm::class, $violations->get(0)->getConstraint());
+    }
+
+    // Test assets in asset and equipment fields.
+    $log = $log_storage->create([
+      'type' => 'test',
+      'asset' => [$asset1],
+      'equipment' => [$asset2],
+    ]);
+    $violations = $log->validate();
+    $this->assertEquals($validates ? 0 : 1, $violations->count());
+    if (!$validates) {
+      $this->assertInstanceOf(LogAssetFarm::class, $violations->get(0)->getConstraint());
+    }
+
+    // Test assets in equipment and location fields.
+    $log = $log_storage->create([
+      'type' => 'test',
+      'equipment' => [$asset1],
+      'location' => [$asset2],
+    ]);
+    $violations = $log->validate();
+    $this->assertEquals($validates ? 0 : 1, $violations->count());
+    if (!$validates) {
+      $this->assertInstanceOf(LogAssetFarm::class, $violations->get(0)->getConstraint());
+    }
+  }
+
+  /**
    * Test movement constraints.
    */
   public function testMovementConstraints() {
@@ -215,11 +400,11 @@ class FieldConstraintsTest extends KernelTestBase {
       'is_movement' => TRUE,
     ]);
 
-    // Confirm that a LogMovementFarm constraint violation was added because
-    // the asset is not in the same farm as location 2.
+    // Confirm that a LogAssetFarm constraint violation was added because the
+    // asset is not in the same farm as location 2.
     $violations = $log->validate();
     $this->assertEquals(1, $violations->count());
-    $this->assertInstanceOf(LogMovementFarm::class, $violations->get(0)->getConstraint());
+    $this->assertInstanceOf(LogAssetFarm::class, $violations->get(0)->getConstraint());
 
     // Change the log location to location 1.
     $log->set('location', [$location1]);
@@ -312,11 +497,11 @@ class FieldConstraintsTest extends KernelTestBase {
       'is_group_assignment' => TRUE,
     ]);
 
-    // Confirm that a LogGroupAssignmentFarm constraint violation was added
-    // because the asset is not in the same farm as group 2.
+    // Confirm that a LogAssetFarm constraint violation was added because the
+    // asset is not in the same farm as group 2.
     $violations = $log->validate();
     $this->assertEquals(1, $violations->count());
-    $this->assertInstanceOf(LogGroupAssignmentFarm::class, $violations->get(0)->getConstraint());
+    $this->assertInstanceOf(LogAssetFarm::class, $violations->get(0)->getConstraint());
 
     // Change the log group to group 1.
     $log->set('group', [$group1]);

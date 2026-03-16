@@ -67,30 +67,6 @@ class FieldHooks {
   }
 
   /**
-   * Implements hook_entity_base_field_info_alter().
-   */
-  #[Hook('entity_base_field_info_alter')]
-  public function entityBaseFieldInfoAlter(&$fields, EntityTypeInterface $entity_type) {
-
-    // Only modify log fields.
-    if ($entity_type->id() != 'log') {
-      return;
-    }
-
-    // If the is_movement field exists, add a constraint to ensure that assets
-    // can't be moved between farms.
-    if (!empty($fields['is_movement'])) {
-      $fields['is_movement']->addConstraint('LogMovementFarm');
-    }
-
-    // If the is_group_membership field exists, add a constraint to ensure that
-    // assets can't be assigned to groups in a different farm.
-    if (!empty($fields['is_group_assignment'])) {
-      $fields['is_group_assignment']->addConstraint('LogGroupAssignmentFarm');
-    }
-  }
-
-  /**
    * Implements hook_farm_import_csv_base_fields().
    */
   #[Hook('farm_import_csv_base_fields')]

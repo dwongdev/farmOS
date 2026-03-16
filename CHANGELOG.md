@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- [Validate that logs only reference assets in the same farm #1070](https://github.com/farmOS/farmOS/pull/1070)
+
 ### Fixed
 
 - [Fix ContentEntityGeometryNormalizer support check #1064](https://github.com/farmOS/farmOS/pull/1064)

@@ -9,19 +9,19 @@ use Drupal\Core\Validation\Attribute\Constraint;
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 /**
- * Checks that assets can only be moved to locations in the same farm.
+ * Checks that all assets referenced by a log are in the same farm.
  */
 #[Constraint(
-  id: 'LogMovementFarm',
-  label: new TranslatableMarkup('Assets can only be moved to locations in the same farm', ['context' => 'Validation']),
+  id: 'LogAssetFarm',
+  label: new TranslatableMarkup('Logs can only reference assets in the same farm', ['context' => 'Validation']),
 )]
-class LogMovementFarm extends SymfonyConstraint {
+class LogAssetFarm extends SymfonyConstraint {
 
   /**
    * The default violation message.
    *
    * @var string
    */
-  public string $message = 'Assets can only be moved to locations in the same farm.';
+  public string $message = 'All assets referenced by a log must be in the same farm.';
 
 }
