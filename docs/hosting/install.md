@@ -11,8 +11,8 @@ to understand what is needed for hosting farmOS.
 ## farmOS Server
 
 Docker is the recommended method of hosting farmOS because it encapsulates the
-server level dependencies that farmOS needs. This documentation describes
-how to host farmOS with Docker.
+server level dependencies that farmOS needs. To deploy a farmOS codebase with
+Docker, see [farmOS in Docker](/hosting/docker).
 
 If you need to build a more customized farmOS codebase, including modules
 provided by the community, or custom modules written by yourself, see
