@@ -78,8 +78,9 @@ fixed. See
 [farmOS coding standards](https://farmos.org/development/environment/code/) for
 more information.
 
-farmOS v3 requires PHP 8.4, and has the following minimum database version
-requirements (inherited from Drupal 11):
+farmOS v4 requires PHP 8.4, and has the following minimum database version
+requirements (inherited from
+[Drupal 11](https://www.drupal.org/docs/getting-started/system-requirements/database-server-requirements)):
 
 - PostgreSQL 16+
 - MariaDB 10.6+
