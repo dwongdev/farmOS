@@ -49,17 +49,36 @@ class LogAssetFarmValidator extends ConstraintValidator {
    *   of 0 will be included in the list.
    */
   protected function logReferencedAssetFarmIds(LogInterface $log) {
-    $farm_ids = [];
 
-    // Check all assets that are referenced directly from the log.
+    // Build a list of asset entity reference field items.
+    /** @var \Drupal\Core\Field\EntityReferenceFieldItemListInterface[] $asset_refs */
+    $asset_refs = [];
+
+    // Consider direct asset references.
     foreach ($this->fieldNames as $name) {
-      if (!$log->hasField($name)) {
+      if ($log->hasField($name)) {
+        $asset_refs[] = $log->get($name);
+      }
+    }
+
+    // Consider inventory adjustment asset references.
+    if ($log->hasField('quantity') && !$log->get('quantity')->isEmpty()) {
+      foreach ($log->get('quantity')->referencedEntities() as $quantity) {
+        /** @var \Drupal\quantity\Entity\QuantityInterface $quantity */
+        if ($quantity->hasField('inventory_asset')) {
+          $asset_refs[] = $quantity->get('inventory_asset');
+        }
+      }
+    }
+
+    // Accumulate the farm ids from all referenced assets.
+    $farm_ids = [];
+    foreach ($asset_refs as $asset_ref) {
+      if ($asset_ref->isEmpty()) {
         continue;
       }
-      if ($log->get($name)->isEmpty()) {
-        continue;
-      }
-      foreach ($log->get($name)->referencedEntities() as $asset) {
+      foreach ($asset_ref->referencedEntities() as $asset) {
+        /** @var \Drupal\asset\Entity\AssetInterface $asset */
         if ($asset->get('farm')->isEmpty()) {
           $farm_ids[] = 0;
         }
@@ -71,26 +90,7 @@ class LogAssetFarmValidator extends ConstraintValidator {
       }
     }
 
-    // Check assets that are referenced in quantity inventory adjustments.
-    if ($log->hasField('quantity') && !$log->get('quantity')->isEmpty()) {
-      foreach ($log->get('quantity')->referencedEntities() as $quantity) {
-        /** @var \Drupal\quantity\Entity\QuantityInterface $quantity */
-        if ($quantity->hasField('inventory_asset') && !$quantity->get('inventory_asset')->isEmpty()) {
-          foreach ($quantity->get('inventory_asset')->referencedEntities() as $asset) {
-            /** @var \Drupal\asset\Entity\AssetInterface $asset */
-            if ($asset->get('farm')->isEmpty()) {
-              $farm_ids[] = 0;
-            }
-            else {
-              foreach ($asset->get('farm')->referencedEntities() as $farm) {
-                $farm_ids[] = $farm->id();
-              }
-            }
-          }
-        }
-      }
-    }
-
+    // Return all unique farm IDs.
     return array_unique($farm_ids);
   }
 
