@@ -7,6 +7,7 @@ namespace Drupal\Tests\farm_role\Kernel;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\simple_oauth\Entity\Oauth2Scope;
 use Drupal\simple_oauth\Oauth2ScopeProviderInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
@@ -62,9 +63,8 @@ class ScopeGranularityTest extends KernelTestBase {
 
   /**
    * Tests permission checking of scope granularity.
-   *
-   * @dataProvider scopeHasPermissionProvider
    */
+  #[DataProvider('scopeHasPermissionProvider')]
   public function testScopeHasPermission(string $role_id, array $allowed_permissions, array $forbidden_permissions): void {
     $scope = Oauth2Scope::create([
       'id' => $role_id,
