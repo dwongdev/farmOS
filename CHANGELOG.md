@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.0] 2026-03-20
+
+This is the first "stable" release of farmOS v4.
+
+Read the [Community blog post](https://farmOS.org/blog/2026/farmOS-v4-and-v3.5/)
+for a summary of notable changes.
+
+If you are updating from farmOS v3, please refer to the release notes for
+breaking changes in [4.0.0-beta1], [4.0.0-beta2], [4.0.0-beta3], and
+[4.0.0-beta4] below.
+
 ### Changed
 
 - [Validate that logs only reference assets in the same farm #1070](https://github.com/farmOS/farmOS/pull/1070)
@@ -202,7 +213,8 @@ farmOS 2.x release notes are available in the 2.x branch's
 farmOS 1.x release notes are available in the
 [farmOS releases on Drupal.org](https://www.drupal.org/project/farm/releases?version=7.x-1).
 
-[Unreleased]: https://github.com/farmOS/farmOS/compare/4.0.0-beta4...4.x
+[Unreleased]: https://github.com/farmOS/farmOS/compare/4.0.0...4.x
+[4.0.0]: https://github.com/farmOS/farmOS/releases/tag/4.0.0-beta4
 [4.0.0-beta4]: https://github.com/farmOS/farmOS/releases/tag/4.0.0-beta4
 [4.0.0-beta3]: https://github.com/farmOS/farmOS/releases/tag/4.0.0-beta3
 [4.0.0-beta2]: https://github.com/farmOS/farmOS/releases/tag/4.0.0-beta2
