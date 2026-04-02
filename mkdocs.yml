@@ -23,6 +23,7 @@ nav:
       - Terms: model/type/term.md
       - Plans: model/type/plan.md
       - Users: model/type/user.md
+      - Organizations: model/type/organization.md
     - Logic:
       - Location: model/logic/location.md
       - Group membership: model/logic/group.md
