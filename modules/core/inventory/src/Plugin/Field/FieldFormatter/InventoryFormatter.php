@@ -24,10 +24,11 @@ class InventoryFormatter extends FormatterBase {
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
+    /** @var \Drupal\Core\Field\FieldItemList $items */
     $elements = [];
 
     /** @var \Drupal\farm_inventory\Plugin\Field\FieldType\InventoryItem $item */
-    foreach ($items as $delta => $item) {
+    foreach ($items->getIterator() as $delta => $item) {
       $summary = $item->value;
       if (!empty($item->units)) {
         $summary .= ' ' . $item->units;

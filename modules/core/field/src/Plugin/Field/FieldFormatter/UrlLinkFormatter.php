@@ -24,12 +24,13 @@ class UrlLinkFormatter extends FormatterBase {
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
+    /** @var \Drupal\Core\Field\FieldItemList $items */
     $elements = [];
 
     // This is a clone of Drupal core's UriLinkFormatter, but it only renders
     // a link if the URI is a valid URL.
     /** @var \Drupal\Core\Field\Plugin\Field\FieldType\UriItem $item */
-    foreach ($items as $delta => $item) {
+    foreach ($items->getIterator() as $delta => $item) {
       if (!$item->isEmpty()) {
         if (filter_var($item->value, FILTER_VALIDATE_URL)) {
           $element = [

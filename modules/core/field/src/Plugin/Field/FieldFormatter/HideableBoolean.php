@@ -59,12 +59,13 @@ class HideableBoolean extends BooleanFormatter {
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
+    /** @var \Drupal\Core\Field\FieldItemList $items */
     $elements = [];
 
     $formats = $this->getOutputFormats();
 
     /** @var \Drupal\Core\Field\Plugin\Field\FieldType\BooleanItem $item */
-    foreach ($items as $delta => $item) {
+    foreach ($items->getIterator() as $delta => $item) {
       $format = $this->getSetting('format');
 
       $hide_if_true = (bool) $this->getSetting('hide_if_true');
