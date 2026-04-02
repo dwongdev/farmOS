@@ -126,7 +126,7 @@ class FieldHooks {
    * Implements hook_farm_entity_bundle_field_info().
    */
   #[Hook('farm_entity_bundle_field_info')]
-  public function farmEntityBundleFieldInfo(EntityTypeInterface $entity_type) {
+  public function farmEntityBundleFieldInfo(EntityTypeInterface $entity_type, string $bundle) {
     $fields = [];
 
     // Add a new string bundle field to input logs.
