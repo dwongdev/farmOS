@@ -22,16 +22,16 @@ class ScopeGranularityTest extends KernelTestBase {
    * {@inheritdoc}
    */
   protected static $modules = [
-    'system',
-    'user',
-    'log',
-    'state_machine',
+    'consumers',
+    'entity',
     'farm_role',
     'farm_role_test',
-    'consumers',
+    'log',
     'serialization',
     'simple_oauth',
     'simple_oauth_test',
+    'state_machine',
+    'system',
     'user',
   ];
 

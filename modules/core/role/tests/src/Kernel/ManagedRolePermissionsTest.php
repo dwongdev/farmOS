@@ -23,12 +23,13 @@ class ManagedRolePermissionsTest extends KernelTestBase {
    * {@inheritdoc}
    */
   protected static $modules = [
-    'system',
-    'user',
-    'log',
-    'state_machine',
+    'entity',
     'farm_role',
     'farm_role_test',
+    'log',
+    'state_machine',
+    'system',
+    'user',
   ];
 
   /**

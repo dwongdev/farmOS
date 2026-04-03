@@ -23,10 +23,11 @@ class LogOwnerTest extends KernelTestBase {
    * {@inheritdoc}
    */
   protected static $modules = [
-    'log',
+    'entity',
     'farm_field',
     'farm_owner',
     'farm_owner_test',
+    'log',
     'state_machine',
     'system',
     'user',
