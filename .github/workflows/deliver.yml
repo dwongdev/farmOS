@@ -73,12 +73,12 @@ jobs:
           docker save ${PROD_IMG_NAME} > /tmp/farmos-${{ matrix.platform }}.tar
           docker save ${DEV_IMG_NAME} > /tmp/farmos-dev-${{ matrix.platform }}.tar
       - name: Cache the farmOS Docker image
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: /tmp/farmos-${{ matrix.platform }}.tar
           key: farmos-${{ matrix.platform }}-${{ github.run_id }}
       - name: Cache the farmOS dev Docker image
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: /tmp/farmos-dev-${{ matrix.platform }}.tar
           key: farmos-dev-${{ matrix.platform }}-${{ github.run_id }}
@@ -92,7 +92,7 @@ jobs:
     needs: build
     steps:
       - name: Restore the farmOS dev Docker image from cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: /tmp/farmos-dev-amd64.tar
           key: farmos-dev-amd64-${{ github.run_id }}
@@ -111,7 +111,7 @@ jobs:
     needs: build
     steps:
       - name: Restore the farmOS dev Docker image from cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: /tmp/farmos-dev-amd64.tar
           key: farmos-dev-amd64-${{ github.run_id }}
@@ -126,7 +126,7 @@ jobs:
     needs: build
     steps:
       - name: Restore the farmOS dev Docker image from cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: /tmp/farmos-dev-amd64.tar
           key: farmos-dev-amd64-${{ github.run_id }}
@@ -167,7 +167,7 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v6
       - name: Restore the farmOS dev Docker image from cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: /tmp/farmos-dev-${{ matrix.platform }}.tar
           key: farmos-dev-${{ matrix.platform }}-${{ github.run_id }}
@@ -225,7 +225,7 @@ jobs:
       - name: Set FARMOS_VERSION from previous output
         run: echo "FARMOS_VERSION=${{ needs.build.outputs.farmos_version }}" >> $GITHUB_ENV
       - name: Restore the farmOS Docker image from cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: /tmp/farmos-${{ matrix.platform }}.tar
           key: farmos-${{ matrix.platform }}-${{ github.run_id }}
@@ -268,14 +268,14 @@ jobs:
       - name: Set FARMOS_VERSION from previous output
         run: echo "FARMOS_VERSION=${{ needs.build.outputs.farmos_version }}" >> $GITHUB_ENV
       - name: Restore the farmOS Docker image from cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: /tmp/farmos-${{ matrix.platform }}.tar
           key: farmos-${{ matrix.platform }}-${{ github.run_id }}
       - name: Load the farmOS Docker image
         run: docker load < /tmp/farmos-${{ matrix.platform }}.tar
       - name: Restore the farmOS dev Docker image from cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: /tmp/farmos-dev-${{ matrix.platform }}.tar
           key: farmos-dev-${{ matrix.platform }}-${{ github.run_id }}
