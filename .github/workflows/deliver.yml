@@ -44,7 +44,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Checkout the repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Set default FARMOS_REPO and FARMOS_VERSION
         run: |
           echo "FARMOS_REPO=${GITHUB_REPOSITORY}" >> $GITHUB_ENV
@@ -165,7 +165,7 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Checkout the repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Restore the farmOS dev Docker image from cache
         uses: actions/cache@v4
         with:
