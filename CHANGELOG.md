@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.1] 2026-04-16
+
+### Security
+
+- Updated Drupal core to 11.3.7 for
+  [SA-CORE-2026-001](https://www.drupal.org/sa-core-2026-001), and
+  [SA-CORE-2026-002](https://www.drupal.org/sa-core-2026-002).
+
 ## [4.0.0] 2026-03-20
 
 This is the first "stable" release of farmOS v4.
