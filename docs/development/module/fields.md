@@ -193,7 +193,6 @@ function mymodule_post_update_add_myfield(&$sandbox) {
   ];
   $field_definition = \Drupal::service('farm_field.factory')->bundleFieldDefinition($options);
   \Drupal::entityDefinitionUpdateManager()->installFieldStorageDefinition('myfield', 'log', 'mymodule', $field_definition);
-  \Drupal::service('entity_field.manager')->rebuildBundleFieldMap();
 }
 ```
 
@@ -212,11 +211,6 @@ There are a few things to make note of in this example:
    the field can be used on.
 3. This example installs a bundle field. To install a base field, replace
    `->bundleFieldDefinition($options)` with `->baseFieldDefinition($options)`.
-4. The last line (which calls `rebuildBundleFieldMap()`) is technically only
-   necessary when installing bundle fields, but it doesn't hurt to include it
-   for base fields as well. The reason this is necessary is to work around an
-   outstanding Drupal core issue:
-   [Issue #3045509: EntityFieldManager::getFieldMap() doesn't show bundle fields](https://www.drupal.org/project/drupal/issues/3045509)
 
 ### Views and CSV Importers
 

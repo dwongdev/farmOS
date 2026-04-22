@@ -6,7 +6,6 @@ namespace Drupal\farm_entity\Hook;
 
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\DependencyInjection\AutowireTrait;
-use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
@@ -21,32 +20,11 @@ class FieldHooks {
   use AutowireTrait;
 
   public function __construct(
-    protected EntityFieldManagerInterface $entityFieldManager,
     protected EntityTypeBundleInfoInterface $entityTypeBundleInfo,
     protected ModuleHandlerInterface $moduleHandler,
     protected AccountInterface $currentUser,
     protected TimeInterface $time,
   ) {}
-
-  /**
-   * Implements hook_modules_installed().
-   */
-  #[Hook('modules_installed')]
-  public function modulesInstalled($modules, $is_syncing) {
-
-    // Rebuild bundle field map when modules are installed.
-    $this->entityFieldManager->rebuildBundleFieldMap();
-  }
-
-  /**
-   * Implements hook_modules_uninstalled().
-   */
-  #[Hook('modules_uninstalled')]
-  public function modulesUninstalled($modules, $is_syncing) {
-
-    // Rebuild bundle field map when modules are uninstalled.
-    $this->entityFieldManager->rebuildBundleFieldMap();
-  }
 
   /**
    * Implements hook_entity_field_storage_info_alter().
