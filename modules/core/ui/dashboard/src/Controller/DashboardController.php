@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\farm_ui_dashboard\Controller;
 
+use Drupal\Component\Plugin\Exception\PluginException;
 use Drupal\Core\Block\BlockManagerInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\AutowireTrait;
@@ -84,16 +85,22 @@ class DashboardController extends ControllerBase {
       // Or if a block is provided, display the block.
       elseif (!empty($pane['block'])) {
 
-        // Render plugin block if is set.
-        $block = $this->blockManager->createInstance($pane['block'], $args);
+        // Create an instance of the block plugin.
+        // Skip if a plugin exception is thrown.
+        try {
+          $block = $this->blockManager->createInstance($pane['block'], $args);
+        }
+        catch (PluginException $e) {
+          continue;
+        }
 
-        // Check block access.
-        $access_result = $block->access($this->currentUser());
+        // Skip if block access check fails.
+        if (!$block->access($this->currentUser())) {
+          continue;
+        }
 
         // Build renderable array of the block.
-        if ($access_result == TRUE) {
-          $output = $block->build();
-        }
+        $output = $block->build();
       }
 
       // If a specific title was provided, use it.

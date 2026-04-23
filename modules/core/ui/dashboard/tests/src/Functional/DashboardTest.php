@@ -57,6 +57,7 @@ class DashboardTest extends FarmBrowserTestBase {
     $this->assertSession()->statusCodeEquals(200);
 
     // Assert that the test block was not added to the dashboard.
+    $this->assertSession()->pageTextNotContains('Test block title');
     $this->assertSession()->pageTextNotContains('This is the dashboard test block.');
 
     // Grant permission to view the block.
@@ -66,6 +67,7 @@ class DashboardTest extends FarmBrowserTestBase {
     // Assert that the test block was added to the dashboard.
     $this->drupalGet('/dashboard');
     $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextContains('Test block title');
     $this->assertSession()->pageTextContains('This is the dashboard test block.');
   }
 

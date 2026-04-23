@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- [Fix dashboard block title access #1075](https://github.com/farmOS/farmOS/pull/1075)
+
 ## [4.0.1] 2026-04-16
 
 ### Security
