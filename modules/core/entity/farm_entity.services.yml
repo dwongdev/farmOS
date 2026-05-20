@@ -1,11 +1,6 @@
 services:
   _defaults:
     autowire: true
-  farm_entity.entity_field_manager:
-    class: Drupal\farm_entity\Entity\EntityFieldManager
-    arguments: [ '@entity_type.manager', '@entity_type.bundle.info', '@entity_display.repository', '@typed_data_manager', '@language_manager', '@keyvalue', '@module_handler', '@cache.discovery', '@entity.last_installed_schema.repository' ]
-    decorates: entity_field.manager
-    decoration_priority: -100
   farm_entity.bundle_plugin_installer:
     class: Drupal\farm_entity\BundlePlugin\BundlePluginInstaller
     decorates: entity.bundle_plugin_installer
