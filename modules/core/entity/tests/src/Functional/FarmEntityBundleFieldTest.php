@@ -130,6 +130,11 @@ class FarmEntityBundleFieldTest extends FarmBrowserTestBase {
     // Must clear the cache for the test environment.
     $this->entityFieldManager->clearCachedFieldDefinitions();
 
+    // Reload the entity field map. We need to get a new instance of the
+    // entity_field.manager service from the container without old state.
+    $this->container->set('entity_field.manager', NULL);
+    $this->entityFieldManager = $this->container->get('entity_field.manager');
+
     // Test bundle field definition exists.
     $fields = $this->entityFieldManager->getFieldDefinitions('log', 'test');
     $this->assertArrayHasKey('test_contrib_hook_bundle_field', $fields);
