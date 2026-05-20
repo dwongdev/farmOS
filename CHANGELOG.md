@@ -15,6 +15,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [Fix dashboard block title access #1075](https://github.com/farmOS/farmOS/pull/1075)
 
+### Security
+
+- Updated Drupal core to 11.3.10 for
+  [SA-CORE-2026-004](https://www.drupal.org/sa-core-2026-004).
+
 ## [4.0.1] 2026-04-16
 
 ### Security
