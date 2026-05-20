@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Deprecated
+
+- [EntityFieldManager::rebuildBundleFieldMap() is deprecated](https://www.drupal.org/node/3591108)
+
 ### Fixed
 
 - [Fix dashboard block title access #1075](https://github.com/farmOS/farmOS/pull/1075)
