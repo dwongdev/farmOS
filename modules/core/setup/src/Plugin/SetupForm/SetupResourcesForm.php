@@ -33,7 +33,7 @@ class SetupResourcesForm extends SetupFormBase {
       '#theme' => 'item_list',
       '#items' => [
         $this->t('User guide: <a href=":uri">:uri</a>', [':uri' => 'https://farmOS.org/guide/']),
-        $this->t('Data model <a href=":uri">:uri</a>', [':uri' => 'https://farmOS.org/model/']),
+        $this->t('Data model: <a href=":uri">:uri</a>', [':uri' => 'https://farmOS.org/model/']),
       ],
     ];
 
