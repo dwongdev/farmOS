@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Update [drupal/simple_oauth](https://www.drupal.org/project/simple_oauth) to
+  [^6.1.1](https://www.drupal.org/project/simple_oauth/releases/6.1.1) and
+  remove patch for
+  [Issue #3573262: Calculated permissions have a cache max age of 0](https://www.drupal.org/project/simple_oauth/issues/3573262)
+  (merged upstream).
+
 ## [4.0.2] 2026-05-20
 
 ### Deprecated
