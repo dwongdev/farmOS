@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   remove patch for
   [Issue #3573262: Calculated permissions have a cache max age of 0](https://www.drupal.org/project/simple_oauth/issues/3573262)
   (merged upstream).
+- Update [drupal/gin](https://www.drupal.org/project/gin) to
+  [5.0.13](https://www.drupal.org/project/gin/releases/5.0.13) (fixes
+  [Issue #3567613: Show sidebar toggle is not usable](https://www.drupal.org/project/gin/issues/3567613)).
 
 ## [4.0.2] 2026-05-20
 
