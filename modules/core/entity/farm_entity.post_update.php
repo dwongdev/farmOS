@@ -8,17 +8,6 @@
 declare(strict_types=1);
 
 /**
- * Implements hook_removed_post_updates().
- */
-function farm_entity_removed_post_updates() {
-  return [
-    'farm_entity_post_update_enforce_plan_eri' => '4.x',
-    'farm_entity_post_update_rebuild_bundle_field_maps' => '4.x',
-    'farm_entity_post_update_uninstall_exif_orientation' => '4.x',
-  ];
-}
-
-/**
  * Enforce entity reference integrity on organization reference fields.
  */
 function farm_entity_post_update_enforce_organization_eri(&$sandbox) {
@@ -45,4 +34,15 @@ function farm_entity_post_update_revision_translations_affected(&$sandbox) {
       \Drupal::database()->query('UPDATE {' . $entity_type . '_field_revision} SET revision_translation_affected = 1');
     }
   }
+}
+
+/**
+ * Implements hook_removed_post_updates().
+ */
+function farm_entity_removed_post_updates() {
+  return [
+    'farm_entity_post_update_enforce_plan_eri' => '4.x',
+    'farm_entity_post_update_rebuild_bundle_field_maps' => '4.x',
+    'farm_entity_post_update_uninstall_exif_orientation' => '4.x',
+  ];
 }

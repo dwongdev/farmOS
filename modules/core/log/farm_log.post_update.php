@@ -10,15 +10,6 @@ declare(strict_types=1);
 use Drupal\system\Entity\Action;
 
 /**
- * Implements hook_removed_post_updates().
- */
-function farm_log_removed_post_updates() {
-  return [
-    'farm_log_post_update_farm_log_workflow' => '4.x',
-  ];
-}
-
-/**
  * Move asset_add_log_action to farm_log_asset module.
  */
 function farm_log_post_update_move_asset_add_log_action(&$sandbox) {
@@ -34,4 +25,13 @@ function farm_log_post_update_move_asset_add_log_action(&$sandbox) {
       $action->save();
     }
   }
+}
+
+/**
+ * Implements hook_removed_post_updates().
+ */
+function farm_log_removed_post_updates() {
+  return [
+    'farm_log_post_update_farm_log_workflow' => '4.x',
+  ];
 }
