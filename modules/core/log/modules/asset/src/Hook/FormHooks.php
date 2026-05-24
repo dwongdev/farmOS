@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\farm_log_asset\Hook;
 
-use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -17,8 +16,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
  * Form hook implementations for farm_log_asset.
  */
 class FormHooks {
-
-  use AutowireTrait;
 
   public function __construct(
     protected EntityTypeManagerInterface $entityTypeManager,

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\farm_ui_menu\Hook;
 
-use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -15,7 +14,6 @@ use Drupal\farm_ui_menu\Render\Element\FarmAdminToolbar;
  */
 class ThemeHooks {
 
-  use AutowireTrait;
   use StringTranslationTrait;
 
   public function __construct(

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\farm_birth\Hook;
 
-use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
@@ -15,8 +14,6 @@ use Drupal\asset\Entity\AssetInterface;
  * Theme hook implementations for farm_birth.
  */
 class ThemeHooks {
-
-  use AutowireTrait;
 
   public function __construct(
     protected EntityTypeManagerInterface $entityTypeManager,

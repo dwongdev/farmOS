@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\farm_land\Hook;
 
-use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\farm_land\Entity\FarmLandType;
@@ -16,7 +15,6 @@ use Drupal\views\ViewExecutable;
  */
 class ViewsExecutionHooks {
 
-  use AutowireTrait;
   use StringTranslationTrait;
 
   public function __construct(

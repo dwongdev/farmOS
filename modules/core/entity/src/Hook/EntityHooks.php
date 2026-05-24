@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\farm_entity\Hook;
 
 use Drupal\Component\Datetime\TimeInterface;
-use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Entity\RevisionLogInterface;
@@ -24,8 +23,6 @@ use Drupal\farm_entity\Routing\EntityRouteProvider;
  * Entity hook implementations for farm_entity.
  */
 class EntityHooks {
-
-  use AutowireTrait;
 
   public function __construct(
     protected AccountInterface $currentUser,

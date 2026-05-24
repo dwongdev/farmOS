@@ -5,15 +5,12 @@ declare(strict_types=1);
 namespace Drupal\quantity\Hook;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Hook\Attribute\Hook;
 
 /**
  * API hook implementations for quantity.
  */
 class ApiHooks {
-
-  use AutowireTrait;
 
   public function __construct(
     protected ConfigFactoryInterface $configFactory,

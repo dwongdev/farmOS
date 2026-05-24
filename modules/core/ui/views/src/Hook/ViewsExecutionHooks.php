@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\farm_ui_views\Hook;
 
 use Drupal\Component\Datetime\TimeInterface;
-use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -20,7 +19,6 @@ use Drupal\views\ViewExecutable;
  */
 class ViewsExecutionHooks {
 
-  use AutowireTrait;
   use StringTranslationTrait;
 
   public function __construct(

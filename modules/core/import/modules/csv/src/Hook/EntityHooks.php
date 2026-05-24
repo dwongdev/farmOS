@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\farm_import_csv\Hook;
 
 use Drupal\Core\Database\Connection;
-use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 
@@ -13,8 +12,6 @@ use Drupal\Core\Hook\Attribute\Hook;
  * Entity hook implementations for farm_import_csv.
  */
 class EntityHooks {
-
-  use AutowireTrait;
 
   public function __construct(
     protected Connection $database,

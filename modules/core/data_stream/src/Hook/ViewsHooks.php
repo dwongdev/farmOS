@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\data_stream\Hook;
 
-use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\data_stream\DataStreamTypeManager;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -13,8 +12,6 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
  * Views hook implementations for data_stream.
  */
 class ViewsHooks {
-
-  use AutowireTrait;
 
   public function __construct(
     #[Autowire(service: 'plugin.manager.data_stream_type')]

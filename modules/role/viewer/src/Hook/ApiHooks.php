@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\farm_viewer\Hook;
 
-use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 
@@ -12,8 +11,6 @@ use Drupal\Core\Hook\Attribute\Hook;
  * API hook implementations for farm_viewer.
  */
 class ApiHooks {
-
-  use AutowireTrait;
 
   public function __construct(
     protected ModuleHandlerInterface $moduleHandler,

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\asset\Hook;
 
-use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\asset\Entity\AssetInterface;
 use Drupal\asset\Event\AssetEvent;
@@ -15,8 +14,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  * Entity hook implementations for asset.
  */
 class EntityHooks {
-
-  use AutowireTrait;
 
   public function __construct(
     #[Autowire(service: 'event_dispatcher')]

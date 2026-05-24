@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\farm_import_csv\Hook;
 
-use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Session\AccountInterface;
@@ -16,8 +15,6 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
  * File hook implementations for farm_import_csv.
  */
 class FileHooks {
-
-  use AutowireTrait;
 
   public function __construct(
     protected EntityTypeManagerInterface $entityTypeManager,

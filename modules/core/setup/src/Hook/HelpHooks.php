@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\farm_setup\Hook;
 
-use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -16,7 +15,6 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
  */
 class HelpHooks {
 
-  use AutowireTrait;
   use StringTranslationTrait;
 
   public function __construct(

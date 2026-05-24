@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\data_stream\Hook;
 
 use Drupal\Core\Database\Connection;
-use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\data_stream\Entity\DataStreamInterface;
 
@@ -13,8 +12,6 @@ use Drupal\data_stream\Entity\DataStreamInterface;
  * Entity hook implementations for data_stream.
  */
 class EntityHooks {
-
-  use AutowireTrait;
 
   public function __construct(
     protected Connection $connection,

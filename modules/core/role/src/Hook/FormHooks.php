@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\farm_role\Hook;
 
-use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -16,7 +15,6 @@ use Drupal\user\PermissionHandlerInterface;
  */
 class FormHooks {
 
-  use AutowireTrait;
   use StringTranslationTrait;
 
   public function __construct(

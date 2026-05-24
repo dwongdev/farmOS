@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\farm_quick\Hook;
 
-use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
@@ -13,8 +12,6 @@ use Drupal\Core\Hook\Attribute\Hook;
  * Form hook implementations for farm_quick.
  */
 class FormHooks {
-
-  use AutowireTrait;
 
   public function __construct(
     protected EntityTypeManagerInterface $entityTypeManager,

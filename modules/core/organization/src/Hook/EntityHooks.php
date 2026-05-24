@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\organization\Hook;
 
-use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\organization\Entity\OrganizationInterface;
 use Drupal\organization\Event\OrganizationEvent;
@@ -15,8 +14,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  * Entity hook implementations for organization.
  */
 class EntityHooks {
-
-  use AutowireTrait;
 
   public function __construct(
     #[Autowire(service: 'event_dispatcher')]

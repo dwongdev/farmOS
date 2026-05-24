@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\quantity\Hook;
 
-use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\quantity\Entity\QuantityInterface;
 use Drupal\quantity\Event\QuantityEvent;
@@ -15,8 +14,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  * Entity hook implementations for quantity.
  */
 class EntityHooks {
-
-  use AutowireTrait;
 
   public function __construct(
     #[Autowire(service: 'event_dispatcher')]

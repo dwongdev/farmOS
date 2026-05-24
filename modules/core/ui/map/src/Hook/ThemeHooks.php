@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\farm_ui_map\Hook;
 
-use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityDisplayRepositoryInterface;
 use Drupal\Core\Entity\EntityInterface;
@@ -15,8 +14,6 @@ use Drupal\Core\Routing\RouteMatchInterface;
  * Theme hook implementations for farm_ui_map.
  */
 class ThemeHooks {
-
-  use AutowireTrait;
 
   public function __construct(
     protected EntityDisplayRepositoryInterface $entityDisplayRepository,

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\plan\Hook;
 
-use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\plan\Entity\PlanInterface;
@@ -13,8 +12,6 @@ use Drupal\plan\Entity\PlanInterface;
  * Entity hook implementations for plan.
  */
 class EntityHooks {
-
-  use AutowireTrait;
 
   public function __construct(
     protected EntityTypeManagerInterface $entityTypeManager,

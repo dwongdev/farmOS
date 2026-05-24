@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\farm_location\Hook;
 
-use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -18,7 +17,6 @@ use Drupal\farm_location\LocationDefaultValues;
  */
 class FieldHooks {
 
-  use AutowireTrait;
   use StringTranslationTrait;
 
   public function __construct(

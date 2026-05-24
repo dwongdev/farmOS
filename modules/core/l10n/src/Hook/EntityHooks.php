@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\farm_l10n\Hook;
 
-use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 
@@ -12,8 +11,6 @@ use Drupal\Core\Hook\Attribute\Hook;
  * Entity hook implementations for farm_l10n.
  */
 class EntityHooks {
-
-  use AutowireTrait;
 
   public function __construct(
     protected ModuleHandlerInterface $moduleHandler,

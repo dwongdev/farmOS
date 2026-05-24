@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\farm_ui_theme\Hook;
 
 use Drupal\Core\Block\BlockPluginInterface;
-use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\Display\EntityFormDisplayInterface;
 use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Extension\ModuleHandlerInterface;
@@ -19,8 +18,6 @@ use Drupal\plan\Entity\PlanInterface;
  * Theme hook implementations for farm_ui_theme.
  */
 class ThemeHooks {
-
-  use AutowireTrait;
 
   public function __construct(
     protected ModuleExtensionList $moduleExtensionList,

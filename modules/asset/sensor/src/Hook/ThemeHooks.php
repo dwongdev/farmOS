@@ -6,7 +6,6 @@ namespace Drupal\farm_sensor\Hook;
 
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Component\Utility\Html;
-use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -19,7 +18,6 @@ use Drupal\data_stream\Entity\DataStreamInterface;
  */
 class ThemeHooks {
 
-  use AutowireTrait;
   use StringTranslationTrait;
 
   public function __construct(

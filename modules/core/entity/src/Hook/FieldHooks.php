@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\farm_entity\Hook;
 
 use Drupal\Component\Datetime\TimeInterface;
-use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
@@ -16,8 +15,6 @@ use Drupal\Core\Session\AccountInterface;
  * Field hook implementations for farm_entity.
  */
 class FieldHooks {
-
-  use AutowireTrait;
 
   public function __construct(
     protected EntityTypeBundleInfoInterface $entityTypeBundleInfo,
