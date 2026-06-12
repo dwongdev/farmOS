@@ -79,6 +79,16 @@ function plan_post_update_remove_admin_view(&$sandbox) {
 }
 
 /**
+ * Add revision_data_table to plan entity type definition.
+ */
+function plan_post_update_revision_data_table(&$sandbox) {
+  $manager = \Drupal::service('entity.definition_update_manager');
+  $entity_type = $manager->getEntityType('plan');
+  $entity_type->set('revision_data_table', 'plan_field_revision');
+  $manager->updateEntityType($entity_type);
+}
+
+/**
  * Implements hook_removed_post_updates().
  */
 function plan_removed_post_updates() {

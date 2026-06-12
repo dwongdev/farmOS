@@ -87,6 +87,7 @@ use Drupal\views\EntityViewsData;
   base_table: 'asset',
   data_table: 'asset_field_data',
   revision_table: 'asset_revision',
+  revision_data_table: 'asset_field_revision',
   translatable: TRUE,
   show_revision_ui: TRUE,
   label_count: [

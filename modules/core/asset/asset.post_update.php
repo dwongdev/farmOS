@@ -94,3 +94,13 @@ function asset_post_update_remove_admin_view(&$sandbox) {
   $view = View::load('asset_admin');
   $view->delete();
 }
+
+/**
+ * Add revision_data_table to asset entity type definition.
+ */
+function asset_post_update_revision_data_table(&$sandbox) {
+  $manager = \Drupal::service('entity.definition_update_manager');
+  $entity_type = $manager->getEntityType('asset');
+  $entity_type->set('revision_data_table', 'asset_field_revision');
+  $manager->updateEntityType($entity_type);
+}

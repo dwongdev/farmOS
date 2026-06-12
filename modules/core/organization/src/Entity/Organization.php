@@ -85,6 +85,7 @@ use Drupal\views\EntityViewsData;
   base_table: 'organization',
   data_table: 'organization_field_data',
   revision_table: 'organization_revision',
+  revision_data_table: 'organization_field_revision',
   translatable: TRUE,
   show_revision_ui: TRUE,
   label_count: [

@@ -85,6 +85,7 @@ use Drupal\views\EntityViewsData;
   base_table: 'plan',
   data_table: 'plan_field_data',
   revision_table: 'plan_revision',
+  revision_data_table: 'plan_field_revision',
   translatable: TRUE,
   show_revision_ui: TRUE,
   label_count: [
