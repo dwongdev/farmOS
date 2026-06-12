@@ -88,7 +88,10 @@ class ThemeHooks {
    */
   #[Hook('preprocess_block')]
   public function preprocessBlock(&$variables) {
-    if ($variables['plugin_id'] == 'help_block') {
+    if ($variables['plugin_id'] == 'farm_local_actions_block') {
+      $variables['#attached']['library'][] = 'farm_ui_theme/menu_local_action';
+    }
+    elseif ($variables['plugin_id'] == 'help_block') {
       $variables['#attached']['library'][] = 'farm_ui_theme/help';
     }
   }

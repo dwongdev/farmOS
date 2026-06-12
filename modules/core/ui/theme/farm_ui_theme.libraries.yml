@@ -40,6 +40,10 @@ map:
       css/map.css: { }
   dependencies:
     - farm_map/farm_map
+menu_local_action:
+  css:
+    theme:
+      css/menu-local-action.css: { }
 menu_local_task:
   css:
     theme:

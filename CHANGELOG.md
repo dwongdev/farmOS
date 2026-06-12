@@ -19,6 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [Issue #3567613: Show sidebar toggle is not usable](https://www.drupal.org/project/gin/issues/3567613)).
 - [Use Drupal core RevisionHtmlRouteProvider #1087](https://github.com/farmOS/farmOS/pull/1087)
 
+### Fixed
+
+- [Fix dropbutton margin in local actions block #1086](https://github.com/farmOS/farmOS/pull/1086)
+
 ## [4.0.2] 2026-05-20
 
 ### Deprecated
