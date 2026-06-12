@@ -10,7 +10,9 @@ use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityViewBuilder;
 use Drupal\Core\Entity\Form\DeleteMultipleForm;
+use Drupal\Core\Entity\Form\RevisionRevertForm;
 use Drupal\Core\Entity\RevisionLogEntityTrait;
+use Drupal\Core\Entity\Routing\RevisionHtmlRouteProvider;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\asset\AssetListBuilder;
@@ -20,7 +22,6 @@ use Drupal\entity\Menu\DefaultEntityLocalTaskProvider;
 use Drupal\entity\QueryAccess\UncacheableQueryAccessHandler;
 use Drupal\entity\Revision\RevisionableContentEntityBase;
 use Drupal\entity\Routing\AdminHtmlRouteProvider;
-use Drupal\entity\Routing\RevisionRouteProvider;
 use Drupal\entity\UncacheableEntityAccessControlHandler;
 use Drupal\entity\UncacheableEntityPermissionProvider;
 use Drupal\user\EntityOwnerTrait;
@@ -59,10 +60,11 @@ use Drupal\views\EntityViewsData;
       'edit' => AssetForm::class,
       'delete' => ContentEntityDeleteForm::class,
       'delete-multiple-confirm' => DeleteMultipleForm::class,
+      'revision-revert' => RevisionRevertForm::class,
     ],
     'route_provider' => [
       'default' => AdminHtmlRouteProvider::class,
-      'revision' => RevisionRouteProvider::class,
+      'revision' => RevisionHtmlRouteProvider::class,
     ],
     'local_task_provider' => [
       'default' => DefaultEntityLocalTaskProvider::class,

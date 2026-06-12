@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update [drupal/gin](https://www.drupal.org/project/gin) to
   [5.0.13](https://www.drupal.org/project/gin/releases/5.0.13) (fixes
   [Issue #3567613: Show sidebar toggle is not usable](https://www.drupal.org/project/gin/issues/3567613)).
+- [Use Drupal core RevisionHtmlRouteProvider #1087](https://github.com/farmOS/farmOS/pull/1087)
 
 ## [4.0.2] 2026-05-20
 
