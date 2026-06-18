@@ -23,6 +23,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [Fix dropbutton margin in local actions block #1086](https://github.com/farmOS/farmOS/pull/1086)
 
+### Security
+
+- Update Drupal core to
+  [11.3.12](https://www.drupal.org/project/drupal/releases/11.3.12) for
+  [SA-CORE-2026-005](https://www.drupal.org/sa-core-2026-005),
+  [SA-CORE-2026-006](https://www.drupal.org/sa-core-2026-006),
+  [SA-CORE-2026-007](https://www.drupal.org/sa-core-2026-007),
+  [SA-CORE-2026-008](https://www.drupal.org/sa-core-2026-008), and
+  [SA-CORE-2026-009](https://www.drupal.org/sa-core-2026-009).
+
 ## [4.0.2] 2026-05-20
 
 ### Deprecated
