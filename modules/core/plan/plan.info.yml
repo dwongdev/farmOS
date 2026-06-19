@@ -1,5 +1,5 @@
 name: Plan
-description: Provides an plan entity type for real world record keeping.
+description: Provides a plan entity type for real world record keeping.
 type: module
 package: Plan
 core_version_requirement: ^11
